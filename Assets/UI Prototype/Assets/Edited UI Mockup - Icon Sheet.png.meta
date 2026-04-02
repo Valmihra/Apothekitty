@@ -1,0 +1,334 @@
+fileFormatVersion: 2
+guid: 43206b02157fd2f43a136795db6fed83
+TextureImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 12
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMasterTextureLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Server
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Edited UI Mockup - Icon Sheet_0
+      rect:
+        serializedVersion: 2
+        x: 242
+        y: 1921
+        width: 959
+        height: 127
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bd47bdb0460f1444882f1c49e9155658
+      internalID: -135162795
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Edited UI Mockup - Icon Sheet_1
+      rect:
+        serializedVersion: 2
+        x: 546
+        y: 1187
+        width: 411
+        height: 518
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7081d6885983d5548813eaa0f629217e
+      internalID: 493989897
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Edited UI Mockup - Icon Sheet_2
+      rect:
+        serializedVersion: 2
+        x: 1101
+        y: 1571
+        width: 120
+        height: 103
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 155715e01a20549439476deaa58e01fb
+      internalID: -296134711
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Edited UI Mockup - Icon Sheet_4
+      rect:
+        serializedVersion: 2
+        x: 1477
+        y: 1322
+        width: 367
+        height: 363
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f3dae7f57efcc9f4180567004054c78d
+      internalID: 1598606725
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Edited UI Mockup - Icon Sheet_6
+      rect:
+        serializedVersion: 2
+        x: 1132
+        y: 1387
+        width: 75
+        height: 112
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: da8658046bd9adf4abc76a6474149bd2
+      internalID: 445580018
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Edited UI Mockup - Icon Sheet_15
+      rect:
+        serializedVersion: 2
+        x: 1101
+        y: 1279
+        width: 120
+        height: 45
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fc14ca3bf8ca45a4abae011516112ac2
+      internalID: -288934129
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Edited UI Mockup - Icon Sheet_16
+      rect:
+        serializedVersion: 2
+        x: 1509
+        y: 1000
+        width: 303
+        height: 319
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 08b4753af3f2bc6419ad374366c09584
+      internalID: -870926500
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Edited UI Mockup - Icon Sheet_19
+      rect:
+        serializedVersion: 2
+        x: 1101
+        y: 1203
+        width: 120
+        height: 46
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2711e2009f8f73544992e0ea3c5a4ca1
+      internalID: -300743196
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Edited UI Mockup - Icon Sheet_20
+      rect:
+        serializedVersion: 2
+        x: 241
+        y: 0
+        width: 959
+        height: 130
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b16c44dce68421040b2c9525af77edcd
+      internalID: -27939053
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    nameFileIdTable:
+      Edited UI Mockup - Icon Sheet_17: 1656929729
+      Edited UI Mockup - Icon Sheet_0: -135162795
+      Edited UI Mockup - Icon Sheet_4: 1598606725
+      Edited UI Mockup - Icon Sheet_15: -288934129
+      Edited UI Mockup - Icon Sheet_8: -555462786
+      Edited UI Mockup - Icon Sheet_9: 932504023
+      Edited UI Mockup - Icon Sheet_16: -870926500
+      Edited UI Mockup - Icon Sheet_1: 493989897
+      Edited UI Mockup - Icon Sheet_13: 1441552881
+      Edited UI Mockup - Icon Sheet_14: -1429524957
+      Edited UI Mockup - Icon Sheet_10: 1360599886
+      Edited UI Mockup - Icon Sheet_19: -300743196
+      Edited UI Mockup - Icon Sheet_3: 322424592
+      Edited UI Mockup - Icon Sheet_12: 2038125142
+      Edited UI Mockup - Icon Sheet_6: 445580018
+      Edited UI Mockup - Icon Sheet_18: 847299251
+      Edited UI Mockup - Icon Sheet_20: -27939053
+      Edited UI Mockup - Icon Sheet_5: -1360460132
+      Edited UI Mockup - Icon Sheet_7: -768200344
+      Edited UI Mockup - Icon Sheet_11: -853942585
+      Edited UI Mockup - Icon Sheet_2: -296134711
+  spritePackingTag: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
