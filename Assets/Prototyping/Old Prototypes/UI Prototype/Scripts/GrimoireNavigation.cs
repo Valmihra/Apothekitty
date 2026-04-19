@@ -40,12 +40,14 @@ public class GrimoireNavigation : MonoBehaviour
         private int spiritTabPageNum;
     // Script holding information on all pages
         private GrimoirePagesData pageData;
+        private UIManager uiManagerTemp;
     
     void Start()
     {
         InitialiseScene();
         
         pageData = FindObjectOfType<GrimoirePagesData>();
+        uiManagerTemp = FindObjectOfType<UIManager>();
             /*if (pageData != null)
             {
                 Debug.Log("Found pageData!");
@@ -127,11 +129,12 @@ public class GrimoireNavigation : MonoBehaviour
         //Debug.Log("The selected ailment is " + selectedAilment + ".");
         //Debug.Log("Would open Diagnosis Sheet here.");
 
-        // Switches active Left UI.
-        clientLetterObj.SetActive(false);
-        diagnosisSheetObj.SetActive(true);
+        // Updates UI on screen
+        uiManagerTemp.SubmitAilment();
+            // clientLetterObj.SetActive(false);
+            // diagnosisSheetObj.SetActive(true);
 
-        navigationButtonsObj.SetActive(false);
+            // navigationButtonsObj.SetActive(false);
     }
 
     /*void InitialiseList()

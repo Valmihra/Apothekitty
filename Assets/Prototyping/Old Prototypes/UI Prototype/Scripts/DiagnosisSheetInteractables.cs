@@ -186,45 +186,30 @@ public class DiagnosisSheetInteractables : MonoBehaviour
     {
         if (dropdown == primaryEffect)
         {
-                //heldName01 = name;
             heldName01 = name;
-                //heldName02 = slot02;
-                //heldName03 = slot03;
-                //heldName04 = slot04;
-
             UpdateSlotOne(name);
         }
         else if (dropdown == primaryTarget)
         {
-                //heldName01 = slot01;
             heldName02 = name;
-                //heldName03 = slot03;
-                //heldName04 = slot04;
-
             UpdateSlotTwo(name);
         }
         else if (dropdown == secondaryEffect)
         {
-                //heldName01 = slot01;
-                //heldName02 = slot02;
             heldName03 = name;
-                //heldName04 = slot04;
-
             UpdateSlotThree(name);
         }
         else if (dropdown == secondaryTarget)
         {
-                //heldName01 = slot01;
-                //heldName02 = slot02;
-                //heldName03 = slot03;
             heldName04 = name;
-
             UpdateSlotFour(name);
         }
         else
         {
             Debug.Log("Issue while attempting to update recipe display.");
         }
+        
+        //var name = (dropdown == primaryEffect) ? UpdateSlotOne(name) : (dropdown == primaryTarget) ? UpdateSlotTwo(name) : (dropdown == secondaryEffect) ? UpdateSlotThree(name) : UpdateSlotFour (name);
     }
 
     void UpdateSlotOne(string name)

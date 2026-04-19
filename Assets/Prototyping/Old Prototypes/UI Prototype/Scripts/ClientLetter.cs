@@ -54,7 +54,7 @@ public class ClientLetter : MonoBehaviour
     private static ClientLetter clientsGlobal;
 
 
-    void Start()
+    void Awake()
     {
         // not full singleton because i'm still scared from last semester's Horrors lmao
         clientsGlobal = this;
@@ -64,7 +64,7 @@ public class ClientLetter : MonoBehaviour
         SetArrays();
         //Debug.Log("clientsList is currently " + clientsList.Count + " entries long!.");
 
-        RandomiseInitialClientLetter();
+        RandomiseIncomingClientLetter();
     }
 
     void InitialiseLists()
@@ -93,7 +93,7 @@ public class ClientLetter : MonoBehaviour
         // add other clients here.
     }
 
-    void RandomiseInitialClientLetter()
+    void RandomiseIncomingClientLetter()
     {
         //clientLetter = new ClientData();
         int randomisedNumber = Random.Range(0, clientsArray.Length);
