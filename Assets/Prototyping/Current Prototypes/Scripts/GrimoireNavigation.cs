@@ -41,6 +41,9 @@ public class GrimoireNavigation : MonoBehaviour
     // Script holding information on all pages
         private GrimoirePagesData pageData;
         private UIManager uiManagerTemp;
+
+
+        public bool ailmentChosen;
     
     void Start()
     {
@@ -70,6 +73,7 @@ public class GrimoireNavigation : MonoBehaviour
     void InitialiseScene()
     {
         selectionIcon.SetActive(false);
+        ailmentChosen = false;
         //diagnosisSheetObj.SetActive(false);
     }
 
@@ -121,6 +125,7 @@ public class GrimoireNavigation : MonoBehaviour
     void GetSelectedAilment(int pageNum)
     {
         selectionIcon.SetActive(true);
+        ailmentChosen = true;
         ///
         /// 
         /// 
