@@ -66,27 +66,26 @@ public class DraggableUI : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndD
 
     public void OnPointerEnter(PointerEventData mouse)
     {
-        Debug.Log("Mouse registered - hovering over UI");
-        // Might want to add shader so that can enable/disable 
-        // when hovering over the draggable element? for now 
-        // just adding debug so I know it works
+        //Debug.Log("Mouse registered - hovering over UI");
+            // Might want to add shader so that can enable/disable 
+            // when hovering over the draggable element? for now 
+            // just adding debug so I know it works
 
-        // outline.color = hoverColour;
         image.color = hoverColour;
     }
 
     public void OnPointerExit(PointerEventData mouse)
     {
-        Debug.Log("Mouse registered - exited UI");
-        //
-        //outline.color = defaultColour;
+        //Debug.Log("Mouse registered - exited UI");
+
         image.color = defaultColour;
     }
 
     // Sets the initial position of the UI prior to movement and brings the selected panel to the front on the screen
     public void OnBeginDrag(PointerEventData mouse)
     {
-        Debug.Log("Drag working"); 
+        //Debug.Log("Drag working"); 
+        
         rectTransform.SetAsLastSibling();
         initialPositionOnDrag = rectTransform.anchoredPosition;
     }

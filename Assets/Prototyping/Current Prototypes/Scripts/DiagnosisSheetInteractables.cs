@@ -14,6 +14,8 @@ public class DiagnosisSheetInteractables : MonoBehaviour
     public Toggle enhancer;
     public Toggle invertor;
 
+    public Button submitDiagnosisButton;
+
     private List<TMP_Dropdown> dropdownsList;
     private List<Toggle> togglesList;
 
@@ -28,7 +30,7 @@ public class DiagnosisSheetInteractables : MonoBehaviour
         string slot03 = "x";
         string slot04 = "x";
     
-    public GrimoireNavigation grimoireNavigation;
+    //private GrimoireNavigation grimoireNavigation;
     
     public TMP_Text clientName;
     public TMP_Text clientSpecies;
@@ -38,7 +40,8 @@ public class DiagnosisSheetInteractables : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        grimoireNavigation = FindObjectOfType<GrimoireNavigation>();
+        //grimoireNavigation = UIManager.Instance.grimoireNavScript;
+            //FindObjectOfType<GrimoireNavigation>();
 
         GenerateLists();
 
@@ -50,15 +53,19 @@ public class DiagnosisSheetInteractables : MonoBehaviour
             enhancer.onValueChanged.AddListener(delegate {ChangeToggleActivity(enhancer); });
             invertor.onValueChanged.AddListener(delegate {ChangeToggleActivity(invertor); });
 
-        FillSheet(grimoireNavigation);
+            submitDiagnosisButton.onClick.AddListener(delegate {SubmissionButtonPressed(); });
+
+        //FillSheet();
     }
 
-    void FillSheet(GrimoireNavigation g)
+    public void FillSheet()
     {
         clientName.text = ClientLetter.ClientsGlobal.clientName.text;
         clientSpecies.text = ClientLetter.ClientsGlobal.clientSpecies.text;
         clientExtras.text = ClientLetter.ClientsGlobal.clientExtras.text;
-        clientAilment.text = g.selectedAilment;
+        //clientAilment.text = g.selectedAilment;
+        clientAilment.text = UIManager.Instance.selectedAilment;
+        
     }
 
     void DropdownValueUpdate(TMP_Dropdown selected)
@@ -264,5 +271,41 @@ public class DiagnosisSheetInteractables : MonoBehaviour
         togglesList = new List<Toggle>();
         togglesList.Add(enhancer);
         togglesList.Add(invertor);
+    }
+
+    void SubmissionButtonPressed()
+    {
+        Debug.Log("Button Pressed!");
+        
+        bool validPrimaryRecipeCombination = (primaryEffect.value <= 0) && (primaryTarget.value <= 0) ? false : true;
+        bool validSecondaryRecipeCombination = (secondaryEffect.value <= 0) && (secondaryTarget.value <= 0) ? true : (secondaryEffect.value > 0) && (secondaryTarget.value > 0) ? true : false;
+        
+        if(validPrimaryRecipeCombination)
+        {
+            if (validSecondaryRecipeCombination)
+            {
+                UIManager.Instance.SubmitDiagnosis();
+
+                // Prevents interaction with the canvas elements
+                primaryEffect.interactable = false;
+                primaryTarget.interactable = false;
+                secondaryEffect.interactable = false;
+                secondaryTarget.interactable = false;
+
+                enhancer.interactable = false;
+                invertor.interactable = false;
+            }
+            else
+            {
+                Debug.Log("Would bring up invalid recipe text, try again popup.");
+            }
+        }
+        else
+        {
+            Debug.Log("Would bring up invalid recipe text, try again popup.");
+        }
+
+        //        
+        
     }
 }

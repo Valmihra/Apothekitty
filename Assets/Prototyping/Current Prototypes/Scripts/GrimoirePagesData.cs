@@ -27,9 +27,24 @@ public class GrimoirePagesData : MonoBehaviour
     public SinglePage[] pagesArray;
 
     int totalPages = 0;
+
+    private static GrimoirePagesData _instance;
+    public static GrimoirePagesData Instance
+    {
+        get
+        {
+            return _instance;
+        }
+    }
     
     void Awake()
     {
+        _instance = this;
+        //if (_instance != this)
+        //{
+        //    Destroy(GetComponent<GameObject>());
+        //}
+        
         InitialiseList();
         SetPageData();
         SetArray();

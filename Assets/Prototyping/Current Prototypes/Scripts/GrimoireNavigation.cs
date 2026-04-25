@@ -17,6 +17,8 @@ public class GrimoireNavigation : MonoBehaviour
         public Image ailmentIcon;
         public GameObject selectionIcon;
 
+        //public CanvasGroup pageContents;
+
     [Header("Ailment Icons")]
         public Image ailmentIcon01;
         public Image ailmentIcon02;
@@ -38,9 +40,6 @@ public class GrimoireNavigation : MonoBehaviour
         private int mindTabPageNum;
         private int bodyTabPageNum;
         private int spiritTabPageNum;
-    // Script holding information on all pages
-        private GrimoirePagesData pageData;
-        private UIManager uiManagerTemp;
 
 
         public bool ailmentChosen;
@@ -48,13 +47,6 @@ public class GrimoireNavigation : MonoBehaviour
     void Start()
     {
         InitialiseScene();
-        
-        pageData = FindObjectOfType<GrimoirePagesData>();
-        uiManagerTemp = FindObjectOfType<UIManager>();
-            /*if (pageData != null)
-            {
-                Debug.Log("Found pageData!");
-            }*/
 
         //InitialiseList();
         InitialiseArray();
@@ -106,7 +98,7 @@ public class GrimoireNavigation : MonoBehaviour
         navigationLeft.enabled = true;
         
         // disables L/R buttons when target int leads outside of array's bounds
-        if (target == pageData.pagesArray.Length - 1)
+        if (target == GrimoirePagesData.Instance.pagesArray.Length - 1)
         {
             navigationRight.enabled = false;
         }
@@ -115,8 +107,8 @@ public class GrimoireNavigation : MonoBehaviour
             navigationLeft.enabled = false;
         }
         
-        ailmentName.text = pageData.pagesArray[target].ailmentName_;
-        ailmentDescription.text = pageData.pagesArray[target].ailmentDescription_;
+        ailmentName.text = GrimoirePagesData.Instance.pagesArray[target].ailmentName_;
+        ailmentDescription.text = GrimoirePagesData.Instance.pagesArray[target].ailmentDescription_;
         ailmentIcon.sprite = ailmentIcons[target].sprite;
         
         currentPageNumber = target;
@@ -127,19 +119,14 @@ public class GrimoireNavigation : MonoBehaviour
         selectionIcon.SetActive(true);
         ailmentChosen = true;
         ///
-        /// 
-        /// 
-        /// 
-        selectedAilment = pageData.pagesArray[pageNum].ailmentName_;
+
+        selectedAilment = GrimoirePagesData.Instance.pagesArray[pageNum].ailmentName_;
+        UIManager.Instance.UpdateAilment(selectedAilment);
         //Debug.Log("The selected ailment is " + selectedAilment + ".");
         //Debug.Log("Would open Diagnosis Sheet here.");
 
         // Updates UI on screen
-        uiManagerTemp.SubmitAilment();
-            // clientLetterObj.SetActive(false);
-            // diagnosisSheetObj.SetActive(true);
-
-            // navigationButtonsObj.SetActive(false);
+        UIManager.Instance.SubmitAilment();
     }
 
     /*void InitialiseList()
@@ -171,4 +158,27 @@ public class GrimoireNavigation : MonoBehaviour
         bodyTabPageNum = 2;
         spiritTabPageNum = 4;
     }
+
+
+
+    /*
+    void OpenBook()
+    {
+        // hides the book cover OR changes the icon of the background? WHICH TO DO??
+
+        uiManagerTemp.EnableUI(pageContents);
+        GoToPage(0);
+
+        // enable buttons
+        // disable cover button
+    }
+
+    void CloseBook()
+    {
+        // Hides the page contents and main navigation buttons, enables the cover navigation button
+        uiManagerTemp.DisableUI(pageContents);
+        // disable buttons
+        // enable cover button
+    }
+    */
 }
