@@ -3,18 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class UIManager : MonoBehaviour
+public class SceneManager : MonoBehaviour
 {
-    /*// SHOULD CONTAIN EVERY SWITCHABLE CANVASGROUP IN THE GAME
+    // SHOULD CONTAIN EVERY SWITCHABLE CANVASGROUP IN THE GAME
     [Header("Main Canvas Groups")]
     public CanvasGroup deskGroup;
     public CanvasGroup herbWallGroup;
     public CanvasGroup clientWindowGroup;
         private List<CanvasGroup> allMainCanvases;
-
-    [Header("Menu Canvas Groups")]
-    public CanvasGroup pauseMenu;
-        private List<CanvasGroup> allCanvasesMenus;
 
     [Header("Determinant Canvas Groups")]   /// if child canvasgroup tagged DETERMINANT, maybe check what should be displayed(??)
     public CanvasGroup clientLetter;
@@ -53,19 +49,17 @@ public class UIManager : MonoBehaviour
     
     
     // Information for the current display
-    private CanvasGroup currentCanvasGroup;
-    private Image clientImage;
+    public CanvasGroup currentCanvasGroup;
+    public Image clientImage;
 
     
-    private bool spawnSet;
-    private bool onDesk;
+    //private bool spawnSet;
+    public bool onDesk;
     private bool herbWallActive;
     public string selectedAilment;
 
-    public GrimoireNavigation grimoireNavScript;*/
-
-    private static UIManager _instance;
-    public static UIManager Instance
+    private static SceneManager _instance;
+    public static SceneManager Instance
     {
         get
         {
@@ -75,7 +69,10 @@ public class UIManager : MonoBehaviour
 
     void Awake()
     {
-        _instance = this;
+        //if (_instance = null)
+        //{
+            _instance = this;
+        //}
 
         //spawnSet = false;
     }
@@ -83,72 +80,84 @@ public class UIManager : MonoBehaviour
     
     void Start()
     {
-        //onDesk = false;
-        //herbWallActive = false;
-        
-        //grimoireNavScript = FindObjectOfType<GrimoireNavigation>();
+        SetStartingScreen();
 
-        //switchDeskHerb.onClick.AddListener(delegate {SwitchSceneDeskHerb(); });
-        //switchDeskClient.onClick.AddListener(delegate {SwitchSceneDeskClient(); });
+        switchDeskHerb.onClick.AddListener(delegate {SwitchSceneDeskHerb(); });
+        switchDeskClient.onClick.AddListener(delegate {SwitchSceneDeskClient(); });
 
         
             //if (!spawnSet)
             //{
-            //    GenerateSpawnpoints();
-            //    InitialiseLists();
+                //GenerateSpawnpoints();
+                InitialiseLists();
             //}
         //SetupUI(allCanvasesDesk);
-        //SetupInitialScene();
+        SetupInitialScene();
     }
 
-
-    //  ---
-    // Scripts responsible for toggling between canvas groups
-    public void EnableUI(CanvasGroup canvasGroup)
+    void SetStartingScreen()
     {
-        canvasGroup.alpha = 1f;
-        canvasGroup.interactable = true;
-        canvasGroup.blocksRaycasts = true;
+        // DESIRED SCREEN TO SETUP FIRST
+        onDesk = false;
+        herbWallActive = false;
     }
-
-    public void DisableUI(CanvasGroup canvasGroup)
-    {
-        canvasGroup.alpha = 0f;
-        canvasGroup.interactable = false;
-        canvasGroup.blocksRaycasts = false;
-    }
-    // ---
 
     // Determines the correct position for each canvas group to be enabled at during the setup phase
         // Useful later on, maybe letters arrive on the desk in a certain area. Maybe the patients pass
         // them over and the location is randomised slightly within an area radius? Could mimic sliding
         // the sheets over a desk? 
-    //void PlaceUI(CanvasGroup canvasGroup)
-    //{
-    //    int placementNumber = allMainCanvases.IndexOf(canvasGroup);
-    //        canvasGroup.GetComponent<RectTransform>().anchoredPosition = canvasSpawnPoints[placementNumber];
-    //        return;
-    //   
-    //}
+    void PlaceUI(CanvasGroup canvasGroup)
+    {
+        int placementNumber = allMainCanvases.IndexOf(canvasGroup);
+            canvasGroup.GetComponent<RectTransform>().anchoredPosition = canvasSpawnPoints[placementNumber];
+            return;
+       
+    }
 
-    
+    // Hides the navigation buttons on the grimoire and enables the diagnosis sheet.
+        // looking to flesh this out better (see PlaceUI)
+    public void SubmitAilment()
+    {
+        /*float radius = 1f;
+        randomisedOrigin = Random.insideUnitCircle * radius;
+        randomisedOrigin += diagnosisSheet.GetComponent<RectTransform>().anchoredPosition;
+        diagnosisSheet.GetComponent<RectTransform>().anchoredPosition = randomisedOrigin;
+        */
+
+        /*Invoke(nameof(MovePosition), 0.2f);
+        randomisedOrigin = position;
+        diagnosisSheet.GetComponent<RectTransform>().anchoredPosition = position;
+        Invoke(nameof(MovePosition), 0.2f);
+        randomisedOrigin = position;
+        diagnosisSheet.GetComponent<RectTransform>().anchoredPosition = position;
+        Invoke(nameof(SetPosition), 0.2f);
+        */
+
+        // prevents further navigation in grimoire and brings out diagnosis sheet
+        UIManager.Instance.DisableUI(grimoireNavigation);
+        UIManager.Instance.EnableUI(diagnosisSheet);
+
+        diagnosisSheet.GetComponent<DiagnosisSheetInteractables>().FillSheet();
+        diagnosisSheet.GetComponent<RectTransform>().SetAsLastSibling();
+    }
 
     void MovePosition()
     {
-        //position = Vector2.Lerp(randomisedOrigin, diagnosisSheetSpawnPoint, Random.value);
-            //MimicAnimation();
+        position = Vector2.Lerp(randomisedOrigin, diagnosisSheetSpawnPoint, Random.value);
     }
 
     void SetPosition()
     {
-        //diagnosisSheet.GetComponent<RectTransform>().anchoredPosition = diagnosisSheetSpawnPoint;
+        diagnosisSheet.GetComponent<RectTransform>().anchoredPosition = diagnosisSheetSpawnPoint;
     }
 
-    /*public void SubmitDiagnosis()
+    public void SubmitDiagnosis()
     {
         Debug.Log("Submission registered.");
         Debug.Log("Unlocking Herb Wall.");
         UnlockHerbWall();
+        
+        // WHEN SET UP, PLACE UI WHERE RELEVANT!
         // PlaceUI(herbalistGuide)
 
         // OOUHHH if i set it up in world space, can move camera 
@@ -156,7 +165,7 @@ public class UIManager : MonoBehaviour
         // address UI again,, smth to bring up with the g ang
     }
 
-
+    // Sets up basic lists to use when resetting scenes
     void InitialiseLists()
     {
         allMainCanvases = new List<CanvasGroup>();
@@ -175,8 +184,9 @@ public class UIManager : MonoBehaviour
         //canvasSpawnPoints.Add(herbalistGuideSpawnPoint);  // 3
 
 
-
-            // LISTS OF UI FOR MORE CONTROL OVER WHAT TO DISPLAY ON SCENE SWITCHES
+        SetupDetailedLists();
+    }
+        /*    // LISTS OF UI FOR MORE CONTROL OVER WHAT TO DISPLAY ON SCENE SWITCHES
         CanvasGroup[] tempCanvasGroups = deskGroup.GetComponentsInChildren<CanvasGroup>();
             allCanvasesDesk = new List<CanvasGroup>(tempCanvasGroups);
             //tempCanvasGroups = herbWallGroup.GetComponentsInChildren<CanvasGroup>();
@@ -186,12 +196,28 @@ public class UIManager : MonoBehaviour
         tempCanvasGroups = clientWindowGroup.GetComponentsInChildren<CanvasGroup>();
             allCanvasesClientWindow = new List<CanvasGroup>(tempCanvasGroups);
             
+            tempCanvasGroups = null;*/
+
+    
+
+    // Sets up detailed lists that can be used to control what is displayed on scene switches
+    void SetupDetailedLists()
+    {
+        CanvasGroup[] tempCanvasGroups = deskGroup.GetComponentsInChildren<CanvasGroup>();
+        allCanvasesDesk = new List<CanvasGroup>(tempCanvasGroups);
+
+        allCanvasesHerbWall = new List<CanvasGroup>();
+        allCanvasesHerbWall.Add(herbWallGroup);
+
+        tempCanvasGroups = clientWindowGroup.GetComponentsInChildren<CanvasGroup>();
+        allCanvasesClientWindow = new List<CanvasGroup>(tempCanvasGroups);
+            
             tempCanvasGroups = null;
-
-            allCanvasesMenus = new List<CanvasGroup>();
-                allCanvasesMenus.Add(pauseMenu);
-
+                //tempCanvasGroups = herbWallGroup.GetComponentsInChildren<CanvasGroup>();
+                //allCanvasesHerbWall = new List<CanvasGroup>(tempCanvasGroups);
     }
+
+
 
     // Shows/hides secondary navigation arrow and changes the button's sprite to reflect the correct direction
     // Enables the UI associated with the correct scene
@@ -199,14 +225,14 @@ public class UIManager : MonoBehaviour
     {
         if (onDesk)
         {
-            DisableUI(switchDeskClient.GetComponent<CanvasGroup>());
+            UIManager.Instance.DisableUI(switchDeskClient.GetComponent<CanvasGroup>());
             switchDeskHerb.GetComponent<Image>().sprite = arrowLeft.sprite;
 
             SetupUI(allCanvasesHerbWall);
         }
         else
         {
-            EnableUI(switchDeskClient.GetComponent<CanvasGroup>());
+            UIManager.Instance.EnableUI(switchDeskClient.GetComponent<CanvasGroup>());
             switchDeskHerb.GetComponent<Image>().sprite = arrowRight.sprite;
 
             SetupUI(allCanvasesDesk);
@@ -218,7 +244,7 @@ public class UIManager : MonoBehaviour
     {
         if (onDesk)
         {
-            DisableUI(switchDeskHerb.GetComponent<CanvasGroup>());
+            UIManager.Instance.DisableUI(switchDeskHerb.GetComponent<CanvasGroup>());
             switchDeskClient.GetComponent<Image>().sprite = arrowDown.sprite;
 
             SetupUI(allCanvasesClientWindow);
@@ -227,11 +253,11 @@ public class UIManager : MonoBehaviour
         {
             if (herbWallActive)
             {
-                EnableUI(switchDeskHerb.GetComponent<CanvasGroup>());
+                UIManager.Instance.EnableUI(switchDeskHerb.GetComponent<CanvasGroup>());
             }
             else
             {
-                DisableUI(switchDeskHerb.GetComponent<CanvasGroup>());
+                UIManager.Instance.DisableUI(switchDeskHerb.GetComponent<CanvasGroup>());
             }
             
             switchDeskClient.GetComponent<Image>().sprite = arrowUp.sprite;
@@ -239,6 +265,8 @@ public class UIManager : MonoBehaviour
         }
         onDesk = !onDesk;
     }
+
+
 
     void SetupInitialScene()
     {
@@ -248,18 +276,13 @@ public class UIManager : MonoBehaviour
         diagnosisSheetSpawnPoint = diagnosisSheet.GetComponent<RectTransform>().anchoredPosition;
         
         //SetupUI(allCanvasesDesk);
-        DisableUI(sceneNavigation);
+        UIManager.Instance.DisableUI(sceneNavigation);
         SetupUI(allCanvasesClientWindow);
-            GameManager.Instance.ResetScene();
-
-        foreach (CanvasGroup c in allCanvasesMenus)
-        {
-            DisableUI(c);
-        }
+            //GameManager.Instance.ResetScene();
 
         clientWindowClientIcon.alpha = 0;
         switchDeskClient.GetComponent<Image>().sprite = arrowDown.sprite;
-        DisableUI(switchDeskHerb.GetComponent<CanvasGroup>());
+        UIManager.Instance.DisableUI(switchDeskHerb.GetComponent<CanvasGroup>());
     }
 
 
@@ -268,100 +291,64 @@ public class UIManager : MonoBehaviour
         // Hides all UI
         foreach (CanvasGroup hide in allMainCanvases)
         {
-            DisableUI(hide);
+            UIManager.Instance.DisableUI(hide);
         }
 
         foreach (CanvasGroup c in canvasGroupList)
         {
-            EnableUI(c);
+            UIManager.Instance.EnableUI(c);
 
             if (canvasGroupList == allCanvasesDesk)
             {
-                if (!grimoireNavScript.ailmentChosen)
+                if (GameManager.Instance.ailmentChosen)
                 {
-                    DisableUI(diagnosisSheet);
+                    UIManager.Instance.DisableUI(diagnosisSheet);
                 }
                 else
                 {
-                    EnableUI(diagnosisSheet);
+                    UIManager.Instance.EnableUI(diagnosisSheet);
                 }
             }
         }
         // for enabling/disabling interaction when entering a menu
         currentCanvasGroup = canvasGroupList == allCanvasesDesk ? deskGroup : canvasGroupList == allCanvasesClientWindow ? clientWindowGroup : herbWallGroup;
+        MenuManager.Instance.SetupInitialScene();
     }
 
     public void UpdateAilment(string ailment)
     {
         selectedAilment = ailment;
-    }*/
-
-
-    public void SpriteShift(Image image, Sprite sprite)
-    {
-        image.sprite = sprite;
-    }
-
-    // toggles interaction with the canvasgroup while keeping it visible
-    public void EnableInteraction(CanvasGroup canvasGroup)
-    {
-        canvasGroup.interactable = true;
-        canvasGroup.blocksRaycasts = true;
-    }
-
-    public void DisableInteraction(CanvasGroup canvasGroup)
-    {
-        canvasGroup.interactable = false;
-        canvasGroup.blocksRaycasts = false;
     }
 
 
-            /*public void OpenMenu(CanvasGroup menuCanvasGroup)
-            {
-                DisableInteraction(currentCanvasGroup);
-                if ((onDesk) && (grimoireNavScript.ailmentChosen))
-                {
-                    DisableInteraction(diagnosisSheet);
-                }
-
-                EnableUI(menuCanvasGroup);
-                menuCanvasGroup.GetComponent<RectTransform>().SetAsLastSibling();
-            }
-
-            public void ExitMenu(CanvasGroup menuCanvasGroup)
-            {
-                DisableUI(menuCanvasGroup);
-                EnableInteraction(currentCanvasGroup);
-                if ((onDesk) && (grimoireNavScript.ailmentChosen))
-                {
-                    EnableInteraction(diagnosisSheet);
-                }
-            }*/
-
-
-    /*public void ShowClient(Sprite spriteToUpdate)//(Image iconToUpdate)
+    public void ShowClient(Image imageToUpdate)//(Image iconToUpdate)
     {
         Debug.Log("Received");
-        SpriteShift(clientImage, spriteToUpdate);
+        Sprite tempSprite = imageToUpdate.sprite;
+        UIManager.Instance.SpriteShift(clientImage, tempSprite);
 
         clientWindowClientIcon.alpha = 1f;
         //clientImage.sprite = iconToUpdate.sprite;
         // Enables navigation, but only to the desk
-        EnableUI(sceneNavigation);
-        //DisableUI(switchDeskHerb.GetComponent<CanvasGroup>());
+        UIManager.Instance.EnableUI(sceneNavigation);
+        //UIManager.Instance.DisableUI(switchDeskHerb.GetComponent<CanvasGroup>());
     }
 
     public void UnlockHerbWall()
     {
-        EnableUI(switchDeskHerb.GetComponent<CanvasGroup>());
+        UIManager.Instance.EnableUI(switchDeskHerb.GetComponent<CanvasGroup>());
         herbWallActive = true;
     }
 
+    /*public void SpriteShift(Image image, Sprite sprite)
+    {
+        image.sprite = sprite;
+    }*/
 
 
 
 
-    void GenerateSpawnpoints()
+    /*void GenerateSpawnpoints()
     {
         letterSpawnPoint = clientLetter.GetComponent<RectTransform>().anchoredPosition;
         grimoireSpawnPoint = grimoire.GetComponent<RectTransform>().anchoredPosition;

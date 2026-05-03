@@ -9,10 +9,10 @@ public class DraggableUI : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndD
     // Attach this component to the base panel of a UI element you want to be draggable in the scene.
     [Header("Location Reference")]
     public RectTransform rectTransform;
-    //public CanvasGroup canvas;
+    
     private Canvas canvas;
     private Outline outline;
-    //private float 
+    
     private Vector2 initialPositionOnDrag;
     private LayerMask deskBorder;
 
@@ -21,16 +21,18 @@ public class DraggableUI : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndD
     private Color hoverColour;
     //private Color
 
-    private float maxX;
+    /*private float maxX;
     private float minX;
     private float maxY;
-    private float minY;
+    private float minY;*/
 
     private float uiScale;
 
     void Awake()
     {
         rectTransform = GetComponent<RectTransform>();
+
+
         image = GetComponent<Image>();
         outline = GetComponent<Outline>();
 
@@ -40,20 +42,7 @@ public class DraggableUI : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndD
         defaultColour = new Color (.8f, .8f, .8f);              // image.color;
         hoverColour = image.color;                              //new Color (defaultColour.x, defaultColour.y, defaultColour.z, 0.5f);
         image.color = defaultColour;                            //defaultColour = new Color (1f,1f,1f,0f);
-        
-            //SetupColours();
     }
-
-    /*void SetupColours()
-    {
-        /*defaultColour = image.color;
-        defaultColour.a = 0.5f;
-
-        hoverColour = defaultColour;
-
-        defaultColour.a = 0f;/
-        Debug.Log("Would set up UI highlight shader here.");
-    }*/
 
     // Defines the area within which it is safe for the player to drag the UI elements
     void DefineDragBoundaries()
@@ -77,7 +66,6 @@ public class DraggableUI : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndD
     public void OnPointerExit(PointerEventData mouse)
     {
         //Debug.Log("Mouse registered - exited UI");
-
         image.color = defaultColour;
     }
 
@@ -85,7 +73,6 @@ public class DraggableUI : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndD
     public void OnBeginDrag(PointerEventData mouse)
     {
         //Debug.Log("Drag working"); 
-        
         rectTransform.SetAsLastSibling();
         initialPositionOnDrag = rectTransform.anchoredPosition;
     }
@@ -94,17 +81,15 @@ public class DraggableUI : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndD
     public void OnDrag(PointerEventData mouse)
     {
         //Debug.Log("Dragging"); 
-        //
         rectTransform.anchoredPosition += mouse.delta / uiScale;
-
-
     }
 
     // Checks to see if the UI is within the set boundaries, and places it accordingly
     public void OnEndDrag(PointerEventData mouse)
     {
-        Debug.Log("Drag complete");
-
+            //Vector2 alteredPosition = herbRectTransform.position.x >= maxX ? initialPositionOnDrag : herbRectTransform.position.x <= minX ? initialPositionOnDrag : herbRectTransform.position.y >= maxY ? initialPositionOnDrag : herbRectTransform.position.y <= minY ? initialPositionOnDrag : herbRectTransform.position;
+            //herbRectTransform.anchoredPosition = alteredPosition;
+        
 
         // if end position is outside of the desk boundaries, the drag does not count
         // else, the new position becomes the position at the end of the drag
@@ -112,7 +97,7 @@ public class DraggableUI : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndD
             
             //Vector2 alteredPosition = rectTransform.position.x >= maxX ? initialPositionOnDrag : rectTransform.position.x <= minX ? initialPositionOnDrag : rectTransform.position.y >= maxY ? initialPositionOnDrag : rectTransform.position.y <= minY ? initialPositionOnDrag : rectTransform.position;
             //rectTransform.anchoredPosition = alteredPosition;
-        
+        Debug.Log("Drag complete");
     }
 
 

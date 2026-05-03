@@ -121,12 +121,12 @@ public class GrimoireNavigation : MonoBehaviour
         ///
 
         selectedAilment = GrimoirePagesData.Instance.pagesArray[pageNum].ailmentName_;
-        UIManager.Instance.UpdateAilment(selectedAilment);
+        //UIManager.Instance.UpdateAilment(selectedAilment);
+        //UIManager.Instance.SubmitAilment();
+        SceneManager.Instance.UpdateAilment(selectedAilment);
+        SceneManager.Instance.SubmitAilment();
         //Debug.Log("The selected ailment is " + selectedAilment + ".");
         //Debug.Log("Would open Diagnosis Sheet here.");
-
-        // Updates UI on screen
-        UIManager.Instance.SubmitAilment();
     }
 
     /*void InitialiseList()

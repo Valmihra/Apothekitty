@@ -64,7 +64,7 @@ public class DiagnosisSheetInteractables : MonoBehaviour
         clientSpecies.text = ClientLetter.ClientsGlobal.clientSpecies.text;
         clientExtras.text = ClientLetter.ClientsGlobal.clientExtras.text;
         //clientAilment.text = g.selectedAilment;
-        clientAilment.text = UIManager.Instance.selectedAilment;
+        clientAilment.text = SceneManager.Instance.selectedAilment;
         
     }
 
@@ -277,14 +277,14 @@ public class DiagnosisSheetInteractables : MonoBehaviour
     {
         Debug.Log("Button Pressed!");
         
-        bool validPrimaryRecipeCombination = (primaryEffect.value <= 0) && (primaryTarget.value <= 0) ? false : true;
+        bool validPrimaryRecipeCombination = (primaryEffect.value <= 0) || (primaryTarget.value <= 0) ? false : true;
         bool validSecondaryRecipeCombination = (secondaryEffect.value <= 0) && (secondaryTarget.value <= 0) ? true : (secondaryEffect.value > 0) && (secondaryTarget.value > 0) ? true : false;
         
         if(validPrimaryRecipeCombination)
         {
             if (validSecondaryRecipeCombination)
             {
-                UIManager.Instance.SubmitDiagnosis();
+                SceneManager.Instance.SubmitDiagnosis();
 
                 // Prevents interaction with the canvas elements
                 primaryEffect.interactable = false;

@@ -474,6 +474,7 @@ GameObject:
   - component: {fileID: 41688870}
   - component: {fileID: 41688872}
   - component: {fileID: 41688871}
+  - component: {fileID: 41688873}
   m_Layer: 5
   m_Name: Icon - Herb Cutting
   m_TagString: Untagged
@@ -539,6 +540,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 41688869}
   m_CullTransparentMesh: 1
+--- !u!225 &41688873
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 41688869}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &45764068
 GameObject:
   m_ObjectHideFlags: 0
@@ -964,9 +977,10 @@ GameObject:
   - component: {fileID: 80960059}
   - component: {fileID: 80960061}
   - component: {fileID: 80960060}
+  - component: {fileID: 80960062}
   m_Layer: 5
   m_Name: Icon - Herb
-  m_TagString: Untagged
+  m_TagString: Herb
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1030,6 +1044,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 80960058}
   m_CullTransparentMesh: 1
+--- !u!114 &80960062
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 80960058}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b2cc77cc89632f64b8b1120cee60c319, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rectTransform: {fileID: 0}
+  cuttingImage: {fileID: 0}
 --- !u!1 &85363297
 GameObject:
   m_ObjectHideFlags: 0
@@ -1621,9 +1649,10 @@ GameObject:
   - component: {fileID: 128523482}
   - component: {fileID: 128523484}
   - component: {fileID: 128523483}
+  - component: {fileID: 128523485}
   m_Layer: 5
   m_Name: Icon - Herb
-  m_TagString: Untagged
+  m_TagString: Herb
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1687,6 +1716,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 128523481}
   m_CullTransparentMesh: 1
+--- !u!114 &128523485
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 128523481}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b2cc77cc89632f64b8b1120cee60c319, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rectTransform: {fileID: 0}
+  cuttingImage: {fileID: 0}
 --- !u!1 &137992654
 GameObject:
   m_ObjectHideFlags: 0
@@ -1698,6 +1741,7 @@ GameObject:
   - component: {fileID: 137992655}
   - component: {fileID: 137992657}
   - component: {fileID: 137992656}
+  - component: {fileID: 137992658}
   m_Layer: 5
   m_Name: Icon - Herb Cutting
   m_TagString: Untagged
@@ -1763,6 +1807,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 137992654}
   m_CullTransparentMesh: 1
+--- !u!225 &137992658
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 137992654}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &153660651
 GameObject:
   m_ObjectHideFlags: 0
@@ -2772,9 +2828,10 @@ GameObject:
   - component: {fileID: 244075544}
   - component: {fileID: 244075546}
   - component: {fileID: 244075545}
+  - component: {fileID: 244075547}
   m_Layer: 5
   m_Name: Icon - Herb
-  m_TagString: Untagged
+  m_TagString: Herb
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2838,6 +2895,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 244075543}
   m_CullTransparentMesh: 1
+--- !u!114 &244075547
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 244075543}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b2cc77cc89632f64b8b1120cee60c319, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rectTransform: {fileID: 0}
+  cuttingImage: {fileID: 0}
 --- !u!1 &244937479
 GameObject:
   m_ObjectHideFlags: 0
@@ -2971,6 +3042,7 @@ GameObject:
   - component: {fileID: 263950647}
   - component: {fileID: 263950649}
   - component: {fileID: 263950648}
+  - component: {fileID: 263950650}
   m_Layer: 5
   m_Name: Icon - Herb Cutting
   m_TagString: Untagged
@@ -3036,6 +3108,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 263950646}
   m_CullTransparentMesh: 1
+--- !u!225 &263950650
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 263950646}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &273077436
 GameObject:
   m_ObjectHideFlags: 0
@@ -3358,8 +3442,8 @@ RectTransform:
   m_Children:
   - {fileID: 1045173797}
   - {fileID: 1520005125}
-  - {fileID: 1723010752}
   - {fileID: 428958798}
+  - {fileID: 1723010752}
   m_Father: {fileID: 1631126838}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -5089,6 +5173,7 @@ GameObject:
   - component: {fileID: 444470628}
   - component: {fileID: 444470630}
   - component: {fileID: 444470629}
+  - component: {fileID: 444470631}
   m_Layer: 5
   m_Name: Panel 4
   m_TagString: Untagged
@@ -5155,6 +5240,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 444470627}
   m_CullTransparentMesh: 1
+--- !u!114 &444470631
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 444470627}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 76a0c14cd14f1e14f95f068726c81d42, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isEmpty: 0
+  inventorySlot: {fileID: 0}
+  inventorySlotEmpty: {fileID: 0}
 --- !u!1 &451685687
 GameObject:
   m_ObjectHideFlags: 0
@@ -5965,6 +6065,7 @@ GameObject:
   - component: {fileID: 496770813}
   - component: {fileID: 496770815}
   - component: {fileID: 496770814}
+  - component: {fileID: 496770816}
   m_Layer: 5
   m_Name: Panel 1
   m_TagString: Untagged
@@ -6031,6 +6132,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 496770812}
   m_CullTransparentMesh: 1
+--- !u!114 &496770816
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 496770812}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 76a0c14cd14f1e14f95f068726c81d42, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isEmpty: 0
+  inventorySlot: {fileID: 0}
+  inventorySlotEmpty: {fileID: 0}
 --- !u!1 &499799069
 GameObject:
   m_ObjectHideFlags: 0
@@ -6044,6 +6160,7 @@ GameObject:
   - component: {fileID: 499799073}
   - component: {fileID: 499799072}
   - component: {fileID: 499799071}
+  - component: {fileID: 499799075}
   m_Layer: 5
   m_Name: Panel - Herb Wall - Inventory Test (1)
   m_TagString: Untagged
@@ -6150,6 +6267,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 499799069}
   m_CullTransparentMesh: 1
+--- !u!114 &499799075
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 499799069}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 930cfd2081b0f564d9af76d191cf77b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &506556103
 GameObject:
   m_ObjectHideFlags: 0
@@ -8675,6 +8804,7 @@ GameObject:
   - component: {fileID: 727373587}
   - component: {fileID: 727373589}
   - component: {fileID: 727373588}
+  - component: {fileID: 727373590}
   m_Layer: 5
   m_Name: Icon - Herb Cutting
   m_TagString: Untagged
@@ -8740,6 +8870,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 727373586}
   m_CullTransparentMesh: 1
+--- !u!225 &727373590
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 727373586}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &732461600
 GameObject:
   m_ObjectHideFlags: 0
@@ -8878,9 +9020,10 @@ GameObject:
   - component: {fileID: 746354628}
   - component: {fileID: 746354630}
   - component: {fileID: 746354629}
+  - component: {fileID: 746354631}
   m_Layer: 5
   m_Name: Icon - Herb
-  m_TagString: Untagged
+  m_TagString: Herb
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -8944,6 +9087,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 746354627}
   m_CullTransparentMesh: 1
+--- !u!114 &746354631
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 746354627}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b2cc77cc89632f64b8b1120cee60c319, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rectTransform: {fileID: 0}
+  cuttingImage: {fileID: 0}
 --- !u!1 &766863466
 GameObject:
   m_ObjectHideFlags: 0
@@ -9654,7 +9811,7 @@ MonoBehaviour:
       m_Calls: []
   m_Sprite: {fileID: 0}
   m_Type: 0
-  m_PreserveAspect: 1
+  m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
   m_FillAmount: 1
@@ -10005,9 +10162,10 @@ GameObject:
   - component: {fileID: 860028115}
   - component: {fileID: 860028117}
   - component: {fileID: 860028116}
+  - component: {fileID: 860028118}
   m_Layer: 5
   m_Name: Icon - Herb
-  m_TagString: Untagged
+  m_TagString: Herb
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -10071,6 +10229,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 860028114}
   m_CullTransparentMesh: 1
+--- !u!114 &860028118
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 860028114}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b2cc77cc89632f64b8b1120cee60c319, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rectTransform: {fileID: 0}
+  cuttingImage: {fileID: 0}
 --- !u!1 &861191038
 GameObject:
   m_ObjectHideFlags: 0
@@ -10469,9 +10641,10 @@ GameObject:
   - component: {fileID: 885863363}
   - component: {fileID: 885863365}
   - component: {fileID: 885863364}
+  - component: {fileID: 885863366}
   m_Layer: 5
   m_Name: Icon - Herb
-  m_TagString: Untagged
+  m_TagString: Herb
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -10535,6 +10708,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 885863362}
   m_CullTransparentMesh: 1
+--- !u!114 &885863366
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 885863362}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b2cc77cc89632f64b8b1120cee60c319, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rectTransform: {fileID: 0}
+  cuttingImage: {fileID: 0}
 --- !u!1 &905139824
 GameObject:
   m_ObjectHideFlags: 0
@@ -11258,9 +11445,10 @@ GameObject:
   - component: {fileID: 974697854}
   - component: {fileID: 974697856}
   - component: {fileID: 974697855}
+  - component: {fileID: 974697857}
   m_Layer: 5
   m_Name: Icon - Herb
-  m_TagString: Untagged
+  m_TagString: Herb
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -11324,6 +11512,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 974697853}
   m_CullTransparentMesh: 1
+--- !u!114 &974697857
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 974697853}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b2cc77cc89632f64b8b1120cee60c319, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rectTransform: {fileID: 0}
+  cuttingImage: {fileID: 0}
 --- !u!1 &985092973
 GameObject:
   m_ObjectHideFlags: 0
@@ -11469,6 +11671,7 @@ GameObject:
   - component: {fileID: 987088473}
   - component: {fileID: 987088475}
   - component: {fileID: 987088474}
+  - component: {fileID: 987088476}
   m_Layer: 5
   m_Name: Icon - Herb Cutting
   m_TagString: Untagged
@@ -11534,6 +11737,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 987088472}
   m_CullTransparentMesh: 1
+--- !u!225 &987088476
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 987088472}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &1015519574
 GameObject:
   m_ObjectHideFlags: 0
@@ -12476,6 +12691,7 @@ GameObject:
   - component: {fileID: 1078644078}
   - component: {fileID: 1078644080}
   - component: {fileID: 1078644079}
+  - component: {fileID: 1078644081}
   m_Layer: 5
   m_Name: Icon - Herb Cutting
   m_TagString: Untagged
@@ -12541,6 +12757,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1078644077}
   m_CullTransparentMesh: 1
+--- !u!225 &1078644081
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1078644077}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &1085435604
 GameObject:
   m_ObjectHideFlags: 0
@@ -13252,6 +13480,7 @@ GameObject:
   - component: {fileID: 1139304414}
   - component: {fileID: 1139304416}
   - component: {fileID: 1139304415}
+  - component: {fileID: 1139304417}
   m_Layer: 5
   m_Name: Panel 2
   m_TagString: Untagged
@@ -13318,6 +13547,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1139304413}
   m_CullTransparentMesh: 1
+--- !u!114 &1139304417
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1139304413}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 76a0c14cd14f1e14f95f068726c81d42, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isEmpty: 0
+  inventorySlot: {fileID: 0}
+  inventorySlotEmpty: {fileID: 0}
 --- !u!1 &1141083909
 GameObject:
   m_ObjectHideFlags: 0
@@ -13446,9 +13690,10 @@ GameObject:
   - component: {fileID: 1147880246}
   - component: {fileID: 1147880248}
   - component: {fileID: 1147880247}
+  - component: {fileID: 1147880249}
   m_Layer: 5
   m_Name: Icon - Herb
-  m_TagString: Untagged
+  m_TagString: Herb
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -13512,6 +13757,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1147880245}
   m_CullTransparentMesh: 1
+--- !u!114 &1147880249
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1147880245}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b2cc77cc89632f64b8b1120cee60c319, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rectTransform: {fileID: 0}
+  cuttingImage: {fileID: 0}
 --- !u!1 &1161645305
 GameObject:
   m_ObjectHideFlags: 0
@@ -15593,6 +15852,7 @@ GameObject:
   - component: {fileID: 1313315816}
   - component: {fileID: 1313315818}
   - component: {fileID: 1313315817}
+  - component: {fileID: 1313315819}
   m_Layer: 5
   m_Name: Panel 3
   m_TagString: Untagged
@@ -15659,6 +15919,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1313315815}
   m_CullTransparentMesh: 1
+--- !u!114 &1313315819
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1313315815}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 76a0c14cd14f1e14f95f068726c81d42, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isEmpty: 0
+  inventorySlot: {fileID: 0}
+  inventorySlotEmpty: {fileID: 0}
 --- !u!1 &1322590038
 GameObject:
   m_ObjectHideFlags: 0
@@ -16192,6 +16467,7 @@ GameObject:
   - component: {fileID: 1359502990}
   - component: {fileID: 1359502992}
   - component: {fileID: 1359502991}
+  - component: {fileID: 1359502993}
   m_Layer: 5
   m_Name: Icon - Herb Cutting
   m_TagString: Untagged
@@ -16257,6 +16533,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1359502989}
   m_CullTransparentMesh: 1
+--- !u!225 &1359502993
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1359502989}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &1369908820
 GameObject:
   m_ObjectHideFlags: 0
@@ -17313,6 +17601,7 @@ GameObject:
   - component: {fileID: 1460690008}
   - component: {fileID: 1460690010}
   - component: {fileID: 1460690009}
+  - component: {fileID: 1460690011}
   m_Layer: 5
   m_Name: Icon - Herb Cutting
   m_TagString: Untagged
@@ -17378,6 +17667,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1460690007}
   m_CullTransparentMesh: 1
+--- !u!225 &1460690011
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1460690007}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &1462801411
 GameObject:
   m_ObjectHideFlags: 0
@@ -17632,9 +17933,10 @@ GameObject:
   - component: {fileID: 1480820397}
   - component: {fileID: 1480820399}
   - component: {fileID: 1480820398}
+  - component: {fileID: 1480820400}
   m_Layer: 5
   m_Name: Icon - Herb
-  m_TagString: Untagged
+  m_TagString: Herb
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -17698,6 +18000,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1480820396}
   m_CullTransparentMesh: 1
+--- !u!114 &1480820400
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1480820396}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b2cc77cc89632f64b8b1120cee60c319, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rectTransform: {fileID: 0}
+  cuttingImage: {fileID: 0}
 --- !u!1 &1499656923
 GameObject:
   m_ObjectHideFlags: 0
@@ -18118,6 +18434,7 @@ GameObject:
   - component: {fileID: 1585545069}
   - component: {fileID: 1585545071}
   - component: {fileID: 1585545070}
+  - component: {fileID: 1585545072}
   m_Layer: 5
   m_Name: Icon - Herb Cutting
   m_TagString: Untagged
@@ -18183,6 +18500,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1585545068}
   m_CullTransparentMesh: 1
+--- !u!225 &1585545072
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1585545068}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &1592556547
 GameObject:
   m_ObjectHideFlags: 0
@@ -18353,6 +18682,7 @@ GameObject:
   - component: {fileID: 1611700332}
   - component: {fileID: 1611700334}
   - component: {fileID: 1611700333}
+  - component: {fileID: 1611700335}
   m_Layer: 5
   m_Name: Panel 5
   m_TagString: Untagged
@@ -18419,6 +18749,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1611700331}
   m_CullTransparentMesh: 1
+--- !u!114 &1611700335
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1611700331}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 76a0c14cd14f1e14f95f068726c81d42, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isEmpty: 0
+  inventorySlot: {fileID: 0}
+  inventorySlotEmpty: {fileID: 0}
 --- !u!1 &1615867351
 GameObject:
   m_ObjectHideFlags: 0
@@ -18677,6 +19022,7 @@ GameObject:
   - component: {fileID: 1629899992}
   - component: {fileID: 1629899994}
   - component: {fileID: 1629899993}
+  - component: {fileID: 1629899995}
   m_Layer: 5
   m_Name: Icon - Herb Cutting
   m_TagString: Untagged
@@ -18742,6 +19088,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1629899991}
   m_CullTransparentMesh: 1
+--- !u!225 &1629899995
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1629899991}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &1630204784
 GameObject:
   m_ObjectHideFlags: 0
@@ -20097,9 +20455,10 @@ GameObject:
   - component: {fileID: 1761132373}
   - component: {fileID: 1761132375}
   - component: {fileID: 1761132374}
+  - component: {fileID: 1761132376}
   m_Layer: 5
   m_Name: Icon - Herb
-  m_TagString: Untagged
+  m_TagString: Herb
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -20163,6 +20522,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1761132372}
   m_CullTransparentMesh: 1
+--- !u!114 &1761132376
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1761132372}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b2cc77cc89632f64b8b1120cee60c319, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rectTransform: {fileID: 0}
+  cuttingImage: {fileID: 0}
 --- !u!1 &1779810667
 GameObject:
   m_ObjectHideFlags: 0
@@ -20607,6 +20980,7 @@ GameObject:
   - component: {fileID: 1821831148}
   - component: {fileID: 1821831150}
   - component: {fileID: 1821831149}
+  - component: {fileID: 1821831151}
   m_Layer: 5
   m_Name: Icon - Herb Cutting
   m_TagString: Untagged
@@ -20672,6 +21046,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1821831147}
   m_CullTransparentMesh: 1
+--- !u!225 &1821831151
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1821831147}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &1837526097
 GameObject:
   m_ObjectHideFlags: 0
@@ -21126,6 +21512,7 @@ GameObject:
   - component: {fileID: 1858357624}
   - component: {fileID: 1858357626}
   - component: {fileID: 1858357625}
+  - component: {fileID: 1858357627}
   m_Layer: 5
   m_Name: Icon - Herb Cutting
   m_TagString: Untagged
@@ -21191,6 +21578,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1858357623}
   m_CullTransparentMesh: 1
+--- !u!225 &1858357627
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1858357623}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &1872714669
 GameObject:
   m_ObjectHideFlags: 0
@@ -21202,8 +21601,8 @@ GameObject:
   - component: {fileID: 1872714670}
   - component: {fileID: 1872714674}
   - component: {fileID: 1872714673}
-  - component: {fileID: 1872714672}
   - component: {fileID: 1872714671}
+  - component: {fileID: 1872714675}
   m_Layer: 5
   m_Name: Panel - Client Window - Curtain
   m_TagString: Untagged
@@ -21243,21 +21642,6 @@ CanvasGroup:
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
---- !u!114 &1872714672
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1872714669}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b5b829af2ce6b24419d76dd1fda001e5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  curtainDisplay: {fileID: 1872714673}
-  open: {fileID: 2061396648}
-  closed: {fileID: 1022117103}
 --- !u!114 &1872714673
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -21296,6 +21680,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1872714669}
   m_CullTransparentMesh: 1
+--- !u!114 &1872714675
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1872714669}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c4c6f0b17f8d9ab438fc60dd74d801e9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  curtainDisplay: {fileID: 1872714673}
+  open: {fileID: 2061396648}
+  closed: {fileID: 1022117103}
 --- !u!1 &1874443003
 GameObject:
   m_ObjectHideFlags: 0
@@ -22818,9 +23217,10 @@ GameObject:
   - component: {fileID: 1982531682}
   - component: {fileID: 1982531684}
   - component: {fileID: 1982531683}
+  - component: {fileID: 1982531685}
   m_Layer: 5
   m_Name: Icon - Herb
-  m_TagString: Untagged
+  m_TagString: Herb
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -22884,6 +23284,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1982531681}
   m_CullTransparentMesh: 1
+--- !u!114 &1982531685
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1982531681}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b2cc77cc89632f64b8b1120cee60c319, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rectTransform: {fileID: 0}
+  cuttingImage: {fileID: 0}
 --- !u!1 &1985615854
 GameObject:
   m_ObjectHideFlags: 0
@@ -23715,9 +24129,10 @@ GameObject:
   - component: {fileID: 2026152757}
   - component: {fileID: 2026152759}
   - component: {fileID: 2026152758}
+  - component: {fileID: 2026152760}
   m_Layer: 5
   m_Name: Icon - Herb
-  m_TagString: Untagged
+  m_TagString: Herb
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -23781,6 +24196,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2026152756}
   m_CullTransparentMesh: 1
+--- !u!114 &2026152760
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2026152756}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b2cc77cc89632f64b8b1120cee60c319, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rectTransform: {fileID: 0}
+  cuttingImage: {fileID: 0}
 --- !u!1 &2035855175
 GameObject:
   m_ObjectHideFlags: 0
@@ -24769,8 +25198,7 @@ MonoBehaviour:
   grimoire: {fileID: 1128831705}
   grimoireNavigation: {fileID: 2052646600}
   clientWindowClientIcon: {fileID: 1462801413}
-  clientImage: {fileID: 533700231}
-  selectedAilment: 
+  herbDrawers: {fileID: 428958800}
   sceneNavigation: {fileID: 708957997}
   switchDeskHerb: {fileID: 410164010}
   switchDeskClient: {fileID: 583961241}
@@ -24778,6 +25206,7 @@ MonoBehaviour:
   arrowRight: {fileID: 1024284688}
   arrowUp: {fileID: 2017818383}
   arrowDown: {fileID: 1952586100}
+  selectedAilment: 
   grimoireNavScript: {fileID: 0}
 --- !u!114 &2111990165
 MonoBehaviour:
@@ -24853,9 +25282,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c4da5fe724827c848b565e23b88e7813, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  curtainAccess: {fileID: 1872714672}
   beginningDay: 0
   resetSceneButton: {fileID: 1276589699}
+  curtainAccess: {fileID: 1872714675}
 --- !u!1 &2118714759
 GameObject:
   m_ObjectHideFlags: 0
