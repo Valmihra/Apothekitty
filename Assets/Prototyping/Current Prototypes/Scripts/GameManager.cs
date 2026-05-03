@@ -6,10 +6,15 @@ using UnityEngine.UI;
 public class GameManager : MonoBehaviour
 {
     private bool isPaused;
+
     public bool beginningDay;
+    public bool canStartDay;
+    //public bool canInteractWithCurtain
+
 
     public bool ailmentChosen;
     public bool diagnosisSubmitted;
+    public bool herbsSubmitted;
     
     public Button resetSceneButton;
     public DayTrigger curtainAccess;
@@ -82,7 +87,10 @@ public class GameManager : MonoBehaviour
         curtainAccess.ResetCurtain();
         ResetClientProgress();
         beginningDay = true;
+        canStartDay = false;
+        //canInteractWithCurtain = false;
 
+        DialogueRunner.Instance.GetDialogue("tutorial");
         //SceneManager.Instance.SetupInitialScene();
     }
 
@@ -96,18 +104,23 @@ public class GameManager : MonoBehaviour
     {
         ailmentChosen = false;
         diagnosisSubmitted = false;
+        Debug.Log("Ailment chosen? " + ailmentChosen + ". Diagnosis submitted? " + diagnosisSubmitted);
     }
 
     // Triggered by the curtain interaction.
     public void BeginDay()
     {
         ClientLetter.ClientsGlobal.RandomiseIncomingClientLetter();
+        //DialogueRunner.Instance.GetDialogue("patientArrive");
         // randomises the client and reads DayData to set the relevant information?
             // once randomised, mimic movement onto the screen? or just fade in?
         // Spawn Client once randomised (invoke 2.0f) 
             // Client/PatientData::
             // SpawnClient
     }
+
+
+    // STILL NEED SOMETHING TO SUBMIT THE FULL AILMENT WITH!!
 
     // maybe trigger on submission to patient?
     /*public void SetClientAilment()

@@ -58,6 +58,8 @@ public class SceneManager : MonoBehaviour
     private bool herbWallActive;
     public string selectedAilment;
 
+    bool firstVisitDesk;
+
     private static SceneManager _instance;
     public static SceneManager Instance
     {
@@ -72,6 +74,7 @@ public class SceneManager : MonoBehaviour
         //if (_instance = null)
         //{
             _instance = this;
+            firstVisitDesk = true;
         //}
 
         //spawnSet = false;
@@ -139,6 +142,8 @@ public class SceneManager : MonoBehaviour
 
         diagnosisSheet.GetComponent<DiagnosisSheetInteractables>().FillSheet();
         diagnosisSheet.GetComponent<RectTransform>().SetAsLastSibling();
+
+        MenuManager.Instance.TutorialPopup("diagnosisSheet");
     }
 
     void MovePosition()
@@ -156,6 +161,8 @@ public class SceneManager : MonoBehaviour
         Debug.Log("Submission registered.");
         Debug.Log("Unlocking Herb Wall.");
         UnlockHerbWall();
+
+        MenuManager.Instance.TutorialPopup("herbalistGuide");
         
         // WHEN SET UP, PLACE UI WHERE RELEVANT!
         // PlaceUI(herbalistGuide)
@@ -262,6 +269,12 @@ public class SceneManager : MonoBehaviour
             
             switchDeskClient.GetComponent<Image>().sprite = arrowUp.sprite;
             SetupUI(allCanvasesDesk);
+
+                if (firstVisitDesk)
+                {
+                    MenuManager.Instance.TutorialPopup("desk");
+                    firstVisitDesk = false;
+                }
         }
         onDesk = !onDesk;
     }
@@ -288,6 +301,7 @@ public class SceneManager : MonoBehaviour
 
     public void SetupUI(List<CanvasGroup> canvasGroupList)
     {
+        Debug.Log("Setting up UI in scene.");
         // Hides all UI
         foreach (CanvasGroup hide in allMainCanvases)
         {
@@ -300,7 +314,7 @@ public class SceneManager : MonoBehaviour
 
             if (canvasGroupList == allCanvasesDesk)
             {
-                if (GameManager.Instance.ailmentChosen)
+                if (!GameManager.Instance.ailmentChosen)
                 {
                     UIManager.Instance.DisableUI(diagnosisSheet);
                 }

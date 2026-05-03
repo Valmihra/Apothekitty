@@ -35,7 +35,7 @@ public class ClientLetter : MonoBehaviour
     private ClientData[] clientsArray;
     private List<Image> clientIconList;
     private Image[] clientIconArray;
-    private ClientData clientLetter;
+    public ClientData clientLetter;
 
     public TMP_Text clientName;
     public TMP_Text clientSpecies;
@@ -115,8 +115,8 @@ public class ClientLetter : MonoBehaviour
         clientLetter = clientsArray[randomisedNumber];
         clientIcon.sprite = clientIconArray[randomisedNumber].sprite;
 
-        Debug.Log("Client icon is of " + clientLetter.clientName_);
-        Debug.Log(clientIcon.sprite.name);
+        //Debug.Log("Client icon is of " + clientLetter.clientName_);
+        //Debug.Log(clientIcon.sprite.name);
 
         Invoke(nameof(SpawnClient), 1.0f);
         //InitialiseLetterDisplay(clientLetter);
@@ -127,6 +127,8 @@ public class ClientLetter : MonoBehaviour
         SceneManager.Instance.ShowClient(clientIcon);
         Debug.Log("The letter has been sent.");
         InitialiseLetterDisplay(clientLetter);
+
+        DialogueRunner.Instance.GetDialogue("patientArrive");
     }
 
     void InitialiseLetterDisplay(ClientData data)

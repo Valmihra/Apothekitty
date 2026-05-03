@@ -29,20 +29,34 @@ public class DayTrigger : MonoBehaviour, IPointerClickHandler
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        Debug.Log("Click registered.");
-        ToggleCurtainState();
+        if (GameManager.Instance.canStartDay)
+        {
+            //if (GameManager.Instance.canInteractWithCurtain)
+            //{
+                Debug.Log("Click registered.");
+                ToggleCurtainState();
+
+                GameManager.Instance.canStartDay = false;
+            //}
+        }
+        
     }
 
-    // Closes the curtain and resets interaction on its canvasgroup component, acting as a 'reset' button
+    // Closes the curtain to ensure the scene is set up correctly.
     public void ResetCurtain()
     {
         if (curtainDisplay.sprite != closedVariant)
         {
             Debug.Log("Resetting the curtain display.");
             SpriteShift(curtainDisplay, closedVariant);
-            UIManager.Instance.EnableInteraction(curtainGroup);
         }
         return;
+    }
+
+    // Resets interaction on the curtain. Called separately so that the dialogue can run first.
+    public void EnableDayTrigger()
+    {
+        UIManager.Instance.EnableInteraction(curtainGroup);
     }
 
 
