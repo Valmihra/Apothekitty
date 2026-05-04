@@ -45,7 +45,7 @@ public class DialogueRunner : MonoBehaviour
 
     void Reset()
     {
-        UIManager.Instance.DisableUI(dialogueBox);
+        //UIManager.Instance.DisableUI(dialogueBox);
 
         currentLine = 0;
         dialogueSet = false;
@@ -55,6 +55,7 @@ public class DialogueRunner : MonoBehaviour
     }
     public void RunDialogue()
     {
+        Debug.Log("Runninng");
         if (dialogueSet)
         {
             if (currentLine < currentDialogue.Count)
