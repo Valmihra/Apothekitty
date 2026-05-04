@@ -78,7 +78,8 @@ public class DraggableHerbs : MonoBehaviour, IDragHandler, IBeginDragHandler, IE
     // Updates the UI position according to the mouse's movement
     public void OnDrag(PointerEventData mouse)
     {
-        rectTransform.anchoredPosition += mouse.delta / uiScale;
+        
+        rectTransform.position = mouse.pressEventCamera.ScreenToWorldPoint(mouse.position);
     }
 
     // Checks to see if the UI is within the set boundaries, and places it accordingly
