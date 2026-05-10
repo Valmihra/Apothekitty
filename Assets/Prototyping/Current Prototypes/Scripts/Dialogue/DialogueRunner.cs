@@ -55,7 +55,7 @@ public class DialogueRunner : MonoBehaviour
     }
     public void RunDialogue()
     {
-        Debug.Log("Runninng");
+        //Debug.Log("Running");
         if (dialogueSet)
         {
             if (currentLine < currentDialogue.Count)
@@ -136,22 +136,22 @@ public class DialogueRunner : MonoBehaviour
         {
             Debug.Log("Patient time!");
             GetDialogueByClient();
-            /*if (ClientLetter.ClientsGlobal.clientLetter.clientName_ == "Barry")
+            /*if (ClientLetter.Instance.clientLetter.clientName_ == "Barry")
             {
                 currentDialogue = DialogueHolder.Instance.barry.dialogue_;
                 //speakerName.text = "The Cat";
                 //dialogueSet = true;
             }
-            if (ClientLetter.ClientsGlobal.clientLetter.clientName_ == "Arabella")
+            if (ClientLetter.Instance.clientLetter.clientName_ == "Arabella")
             {
                 currentDialogue = DialogueHolder.Instance.arabella.dialogue_;
             }
-            if (ClientLetter.ClientsGlobal.clientLetter.clientName_ == "Lawrence")
+            if (ClientLetter.Instance.clientLetter.clientName_ == "Lawrence")
             {
                 currentDialogue = DialogueHolder.Instance.lawrence.dialogue_;
             }
             dialogueSet = true;
-            speakerName.text = ClientLetter.ClientsGlobal.clientLetter.clientName_;
+            speakerName.text = ClientLetter.Instance.clientLetter.clientName_;
             UIManager.Instance.EnableUI(dialogueBox);
             RunDialogue();*/
         }
@@ -159,7 +159,7 @@ public class DialogueRunner : MonoBehaviour
 
     void GetDialogueByClient()
     {
-        client = ClientLetter.ClientsGlobal.clientName.text;
+        client = ClientLetter.Instance.clientName.text;
         speakerName.text = client;
         
         if (client == "Barry Buff")

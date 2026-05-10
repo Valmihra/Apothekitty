@@ -3,15 +3,22 @@ using UnityEngine.EventSystems;
 
 public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
     {
-
+        public RectTransform rectTransform;
         private Vector2 delta;
-    
-        public void OnBeginDrag(PointerEventData eventData)
+
+        protected virtual void Awake()
         {
-            delta = eventData.pressPosition - (Vector2)transform.position;
+            rectTransform = GetComponent<RectTransform>();
         }
 
-        public void OnDrag(PointerEventData eventData)
+        public virtual void OnBeginDrag(PointerEventData eventData)
+        {
+            delta = eventData.pressPosition - (Vector2)transform.position;
+
+            rectTransform.SetAsLastSibling();
+        }
+
+        public virtual void OnDrag(PointerEventData eventData)
         {
             var x = eventData.position.x / Screen.width;
             var y = eventData.position.y / Screen.height;
@@ -21,7 +28,7 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
             transform.position = eventData.position - delta;
         }
 
-        public void OnEndDrag(PointerEventData eventData)
+        public virtual void OnEndDrag(PointerEventData eventData)
         {
         
         }
