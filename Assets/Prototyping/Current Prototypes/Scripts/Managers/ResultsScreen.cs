@@ -47,9 +47,17 @@ public class ResultsScreen : MonoBehaviour
         _instance = this;
     }
 
-    void Start()
+    /*void Start()
     {
         //clientCured = false;
+        resultsScreen = GetComponent<CanvasGroup>();
+        textDisplayed = Color.black;
+        textHidden = new Color (1,1,1,0);
+        InitialiseResultsDisplay();
+    }*/
+
+    public void ResetResultsScreen()
+    {
         resultsScreen = GetComponent<CanvasGroup>();
         textDisplayed = Color.black;
         textHidden = new Color (1,1,1,0);

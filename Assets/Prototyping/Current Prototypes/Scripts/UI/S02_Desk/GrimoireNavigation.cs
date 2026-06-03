@@ -54,19 +54,21 @@ public class GrimoireNavigation : MonoBehaviour
     
     void Start()
     {
-        InitialiseScene();
+        navigationLeft.onClick.AddListener(delegate { GoToPage(currentPageNumber -1); });
+        navigationRight.onClick.AddListener(delegate { GoToPage(currentPageNumber +1); });
+        ailmentSelection.onClick.AddListener(delegate {GetSelectedAilment (currentPageNumber); });
 
+    }
+
+    public void ResetGrimoireNavigation()
+    {
+        InitialiseScene();
         //InitialiseList();
         InitialiseArray();
         SetTabNumbers();
 
         // 0 is first num of array!     this whole setup section would later be replaced with better scene management.
         GoToPage(0);
-        
-        navigationLeft.onClick.AddListener(delegate { GoToPage(currentPageNumber -1); });
-        navigationRight.onClick.AddListener(delegate { GoToPage(currentPageNumber +1); });
-        ailmentSelection.onClick.AddListener(delegate {GetSelectedAilment (currentPageNumber); });
-
     }
 
     // Basic scene setup

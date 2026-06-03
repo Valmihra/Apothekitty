@@ -39,14 +39,15 @@ public class MenuManager : MonoBehaviour
         //{
             _instance = this;
         //}
+
         //resumeGameButton.onClick.AddListener(delegate { Resume(); });
         //returnToMainMenuButton.onClick.AddListener(delegate { Return(); });
         //resetSceneButton.onClick.AddListener(delegate { Reset(); });
 
-        InitialiseList();
+        InitialiseMenuCanvasGroupList();
         diagnosisSheetPopup = false;
         popupPrompt.text = defaultpopupPromptText;
-        //SetupInitialScene();
+        //HideMenuCanvases();
     }
 
     public void Reset()
@@ -54,7 +55,7 @@ public class MenuManager : MonoBehaviour
         //GameManager.Instance.ResetScene();
     }
 
-    void InitialiseList()
+    void InitialiseMenuCanvasGroupList()
     {
         allCanvasesMenus = new List<CanvasGroup>();
         allCanvasesMenus.Add(pauseMenu);
@@ -84,7 +85,7 @@ public class MenuManager : MonoBehaviour
         }
     }
 
-    public void SetupInitialScene()
+    public void HideMenuCanvases()
     {
         foreach (CanvasGroup c in allCanvasesMenus)
         {
@@ -95,6 +96,7 @@ public class MenuManager : MonoBehaviour
     public void TutorialPopup(string popupType)
     {
         OpenMenu(popupMenu);
+        
         if (popupType == "initialTutorial")
         {
             popupText = "Welcome to Apothekitty!\n\nAs the town healer, it's your job to carefully diagnose and treat your patients. \n\nClick on the curtain to receive your first client!";

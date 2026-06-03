@@ -34,6 +34,7 @@ public class QuestLog : MonoBehaviour
         //UIManager.
         //ResetQuestLog
         InitialiseQuestLog();
+        StartLevelQuestLog();
     }
 
     // Called once on desk?
@@ -43,7 +44,10 @@ public class QuestLog : MonoBehaviour
         SetColour(currentQuestItem, diagnoseAilment);
         SetColour(futureQuestItem, createRecipe);
         SetColour(futureQuestItem, submitHerbs);
+    }
 
+    void StartLevelQuestLog()
+    {
         active = true;
         ToggleQuestLog();
     }
@@ -63,14 +67,14 @@ public class QuestLog : MonoBehaviour
         else
         {
             UIManager.Instance.SpriteShift(displayArrow, arrowUp);
-            UpdateQuestLog();
+            //UpdateQuestLog();
             UIManager.Instance.EnableUI(questLog);
         }
         active = !active;
         
     }
 
-    void UpdateQuestLog()
+    public void UpdateQuestLog()
     {
         if (GameManager.Instance.ailmentChosen)
         {
@@ -87,6 +91,12 @@ public class QuestLog : MonoBehaviour
         {
             InitialiseQuestLog();
         }
+    }
+
+    public void FinishQuestLog()
+    {
+        currentObjective.fontStyle = FontStyles.Strikethrough;
+        SetColour(finishedQuestItem, currentObjective);
     }
 
     void MakeCurrentObjective(TMP_Text nextObjective)

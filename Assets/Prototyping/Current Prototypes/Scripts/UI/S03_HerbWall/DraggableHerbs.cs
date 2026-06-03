@@ -22,10 +22,7 @@ public class DraggableHerbs : Draggable
     {
         LocateRect();
         AssignCanvasGroup();
-        //initialPositionOnDrag = cuttingRectTransform.anchoredPosition;
         initialPositionOnDrag = cuttingObject.transform.position;
-
-        //UIManager.Instance.DisableUI(movableCutting);
     }
 
     void Start()
@@ -36,11 +33,13 @@ public class DraggableHerbs : Draggable
     // Sets the initial position of the UI prior to movement and brings the selected panel to the front on the screen
     public override void OnBeginDrag(PointerEventData eventData)
     {
-        drag = eventData.pressPosition - (Vector2)transform.position;
-
+        //drag = eventData.pressPosition - (Vector2)transform.position;
             //rectTransform.SetAsLastSibling();
+        cuttingObject.transform.position = eventData.pressPosition;
 
         UIManager.Instance.EnableUI(movableCutting);
+        
+
         UIManager.Instance.DisableInteraction(SceneManager.Instance.herbDrawers);
     }
 
@@ -52,9 +51,7 @@ public class DraggableHerbs : Draggable
             //try to prevent dragging the element offscreen
             if(x is < 0.02f or > 0.98f || y is < 0.02f or > 0.98f) return;
         
-            cuttingObject.transform.position = eventData.position - drag;
-                // MIGHT HAVE TO EDIT THE SORT ORDER TO BRING IT IN FRONT OF THE INVENTORY
-        //cuttingRectTransform.position = eventData.pressEventCamera.ScreenToWorldPoint(eventData.position);
+            cuttingObject.transform.position = eventData.position;// - drag;
     }
 
     // Checks to see if the UI is within the set boundaries, and places it accordingly
@@ -62,7 +59,6 @@ public class DraggableHerbs : Draggable
     {
         UIManager.Instance.DisableUI(movableCutting);
         cuttingObject.transform.position = initialPositionOnDrag;
-            //cuttingRectTransform.anchoredPosition = initialPositionOnDrag;
         UIManager.Instance.EnableInteraction(SceneManager.Instance.herbDrawers);        
     }
 

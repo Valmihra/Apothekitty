@@ -9,7 +9,7 @@ public class GameManager : MonoBehaviour
 
     public bool beginningDay;
     public bool canStartDay;
-
+    public bool reloaded;
 
     public bool ailmentChosen;
     public bool diagnosisSubmitted;
@@ -19,6 +19,7 @@ public class GameManager : MonoBehaviour
     
     public Button resetSceneButton;
     public DayTrigger curtainAccess;
+    private DiagnosisSheetInteractables diagnosisSheetInteractables;
 
     private static GameManager _instance;
     public static GameManager Instance
@@ -32,12 +33,16 @@ public class GameManager : MonoBehaviour
     void Awake()
     {
         _instance = this;
+
+
+        diagnosisSheetInteractables = FindObjectOfType<DiagnosisSheetInteractables>();
         // maybe search for all components in scene instead and delete any not on Constant UI?
             // singleton trauma is REAL, people!!
 
         // Assigns function to the associated button
         resetSceneButton.onClick.AddListener(delegate { ResetScene(); });
         isPaused = false;
+        reloaded = false;
     }
 
     void Start()
@@ -68,6 +73,11 @@ public class GameManager : MonoBehaviour
     public void ResetScene()        // NextDayResetScene
     {
         Debug.Log("Resetting Scene.");
+
+            if (reloaded)
+            {
+                SceneManager.Instance.SetupInitialScene();
+            }
         // read data from GameData (when I've written that,,,) and assign the day as required
 
         /* resets any elements in the scene that might have changed over the course of gameplay
@@ -87,11 +97,27 @@ public class GameManager : MonoBehaviour
             // Client Window UI
         curtainAccess.ResetCurtain();
         ResetClientProgress();
+        ResultsScreen.Instance.ResetResultsScreen();
         beginningDay = true;
         canStartDay = false;
 
-        DialogueRunner.Instance.GetDialogue("tutorial");
+        DialogueRunner.Instance.ResetDialogueRunner();
+
+        // RESETTING INTERACTABLES
+        GrimoirePagesData.Instance.ResetGrimoire();
+        diagnosisSheetInteractables.ResetDiagnosisSheet();
+
+        // Resetting the herb wall and guide pages
+
+
+        // BEGINS TUTORIAL DIALOGUE
+        BeginTutorial();
         //SceneManager.Instance.SetupInitialScene();
+    }
+
+    void BeginTutorial()
+    {
+        DialogueRunner.Instance.GetDialogue("tutorial");
     }
 
     public void NextClient()
@@ -105,7 +131,6 @@ public class GameManager : MonoBehaviour
         ailmentChosen = false;
         diagnosisSubmitted = false;
         Debug.Log("Client Progress reset.");
-        //Debug.Log("Ailment chosen? " + ailmentChosen + ". Diagnosis submitted? " + diagnosisSubmitted);
     }
 
     // Triggered by the curtain interaction.

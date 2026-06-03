@@ -45,6 +45,7 @@ public class DayTrigger : MonoBehaviour, IPointerClickHandler
     // Closes the curtain to ensure the scene is set up correctly.
     public void ResetCurtain()
     {
+        EnableDayTrigger();
         if (curtainDisplay.sprite != closedVariant)
         {
             Debug.Log("Resetting the curtain display.");
@@ -54,7 +55,8 @@ public class DayTrigger : MonoBehaviour, IPointerClickHandler
     }
 
     // Resets interaction on the curtain. Called separately so that the dialogue can run first.
-    public void EnableDayTrigger()
+    /*public */
+    void EnableDayTrigger()
     {
         UIManager.Instance.EnableInteraction(curtainGroup);
     }

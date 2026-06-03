@@ -38,14 +38,15 @@ public class DialogueRunner : MonoBehaviour
         //nextDialogue.onClick.AddListener(delegate { RunDialogue(); });
     }
 
-    void Start()
+    /*void Start()
     {
         Reset();
-    }
+    }*/
 
-    void Reset()
+    public void ResetDialogueRunner()
     {
         //UIManager.Instance.DisableUI(dialogueBox);
+        Debug.Log("Resetting DialogueRunner...");
 
         currentLine = 0;
         dialogueSet = false;
@@ -53,44 +54,57 @@ public class DialogueRunner : MonoBehaviour
         firstDialogueComplete = false;
         notSeenDeskHint = true;
     }
+
     public void RunDialogue()
     {
-        //Debug.Log("Running");
+        //Debug.Log("Dialogue set? " + dialogueSet);
+        
+
         if (dialogueSet)
         {
-            if (currentLine < currentDialogue.Count)
+            Debug.Log("Right now, currentDialogue is holding " + currentDialogue.Count + " strings of dialogue.");
+            Debug.Log("You are currently on line: " + currentLine + ".");
+
+            if (currentLine >= currentDialogue.Count)
             {
-                // updates the text
-                //CheckForSpeaker();
-                currentString.text = currentDialogue[currentLine];
-                currentLine++;
+                Debug.Log("currentLine is larger than currentDialogue.Count. Checking whether this is intentional or not.");
+                if ((currentDialogue == DialogueHolder.Instance.barry.dialogue_) || (currentDialogue == DialogueHolder.Instance.arabella.dialogue_) || (currentDialogue == DialogueHolder.Instance.lawrence.dialogue_))
+                {
+                    if (!introductionComplete)
+                    {
+                        currentDialogue = null;
+                        currentLine = 0;
+                        speakerName.text = "The Cat";
+                        currentString.text = "You've come to the right place! Just pass me your patient form and take a seat. I'll take care of everything.";
+                        introductionComplete = true;
+                        dialogueSet = false;
+                    }
+                    else
+                    {
+                        Debug.Log("Bro how'd you fuck it up like this?");
+                    }
+                }
+                else
+                {
+                    Debug.Log("You have reached the end of this DialogueSnippet.");
+                    CloseDialogueWindow();
+                }
             }
             else
             {
-                //if (!introductionComplete)
-                //{
-                    if ((currentDialogue == DialogueHolder.Instance.barry.dialogue_) || (currentDialogue == DialogueHolder.Instance.arabella.dialogue_) || (currentDialogue == DialogueHolder.Instance.lawrence.dialogue_))
-                    {
-                        if (!introductionComplete)
-                        {
-                            currentDialogue = null;
-                            currentLine = 0;
-                            speakerName.text = "The Cat";
-                            currentString.text = "You've come to the right place! Just pass me your patient form and take a seat. I'll take care of everything.";
-                            introductionComplete = true;
-                            dialogueSet = false;
-                        }
-                    }
-                //}   //else if !submittingFinal
-                else
+                if (currentLine < currentDialogue.Count)
                 {
-                    CloseDialogueWindow();
+                    // updates the text
+                    //CheckForSpeaker();
+                    currentString.text = currentDialogue[currentLine];
+                    currentLine++;
+                    //Debug.Log("Next line will be: " + currentLine);
                 }
-                //CloseDialogueWindow();
             }
         }
         else
         {
+            Debug.Log("No set dialogue. Closing the dialogue window.");
             CloseDialogueWindow();
         }
 
@@ -99,6 +113,7 @@ public class DialogueRunner : MonoBehaviour
 
     void CloseDialogueWindow()
     {
+        Debug.Log("Closing dialogue window.");
         UIManager.Instance.DisableUI(dialogueBox);
         dialogueSet = false;
         currentLine = 0;
@@ -110,13 +125,16 @@ public class DialogueRunner : MonoBehaviour
         if (!firstDialogueComplete)
         {
             firstDialogueComplete = true;
+            // ****         MIGHT BE BETTER TO HAVE A SEPARATE TUTORIAL SCRIPT INSTEAD
             MenuManager.Instance.TutorialPopup("initialTutorial");
             GameManager.Instance.canStartDay = true;
-            //GameManager.Instance.canInteractWithCurtain = true;
         }
+
         if (introductionComplete && notSeenDeskHint)
         {
             MenuManager.Instance.TutorialPopup("startPrompts");
+            // PUT NAVIGATION HERE INSTEAD
+            SceneManager.Instance.EnableGameplay();
             notSeenDeskHint = false;
         }
     }
@@ -132,10 +150,12 @@ public class DialogueRunner : MonoBehaviour
             UIManager.Instance.EnableUI(dialogueBox);
             RunDialogue();
         }
+
         else if (target == "patientArrive")
         {
-            Debug.Log("Patient time!");
+            //Debug.Log("Patient time!");
             GetDialogueByClient();
+
             /*if (ClientLetter.Instance.clientLetter.clientName_ == "Barry")
             {
                 currentDialogue = DialogueHolder.Instance.barry.dialogue_;
@@ -165,21 +185,14 @@ public class DialogueRunner : MonoBehaviour
         if (client == "Barry Buff")
         {
             currentDialogue = DialogueHolder.Instance.barry.dialogue_;
-            
         }
         else if (client == "Arabella Bunny")
         {
             currentDialogue = DialogueHolder.Instance.arabella.dialogue_;
-            //dialogueSet = true;
-            //UIManager.Instance.EnableUI(dialogueBox);
-            //RunDialogue();
         }
         else if (client == "Lawrence Lark")
         {
             currentDialogue = DialogueHolder.Instance.lawrence.dialogue_;
-            //dialogueSet = true;
-            //UIManager.Instance.EnableUI(dialogueBox);
-            //RunDialogue();
         }
         
         dialogueSet = true;

@@ -49,6 +49,7 @@ public class DialogueHolder : MonoBehaviour
             introduction.dialogue_ = new List<string>();
             introduction.dialogue_.Add("Back to work...");
             introduction.dialogue_.Add("Sounds busy out there. I'd better open up the shop.");
+            introduction.dialogue_.Add("DEBUGGING TEST");
 
         barry = new DialogueSnippet();
             barry.dialogue_ = new List<string>();

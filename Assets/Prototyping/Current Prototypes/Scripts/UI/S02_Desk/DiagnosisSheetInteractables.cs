@@ -38,7 +38,7 @@ public class DiagnosisSheetInteractables : MonoBehaviour
     public TMP_Text clientAilment;
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         //grimoireNavigation = UIManager.Instance.grimoireNavScript;
             //FindObjectOfType<GrimoireNavigation>();
@@ -56,6 +56,22 @@ public class DiagnosisSheetInteractables : MonoBehaviour
             submitDiagnosisButton.onClick.AddListener(delegate {SubmissionButtonPressed(); });
 
         //FillSheet();
+    }
+
+    public void ResetDiagnosisSheet()
+    {
+        // allows interaction with the canvas elements
+        foreach (TMP_Dropdown dropdown in dropdownsList)
+        {
+            dropdown.value = 0;
+            dropdown.interactable = true;
+        }
+        foreach (Toggle toggle in togglesList)
+        {
+            toggle.isOn = false;
+            toggle.interactable = true;
+        }
+        submitDiagnosisButton.interactable = true;
     }
 
     public void FillSheet()
@@ -284,16 +300,18 @@ public class DiagnosisSheetInteractables : MonoBehaviour
         {
             if (validSecondaryRecipeCombination)
             {
+                submitDiagnosisButton.interactable = false;
                 SceneManager.Instance.SubmitDiagnosis();
 
                 // Prevents interaction with the canvas elements
-                primaryEffect.interactable = false;
-                primaryTarget.interactable = false;
-                secondaryEffect.interactable = false;
-                secondaryTarget.interactable = false;
-
-                enhancer.interactable = false;
-                invertor.interactable = false;
+                foreach (TMP_Dropdown dropdown in dropdownsList)
+                {
+                    dropdown.interactable = false;
+                }
+                foreach (Toggle toggle in togglesList)
+                {
+                    toggle.interactable = false;
+                }
             }
             else
             {

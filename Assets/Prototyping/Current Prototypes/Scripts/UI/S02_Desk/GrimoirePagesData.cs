@@ -27,6 +27,8 @@ public class GrimoirePagesData : MonoBehaviour
 
     int totalPages = 0;
 
+    private GrimoireNavigation grimoireNavigation;
+
     private static GrimoirePagesData _instance;
     public static GrimoirePagesData Instance
     {
@@ -39,6 +41,7 @@ public class GrimoirePagesData : MonoBehaviour
     void Awake()
     {
         _instance = this;
+        grimoireNavigation = GetComponent<GrimoireNavigation>();
         //if (_instance != this)
         //{
         //    Destroy(GetComponent<GameObject>());
@@ -47,6 +50,7 @@ public class GrimoirePagesData : MonoBehaviour
         InitialiseList();
         SetPageData();
         SetArray();
+        
         //Debug.Log("pagesList is currently " + pagesList.Count + " entries long!.");
     }
 
@@ -120,6 +124,11 @@ public class GrimoirePagesData : MonoBehaviour
 
         Debug.Log("There are currently " + totalPages + " pages set up correctly.");
 
+    }
+
+    public void ResetGrimoire()
+    {
+        grimoireNavigation.ResetGrimoireNavigation();
     }
     
     //List<string> ailmentDescriptions;

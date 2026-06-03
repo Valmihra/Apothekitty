@@ -55,18 +55,11 @@ public class ResultsCalculator : MonoBehaviour
         correctRecipe = false;
         correctHerbs = false;
     }
-    //void GetRequiredProperties()
-    //{
-        //currentClient = ClientLetter.Instance.clientName.text;
-        //Debug.Log("Client is " + currentClient);
-        //Debug.Log("Ailment is set as " + currentAilment);
-        //currentClient = 
-        //ClientLetter.Instance.clientLetter
-    //}
 
     // Checks the inventory contents and compares it with the requirements for the client.
     void CalculateResults()
     {
+            SceneManager.Instance.SubmitHerbs();
         CheckInventory();
 
         CheckCorrectAilment();
@@ -129,49 +122,53 @@ public class ResultsCalculator : MonoBehaviour
     void CheckCorrectHerbs()
     {
         bool match = false;
-        foreach (string s in inventoryContentsOnSubmission)
-        {
-            match = false;
-            foreach (string h in AilmentData.Instance.currentAilment.acceptableHerbs)
-            {
-                if (s == h)
-                {
-                    match = true;
-                }
-                else
-                {
-                    continue;
-                }
-            }
+        int numMatches = 0;
+        int targetIngredientCount = AilmentData.Instance.currentAilment.acceptableHerbs.Count;
+        //bool final
 
-            if (!match)
-            {
-                Debug.Log("Incorrect herb chosen.");
-            }
+        int ingredientsChosen = 0;
+        foreach (string ingredient in inventoryContentsOnSubmission)
+        {
+            ingredientsChosen++;
         }
 
-        if (match)
+        //if (ingredientsChosen == AilmentData.Instance.currentAilment.acceptableHerbs.Count)
+        if (ingredientsChosen == targetIngredientCount)
+        {
+            
+            //foreach (string h in AilmentData.Instance.currentAilment.acceptableHerbs)
+            foreach (string ingredient in inventoryContentsOnSubmission)
+            {
+                Debug.Log("Checking for: " + ingredient);
+
+                for (int i = 0; i < ingredientsChosen; i++)
+                {
+                    if (AilmentData.Instance.currentAilment.acceptableHerbs[i] == ingredient)
+                    {
+                        Debug.Log("Match found: " + AilmentData.Instance.currentAilment.acceptableHerbs[i] + " and " + ingredient);
+                        numMatches++;
+                        //ingredient = "match";
+                        //inventoryContentsOnSubmission[i] = "match";
+                        //match = true;
+                    }
+                    else
+                    {
+                        continue;
+                    }
+                }
+            }
+        }
+        else
+        {
+            match = false;
+        }
+        
+        if (numMatches == targetIngredientCount)
         {
             correctHerbs = true;
         }
-            /*foreach (SingleHerb h in AllHerbsData.Instance.herbDrawerContents)
-            {
-                if (s == h.herbName)
-                {
-                    if (AilmentData.Instance.currentAilment)
-                    {
-
-                    }
-                    
-                    h 
-                }
-                else
-                {
-                    continue;
-                }
-            }*/
-            //if (s == )
-            GoResultsScreen();
+        
+        GoResultsScreen();
         
     }
 
