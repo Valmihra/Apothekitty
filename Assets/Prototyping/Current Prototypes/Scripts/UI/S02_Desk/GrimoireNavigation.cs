@@ -114,7 +114,9 @@ public class GrimoireNavigation : MonoBehaviour
         }
         if (target == 0)
         {
+            // closes the book? or just turns off navigation?
             navigationLeft.enabled = false;
+            // close book option.enabled = true?
         }
         
         ailmentName.text = GrimoirePagesData.Instance.pagesArray[target]._ailmentName;
