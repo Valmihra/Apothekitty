@@ -315,11 +315,13 @@ public class DiagnosisSheetInteractables : MonoBehaviour
             }
             else
             {
+                MenuManager.Instance.InvalidPopup();
                 Debug.Log("Would bring up invalid recipe text, try again popup.");
             }
         }
         else
         {
+            MenuManager.Instance.InvalidPopup();
             Debug.Log("Would bring up invalid recipe text, try again popup.");
         }
 

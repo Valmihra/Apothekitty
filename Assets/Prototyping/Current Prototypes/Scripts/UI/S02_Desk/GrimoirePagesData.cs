@@ -79,7 +79,7 @@ public class GrimoirePagesData : MonoBehaviour
 
         SinglePage dietDrift = new SinglePage();
         dietDrift.UpdateName("Diet Drift");     // should prob actually be fortify mind!!
-        dietDrift.UpdateDescription("An ailment in which the patient develops an insatiable hunger for food unnatural to their species. For example, a herbivore craving meat.\n\nThis condition is typically triggered by a traumatic experience involving the consumption of that forbidden diet. In some cases, it may progress into cannibalism if the trauma involved consuming a member of the same species. Treatment should focus on expelling corrupted thoughts and clearing the body of any impurities. ");
+        dietDrift.UpdateDescription("An ailment in which the patient develops an insatiable hunger for food unnatural to their species. For example, a herbivore craving meat.\n\nThis condition is typically triggered by a traumatic experience involving the consumption of that forbidden diet. In some cases, it may progress into cannibalism if the trauma involved consuming a member of the same species. Treatment should focus on stopping corrupted thoughts and clearing the body of any impurities. ");
             pagesList.Add(dietDrift);
 
         SinglePage honEye = new SinglePage();
@@ -109,12 +109,12 @@ public class GrimoirePagesData : MonoBehaviour
 
         SinglePage theFanging = new SinglePage();
         theFanging.UpdateName("The Fanging");
-        theFanging.UpdateDescription("An ailment transmitted through the bite of an infected Nocturnal Mosquito, causing the patient to transform into a bat-like creature.\n\nPatients may develop bat-like sensory processing, wings, sharpened teeth, and nocturnal instincts. If left untreated, the patient will fully transform into the bat-like creature. Treatment should focus on reversing physical and sensory transformation and reinforcing the patient's sense of identity.");
+        theFanging.UpdateDescription("An ailment transmitted through the bite of an infected Nocturnal Mosquito, causing the patient to transform into a bat-like creature.\n\nPatients may develop bat-like sensory processing, wings, sharpened teeth, and nocturnal instincts. If left untreated, the patient will fully transform into the bat-like creature. Treatment should focus on healing physical transformation and reinforcing the patient's sense of identity.");
             pagesList.Add(theFanging);
         
         SinglePage theFawning = new SinglePage();
         theFawning.UpdateName("The Fawning");
-        theFawning.UpdateDescription("An ailment in which predators begin to transform into prey after prolonged stress or self-esteem issues. Patients develop heightened fear responses, a nervous demeanour, and become increasingly paranoid of their surroundings.\n\nPhysical symptoms include a reduced appetite for meat, dulled teeth and claws, and the development of features of the prey species (such as antlers). Treatment should focus on reversing physical transformation and gently restoring the patient's confidence and sense of identity.");
+        theFawning.UpdateDescription("An ailment in which predators begin to transform into prey after prolonged stress or self-esteem issues. Patients develop heightened fear responses, a nervous demeanour, and become increasingly paranoid of their surroundings.\n\nPhysical symptoms include a reduced appetite for meat, dulled teeth and claws, and the development of features of the prey species (such as antlers). Treatment should focus on healing physical transformation and gently restoring the patient's confidence and sense of identity.");
             pagesList.Add(theFawning);
 
         foreach (SinglePage s in pagesList)

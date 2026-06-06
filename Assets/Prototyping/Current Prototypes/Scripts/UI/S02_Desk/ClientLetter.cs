@@ -100,12 +100,12 @@ public class ClientLetter : MonoBehaviour
 
         ClientData arabella = new ClientData();
         arabella.UpdateBasicInfo("Arabella Bunny", "Rabbit", "Small, Herbivore");
-        arabella.UpdateClientLetter("I don't have any specific dialogue yet, but something happened to me and I... I can't even write it down, I'm so horrified with what I've done. But now I'm so hungry all the time. I need to eat, the craving won't stop.\n\nI have a family, I can't be near them like this!");
+        arabella.UpdateClientLetter("My family have been starving recently... One of my sons passed from this mysterious illness... I had no choice but to cook him up for supper as we had nothing to eat... I'm starting to have an urge for flesh, and I'm afraid of what I might do to my other children. Please help me, Apothekitty!");
             clientsList.Add(arabella);
 
         ClientData lawrence = new ClientData();
         lawrence.UpdateBasicInfo("Lawrence Lark", "Bird", "Small, Herbivore");
-        lawrence.UpdateClientLetter("I don't have any specific dialogue yet, but bro something bit me the other night, and since then things have been getting whacky! I think I'm growing teeth, and I'm tired all day, but I can't get to sleep at night.");
+        lawrence.UpdateClientLetter("I love going for nightly glides amongst the treetops! However, a week ago, I noticed I developed this weird bite after one of my adventures... And now I've started growing teeth and bat wings! I don't know what's going on, but I don't like it! Please fix me, Apothekitty!");
             clientsList.Add(lawrence);
     }
  

@@ -120,23 +120,6 @@ public class SceneManager : MonoBehaviour
        
     }
 
-    // Hides the navigation buttons on the grimoire and enables the diagnosis sheet.
-        // looking to flesh this out better (see PlaceUI)
-    public void SubmitAilment()
-    {
-        GameManager.Instance.ailmentChosen = true;
-
-        // prevents further navigation in grimoire and brings out diagnosis sheet
-        UIManager.Instance.DisableUI(grimoireNavigation);
-        UIManager.Instance.EnableUI(diagnosisSheet);
-
-        diagnosisSheet.GetComponent<DiagnosisSheetInteractables>().FillSheet();
-        diagnosisSheet.GetComponent<RectTransform>().SetAsLastSibling();
-
-            questLog.UpdateQuestLog();
-        MenuManager.Instance.TutorialPopup("diagnosisSheet");
-    }
-
     void MovePosition()
     {
         position = Vector2.Lerp(randomisedOrigin, diagnosisSheetSpawnPoint, Random.value);
@@ -147,26 +130,48 @@ public class SceneManager : MonoBehaviour
         diagnosisSheet.GetComponent<RectTransform>().anchoredPosition = diagnosisSheetSpawnPoint;
     }
 
+    // Hides the navigation buttons on the grimoire and enables the diagnosis sheet.
+        // looking to flesh this out better (see PlaceUI)
+    public void SubmitAilment()
+    {
+        GameManager.Instance.ailmentChosen = true;
+
+        // prevents further navigation in grimoire and brings out diagnosis sheet
+        UIManager.Instance.DisableUI(grimoireNavigation);
+            questLog.UpdateQuestLog();
+
+
+    }
+
+    public void GetDiagnosisSheet()
+    {
+        UIManager.Instance.EnableUI(diagnosisSheet);
+
+        diagnosisSheet.GetComponent<DiagnosisSheetInteractables>().FillSheet();
+        diagnosisSheet.GetComponent<RectTransform>().SetAsLastSibling();
+
+        //MenuManager.Instance.TutorialPopup("diagnosisSheet");
+    }
+
     public void SubmitDiagnosis()
     {
         Debug.Log("Submission registered.");
-        Debug.Log("Unlocking Herb Wall.");
-        UnlockHerbWall();
-
             questLog.UpdateQuestLog();
 
-        MenuManager.Instance.TutorialPopup("herbalistGuide");
-        // WHEN SET UP, PLACE UI WHERE RELEVANT!
-        // PlaceUI(herbalistGuide)
-
-        // OOUHHH if i set it up in world space, can move camera 
-        // to set points and mimic movement? but then have to 
-        // address UI again,, smth to bring up with the gang
+        DialogueRunner.Instance.GetDialogue("treatmentPlanSubmitted");
     }
 
-    public void SubmitHerbs()
+    /*public void SubmitHerbs()
     {
         questLog.FinishQuestLog();
+    }*/
+
+    public void ResultsScreenPrep()
+    {
+        questLog.FinishQuestLog();
+        UIManager.Instance.DisableUI(questLog.GetComponent<CanvasGroup>());
+        UIManager.Instance.DisableUI(sceneNavigation);
+        UIManager.Instance.DisableUI(submissionButton);
     }
 
     // Sets up basic lists to use when resetting scenes
@@ -229,7 +234,7 @@ public class SceneManager : MonoBehaviour
         {
             if (firstVisitHerbWall)
             {
-                // could put dialogue tut popup here inst... (?)
+                DialogueRunner.Instance.GetDialogue("onHerbWall");
                 UIManager.Instance.EnableUI(submissionButton);
                 firstVisitHerbWall = false;
             }
@@ -273,7 +278,8 @@ public class SceneManager : MonoBehaviour
 
                 if (firstVisitDesk)
                 {
-                    MenuManager.Instance.TutorialPopup("desk");
+                    DialogueRunner.Instance.GetDialogue("desk");
+                    //MenuManager.Instance.TutorialPopup("desk");
                     firstVisitDesk = false;
                 }
         }
@@ -304,7 +310,6 @@ public class SceneManager : MonoBehaviour
         UIManager.Instance.DisableUI(questLog.GetComponent<CanvasGroup>());
         UIManager.Instance.DisableUI(submissionButton);
     }
-
 
     public void SetupUI(List<CanvasGroup> canvasGroupList)
     {
@@ -362,8 +367,12 @@ public class SceneManager : MonoBehaviour
 
     public void UnlockHerbWall()
     {
+        Debug.Log("Unlocking Herb Wall.");
+        
         UIManager.Instance.EnableUI(switchDeskHerb.GetComponent<CanvasGroup>());
+        MenuManager.Instance.TutorialPopup("toHerbWall");
         herbWallActive = true;
+        
     }
 
     /*public void SpriteShift(Image image, Sprite sprite)

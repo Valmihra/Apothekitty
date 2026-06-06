@@ -137,6 +137,8 @@ public class GrimoireNavigation : MonoBehaviour
         //UIManager.Instance.SubmitAilment();
         SceneManager.Instance.UpdateAilment(selectedAilment);
         SceneManager.Instance.SubmitAilment();
+
+        DialogueRunner.Instance.GetDialogue("ailmentSubmitted");
         //Debug.Log("The selected ailment is " + selectedAilment + ".");
         //Debug.Log("Would open Diagnosis Sheet here.");
     }

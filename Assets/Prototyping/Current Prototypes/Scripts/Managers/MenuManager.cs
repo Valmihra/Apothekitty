@@ -11,6 +11,9 @@ public class MenuManager : MonoBehaviour
     public CanvasGroup popupMenu;
     public List<CanvasGroup> allCanvasesMenus;
     
+    // COLOUR CHANGES
+    // <color=red>  <#8A1E1E>
+
     //[Header("Pause Menu Buttons")]
     //public Button resumeGameButton;
     //public Button returnToMainMenuButton;
@@ -22,7 +25,8 @@ public class MenuManager : MonoBehaviour
     bool deskPopup;
 
     public TMP_Text popupPrompt;
-    string defaultpopupPromptText = "Click to close.";
+    string defaultPopupPromptText = "Click to close.";
+    string continuePopupPromptText = "Click to continue.";
 
     private static MenuManager _instance;
     public static MenuManager Instance
@@ -46,7 +50,7 @@ public class MenuManager : MonoBehaviour
 
         InitialiseMenuCanvasGroupList();
         diagnosisSheetPopup = false;
-        popupPrompt.text = defaultpopupPromptText;
+        popupPrompt.text = defaultPopupPromptText;
         //HideMenuCanvases();
     }
 
@@ -99,45 +103,58 @@ public class MenuManager : MonoBehaviour
         
         if (popupType == "initialTutorial")
         {
-            popupText = "Welcome to Apothekitty!\n\nAs the town healer, it's your job to carefully diagnose and treat your patients. \n\nClick on the curtain to receive your first client!";
+            // HighlightCanvasElement(curtain)
+            popupText = "Welcome to Apothekitty!\n\nAs the town healer, it's your job to carefully diagnose and treat your patients. \n\nClick on the <#8A1E1E>curtain</color> to receive your first client!";
         }
         else if (popupType == "startPrompts")
         {
-            popupText = "You'll find the patient form on your desk. Click the arrows in the bottom right corner to navigate between screens as needed.\n\nIf you feel lost at any point, click the arrow by the quest log to see what you still need to do.";
-        }
-        else if (popupType == "desk")
-        {
-            popupPrompt.text = "Next...";
-            deskPopup = true;
-            popupText = "Welcome to your work station! Your client has already filled out their patient form, so it's up to you to figure out what's wrong with them.\n\nYou can do this with your grimoire.";
+            popupText = "You'll find the patient form on your <#8A1E1E>desk</color>. Click the arrows in the bottom right to navigate between screens.\n\nIf you feel lost at any point, click the arrow by the quest log to see what you still need to do.";
         }
         else if (popupType == "grimoire")
         {
-            popupPrompt.text = defaultpopupPromptText;
-            deskPopup = false;
-            popupText = "Your grimoire acts as a compendium of ailments. Pay close attention to the descriptions of each ailment and compare them to the symptoms your client is describing.\n\nWhen you think you've found the correct diagnosis, click on the icon of the ailment to submit it.";
+            //popupPrompt.text = defaultPopupPromptText;
+            popupText = "Your Grimoire acts as your reference point for ailments. Pay close attention to each ailment's description and compare it to your client's symptoms.\n\nOnce you think you've found the correct diagnosis, click on the <#8A1E1E>ailment's picture</color> to select it!";
         }
         else if (popupType == "diagnosisSheet")
         {
-            popupPrompt.text = "Next...";
+            popupPrompt.text = continuePopupPromptText;
             diagnosisSheetPopup = true;
-            popupText = "Now that you've selected an ailment, you need to come up with a recipe to treat it.\n\nYou need to figure out what type of EFFECT makes the most sense, and what that effect should TARGET.";
+            popupText = "Scan the ailment's description for clues to make a suitable treatment plan.\n\nYou can click and drag papers on your desk if you need to see something that's being obscured.\n\nNot all ailments require two targets, but some may require a <#8A1E1E>modifier</color>.";
+            
         }
         else if (popupType == "diagnosisSheetTwo")
         {
-            popupPrompt.text = defaultpopupPromptText;
+            popupPrompt.text = defaultPopupPromptText;
             diagnosisSheetPopup = false;
-            popupText = "You can heal something that's been harmed, ease something that needs soothing, or fortify something that needs resistance.\n\n You can target the mind, the body, or you can try to release a spirit -- but just between you and me, you won't find any spirit possessions in this stage, because it's a tutorial and I'm nice.";
+            popupText = "MIGHT NEED TWEAKING::\n\nFor later-stage ailments or large clients, you can strengthen the treatment with the <b>enhancer</b>. You can also choose the <b>inverter</b> to achieve the opposite effect, if the description calls for it.\n\nClick <b>submit treatment plan</b> when you're ready.";
         }
-        else if (popupType == "herbalistGuide")
+        else if (popupType == "toHerbWall")
         {
-            popupText = "Wahoo!! You've come up with a treatment, so now you have access to your herb stores.\n\nUsing the recipe you came up with and the guide on the wall, follow the riddles to find the correct herbs to prescribe.\nDrag and drop them into your inventory, and when you're done, click the submission button to give the herbs to your patient.";
+            popupText = "Now that you've chosen a treatment plan, you can access your herb stores to create your treatment.\n\nClick the new arrow in the bottom right to navigate to the <#8A1E1E>herb wall</color>.";
         }
         else
         {
-            popupText = "You've done it! ,,,";// how to submit and view results
+            popupText = "If you forget your chosen treatment plan, you can click the arrow in the bottom right to navigate to the desk.\n\nOnce you're done, click 'submit treatment' to hand your recipe to the client.\n\nMake sure you're 100% certain before submitting, as there's no going back!";// how to submit and view results
         }
         popupTextBox.text = popupText;
+
+        /*if (popupTextBox.text.Contains("</color>"))
+        {
+            popupTextBox.text = "works";
+        }*/
+
+
+
+        // IF RED IS PRESENT, WAIT .5F AND THEN INVOKE CHANGE COLOUR ON THE OBJECT
+        // CHANGE COLOUR (WAITS .5F AND THEN SETS BACK TO DEFAULT COLOUR?)
+        // INVOKE IT 3X? EACH TIME PERFORMING TIMESCALLED++ UNTIL 3X
+        // THEN RESET TO 0 AND STOP RUNNING CHANGE COLOUR.
+    }
+
+    public void InvalidPopup()
+    {
+        popupTextBox.text = "This combination is invalid.\n\nPlease ensure you are choosing <b> at least </b> a single effect and a target to pair it with.";
+        OpenMenu(popupMenu);
     }
 
     public void ClosePopup()
@@ -146,10 +163,10 @@ public class MenuManager : MonoBehaviour
         {
             TutorialPopup("diagnosisSheetTwo");
         }
-        else if (deskPopup)
+        /*else if (deskPopup)
         {
             TutorialPopup("grimoire");
-        }
+        }*/
         else
         {
             ExitMenu(popupMenu);
