@@ -26,10 +26,15 @@ public class HerbalistGuidePages : MonoBehaviour
         }
     }
 
+    private GameObject herbalistGuideObject;
+    private Vector2 spawnPosition;
+
     private List<GuidePage> pagesList;
     public GuidePage[] pagesArray;
 
     int totalPages = 0;
+
+    private HerbalistGuideNavigation herbalistGuideNavigation;
 
     private static HerbalistGuidePages _instance;
     public static HerbalistGuidePages Instance
@@ -43,6 +48,9 @@ public class HerbalistGuidePages : MonoBehaviour
     void Awake()
     {
         _instance = this;
+        herbalistGuideNavigation = GetComponent<HerbalistGuideNavigation>();
+        herbalistGuideObject = GameObject.Find("Panel - Expanded Herbalist's Guide");
+        GetSpawnPoint();//spawnPosition = transform.position;
     }
     
     void Start()
@@ -54,20 +62,26 @@ public class HerbalistGuidePages : MonoBehaviour
         SetPageData();
         SetArray();
 
-        ActivateNavigationScript();
-        SetupGuide();
+        //ResetHerbalistGuide();
     }
 
-    void ActivateNavigationScript()
+    void GetSpawnPoint()
     {
-        HerbalistGuideNavigation navigation = GetComponent<HerbalistGuideNavigation>();
-        navigation.InitialiseGuideNav();
+        spawnPosition = herbalistGuideObject.transform.position;
     }
 
-    void SetupGuide()
+    void ResetNavigationScript()
     {
+        herbalistGuideNavigation.ResetHerbalistGuideNavigation();
+    }
+
+    public void ResetHerbalistGuide()
+    {
+        herbalistGuideObject.transform.position = spawnPosition;
         UIManager.Instance.DisableUI(herbalistGuide);
         active = false;
+
+        ResetNavigationScript();
     }
 
     void ToggleGuide()
@@ -106,32 +120,32 @@ public class HerbalistGuidePages : MonoBehaviour
 
         GuidePage mind = new GuidePage();
         mind.UpdateType("Mind");
-        mind.UpdateDescription("Plants that produce regularly. \n\n flowers that bloom so much that their blossoms overlap\n\nOR\n\nplants that bear fruit");
+        mind.UpdateDescription("How to identify plants that can be used for this property:\n\n flowers that bloom so much that their blossoms overlap\n\nOR\n\nplants that bear fruit");
             pagesList.Add(mind);
 
         GuidePage body = new GuidePage();
         body.UpdateType("Body");
-        body.UpdateDescription("Plants that are stubborn. \n\n the plant has no flowers or fruit\n\nAND\n\nhas two colours maximum");
+        body.UpdateDescription("How to identify plants that can be used for this property:\n\n the plant has no flowers or fruit\n\nAND\n\nhas two colours maximum");
             pagesList.Add(body);
 
         GuidePage spirit = new GuidePage();
         spirit.UpdateType("Spirit - (also Enhance currently)");
-        spirit.UpdateDescription("Plants with a specific hue\n\n plant has white growths\n\nOR\n\nplant's main body is purple");
+        spirit.UpdateDescription("How to identify plants that can be used for this property:\n\n plant has white growths\n\nOR\n\nplant's main body is purple");
             pagesList.Add(spirit);
 
         GuidePage fortify = new GuidePage();
         fortify.UpdateType("Fortify");
-        fortify.UpdateDescription("plant is short and its body is wide\n\nOR\n\nhalf or more of the plant is yellow");
+        fortify.UpdateDescription("How to identify plants that can be used for this property:\n\nplant is short and its body is wide\n\nOR\n\nhalf or more of the plant is yellow");
             pagesList.Add(fortify);
 
         GuidePage heal = new GuidePage();
         heal.UpdateType("Heal");
-        heal.UpdateDescription("plant's main growth has flecks of colour on it \n\nOR\n\nred is a prominent colour");
+        heal.UpdateDescription("How to identify plants that can be used for this property:\n\nplant's main growth has flecks of colour on it \n\nOR\n\nred is a prominent colour");
             pagesList.Add(heal);
 
         GuidePage ease = new GuidePage();
         ease.UpdateType("Ease");
-        ease.UpdateDescription("plant's stems or body is long and spindly\n\nOR\n\nit produces something that is not a flower");
+        ease.UpdateDescription("How to identify plants that can be used for this property:\n\nplant's stems or body is long and spindly\n\nOR\n\nit produces something that is not a flower");
             pagesList.Add(ease);
 
         foreach (GuidePage g in pagesList)

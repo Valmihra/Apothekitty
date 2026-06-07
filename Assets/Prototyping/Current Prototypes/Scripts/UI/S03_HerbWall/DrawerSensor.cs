@@ -34,7 +34,7 @@ public class DrawerSensor : MonoBehaviour
         buttonOpen.onClick.AddListener(delegate { CloseDrawer(); });
         //buttonOpen.onClick.Invoke();
         
-        Invoke (nameof(SetupHerbWall), 0.5f);
+        //Invoke (nameof(SetupHerbWall), 0.5f);
         
     }
     // Start is called before the first frame update
@@ -90,7 +90,7 @@ public class DrawerSensor : MonoBehaviour
         
     }
 
-    void SetupHerbWall()
+    public void SetupHerbWall()
     {
         UIManager.Instance.DisableUI(this.openDrawer);
         UIManager.Instance.EnableUI(this.closedDrawer);

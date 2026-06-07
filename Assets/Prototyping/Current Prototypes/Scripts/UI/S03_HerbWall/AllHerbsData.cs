@@ -86,7 +86,7 @@ public class AllHerbsData : MonoBehaviour
 
         SingleHerb meltingRoot = new SingleHerb();
             meltingRoot.UpdateName("meltingRoot");
-            meltingRoot.UpdateDetails("clashes with sweet root cap.\nrecipe needs a secondary target", "should we put properties here?");
+            meltingRoot.UpdateDetails("Growing close to the ground with its roots partially exposed, Meltingroot is a pale herb with no flowers or fruit.", "Treatment Rules:\n1. Does not work alongside Sweet Rot Cap\n2. Recipe needs a secondary effect target");
             meltingRoot.SetEffects(false, false, false);
             meltingRoot.SetTargets(false, true, false);
             meltingRoot.SetModifiers(false, false);
@@ -94,7 +94,7 @@ public class AllHerbsData : MonoBehaviour
 
         SingleHerb spiceLeaf = new SingleHerb();
             spiceLeaf.UpdateName("spiceLeaf");
-            spiceLeaf.UpdateDetails("only works when pupil petal, bumble blooms, or hexacore is present in the recipe", "should we put properties here?");
+            spiceLeaf.UpdateDetails("Speckled with yellow spots, Spiceleaf is a small collection of red fruit that rests close to the ground. No flowers are present in bearing the fruit of this herb.", "Treatment Rules:\n1. Only works when Pupil Petal, Bumble Blooms, or Hexacore is present in the recipe");
             spiceLeaf.SetEffects(false, false, true);
             spiceLeaf.SetTargets(true, false, false);
             spiceLeaf.SetModifiers(false, false);
@@ -102,7 +102,7 @@ public class AllHerbsData : MonoBehaviour
 
         SingleHerb warmWhisper = new SingleHerb();
             warmWhisper.UpdateName("warmWhisper");
-            warmWhisper.UpdateDetails("recipe needs secondary effects to be valid\nusing it to ease will nullify a heal effect. it is safe to heal without nullifying an ease effect though", "should we put properties here?");
+            warmWhisper.UpdateDetails("A luscious red herb, standing tall with its long stems.", "Treatment Rules:\n1. Recipe needs both a primary and secondary effect\n2. Using this herb to ease will nullify a heal effect, but won't nullify if used to heal an ease effect");
             warmWhisper.SetEffects(false, true, true);
             warmWhisper.SetTargets(false, false, false);
             warmWhisper.SetModifiers(false, false);
@@ -110,7 +110,7 @@ public class AllHerbsData : MonoBehaviour
 
         SingleHerb heavensHollyhock = new SingleHerb();
             heavensHollyhock.UpdateName("heavensHollyhock");
-            heavensHollyhock.UpdateDetails("having a secondary effect/using another herb as an enhancer will nullify the treatment", "should we put properties here?");
+            heavensHollyhock.UpdateDetails("Delicate clusters of blooming white flowers that overlap amongst each other.", "Treatment Rules:\n1. Having a secondary effect / using another herb as an enhancer will nullify the treatment");
             heavensHollyhock.SetEffects(false, false, false);
             heavensHollyhock.SetTargets(true, false, true);
             heavensHollyhock.SetModifiers(true, false);
@@ -118,7 +118,7 @@ public class AllHerbsData : MonoBehaviour
 
         SingleHerb crystalMoss = new SingleHerb();
             crystalMoss.UpdateName("crystalMoss");
-            crystalMoss.UpdateDetails("only works as a secondary EFFECT or as an enhancer\n\nwon't enhance without a secondary effect", "should we put properties here?");
+            crystalMoss.UpdateDetails("Attached to bark, Crystal Moss is a green herb with white growths. These growths are neither fruit nor flower.", "Treatment Rules:\n1. Only works as a secondary effect or as an enhancer\n2. Won't enhance without a secondary effect");
             crystalMoss.SetEffects(false, false, true);
             crystalMoss.SetTargets(false, true, true);
             crystalMoss.SetModifiers(true, false);
@@ -126,7 +126,7 @@ public class AllHerbsData : MonoBehaviour
 
         SingleHerb sweetRotCap = new SingleHerb();
             sweetRotCap.UpdateName("sweetRotCap");
-            sweetRotCap.UpdateDetails("only safe for large creatures to consume", "should we put properties here?");
+            sweetRotCap.UpdateDetails("A short but wide purple fungi with light blue specks on its caps.", "Treatment Rules:\n1. Only safe for large animals to consume");
             sweetRotCap.SetEffects(true, true, false);
             sweetRotCap.SetTargets(false, false, true);
             sweetRotCap.SetModifiers(true, false);
@@ -134,7 +134,7 @@ public class AllHerbsData : MonoBehaviour
 
         SingleHerb hexacore = new SingleHerb();
             hexacore.UpdateName("hexacore");
-            hexacore.UpdateDetails("only works if creature is a bird\n\nonly when taken with meltingroot", "should we put properties here?");
+            hexacore.UpdateDetails("Named after the distinct hexagonal shape of their seed pods, the Hexacore is a primarily vibrant yellow plant with long stems.", "Treatment Rules:\n1. Only works in a treatment if the creature is a bird\n2. Only works when Meltingroot is also present in the recipe");
             hexacore.SetEffects(true, false, false);
             hexacore.SetTargets(false, false, false);
             hexacore.SetModifiers(false, false);
@@ -142,7 +142,7 @@ public class AllHerbsData : MonoBehaviour
 
         SingleHerb crystalVine = new SingleHerb();
             crystalVine.UpdateName("crystalVine");
-            crystalVine.UpdateDetails("having a secondary effect will nullify the treatment", "should we put properties here?");
+            crystalVine.UpdateDetails("A green herb with white growths. These growths are neither fruit nor flower.", "Treatment Rules:\n1. Having a secondary effect will nullify the treatment");
             crystalVine.SetEffects(false, false, true);
             crystalVine.SetTargets(false, true, false);
             crystalVine.SetModifiers(false, false);
@@ -150,7 +150,7 @@ public class AllHerbsData : MonoBehaviour
 
         SingleHerb watchersWeed = new SingleHerb();
             watchersWeed.UpdateName("watchersWeed");
-            watchersWeed.UpdateDetails("only enhances when a recipe targets the mind", "should we put properties here?");
+            watchersWeed.UpdateDetails("Most recognisable for its 'eye-like' white growths.", "Treatment Rules:\n1. Only enhances when a recipe targets the mind");
             watchersWeed.SetEffects(false, false, false);
             watchersWeed.SetTargets(false, false, true);
             watchersWeed.SetModifiers(true, false);
@@ -158,7 +158,7 @@ public class AllHerbsData : MonoBehaviour
 
         SingleHerb pupilPetal = new SingleHerb();
             pupilPetal.UpdateName("pupilPetal");
-            pupilPetal.UpdateDetails("as an effect, it can only target the mind\n\nwon't work without an enhancer in the recipe", "should we put properties here?");
+            pupilPetal.UpdateDetails("Its red flowers stand on long spindly stems.", "Treatment Rules:\n1. Can only target the mind\n2. Won't work without an enhancer");
             pupilPetal.SetEffects(false, true, true);
             pupilPetal.SetTargets(false, false, false);
             pupilPetal.SetModifiers(false, false);
@@ -166,7 +166,7 @@ public class AllHerbsData : MonoBehaviour
 
         SingleHerb queensReed = new SingleHerb();
             queensReed.UpdateName("queensReed");
-            queensReed.UpdateDetails("can only be a primary effect or an enhancer\n\nonly successfully enhances if the recipe targets the body", "should we put properties here?");
+            queensReed.UpdateDetails("A green and purple herb, bearing no flowers or fruit.", "Treatment Rules:\n1. Can only impact the treatment's primary effect or enhancer\n2. Only enhances when targeting the body");
             queensReed.SetEffects(false, false, false);
             queensReed.SetTargets(false, true, true);
             queensReed.SetModifiers(true, false);
@@ -174,7 +174,7 @@ public class AllHerbsData : MonoBehaviour
 
         SingleHerb bumbleBlooms = new SingleHerb();
             bumbleBlooms.UpdateName("bumbleBlooms");
-            bumbleBlooms.UpdateDetails("only works when the effect is 'ease'\n\nneeds two effects and won't work with an enhancer", "should we put properties here?");
+            bumbleBlooms.UpdateDetails("Small yellow fruit with long green stems.", "Treatment Rules:\n1. Only works when effect is 'ease'\n2. needs two effects, won't work with an enhancer");
             bumbleBlooms.SetEffects(false, false, false);
             bumbleBlooms.SetTargets(true, false, false);
             bumbleBlooms.SetModifiers(false, false);

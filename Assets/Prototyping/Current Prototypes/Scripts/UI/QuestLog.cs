@@ -33,17 +33,23 @@ public class QuestLog : MonoBehaviour
         toggleQuestLog.onClick.AddListener(delegate { ToggleQuestLog(); });
         //UIManager.
         //ResetQuestLog
-        InitialiseQuestLog();
-        StartLevelQuestLog();
+        //ResetQuestLog();
+        
     }
 
     // Called once on desk?
-    public void InitialiseQuestLog()
+    public void ResetQuestLog()
     {
         currentObjective = diagnoseAilment;
         SetColour(currentQuestItem, diagnoseAilment);
         SetColour(futureQuestItem, createRecipe);
         SetColour(futureQuestItem, submitHerbs);
+
+        diagnoseAilment.fontStyle = FontStyles.Normal;
+        createRecipe.fontStyle = FontStyles.Normal;
+        submitHerbs.fontStyle = FontStyles.Normal;
+
+        StartLevelQuestLog();
     }
 
     void StartLevelQuestLog()
@@ -89,7 +95,7 @@ public class QuestLog : MonoBehaviour
         }
         else
         {
-            InitialiseQuestLog();
+            ResetQuestLog();
         }
     }
 

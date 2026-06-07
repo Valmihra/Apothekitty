@@ -59,15 +59,26 @@ public class ResultsCalculator : MonoBehaviour
     // Checks the inventory contents and compares it with the requirements for the client.
     void CalculateResults()
     {
-            SceneManager.Instance.ResultsScreenPrep();
             ResetBools();
             
 
         CheckInventory();
 
-        CheckCorrectAilment();
-        CheckCorrectRecipe();
-        CheckCorrectHerbs();
+        if (inventoryContentsOnSubmission.Count == 0)
+        {
+            MenuManager.Instance.NothingChosenPopup();
+        }
+        else if(inventoryContentsOnSubmission.Count == 1)
+        {
+            MenuManager.Instance.OneHerbChosenPopup();
+        }
+        else
+        {
+            SceneManager.Instance.ResultsScreenPrep();
+            CheckCorrectAilment();
+            CheckCorrectRecipe();
+            CheckCorrectHerbs();
+        }
 
         // function to send to end screen w/results
     }

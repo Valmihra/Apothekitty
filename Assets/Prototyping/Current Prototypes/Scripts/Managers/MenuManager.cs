@@ -18,15 +18,18 @@ public class MenuManager : MonoBehaviour
     //public Button resumeGameButton;
     //public Button returnToMainMenuButton;
     //public Button resetSceneButton;
-    
+    private Vector2 spawnPosition;
+    private Vector2 movedDownPosition;
+    private Vector2 movedUpPosition;
+
     public TMP_Text popupTextBox;
     string popupText;
     bool diagnosisSheetPopup;
     bool deskPopup;
 
     public TMP_Text popupPrompt;
-    string defaultPopupPromptText = "Click to close.";
-    string continuePopupPromptText = "Click to continue.";
+    string defaultPopupPromptText = "Click box to close.";
+    string continuePopupPromptText = "Click box to continue.";
 
     private static MenuManager _instance;
     public static MenuManager Instance
@@ -51,6 +54,10 @@ public class MenuManager : MonoBehaviour
         InitialiseMenuCanvasGroupList();
         diagnosisSheetPopup = false;
         popupPrompt.text = defaultPopupPromptText;
+
+        spawnPosition = popupMenu.transform.position;
+        movedDownPosition = new Vector2(spawnPosition.x, spawnPosition.y-100f);
+        movedUpPosition = new Vector2(spawnPosition.x, spawnPosition.y+100f);
         //HideMenuCanvases();
     }
 
@@ -103,20 +110,24 @@ public class MenuManager : MonoBehaviour
         
         if (popupType == "initialTutorial")
         {
-            // HighlightCanvasElement(curtain)
+            //UIManager.Instance.HighlightCanvasElement("curtain");
             popupText = "Welcome to Apothekitty!\n\nAs the town healer, it's your job to carefully diagnose and treat your patients. \n\nClick on the <#8A1E1E>curtain</color> to receive your first client!";
         }
         else if (popupType == "startPrompts")
         {
-            popupText = "You'll find the patient form on your <#8A1E1E>desk</color>. Click the arrows in the bottom right to navigate between screens.\n\nIf you feel lost at any point, click the arrow by the quest log to see what you still need to do.";
+            UIManager.Instance.HighlightCanvasElement("arrows");
+            popupText = "You'll find the patient form on your desk. Click the <#8A1E1E>arrows</color> in the bottom right to navigate between screens.\n\nIf you feel lost at any point, click the arrow by the quest log to see what you still need to do.";
         }
         else if (popupType == "grimoire")
         {
-            //popupPrompt.text = defaultPopupPromptText;
+            popupMenu.transform.position = movedDownPosition;   //AilmentIconColourController.Instance.ShowAilmentIconBackground();   //UIManager.Instance.HighlightCanvasElement("ailmentIcon");
+            UIManager.Instance.HighlightCanvasElement("ailmentIcon");
             popupText = "Your Grimoire acts as your reference point for ailments. Pay close attention to each ailment's description and compare it to your client's symptoms.\n\nOnce you think you've found the correct diagnosis, click on the <#8A1E1E>ailment's picture</color> to select it!";
         }
         else if (popupType == "diagnosisSheet")
         {
+            popupMenu.transform.position = movedUpPosition;
+            UIManager.Instance.HighlightCanvasElement("modifiers");
             popupPrompt.text = continuePopupPromptText;
             diagnosisSheetPopup = true;
             popupText = "Scan the ailment's description for clues to make a suitable treatment plan.\n\nYou can click and drag papers on your desk if you need to see something that's being obscured.\n\nNot all ailments require two targets, but some may require a <#8A1E1E>modifier</color>.";
@@ -126,15 +137,16 @@ public class MenuManager : MonoBehaviour
         {
             popupPrompt.text = defaultPopupPromptText;
             diagnosisSheetPopup = false;
-            popupText = "MIGHT NEED TWEAKING::\n\nFor later-stage ailments or large clients, you can strengthen the treatment with the <b>enhancer</b>. You can also choose the <b>inverter</b> to achieve the opposite effect, if the description calls for it.\n\nClick <b>submit treatment plan</b> when you're ready.";
+            popupText = "For extreme cases or large clients, you can strengthen the treatment with the <b>enhancer</b>. You can also choose the <b>inverter</b> to achieve the opposite effect, if the description calls for it.\n\nClick <b>submit treatment plan</b> when you're ready.";
         }
         else if (popupType == "toHerbWall")
         {
+            //UIManager.Instance.HighlightCanvasElement("arrows");
             popupText = "Now that you've chosen a treatment plan, you can access your herb stores to create your treatment.\n\nClick the new arrow in the bottom right to navigate to the <#8A1E1E>herb wall</color>.";
         }
         else
         {
-            popupText = "If you forget your chosen treatment plan, you can click the arrow in the bottom right to navigate to the desk.\n\nOnce you're done, click 'submit treatment' to hand your recipe to the client.\n\nMake sure you're 100% certain before submitting, as there's no going back!";// how to submit and view results
+            popupText = "If you forget your chosen treatment plan, you can click the arrow in the bottom right to navigate to the desk.\n\nOnce you're done, click <b>'submit treatment'</b> to hand your recipe to the client.\n\nMake sure you're 100% certain before submitting, as there's no going back!";// how to submit and view results
         }
         popupTextBox.text = popupText;
 
@@ -157,22 +169,63 @@ public class MenuManager : MonoBehaviour
         OpenMenu(popupMenu);
     }
 
+    public void NothingChosenPopup()
+    {
+        popupTextBox.text = "Bro, you can't give the client <i>nothing</i>. They're a paying customer!!";
+        OpenMenu(popupMenu);
+    }
+
+    public void OneHerbChosenPopup()
+    {
+        popupTextBox.text = "Don't get stingy, you need to pick at least two herbs for a recipe to do something!!";
+        OpenMenu(popupMenu);
+    }
+
+    public void ExitGamePopup()
+    {
+        popupTextBox.text = "The game should close after you click this box.\n\nThank-a-you so much for to playing our game!";
+        OpenMenu(popupMenu);
+    }
+
     public void ClosePopup()
     {
         if (diagnosisSheetPopup)
         {
+            popupMenu.transform.position = spawnPosition;
             TutorialPopup("diagnosisSheetTwo");
         }
+
+        
         /*else if (deskPopup)
         {
             TutorialPopup("grimoire");
         }*/
         else
         {
-            ExitMenu(popupMenu);
+            if (popupTextBox.text.Contains("Pay close attention to each ailment's description"))
+            {
+                //AilmentIconColourController.Instance.ResetAilmentIconBackground();
+                popupMenu.transform.position = spawnPosition;
+                ExitMenu(popupMenu);
+            }
+            else if (popupTextBox.text.Contains("Thank-a-you so much for to playing our game!"))
+            {
+                ExitMenu(popupMenu);
+                Invoke(nameof(Quit), 1f);
+            }
+            else
+            {
+                ExitMenu(popupMenu);
+            }
         }
     }
 
+    void Quit()
+    {
+        Debug.Log("got to the quit command");
+        GameManager.Instance.ExitGame();
+        //Debug.Log("got past instance.exit");
+    }
 
     /*public void MiniPopup()
     {

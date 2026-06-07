@@ -76,27 +76,30 @@ public class SceneManager : MonoBehaviour
         //if (_instance = null)
         //{
             _instance = this;
-            firstVisitDesk = true;
         //}
 
         //spawnSet = false;
+        switchDeskHerb.onClick.AddListener(delegate {SwitchSceneDeskHerb(); });
+        switchDeskClient.onClick.AddListener(delegate {SwitchSceneDeskClient(); });
+        questLog = FindObjectOfType<QuestLog>();
     }
 
     
     void Start()
-    {
-        SetInitialBools();
-
-        switchDeskHerb.onClick.AddListener(delegate {SwitchSceneDeskHerb(); });
-        switchDeskClient.onClick.AddListener(delegate {SwitchSceneDeskClient(); });
-
-        
+    {       
             //if (!spawnSet)
             //{
-                InitialiseLists();
+                
             //}
-            questLog = FindObjectOfType<QuestLog>();
+    }
+    
+    public void ResetScene()
+    {
+        questLog.ResetQuestLog();
+        SetInitialBools();
+        InitialiseLists();
         SetupInitialScene();
+
     }
 
     // Sets the initial values for the 
@@ -105,6 +108,7 @@ public class SceneManager : MonoBehaviour
         // DESIRED SCREEN TO SETUP FIRST
         onDesk = false;
         herbWallActive = false;
+        firstVisitDesk = true;
         firstVisitHerbWall = true;
     }
 

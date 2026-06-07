@@ -11,21 +11,21 @@ public class Inventory : MonoBehaviour, IDropHandler
     [HideInInspector]
     public List<InventorySlot> inventorySlots;
     
-    /*private static Inventory reference;
-    public static Inventory Reference
+    private static Inventory _instance;
+    public static Inventory Instance
     {
         get
         {
-            return reference;
+            return _instance;
         }
-    }*/
+    }
 
     void Awake()
     {
-        //if (reference = null)
+        //if (_instance = null)
         //{
             //Debug.Log ("yarh");
-            //reference = this;
+            _instance = this;
 
             //canvas = GetComponentInParent<Canvas>();
             //uiScale = canvas.scaleFactor;
@@ -34,12 +34,13 @@ public class Inventory : MonoBehaviour, IDropHandler
 
     void Start()
     {
-        SetupList();
+        //SetupList();
     }
 
     void SetupList()
     {
         inventorySlots = new List<InventorySlot>();
+        Debug.Log("Inventory is resetting, currently contains " + inventorySlots.Count + " slots.");
         foreach (Transform child in transform)
         {
             InventorySlot temp = child.GetComponent<InventorySlot>();       // switch to trygetcomponent?
@@ -48,7 +49,17 @@ public class Inventory : MonoBehaviour, IDropHandler
                 inventorySlots.Add(temp);
             }
         }
+        Debug.Log("Reset complete. Inventory has found " + inventorySlots.Count + " slots.");
         //Debug.Log("There are currently " + inventorySlots.Count + "inventory slots.");
+    }
+
+    public void ResetInventory()
+    {
+        SetupList();
+        foreach (InventorySlot i in inventorySlots)
+        {
+            i.ResetInventorySlot();
+        }
     }
 
     /*void GetImage(DraggableHerbs draggedHerb)

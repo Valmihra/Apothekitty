@@ -5,6 +5,17 @@ using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
+    private CanvasGroup canvasToHighlight;
+
+    public CanvasGroup arrows;
+    public CanvasGroup curtain;
+    public CanvasGroup ailmentIcon;
+    public CanvasGroup modifiers; 
+    public CanvasGroup grimoire;
+    public CanvasGroup herbGuide;
+    public CanvasGroup effect;
+    public CanvasGroup target;
+
     /*// SHOULD CONTAIN EVERY SWITCHABLE CANVASGROUP IN THE GAME
     [Header("Main Canvas Groups")]
     public CanvasGroup deskGroup;
@@ -315,6 +326,43 @@ public class UIManager : MonoBehaviour
         canvasGroup.blocksRaycasts = false;
     }
 
+    public void HighlightCanvasElement(string targetObjectName)
+    {
+        if (targetObjectName == "curtain")
+        {
+            canvasToHighlight = curtain;
+        }
+        else if (targetObjectName == "arrows")
+        {
+            canvasToHighlight = arrows;
+        }
+        else if (targetObjectName == "ailmentIcon")
+        {
+            canvasToHighlight = ailmentIcon;
+        }
+        else if (targetObjectName == "modifiers")
+        {
+            canvasToHighlight = modifiers; 
+        }
+        else if (targetObjectName == "grimoire")
+        {
+            canvasToHighlight = grimoire; 
+        }
+        else if (targetObjectName == "herbGuide")
+        {
+            canvasToHighlight = herbGuide; 
+        }
+        else if (targetObjectName == "effect")
+        {
+            canvasToHighlight = effect; 
+        }
+        else if (targetObjectName == "target")
+        {
+            canvasToHighlight = target; 
+        }
+
+        canvasToHighlight.GetComponent<HighlightObject>().PerformPulse();
+    }
 
             /*public void OpenMenu(CanvasGroup menuCanvasGroup)
             {

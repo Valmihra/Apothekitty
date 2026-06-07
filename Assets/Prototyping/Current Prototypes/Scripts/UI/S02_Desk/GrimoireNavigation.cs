@@ -74,6 +74,7 @@ public class GrimoireNavigation : MonoBehaviour
     // Basic scene setup
     void InitialiseScene()
     {
+        ailmentSelection.interactable = true;
         selectionIcon.SetActive(false);
         ailmentChosen = false;
         //diagnosisSheetObj.SetActive(false);
@@ -131,10 +132,10 @@ public class GrimoireNavigation : MonoBehaviour
         selectionIcon.SetActive(true);
         ailmentChosen = true;
         ///
+        ailmentSelection.interactable = false;
 
         selectedAilment = GrimoirePagesData.Instance.pagesArray[pageNum]._ailmentName;
-        //UIManager.Instance.UpdateAilment(selectedAilment);
-        //UIManager.Instance.SubmitAilment();
+
         SceneManager.Instance.UpdateAilment(selectedAilment);
         SceneManager.Instance.SubmitAilment();
 

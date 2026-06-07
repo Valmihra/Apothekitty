@@ -14,10 +14,22 @@ public class InventorySlot : MonoBehaviour
 
     void Start()
     {
+        /*SetupImages();
+        isEmpty = true;
+        slotContents = null;*/
+    }
+
+    public void ResetInventorySlot()
+    {
         SetupImages();
         isEmpty = true;
         slotContents = null;
     }
+
+    /*void FindParents()
+    {
+        /
+    }*/
 
     // assigns the correct 'empty' images
     void SetupImages()

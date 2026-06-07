@@ -66,7 +66,7 @@ public class DialogueHolder : MonoBehaviour
         deskIntroduction = new DialogueSnippet();
             deskIntroduction.dialogue_ = new List<string>();
             deskIntroduction.dialogue_.Add("I haven't done this in a while... I'd better refamiliarise myself with the process.");
-            deskIntroduction.dialogue_.Add("Okay, all the information is on the form. I just have to match it up to the <#8A1E1E>Grimoire</color>!");
+            deskIntroduction.dialogue_.Add("Okay, all the information I'll need is on the New Patient Form. I just have to match it up to the <#8A1E1E>Grimoire</color>!");
 
         ailmentSubmittedIntroduction = new DialogueSnippet();
             ailmentSubmittedIntroduction.dialogue_ = new List<string>();
@@ -91,7 +91,7 @@ public class DialogueHolder : MonoBehaviour
             herbWallIntroduction.dialogue_.Add("Hello, my precious herb collection! Let's see... I can click each drawer to see what's inside... And if I hover over the contents, it'll give me a description.");
             herbWallIntroduction.dialogue_.Add("The <#8A1E1E>herb guide</color> on the left of the screen will tell me the characteristics of the herbs I need to treat the client. I need to find one herb for each effect, target, and enhancer or inverter I have chosen.");
             herbWallIntroduction.dialogue_.Add("Once I think I found the right herb, I can click and drag them across into my inventory.");
-            herbWallIntroduction.dialogue_.Add("And if I think I've made the wrong choice, I can click the <#8A1E1E>remove</color> button to get rid of it!");
+            herbWallIntroduction.dialogue_.Add("And if I think I've made the wrong choice, I can click the <#8A1E1E>remove herb</color> button to get rid of it!");
 
             //
         

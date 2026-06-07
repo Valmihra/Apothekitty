@@ -6,6 +6,6 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Prototyping/Current Prototypes/Scene/ApothekittyTestBuild_v001.unity
-    guid: 2e99045f5aa91f840a668406fa62fe39
+    path: Assets/Prototyping/Current Prototypes/Scenes/ApothekittyTestBuild_v005.unity
+    guid: 48993c7b04c01a94bb0d1d4e91b9204c
   m_configObjects: {}

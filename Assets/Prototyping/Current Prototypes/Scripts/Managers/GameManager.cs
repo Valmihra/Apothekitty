@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class GameManager : MonoBehaviour
 {
     private bool isPaused;
+    private bool quitting;
 
     public bool beginningDay;
     public bool canStartDay;
@@ -33,6 +34,7 @@ public class GameManager : MonoBehaviour
     void Awake()
     {
         _instance = this;
+        quitting = false;
 
 
         diagnosisSheetInteractables = FindObjectOfType<DiagnosisSheetInteractables>();
@@ -66,6 +68,10 @@ public class GameManager : MonoBehaviour
             }
             isPaused = !isPaused;
         }*/
+        /*if (quitting)
+        {
+            Application.Quit();
+        }*/
     }
 
 
@@ -74,10 +80,10 @@ public class GameManager : MonoBehaviour
     {
         Debug.Log("Resetting Scene.");
 
-            if (reloaded)
-            {
-                SceneManager.Instance.SetupInitialScene();
-            }
+            //if (reloaded)
+            //{
+                SceneManager.Instance.ResetScene();
+            //}
         // read data from GameData (when I've written that,,,) and assign the day as required
 
         /* resets any elements in the scene that might have changed over the course of gameplay
@@ -105,10 +111,14 @@ public class GameManager : MonoBehaviour
 
         // RESETTING INTERACTABLES
         GrimoirePagesData.Instance.ResetGrimoire();
+        //AilmentIconColourController.Instance.ResetAilmentIconBackground();
         diagnosisSheetInteractables.ResetDiagnosisSheet();
 
         // Resetting the herb wall and guide pages
-
+        HerbalistGuidePages.Instance.ResetHerbalistGuide();
+        Inventory.Instance.ResetInventory();
+        HerbDrawersController.Instance.ResetHerbDrawerIcons();
+        // CLOSE ANY OPEN DRAWERS
 
         // BEGINS TUTORIAL DIALOGUE
         BeginTutorial();
@@ -164,6 +174,23 @@ public class GameManager : MonoBehaviour
         }
     }*/
 
+    public void ExitGame()
+    {
+        //Debug.Log("got to the final exit command");
+        //Invoke(nameof(QuitApplication), 1f);
+        //QuitApplication();
+        Application.Quit();
+    }
+
+    /*void QuitApplication()
+    {
+        //Application.Quit();
+        //quitting = true;
+        Application.Quit();
+        /*#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+        #endif\/
+    }*/
 
     //
 }

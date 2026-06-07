@@ -28,8 +28,8 @@ public class DialogueRunner : MonoBehaviour
     string defaultSpeaker = null;
     string defaultString = "You have encountered this due to an error with the DialogueRunner or DialogueHolder scripts";
 
-    string continuePrompt = "Click to continue";
-    string closePrompt = "Click to close";
+    string continuePrompt = "Click box to continue";
+    string closePrompt = "Click box to close";
 
 
     string catName = "The Cat";
@@ -365,31 +365,33 @@ public class DialogueRunner : MonoBehaviour
 
     void PerformAction(string stringToRead)
     {
-        // if (stringToRead?.Contains("curtain") == true)
-        if (stringToRead.Contains("curtain"))
+        
+        if (stringToRead.Contains("Grimoire"))
         {
             Debug.Log("---.GetComponent<ThingThatDoesTheFlashy>().PulseColour();");
+            UIManager.Instance.HighlightCanvasElement("grimoire");
         }
-        else if (stringToRead.Contains("desk"))
+        
+        else if (stringToRead.Contains("Each recipe has an"))
         {
             Debug.Log("---.GetComponent<ThingThatDoesTheFlashy>().PulseColour();");
+            UIManager.Instance.HighlightCanvasElement("effect");
         }
-        else if (stringToRead.Contains("grimoire"))
+        else if (stringToRead.Contains("I just need to choose a"))
         {
             Debug.Log("---.GetComponent<ThingThatDoesTheFlashy>().PulseColour();");
+            UIManager.Instance.HighlightCanvasElement("target");
         }
-        else if (stringToRead.Contains("ailment's picture"))
+        else
+        {
+            return;
+        }
+        /*else if (stringToRead.Contains("the characteristics of the herbs"))
         {
             Debug.Log("---.GetComponent<ThingThatDoesTheFlashy>().PulseColour();");
-        }
-        else if (stringToRead.Contains("effect"))
-        {
-            Debug.Log("---.GetComponent<ThingThatDoesTheFlashy>().PulseColour();");
-        }
-        else if (stringToRead.Contains("target"))
-        {
-            Debug.Log("---.GetComponent<ThingThatDoesTheFlashy>().PulseColour();");
-        }
+            UIManager.Instance.HighlightCanvasElement("herbGuide");
+        }*/
+        
     }
 
     /*void CheckForSpeaker()
