@@ -102,7 +102,7 @@ public class AllHerbsData : MonoBehaviour
 
         SingleHerb warmWhisper = new SingleHerb();
             warmWhisper.UpdateName("warmWhisper");
-            warmWhisper.UpdateDetails("A luscious red herb, standing tall with its long stems.", "Treatment Rules:\n1. Recipe needs both a primary and secondary effect\n2. Using this herb to ease will nullify a heal effect, but won't nullify if used to heal an ease effect");
+            warmWhisper.UpdateDetails("A luscious red herb, standing tall with its long stems.", "Treatment Rules:\n1. Recipe needs both a primary and secondary effect\n2. If using this herb to ease while a heal effect is also present in the recipe, the treatment will be nullified. However, the treatment is fine if used to heal while an ease effect is present");
             warmWhisper.SetEffects(false, true, true);
             warmWhisper.SetTargets(false, false, false);
             warmWhisper.SetModifiers(false, false);

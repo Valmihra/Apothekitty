@@ -30,8 +30,8 @@ public class DiagnosisSheetInteractables : MonoBehaviour
         string slot03 = "x";
         string slot04 = "x";
     
-    //private GrimoireNavigation grimoireNavigation;
-    private Vector2 spawnPosition;
+    // Vector used to reset draggable objects
+    private Vector2 startingPosition;
     
     public TMP_Text clientName;
     public TMP_Text clientSpecies;
@@ -41,7 +41,7 @@ public class DiagnosisSheetInteractables : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
-        spawnPosition = transform.position;
+        startingPosition = transform.position;
         //grimoireNavigation = UIManager.Instance.grimoireNavScript;
             //FindObjectOfType<GrimoireNavigation>();
 
@@ -62,7 +62,7 @@ public class DiagnosisSheetInteractables : MonoBehaviour
 
     public void ResetDiagnosisSheet()
     {
-        transform.position = spawnPosition;
+        transform.position = startingPosition;
         // allows interaction with the canvas elements
         foreach (TMP_Dropdown dropdown in dropdownsList)
         {

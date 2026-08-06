@@ -6,8 +6,8 @@ using TMPro;
 
 public class ClientLetter : MonoBehaviour
 {
-    // should really be changed to PatientForm or Client / PatientInfo
-
+    // name should really be changed to PatientForm or Client / PatientInfo
+    // functions could probably be split into two scripts (?)
 
     public class ClientData
     {
@@ -36,6 +36,7 @@ public class ClientLetter : MonoBehaviour
 
     [HideInInspector]
     public List<ClientData> clientsList;
+    public List<ClientData> treatedClientsList;
     private ClientData[] clientsArray;
     private List<Image> clientIconList;
     private Image[] clientIconArray;
@@ -63,6 +64,8 @@ public class ClientLetter : MonoBehaviour
         }
     }
 
+    // Vector used to reset draggable objects
+    private Vector2 startingPosition;
 
     void Awake()
     {
@@ -70,9 +73,15 @@ public class ClientLetter : MonoBehaviour
         _instance = this;
 
         resultsCalculator = FindObjectOfType<ResultsCalculator>();
-
+        startingPosition = transform.position;
+        
         InitialiseLists();
         UpdateClientInformation();
+    }
+
+    public void ResetCLientLetter()
+    {
+        transform.position = startingPosition;
     }
 
     // Creates the lists used to access the clients and their associated images
@@ -86,6 +95,8 @@ public class ClientLetter : MonoBehaviour
         clientIconList.Add(clientIcon01);
         clientIconList.Add(clientIcon02);
         clientIconList.Add(clientIcon03);
+
+        //treatedClientsList = new List<ClientData>(clientsList.Count);
         
         //Debug.Log("clientsList is currently " + clientsList.Count + " entries long!.");
     }
@@ -116,10 +127,33 @@ public class ClientLetter : MonoBehaviour
         clientLetter = clientsList[randomisedNumber];
         clientIcon.sprite = clientIconList[randomisedNumber].sprite;
 
+        Invoke(nameof(SpawnClient), 1.0f);
         //Debug.Log("Client icon is of " + clientLetter._clientName);
         //Debug.Log(clientIcon.sprite.name);
+        //int safeSlots = 0;
+        /*int numChecked = 0;
 
-        Invoke(nameof(SpawnClient), 1.0f);
+        for (int i = 0; i < clientsList.Count; i++)
+        {
+            numChecked++;
+            
+            if (clientLetter == treatedClientsList[i])
+            {
+                Debug.Log("Doubleup client. Rerolling.");
+                RandomiseIncomingClientLetter();
+            }
+            else
+            {
+                //safeSlots++;
+                
+                continue;
+            }
+        }
+
+        if (numChecked == clientsList.Count)
+        {
+            Invoke(nameof(SpawnClient), 1.0f);
+        }*/
     }
 
     // "spawns" the randomised client, and updates the relevant scripts with their information.
@@ -128,7 +162,7 @@ public class ClientLetter : MonoBehaviour
         SceneManager.Instance.ShowClient(clientIcon);
         InitialiseLetterDisplay(clientLetter);
         SetClientAilment(clientLetter);
-
+        //Debug.Log("Running correctly.");
         DialogueRunner.Instance.GetDialogue("patientArrive");
     }
 
@@ -151,4 +185,30 @@ public class ClientLetter : MonoBehaviour
         Debug.Log("Linking ailment with randomised client.");
     }
 
+
+    public void UpdateLists()
+    {
+        int index = clientsList.Count + 10;
+        //int check = 0;
+
+        foreach (ClientData c in clientsList)
+        {
+            if (c == clientLetter)
+            {
+                index = clientsList.IndexOf(c);
+                //check++;
+            }
+            else
+            {
+                continue;
+            }
+        }
+
+        //if (check > 0)
+        if (index !> clientsList.Count)
+        {
+            clientsList.RemoveAt(index);
+            clientIconList.RemoveAt(index);
+        }
+    }
 }

@@ -49,15 +49,21 @@ public class GrimoireNavigation : MonoBehaviour
         private int bodyTabPageNum;
         private int spiritTabPageNum;
 
-
         public bool ailmentChosen;
-    
+        
+        // Vector used to reset draggable objects
+        private Vector2 startingPosition;
+
+    void Awake()
+    {
+        startingPosition = transform.position;
+    }
+
     void Start()
     {
         navigationLeft.onClick.AddListener(delegate { GoToPage(currentPageNumber -1); });
         navigationRight.onClick.AddListener(delegate { GoToPage(currentPageNumber +1); });
         ailmentSelection.onClick.AddListener(delegate {GetSelectedAilment (currentPageNumber); });
-
     }
 
     public void ResetGrimoireNavigation()
@@ -78,6 +84,9 @@ public class GrimoireNavigation : MonoBehaviour
         selectionIcon.SetActive(false);
         ailmentChosen = false;
         //diagnosisSheetObj.SetActive(false);
+
+        // reset position on screen
+        transform.position = startingPosition;
     }
 
     // Immediately jumps to one of three key page numbers depending on tab chosen

@@ -12,18 +12,19 @@ public class InventorySlot : MonoBehaviour
     public string slotContents;
 
 
-    void Start()
+    void Awake()
     {
-        /*SetupImages();
-        isEmpty = true;
-        slotContents = null;*/
+        SetupImages();
+        //isEmpty = true;
+        //slotContents = null;
     }
 
     public void ResetInventorySlot()
     {
-        SetupImages();
-        isEmpty = true;
-        slotContents = null;
+        RemoveHerb();
+        //SetupImages();  // ResetImages();
+        //isEmpty = true;
+        //slotContents = null;
     }
 
     /*void FindParents()
@@ -38,15 +39,24 @@ public class InventorySlot : MonoBehaviour
         Transform herbSlot = parentSlot.transform.Find("Selected Herb");
 
         inventorySlot = herbSlot.GetComponent<Image>();
-        Image temporaryImage = GetComponent<Image>();
-        Color temporaryColour = new Color(1,1,1,0);
-        //temporaryColour.a = 0f;
-        temporaryImage.color = temporaryColour;
-        //temporaryImage.alpha = 0f;
-        inventorySlotEmpty = temporaryImage;
+        
+        //Image temporaryImage = GetComponent<Image>();
+        // makes a transparent sprite for the starting inventory image, based on a preexisting sprite in the scene
+        GameObject temporaryObject = GameObject.Find("Empty Inventory Icon");
+        inventorySlotEmpty = temporaryObject.GetComponent<Image>();
+
+            // have instead made sprite transparent in unity
+        // Color temporaryColour = new Color(1,1,1,0);
+        // temporaryImage.color = temporaryColour;
+
+        // assigns the blank sprite to the empty slot
+        //inventorySlotEmpty.sprite = temporaryImage.sprite;
+
         //inventorySlotEmpty = GetComponent<Image>();//inventorySlot;
         //Debug.Log("Image is set as " + inventorySlot.name);
     }
+
+
 
     // changes the image display to the sprite specified
     public void UpdateIcon(Sprite sprite)
@@ -64,7 +74,7 @@ public class InventorySlot : MonoBehaviour
         else
         {
             slotContents = contents;
-            Debug.Log("Inventory slot holding " + slotContents + ".");
+            // Debug.Log("Inventory slot holding " + slotContents + ".");
         }
     }
 
@@ -72,7 +82,7 @@ public class InventorySlot : MonoBehaviour
     public void RemoveHerb()
     {
         inventorySlot.sprite = inventorySlotEmpty.sprite;
-        Debug.Log("Removing herb");
+        // Debug.Log("Removing herb");
         UpdateContents("x");
         isEmpty = true;
     }

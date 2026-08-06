@@ -62,7 +62,7 @@ public class DialogueRunner : MonoBehaviour
 
     public void ResetDialogueRunner()
     {
-        //UIManager.Instance.DisableUI(dialogueBox);
+        UIManager.Instance.DisableUI(dialogueBox);
         Debug.Log("Resetting DialogueRunner...");
 
         currentLine = 0;
@@ -151,56 +151,70 @@ public class DialogueRunner : MonoBehaviour
         // could probably put the client check here too instead of in RunDialogue if I wanted it cleaner!!
     void FinishDialogueSnippet()
     {
-        if (!firstDialogueComplete)
+        if (GameManager.Instance.runningTutorial)
         {
-            CloseDialogueWindow();
-            firstDialogueComplete = true;
-            // ****         MIGHT BE BETTER TO HAVE A SEPARATE TUTORIAL SCRIPT INSTEAD
-            MenuManager.Instance.TutorialPopup("initialTutorial");
-            GameManager.Instance.canStartDay = true;
-        }
-        else if (introductionComplete && notSeenDeskHint)
-        {
-            CloseDialogueWindow();
-            MenuManager.Instance.TutorialPopup("startPrompts");
-            // PUT NAVIGATION HERE INSTEAD
-            SceneManager.Instance.EnableGameplay();
-            notSeenDeskHint = false;
-        }
-        else if (firstVisitDesk)
-        {
-            CloseDialogueWindow();
-            MenuManager.Instance.TutorialPopup("grimoire");
-            firstVisitDesk = false;
-        }
-        // if the player has submitted the ailment and hasn't seen the next set of hints
-        else if (GameManager.Instance.ailmentChosen && notSeenDiagnosisSheetHint)
-        {
-            SceneManager.Instance.GetDiagnosisSheet();
-            notSeenDiagnosisSheetHint = false;
-            JumpNextDialogue(DialogueHolder.Instance.diagnosisSheetIntroduction.dialogue_);//GetDialogue()
-            
-        }
-        else if (GameManager.Instance.ailmentChosen && !notSeenDiagnosisSheetHint && notSeenFinalDiagnosisPopup)
-        {
-            CloseDialogueWindow();
-            
-            notSeenFinalDiagnosisPopup = false;
-            MenuManager.Instance.TutorialPopup("diagnosisSheet");
-        }
-        else if (justSubmittedDiagnosis)
-        {
-            CloseDialogueWindow();
-            justSubmittedDiagnosis = false;
+            if (!firstDialogueComplete)
+            {
+                CloseDialogueWindow();
+                firstDialogueComplete = true;
+                // ****         MIGHT BE BETTER TO HAVE A SEPARATE TUTORIAL SCRIPT INSTEAD
+                MenuManager.Instance.TutorialPopup("initialTutorial");
+                GameManager.Instance.canStartDay = true;
+            }
+            else if (introductionComplete && notSeenDeskHint)
+            {
+                CloseDialogueWindow();
+                MenuManager.Instance.TutorialPopup("startPrompts");
+                // PUT NAVIGATION HERE INSTEAD
+                SceneManager.Instance.EnableGameplay();
+                notSeenDeskHint = false;
+            }
+            else if (firstVisitDesk)
+            {
+                CloseDialogueWindow();
+                MenuManager.Instance.TutorialPopup("grimoire");
+                firstVisitDesk = false;
+            }
+            // if the player has submitted the ailment and hasn't seen the next set of hints
+            else if (GameManager.Instance.ailmentChosen && notSeenDiagnosisSheetHint)
+            {
+                SceneManager.Instance.GetDiagnosisSheet();
+                notSeenDiagnosisSheetHint = false;
+                JumpNextDialogue(DialogueHolder.Instance.diagnosisSheetIntroduction.dialogue_);//GetDialogue()
+                
+            }
+            else if (GameManager.Instance.ailmentChosen && !notSeenDiagnosisSheetHint && notSeenFinalDiagnosisPopup)
+            {
+                CloseDialogueWindow();
+                
+                notSeenFinalDiagnosisPopup = false;
+                MenuManager.Instance.TutorialPopup("diagnosisSheet");
+            }
+            else if (justSubmittedDiagnosis)
+            {
+                CloseDialogueWindow();
+                justSubmittedDiagnosis = false;
 
-            SceneManager.Instance.UnlockHerbWall();
-        }
-        else if (justVisitedHerbWall)
-        {
-            CloseDialogueWindow();
-            justVisitedHerbWall = false;
+                SceneManager.Instance.UnlockHerbWall();
+            }
+            else if (justVisitedHerbWall)
+            {
+                CloseDialogueWindow();
+                justVisitedHerbWall = false;
 
-            MenuManager.Instance.TutorialPopup("finalPopup");
+                MenuManager.Instance.TutorialPopup("finalPopup");
+            }
+        }
+        else if (!GameManager.Instance.runningTutorial)
+        {
+            if (!firstDialogueComplete)
+            {
+                CloseDialogueWindow();
+                firstDialogueComplete = true;
+                // ****         MIGHT BE BETTER TO HAVE A SEPARATE TUTORIAL SCRIPT INSTEAD
+                GameManager.Instance.canStartDay = true;
+                SceneManager.Instance.EnableGameplay();
+            }
         }
     }
 
@@ -237,64 +251,54 @@ public class DialogueRunner : MonoBehaviour
 
     public void GetDialogue(string target)
     {
-        if (target == "tutorial")
+        if (GameManager.Instance.runningTutorial)
         {
-            currentDialogue = DialogueHolder.Instance.introduction.dialogue_;
-            SetupDialogueForTutorial();
-            RunDialogue();
+            Debug.Log("trueeee");
+            if (target == "tutorial")
+            {
+                currentDialogue = DialogueHolder.Instance.introduction.dialogue_;
+                SetupDialogueForTutorial();
+                RunDialogue();
+            }
+            else if (target == "desk")
+            {
+                currentDialogue = DialogueHolder.Instance.deskIntroduction.dialogue_;
+                SetupDialogueForTutorial();
+                RunDialogue();
+                firstVisitDesk = true;
+            }
+            else if (target == "ailmentSubmitted")
+            {
+                currentDialogue = DialogueHolder.Instance.ailmentSubmittedIntroduction.dialogue_;
+                SetupDialogueForTutorial();
+                RunDialogue();
+            }
+            else if (target == "treatmentPlanSubmitted")
+            {
+                currentDialogue = DialogueHolder.Instance.treatmentPlanSubmittedIntroduction.dialogue_;
+                SetupDialogueForTutorial();
+                RunDialogue();
+                justSubmittedDiagnosis = true;
+            }
+            else if (target == "onHerbWall")
+            {
+                currentDialogue = DialogueHolder.Instance.herbWallIntroduction.dialogue_;
+                SetupDialogueForTutorial();
+                RunDialogue();
+                justVisitedHerbWall = true;
+            }
         }
-        else if (target == "desk")
-        {
-            currentDialogue = DialogueHolder.Instance.deskIntroduction.dialogue_;
-            SetupDialogueForTutorial();
-            RunDialogue();
-            firstVisitDesk = true;
-        }
-        else if (target == "ailmentSubmitted")
-        {
-            currentDialogue = DialogueHolder.Instance.ailmentSubmittedIntroduction.dialogue_;
-            SetupDialogueForTutorial();
-            RunDialogue();
-        }
-        else if (target == "treatmentPlanSubmitted")
-        {
-            currentDialogue = DialogueHolder.Instance.treatmentPlanSubmittedIntroduction.dialogue_;
-            SetupDialogueForTutorial();
-            RunDialogue();
-            justSubmittedDiagnosis = true;
-        }
-        else if (target == "onHerbWall")
-        {
-            currentDialogue = DialogueHolder.Instance.herbWallIntroduction.dialogue_;
-            SetupDialogueForTutorial();
-            RunDialogue();
-            justVisitedHerbWall = true;
-        }
-
-
-        else if (target == "patientArrive")
+        
+        if (target == "patientArrive")
         {
             //Debug.Log("Patient time!");
             GetDialogueByClient();
+        }
 
-            /*if (ClientLetter.Instance.clientLetter.clientName_ == "Barry")
-            {
-                currentDialogue = DialogueHolder.Instance.barry.dialogue_;
-                //speakerName.text = catName;
-                //dialogueSet = true;
-            }
-            if (ClientLetter.Instance.clientLetter.clientName_ == "Arabella")
-            {
-                currentDialogue = DialogueHolder.Instance.arabella.dialogue_;
-            }
-            if (ClientLetter.Instance.clientLetter.clientName_ == "Lawrence")
-            {
-                currentDialogue = DialogueHolder.Instance.lawrence.dialogue_;
-            }
-            dialogueSet = true;
-            speakerName.text = ClientLetter.Instance.clientLetter.clientName_;
-            UIManager.Instance.EnableUI(dialogueBox);
-            RunDialogue();*/
+        else
+        {
+            //CloseDialogueWindow();
+            return;
         }
     }
 

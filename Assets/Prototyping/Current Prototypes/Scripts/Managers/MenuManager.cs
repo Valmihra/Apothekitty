@@ -7,6 +7,7 @@ using TMPro;
 public class MenuManager : MonoBehaviour
 {
     [Header("Menu Canvas Groups")]
+    public CanvasGroup mainMenu;
     public CanvasGroup pauseMenu;
     public CanvasGroup popupMenu;
     public List<CanvasGroup> allCanvasesMenus;
@@ -71,11 +72,13 @@ public class MenuManager : MonoBehaviour
         allCanvasesMenus = new List<CanvasGroup>();
         allCanvasesMenus.Add(pauseMenu);
         allCanvasesMenus.Add(popupMenu);
+            allCanvasesMenus.Add(mainMenu);
         //Debug.Log(allCanvasesMenus.Count + pauseMenu.name);
     }
 
     public void OpenMenu(CanvasGroup menuCanvasGroup)
     {
+        // game is paused?
         UIManager.Instance.DisableInteraction(SceneManager.Instance.currentCanvasGroup);
         if ((SceneManager.Instance.onDesk) && (GameManager.Instance.ailmentChosen))
         {
@@ -94,6 +97,12 @@ public class MenuManager : MonoBehaviour
         {
             UIManager.Instance.EnableInteraction(SceneManager.Instance.diagnosisSheet);
         }
+
+        if (menuCanvasGroup == mainMenu)
+        {
+            GameManager.Instance.onMainMenu = false;
+        }
+        // game is no longer paused?
     }
 
     public void HideMenuCanvases()
@@ -106,6 +115,11 @@ public class MenuManager : MonoBehaviour
 
     public void TutorialPopup(string popupType)
     {
+        /*if (GameManager.Instance.runningTutorial)
+        {
+            ,,
+        }*/
+        
         OpenMenu(popupMenu);
         
         if (popupType == "initialTutorial")

@@ -18,26 +18,47 @@ public class DayTrigger : MonoBehaviour, IPointerClickHandler
 
     private CanvasGroup curtainGroup;
 
+    private int timesClicked;
+
     void Start()
     {
         curtainGroup = gameObject.GetComponent<CanvasGroup>();
         openVariant = open.sprite;
         closedVariant = closed.sprite;
+
+        timesClicked = 0;
     }
 
     
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        if (GameManager.Instance.canStartDay)
+        //Debug.Log("Click works.");
+        if (GameManager.Instance.runningTutorial && GameManager.Instance.canStartDay)
         {
+            //if (timesClicked > 0)
+            //{
+                //Debug.Log("Click registered.");
+                ToggleCurtainState();
+                GameManager.Instance.canStartDay = false;
+                
+            //}
             //if (GameManager.Instance.canInteractWithCurtain)
             //{
-                Debug.Log("Click registered.");
-                ToggleCurtainState();
-
-                GameManager.Instance.canStartDay = false;
+                
             //}
+        }
+        else
+        {
+            if (!GameManager.Instance.runningTutorial)
+            {
+                if (timesClicked == 0)
+                {
+                    timesClicked++;
+                    ToggleCurtainState();
+                    GameManager.Instance.canStartDay = false;
+                }
+            }
         }
         
     }
