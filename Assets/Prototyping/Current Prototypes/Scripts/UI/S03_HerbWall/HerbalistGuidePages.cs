@@ -121,31 +121,37 @@ public class HerbalistGuidePages : MonoBehaviour
         GuidePage mind = new GuidePage();
         mind.UpdateType("Mind");
         mind.UpdateDescription("How to identify plants that can be used for this property:\n\n flowers that bloom so much that their blossoms overlap\n\nOR\n\nplants that bear fruit");
+        // intricate, delicate, complex
             pagesList.Add(mind);
 
         GuidePage body = new GuidePage();
         body.UpdateType("Body");
         body.UpdateDescription("How to identify plants that can be used for this property:\n\n the plant has no flowers or fruit\n\nAND\n\nhas two colours maximum");
+        // ,
             pagesList.Add(body);
 
         GuidePage spirit = new GuidePage();
         spirit.UpdateType("Spirit - (also Enhance currently)");
         spirit.UpdateDescription("How to identify plants that can be used for this property:\n\n plant has white growths\n\nOR\n\nplant's main body is purple");
+        // ,
             pagesList.Add(spirit);
 
         GuidePage fortify = new GuidePage();
         fortify.UpdateType("Fortify");
         fortify.UpdateDescription("How to identify plants that can be used for this property:\n\nplant is short and its body is wide\n\nOR\n\nhalf or more of the plant is yellow");
+        // ,
             pagesList.Add(fortify);
 
         GuidePage heal = new GuidePage();
         heal.UpdateType("Heal");
         heal.UpdateDescription("How to identify plants that can be used for this property:\n\nplant's main growth has flecks of colour on it \n\nOR\n\nred is a prominent colour");
+        // ,
             pagesList.Add(heal);
 
         GuidePage ease = new GuidePage();
         ease.UpdateType("Ease");
         ease.UpdateDescription("How to identify plants that can be used for this property:\n\nplant's stems or body is long and spindly\n\nOR\n\nit produces something that is not a flower");
+        // ,
             pagesList.Add(ease);
 
         foreach (GuidePage g in pagesList)

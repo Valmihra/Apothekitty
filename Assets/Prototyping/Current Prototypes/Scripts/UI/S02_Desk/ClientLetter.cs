@@ -97,7 +97,6 @@ public class ClientLetter : MonoBehaviour
         clientIconList.Add(clientIcon03);
 
         //treatedClientsList = new List<ClientData>(clientsList.Count);
-        
         //Debug.Log("clientsList is currently " + clientsList.Count + " entries long!.");
     }
 
