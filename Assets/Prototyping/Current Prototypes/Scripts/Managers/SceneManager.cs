@@ -6,10 +6,14 @@ using UnityEngine.UI;
 public class SceneManager : MonoBehaviour
 {
     // SHOULD CONTAIN EVERY SWITCHABLE CANVASGROUP IN THE GAME
+    // SHOULD CONTAIN EVERY MAIN
     [Header("Main Canvas Groups")]
     public CanvasGroup deskGroup;
     public CanvasGroup herbWallGroup;
     public CanvasGroup clientWindowGroup;
+
+    // public CanvasGroup resultsScreenGroup;
+    
         private List<CanvasGroup> allMainCanvases;
 
     [Header("Determinant Canvas Groups")]   /// if child canvasgroup tagged DETERMINANT, maybe check what should be displayed(??)
@@ -53,13 +57,13 @@ public class SceneManager : MonoBehaviour
     public CanvasGroup currentCanvasGroup;
     public Image clientImage;
 
-    //private bool spawnSet;
     public bool onDesk;
     private bool herbWallActive;
     private bool firstVisitHerbWall;
+    private bool firstVisitDesk;
+
     public string selectedAilment;
 
-    bool firstVisitDesk;
     private QuestLog questLog;
 
     private static SceneManager _instance;
@@ -73,19 +77,16 @@ public class SceneManager : MonoBehaviour
 
     void Awake()
     {
-        //if (_instance = null)
-        //{
+        //if (_instance = null)         {
             _instance = this;
-        //}
 
-        //spawnSet = false;
         switchDeskHerb.onClick.AddListener(delegate {SwitchSceneDeskHerb(); });
         switchDeskClient.onClick.AddListener(delegate {SwitchSceneDeskClient(); });
         questLog = FindObjectOfType<QuestLog>();
 
-
-        SetInitialBools();
-        InitialiseLists();
+        InitialiseSceneManager();
+        // SetInitialBools();
+        // InitialiseLists();
     }
 
     
@@ -95,6 +96,35 @@ public class SceneManager : MonoBehaviour
             //{
                 
             //}
+    }
+
+    // update function here to handle 'animated camera movement'        DO WE WANT THAT?    QUIERES??
+    // if (switching scenes)
+    /*void Update()
+    {
+        if (switchingScenes)
+        {
+            if (currentCanvasGroup == deskGroup)
+            {
+
+            }
+            else if (currentCanvasGroup == clientWindowGroup)
+            {
+                ,,
+            }
+            else
+            {
+                ,,
+            }
+
+            set up screens next to each other in the scene and have
+            camera   physically   move towards target location!!
+        }
+    }*/
+
+    void InitialiseSceneManager()
+    {
+        InitialiseLists();
     }
 
     public void SetupMainMenu()
@@ -109,7 +139,6 @@ public class SceneManager : MonoBehaviour
         questLog.ResetQuestLog();
 
         SetInitialBools();
-        InitialiseLists();
         SetupInitialScene();
 
     }
@@ -156,6 +185,8 @@ public class SceneManager : MonoBehaviour
         diagnosisSheet.GetComponent<RectTransform>().anchoredPosition = diagnosisSheetSpawnPoint;
     }*/
 
+
+
     // Hides the navigation buttons on the grimoire and enables the diagnosis sheet.
         // looking to flesh this out better (see PlaceUI)
     public void SubmitAilment()
@@ -174,6 +205,7 @@ public class SceneManager : MonoBehaviour
 
     }
 
+    // Enables the diagnosis sheet, fills it with the relevant information, and sends it to the front of the screen.
     public void GetDiagnosisSheet()
     {
         UIManager.Instance.EnableUI(diagnosisSheet);
@@ -210,6 +242,15 @@ public class SceneManager : MonoBehaviour
         UIManager.Instance.DisableUI(questLog.GetComponent<CanvasGroup>());
         UIManager.Instance.DisableUI(sceneNavigation);
         UIManager.Instance.DisableUI(submissionButton);
+
+        if (ClientLetter.Instance.currentDayClientsList.Count == 1)
+        {
+            ResultsScreen.Instance.NextDayButton(true);
+        }
+        else
+        {
+            ResultsScreen.Instance.NextDayButton(false);
+        }
     }
 
     // Sets up basic lists to use when resetting scenes
@@ -429,7 +470,12 @@ public class SceneManager : MonoBehaviour
         Debug.Log("Unlocking Herb Wall.");
         
         UIManager.Instance.EnableUI(switchDeskHerb.GetComponent<CanvasGroup>());
-        MenuManager.Instance.TutorialPopup("toHerbWall");
+
+        if (GameManager.Instance.runningTutorial)
+        {
+            MenuManager.Instance.TutorialPopup("toHerbWall");
+        }
+        
         herbWallActive = true;
         
     }

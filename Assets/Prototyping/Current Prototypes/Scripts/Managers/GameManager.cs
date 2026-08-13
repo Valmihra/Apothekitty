@@ -7,7 +7,9 @@ public class GameManager : MonoBehaviour
 {
     // game states
     private bool isPaused;
-    private bool quitting;
+    //private bool quitting;
+    public bool quitting {get; private set;}
+    public bool seenFirstClient; // {get; private set;}
     public bool onMainMenu;
      
     public bool beginningDay;
@@ -24,7 +26,7 @@ public class GameManager : MonoBehaviour
 
     //private bool debugging;
     
-    public Button resetSceneButton;
+    // public Button resetSceneButton;
     public DayTrigger curtainAccess;
     private DiagnosisSheetInteractables diagnosisSheetInteractables;
 
@@ -69,31 +71,28 @@ public class GameManager : MonoBehaviour
 
         // links the manager to the diagnosis sheet script
         diagnosisSheetInteractables = FindObjectOfType<DiagnosisSheetInteractables>();      // should only ever be one in the game, but might be better way to do this. maybe search for all components in scene instead and delete any not on Constant UI?
-
-        // Assigns function to the associated button
-        resetSceneButton.onClick.AddListener(delegate { ResetScene(); });
+            // Assigns function to the associated button
+            // resetSceneButton.onClick.AddListener(delegate { ResetScene(); });
 
         // sets bools
-        quitting = false;
-        isPaused = false;
-        reloaded = false;
+        ResetBools();
+            //quitting = false;
+            //isPaused = false;
+            //reloaded = false;
 
         // for now set to run automatically, but will only go on tutorial lv when Jimmy is implemented
-        runningTutorial = true;
+        //runningTutorial = true;
     }
 
+    // GameManager should be first script to run
     void Start()
     {
+        Debug.Log("Starting game at Main Menu.");
+
+        FirstOpenGame();
+        GoMainMenu();
         
 
-        // opens the main menu canvas
-        GoMainMenu();
-
-        // ----------
-
-
-        //BeginDay();
-        //ResetScene();
     }
 
     void Update()
@@ -117,29 +116,51 @@ public class GameManager : MonoBehaviour
         }*/
     }
 
+    // ---------------------------------
+    //      GAME MANAGEMENT
+    // ---------------------------------
 
-    // Resets the scene
-    public void ResetScene()
+
+    void ResetBools()
     {
-        Debug.Log("Resetting Scene.");
+        quitting = false;
+        isPaused = false;
+        reloaded = false;
 
-        // Resets all basic information in the scene
+        // for now set to run automatically, but will only go on tutorial lv when Jimmy is implemented
+        // runningTutorial = true;
+    }
+    
+    // Resets all basic information in the scene
+    void ResetBasicInformation()
+    {
         SceneManager.Instance.ResetScene();             // Quest Log also resets in this SceneManager function
-        ResetClientProgress();
+            beginningDay = true;
+            canStartDay = false;
+            ResetClientProgress();
+    }
 
-        // Sets bools for the beginning of the day
-        beginningDay = true;
-        canStartDay = false;
+    void InitialiseAllGameData()
+    {
+        ClientLetter.Instance.InitialiseClientLetter();
+        AilmentData.Instance.InitialiseAilmentData();
+        DayManager.Instance.InitialiseDayManager();
 
+        DayManager.Instance.ResetGameDays();
+        ClientLetter.Instance.UpdateCurrentDayClientsList();
+    }
+
+    // Resets all elements the player may have altered in-game
+    void ResetInteractableGameElements()
+    {
         // Resets Client Window UI
         curtainAccess.ResetCurtain();
 
         // Resets Desk UI
-        ClientLetter.Instance.ResetCLientLetter();
-        GrimoirePagesData.Instance.ResetGrimoire();
+        ClientLetter.Instance.ResetClientLetterPosition();
+        GrimoirePagesData.Instance.ResetGrimoire();                 //AilmentIconColourController.Instance.ResetAilmentIconBackground();
         diagnosisSheetInteractables.ResetDiagnosisSheet();
-            //AilmentIconColourController.Instance.ResetAilmentIconBackground();
-
+            
         // Resets Herb Wall UI
         HerbalistGuidePages.Instance.ResetHerbalistGuide();
         HerbDrawersController.Instance.ResetHerbDrawerIcons();
@@ -148,17 +169,31 @@ public class GameManager : MonoBehaviour
         // Resets Extras
         ResultsScreen.Instance.ResetResultsScreen();
         DialogueRunner.Instance.ResetDialogueRunner();
-        
+    }
+
+    // Resets the scene entirely.
+    public void FullResetScene()
+    {
+        Debug.Log("Resetting scene for a new game...");
+
+        // Generate the clients and ailments
+        InitialiseAllGameData();
+
+        // Reset the game scene
+        ResetBasicInformation();
+        ResetInteractableGameElements();
+
+        // Debug options. Build will only require BeginTutorial!
         if (runningTutorial)
         {
             BeginTutorial();
         }
         else
         {
-            Debug.Log("Skipping tutorial.");
+            Debug.Log("Skipping tutorial for debug purposes.");
         }
         // BEGINS TUTORIAL DIALOGUE
-        //BeginTutorial();
+        // BeginTutorial();
         //SceneManager.Instance.SetupInitialScene();
 
 
@@ -166,6 +201,24 @@ public class GameManager : MonoBehaviour
                 // draggable components? then search for all of them and reset? idk.
     }
 
+    // similar to full reset, but it maintains the day number and sets up accordingly
+    public void ResetLevel()
+    {
+        // int dayNumber = DayManager.Instance.currentDayNumber;       // will eventually add gamedata for this stuff!!
+        Debug.Log("Resetting the current level...");
+
+        // Reset the game scene
+        ResetBasicInformation();
+        ResetInteractableGameElements();
+
+        if (runningTutorial)
+        {
+            BeginTutorial();
+        }
+        
+    }
+
+    // Initiates the series of dialogue, checks, and popups related to the tutorial
     void BeginTutorial()
     {
         DialogueRunner.Instance.GetDialogue("tutorial");
@@ -181,11 +234,11 @@ public class GameManager : MonoBehaviour
     {
         ailmentChosen = false;
         diagnosisSubmitted = false;
-        Debug.Log("Client Progress reset.");
+        // Debug.Log("Client Progress reset.");
     }
 
     // Triggered by the curtain interaction.
-    public void BeginDay()
+    public void SummonClient()
     {
         ClientLetter.Instance.RandomiseIncomingClientLetter();
         //DialogueRunner.Instance.GetDialogue("patientArrive");
@@ -199,7 +252,7 @@ public class GameManager : MonoBehaviour
     public void GoNextClient()
     {
         ClientLetter.Instance.UpdateLists();
-        Debug.Log("Clients List is now " + ClientLetter.Instance.clientsList.Count + " entries long.");
+        Debug.Log("There are now " + ClientLetter.Instance.currentDayClientsList.Count + " clients remaining today.");
 
         
         /*int index = ClientLetter.Instance.clientsList.FindIndex(ClientLetter.Instance.clientLetter);
@@ -220,21 +273,15 @@ public class GameManager : MonoBehaviour
 
         
 
-
-        SceneManager.Instance.ResetScene();             // Quest Log also resets in this SceneManager function
+        // Resets without altering bools
+        SceneManager.Instance.ResetScene();
         ResetClientProgress();
 
-        // Sets bools for the beginning of the day
-        //beginningDay = true;
-        //canStartDay = false;
-
-
         // Resets Desk UI
-        ClientLetter.Instance.ResetCLientLetter();
-        GrimoirePagesData.Instance.ResetGrimoire();
+        ClientLetter.Instance.ResetClientLetterPosition();
+        GrimoirePagesData.Instance.ResetGrimoire();                     //AilmentIconColourController.Instance.ResetAilmentIconBackground();
         diagnosisSheetInteractables.ResetDiagnosisSheet();
-            //AilmentIconColourController.Instance.ResetAilmentIconBackground();
-
+            
         // Resets Herb Wall UI
         HerbalistGuidePages.Instance.ResetHerbalistGuide();
         HerbDrawersController.Instance.ResetHerbDrawerIcons();
@@ -244,7 +291,8 @@ public class GameManager : MonoBehaviour
         ResultsScreen.Instance.ResetResultsScreen();
         DialogueRunner.Instance.ResetDialogueRunner();
 
-        ClientLetter.Instance.RandomiseIncomingClientLetter();
+        // Calls in the next client
+        SummonClient();
     }
 
 
@@ -284,10 +332,23 @@ public class GameManager : MonoBehaviour
         #endif\/
     }*/
 
+    void FirstOpenGame()
+    {
+        // for now set to run automatically, but will only go on tutorial lv when Jimmy is implemented
+        runningTutorial = true;
+        seenFirstClient = false;
+        Debug.Log("SFC is: " + seenFirstClient);
+    }
+
     //
     public void GoMainMenu()
     {
         onMainMenu = true;
         SceneManager.Instance.SetupMainMenu();
+    }
+
+    public void NewGame()
+    {
+        FullResetScene();
     }
 }

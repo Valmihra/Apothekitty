@@ -32,7 +32,7 @@ public class AilmentData : MonoBehaviour
             affectedClientName = targetClient;
         }
 
-        // the ailment's dropdown numbers are set according to the arguments (see GenerateAilments for rules)
+        // the ailment's dropdown numbers are set according to the arguments (see InitialiseAilmentData for rules)
         // the results screen can then check the dropdown numbers on the diagnosis sheet for matches 
         public void SetAilmentInformation(string primEffect, string primTarget, string secEffect, string secTarget, int mod)//(int primEffect, int primTarget, int secEffect, int secTarget, int mod)
         {
@@ -94,7 +94,7 @@ public class AilmentData : MonoBehaviour
 
     void Start()
     {
-        GenerateAilments();
+        // InitialiseAilmentData();
     }
 
     
@@ -118,20 +118,22 @@ public class AilmentData : MonoBehaviour
             - "none"
             This is easier to read when checking results later.
             */
-    void GenerateAilments()
+    public void InitialiseAilmentData()
     {
         allAilments = new List<Ailment>();
 
         Ailment chronicInsomnia = new Ailment();
             chronicInsomnia.SetAilmentInformation("ease", "mind", "heal", "body", 0);
-            chronicInsomnia.AttachToClient("none");
+            //chronicInsomnia.AttachToClient("none");
+                            chronicInsomnia.AttachToClient(ClientLetter.Instance.clientsList[3]._clientName); // jimothy
             allAilments.Add(chronicInsomnia);
             List<string> acceptableHerbs = new List<string>{"spiceLeaf", "bumbleBlooms", "warmWhisper", "meltingRoot"};
             chronicInsomnia.SpecifyAcceptableHerbs(acceptableHerbs);
 
         Ailment contaminationOCD = new Ailment();
             contaminationOCD.SetAilmentInformation("ease", "mind", "x", "x", 1);
-            contaminationOCD.AttachToClient("none");
+            //contaminationOCD.AttachToClient("none");
+                            contaminationOCD.AttachToClient(ClientLetter.Instance.clientsList[4]._clientName);   //temp1
             allAilments.Add(contaminationOCD);
             acceptableHerbs = new List<string>{"pupilPetal", "spiceLeaf", "watchersWeed"};
             contaminationOCD.SpecifyAcceptableHerbs(acceptableHerbs);
@@ -152,7 +154,8 @@ public class AilmentData : MonoBehaviour
 
         Ailment illnessAnxiety = new Ailment();
             illnessAnxiety.SetAilmentInformation("ease", "mind", "x", "x", 0);
-            illnessAnxiety.AttachToClient("none");
+            //illnessAnxiety.AttachToClient("none");
+                            illnessAnxiety.AttachToClient(ClientLetter.Instance.clientsList[5]._clientName);
             allAilments.Add(illnessAnxiety);
             acceptableHerbs = new List<string>{"crystalVine", "heavensHollyhock"};
             illnessAnxiety.SpecifyAcceptableHerbs(acceptableHerbs);

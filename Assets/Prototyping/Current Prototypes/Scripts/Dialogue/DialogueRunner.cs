@@ -94,7 +94,7 @@ public class DialogueRunner : MonoBehaviour
             {
                 // at or over the limit of the lines of dialogue
                 Debug.Log("currentLine is larger than currentDialogue.Count. Checking whether this is intentional or not.");
-                if ((currentDialogue == DialogueHolder.Instance.barry.dialogue_) || (currentDialogue == DialogueHolder.Instance.arabella.dialogue_) || (currentDialogue == DialogueHolder.Instance.lawrence.dialogue_))
+                if ((currentDialogue == DialogueHolder.Instance.barry._dialogue) || (currentDialogue == DialogueHolder.Instance.arabella._dialogue) || (currentDialogue == DialogueHolder.Instance.lawrence._dialogue) || (currentDialogue == DialogueHolder.Instance.jimothy._dialogue) || (currentDialogue == DialogueHolder.Instance.TEMP_NPC01._dialogue) || (currentDialogue == DialogueHolder.Instance.TEMP_NPC02._dialogue))
                 {
                     if (!introductionComplete)
                     {
@@ -180,7 +180,7 @@ public class DialogueRunner : MonoBehaviour
             {
                 SceneManager.Instance.GetDiagnosisSheet();
                 notSeenDiagnosisSheetHint = false;
-                JumpNextDialogue(DialogueHolder.Instance.diagnosisSheetIntroduction.dialogue_);//GetDialogue()
+                JumpNextDialogue(DialogueHolder.Instance.diagnosisSheetIntroduction._dialogue);//GetDialogue()
                 
             }
             else if (GameManager.Instance.ailmentChosen && !notSeenDiagnosisSheetHint && notSeenFinalDiagnosisPopup)
@@ -253,36 +253,36 @@ public class DialogueRunner : MonoBehaviour
     {
         if (GameManager.Instance.runningTutorial)
         {
-            Debug.Log("trueeee");
+            Debug.Log("Tutorial toggled on. Running relevant dialogue.");
             if (target == "tutorial")
             {
-                currentDialogue = DialogueHolder.Instance.introduction.dialogue_;
+                currentDialogue = DialogueHolder.Instance.introduction._dialogue;
                 SetupDialogueForTutorial();
                 RunDialogue();
             }
             else if (target == "desk")
             {
-                currentDialogue = DialogueHolder.Instance.deskIntroduction.dialogue_;
+                currentDialogue = DialogueHolder.Instance.deskIntroduction._dialogue;
                 SetupDialogueForTutorial();
                 RunDialogue();
                 firstVisitDesk = true;
             }
             else if (target == "ailmentSubmitted")
             {
-                currentDialogue = DialogueHolder.Instance.ailmentSubmittedIntroduction.dialogue_;
+                currentDialogue = DialogueHolder.Instance.ailmentSubmittedIntroduction._dialogue;
                 SetupDialogueForTutorial();
                 RunDialogue();
             }
             else if (target == "treatmentPlanSubmitted")
             {
-                currentDialogue = DialogueHolder.Instance.treatmentPlanSubmittedIntroduction.dialogue_;
+                currentDialogue = DialogueHolder.Instance.treatmentPlanSubmittedIntroduction._dialogue;
                 SetupDialogueForTutorial();
                 RunDialogue();
                 justSubmittedDiagnosis = true;
             }
             else if (target == "onHerbWall")
             {
-                currentDialogue = DialogueHolder.Instance.herbWallIntroduction.dialogue_;
+                currentDialogue = DialogueHolder.Instance.herbWallIntroduction._dialogue;
                 SetupDialogueForTutorial();
                 RunDialogue();
                 justVisitedHerbWall = true;
@@ -318,17 +318,30 @@ public class DialogueRunner : MonoBehaviour
         
         if (client == "Barry Buff")
         {
-            currentDialogue = DialogueHolder.Instance.barry.dialogue_;
+            currentDialogue = DialogueHolder.Instance.barry._dialogue;
         }
         else if (client == "Arabella Bunny")
         {
-            currentDialogue = DialogueHolder.Instance.arabella.dialogue_;
+            currentDialogue = DialogueHolder.Instance.arabella._dialogue;
         }
         else if (client == "Lawrence Lark")
         {
-            currentDialogue = DialogueHolder.Instance.lawrence.dialogue_;
+            currentDialogue = DialogueHolder.Instance.lawrence._dialogue;
+        }
+        else if (client == "Jimothy")
+        {
+            currentDialogue = DialogueHolder.Instance.jimothy._dialogue;
+        }
+        else if (client == "TEMP_NPC01")
+        {
+            currentDialogue = DialogueHolder.Instance.TEMP_NPC01._dialogue;
+        }
+        else if (client == "TEMP_NPC02")
+        {
+            currentDialogue = DialogueHolder.Instance.TEMP_NPC02._dialogue;
         }
         
+        Debug.Log("SET DIALOGUE: " + client); //currentDialogue)
         dialogueSet = true;
         UIManager.Instance.EnableUI(dialogueBox);
         RunDialogue();
@@ -343,7 +356,7 @@ public class DialogueRunner : MonoBehaviour
         else
         {
             // might be -1... unsure rn,,,,
-            /*if ((currentLine == currentDialogue.Count) && (currentDialogue == DialogueHolder.Instance.barry.dialogue_) || (currentDialogue == DialogueHolder.Instance.arabella.dialogue_) || (currentDialogue == DialogueHolder.Instance.lawrence.dialogue_))
+            /*if ((currentLine == currentDialogue.Count) && (currentDialogue == DialogueHolder.Instance.barry._dialogue) || (currentDialogue == DialogueHolder.Instance.arabella._dialogue) || (currentDialogue == DialogueHolder.Instance.lawrence._dialogue))
             {
                 promptString.text = continuePrompt;
             }

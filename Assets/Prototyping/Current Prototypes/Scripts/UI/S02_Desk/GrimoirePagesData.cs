@@ -7,7 +7,7 @@ public class GrimoirePagesData : MonoBehaviour
 {
     public class SinglePage
     {
-        //public int/icon? which to use? int??
+        // public int/icon? which to use? int??
         public string _ailmentName;
         public string _ailmentDescription;
 
@@ -42,16 +42,16 @@ public class GrimoirePagesData : MonoBehaviour
     {
         _instance = this;
         grimoireNavigation = GetComponent<GrimoireNavigation>();
-        //if (_instance != this)
-        //{
-        //    Destroy(GetComponent<GameObject>());
-        //}
+        // if (_instance != this)
+        // {
+        //     Destroy(GetComponent<GameObject>());
+        // }
         
         InitialiseList();
         SetPageData();
         SetArray();
         
-        //Debug.Log("pagesList is currently " + pagesList.Count + " entries long!.");
+        // Debug.Log("pagesList is currently " + pagesList.Count + " entries long!.");
     }
 
     void InitialiseList()
@@ -62,7 +62,7 @@ public class GrimoirePagesData : MonoBehaviour
     void SetArray()
     {
         pagesArray = pagesList.ToArray();
-        //Debug.Log("pagesArray is " + pagesArray.Length + " units long!");
+        // Debug.Log("pagesArray is " + pagesArray.Length + " units long!");
     }
 
     void SetPageData()  // alphabetically set up for now
@@ -122,7 +122,7 @@ public class GrimoirePagesData : MonoBehaviour
             totalPages++;
         }
 
-        Debug.Log("There are currently " + totalPages + " pages set up correctly.");
+        // Debug.Log("There are currently " + totalPages + " pages set up correctly.");
 
     }
 
@@ -131,10 +131,10 @@ public class GrimoirePagesData : MonoBehaviour
         grimoireNavigation.ResetGrimoireNavigation();
     }
     
-    //List<string> ailmentDescriptions;
+    // List<string> ailmentDescriptions;
 
 
-    //string ailment
+    // string ailment
     //
-    //public void UpdatePage
+    // public void UpdatePage
 }

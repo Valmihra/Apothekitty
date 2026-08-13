@@ -209,8 +209,8 @@ public class AllHerbsData : MonoBehaviour
         }
 
         // FOR DEBUGGING
-        int randomDraw = Random.Range(0, herbCount); //+1
-        Debug.Log("The herb in slot " + randomDraw + " is: " + herbDrawerContents[randomDraw].herbName + ". The drawerSensor for the same slot has updated its contents as: " + drawerSensorScripts[randomDraw].drawerContents + ".");
+        // int randomDraw = Random.Range(0, herbCount); //+1
+        // Debug.Log("The herb in slot " + randomDraw + " is: " + herbDrawerContents[randomDraw].herbName + ". The drawerSensor for the same slot has updated its contents as: " + drawerSensorScripts[randomDraw].drawerContents + ".");
     }
 
     public void UpdateAndShowNote(string herbNameToSearch)

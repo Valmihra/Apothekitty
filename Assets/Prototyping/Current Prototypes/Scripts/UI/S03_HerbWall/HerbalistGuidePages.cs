@@ -62,7 +62,7 @@ public class HerbalistGuidePages : MonoBehaviour
         SetPageData();
         SetArray();
 
-        //ResetHerbalistGuide();
+        // ResetHerbalistGuide();
     }
 
     void GetSpawnPoint()
@@ -108,7 +108,7 @@ public class HerbalistGuidePages : MonoBehaviour
     void SetArray()
     {
         pagesArray = pagesList.ToArray();
-        //Debug.Log("pagesArray is " + pagesArray.Length + " units long!");
+        // Debug.Log("pagesArray is " + pagesArray.Length + " units long!");
     }
 
     void SetPageData()
@@ -159,7 +159,7 @@ public class HerbalistGuidePages : MonoBehaviour
             totalPages++;
         }
 
-        Debug.Log("There are currently " + totalPages + " pages set up correctly.");
+        // Debug.Log("There are currently " + totalPages + " pages set up correctly.");
 
     }
 }

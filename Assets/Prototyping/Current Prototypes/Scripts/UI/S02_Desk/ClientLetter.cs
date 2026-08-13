@@ -16,6 +16,12 @@ public class ClientLetter : MonoBehaviour
         public string _clientExtras;
         public string _clientLetterText;
 
+        public int _clientDayNumber;
+
+        public Image _clientIcon;
+                // private Image _clientIconStandard
+                // private Image _clientIconHappy / sad / cured ??
+
             //public AilmentData clientAilment_;
 
         public void UpdateBasicInfo(string newName, string newSpecies, string newExtras)
@@ -31,6 +37,16 @@ public class ClientLetter : MonoBehaviour
         public void UpdateClientLetter(string letterText)
         {
             _clientLetterText = letterText;
+        }
+
+        public void AssignDay(int dayNum)
+        {
+            _clientDayNumber = dayNum;
+        }
+
+        public void SetIcon(Image icon)
+        {
+            _clientIcon = icon;
         }
     }
 
@@ -53,6 +69,16 @@ public class ClientLetter : MonoBehaviour
     public Image clientIcon02;
     public Image clientIcon03;
 
+    public Image clientIcon04;
+    public Image clientIcon05;
+    public Image clientIcon06;
+
+
+    public List<ClientData> currentDayClientsList;
+
+    // public ClientData jimothy;
+
+
     private ResultsCalculator resultsCalculator;
 
     private static ClientLetter _instance;
@@ -74,14 +100,43 @@ public class ClientLetter : MonoBehaviour
 
         resultsCalculator = FindObjectOfType<ResultsCalculator>();
         startingPosition = transform.position;
-        
-        InitialiseLists();
-        UpdateClientInformation();
     }
 
-    public void ResetCLientLetter()
+    public void InitialiseClientLetter()
+    {
+        Debug.Log("Creating all clients...");
+        //InitialiseLists();
+        CreateClientInformation();
+
+        return;
+    }
+
+    public void ResetClientLetterPosition()
     {
         transform.position = startingPosition;
+    }
+
+    public void UpdateCurrentDayClientsList()
+    {
+        // THIS WILL NEED TO BE FIXED. HONESTLY SHOULD PROBABLY MOVE ASSIGN DAILY TO HERE INSTEAD, BUT,,, IDK
+
+
+        if (DayManager.Instance.currentDayNumber == 1)
+        {
+            currentDayClientsList = new List<ClientData>(DayManager.Instance.day01ClientsList);
+        }
+        else
+        {
+            currentDayClientsList = new List<ClientData>(DayManager.Instance.day02ClientsList);
+        }
+
+
+
+
+        foreach (ClientData c in currentDayClientsList)
+        {
+            Debug.Log(c._clientName);
+        }
     }
 
     // Creates the lists used to access the clients and their associated images
@@ -89,44 +144,140 @@ public class ClientLetter : MonoBehaviour
     void InitialiseLists()
     {
         clientsList = new List<ClientData>();
-        clientIconList = new List<Image>();
+        //clientIconList = new List<Image>();
 
         // Add all client icons here
-        clientIconList.Add(clientIcon01);
-        clientIconList.Add(clientIcon02);
-        clientIconList.Add(clientIcon03);
+        /*
+        clientIconList.Add(clientIcon01);   // barry
+        clientIconList.Add(clientIcon02);   // arabella
+        clientIconList.Add(clientIcon03);   // lawrence
+
+        clientIconList.Add(clientIcon04);   // jimothy
+        clientIconList.Add(clientIcon05);   // TEMP_NPC01
+        clientIconList.Add(clientIcon06);   // TEMP_NPC02*/
 
         //treatedClientsList = new List<ClientData>(clientsList.Count);
         //Debug.Log("clientsList is currently " + clientsList.Count + " entries long!.");
     }
 
-    // Creates the individual ClientData classes and fills them out with information related to each specific client.
-    void UpdateClientInformation()
+    // Creates the individual ClientData objects and fills them out with information related to each specific client.
+    void CreateClientInformation()
     {
+        clientsList = new List<ClientData>();
+
+
+
         ClientData barry = new ClientData();
         barry.UpdateBasicInfo("Barry Buff", "Bear", "Large, Omnivore");
         barry.UpdateClientLetter("These crystals formed after eating some homemade hot honey for dinner last night. My eyes are constantly pulsating, and I'm starting to lose my vision.\n\nPlease help me! I'm not sure what will happen if I leave it alone.");
+        barry.AssignDay(2);
+        barry.SetIcon(clientIcon01);
             clientsList.Add(barry);
 
         ClientData arabella = new ClientData();
         arabella.UpdateBasicInfo("Arabella Bunny", "Rabbit", "Small, Herbivore");
         arabella.UpdateClientLetter("My family have been starving recently... One of my sons passed from this mysterious illness... I had no choice but to cook him up for supper as we had nothing to eat... I'm starting to have an urge for flesh, and I'm afraid of what I might do to my other children. Please help me, Apothekitty!");
+        arabella.AssignDay(2);
+        arabella.SetIcon(clientIcon02);
             clientsList.Add(arabella);
 
         ClientData lawrence = new ClientData();
         lawrence.UpdateBasicInfo("Lawrence Lark", "Bird", "Small, Herbivore");
         lawrence.UpdateClientLetter("I love going for nightly glides amongst the treetops! However, a week ago, I noticed I developed this weird bite after one of my adventures... And now I've started growing teeth and bat wings! I don't know what's going on, but I don't like it! Please fix me, Apothekitty!");
+        lawrence.AssignDay(2);
+        lawrence.SetIcon(clientIcon03);
             clientsList.Add(lawrence);
+
+
+
+
+        ClientData jimothy = new ClientData();
+        jimothy.UpdateBasicInfo("Jimothy", "Jerboa", "Small, Omnivore");
+        jimothy.UpdateClientLetter("PLACEHOLDER LETTER TEXT - JIMOTHY");
+        jimothy.AssignDay(1);
+        jimothy.SetIcon(clientIcon04);
+            clientsList.Add(jimothy);
+
+        ClientData TEMP_NPC01 = new ClientData();
+        TEMP_NPC01.UpdateBasicInfo("TEMP_NPC01", "PLACEHOLDER", "PLACEHOLDER, PLACEHOLDER");
+        TEMP_NPC01.UpdateClientLetter("PLACEHOLDER LETTER TEXT - TEMP_NPC01");
+        TEMP_NPC01.AssignDay(1);
+        TEMP_NPC01.SetIcon(clientIcon05);
+            clientsList.Add(TEMP_NPC01);
+
+        ClientData TEMP_NPC02 = new ClientData();
+        TEMP_NPC02.UpdateBasicInfo("TEMP_NPC02", "PLACEHOLDER", "PLACEHOLDER, PLACEHOLDER");
+        TEMP_NPC02.UpdateClientLetter("PLACEHOLDER LETTER TEXT - TEMP_NPC02");
+        TEMP_NPC02.AssignDay(1);
+        TEMP_NPC02.SetIcon(clientIcon06);
+            clientsList.Add(TEMP_NPC02);
     }
+
+    /*public void ()
+    {
+
+    }*/
  
     // Randomises the client that visits the player
     public void RandomiseIncomingClientLetter()
     {
-        int randomisedNumber = Random.Range(0, clientsList.Count);
+        if (GameManager.Instance.runningTutorial)
+        {
+            Debug.Log("    ----    FINDING TUTORIAL CHARACTER IN THE CLIENTS LIST    ----    ");
+            clientLetter = clientsList[3];  // jimothy;
+            Debug.Log("    ----    CLIENT'S NAME IS: " + clientLetter._clientName + "     ----    ");
+            Debug.Log("    ----    ATTEMPTING TO LOCATE THE CLIENT ICON TO DISPLAY    ----    ");
+            Debug.Log(clientLetter._clientIcon);
+            Debug.Log("    ----    ASSIGNING THE CLIENT ICON    ----    ");
+            clientIcon.sprite = clientLetter._clientIcon.sprite;
+            Debug.Log("    ----    SPAWNING CLIENT    ----    ");
+
+            Invoke(nameof(SpawnClient), 1.0f);
+            // should add function into client data that assigns sprite from set image to the one onscreen
+        }
+        /*int randomisedNumber = Random.Range(0, clientsList.Count);
         clientLetter = clientsList[randomisedNumber];
         clientIcon.sprite = clientIconList[randomisedNumber].sprite;
 
-        Invoke(nameof(SpawnClient), 1.0f);
+        Invoke(nameof(SpawnClient), 1.0f);*/
+        else
+        {
+            if (GameManager.Instance.seenFirstClient);
+            {
+                Debug.Log("Seen first client");
+                Debug.Log(DayManager.Instance.currentDayNumber);
+                Debug.Log(currentDayClientsList.Count);
+                // Removes specific tutorial character from list to avoid pulling again
+                if ((DayManager.Instance.currentDayNumber == 1) && (currentDayClientsList.Count == 3))
+                {
+                    
+                    currentDayClientsList.RemoveAt(0);
+                    //int indexNumber = 
+                }
+            }
+            
+
+            int randomisedNumber = Random.Range(0, currentDayClientsList.Count);
+            clientLetter = currentDayClientsList[randomisedNumber];
+            clientIcon.sprite = clientLetter._clientIcon.sprite;
+            //clientIcon.sprite = clientIconList[randomisedNumber].sprite;
+
+            /*if (!GameManager.Instance.seenFirstClient)
+            {
+                GameManager.Instance.seenFirstClient = true;
+            }*/
+
+            Invoke(nameof(SpawnClient), 1.0f);
+
+        }
+
+
+
+
+
+
+
+
         //Debug.Log("Client icon is of " + clientLetter._clientName);
         //Debug.Log(clientIcon.sprite.name);
         //int safeSlots = 0;
@@ -161,11 +312,11 @@ public class ClientLetter : MonoBehaviour
         SceneManager.Instance.ShowClient(clientIcon);
         InitialiseLetterDisplay(clientLetter);
         SetClientAilment(clientLetter);
-        //Debug.Log("Running correctly.");
+        
         DialogueRunner.Instance.GetDialogue("patientArrive");
     }
 
-    // Updates the TMP files on the letter UI with the information from the specified ClientData
+    // Updates the text on the letter UI with the information from the specified ClientData
     void InitialiseLetterDisplay(ClientData data)
     {
         clientName.text = data._clientName;
@@ -187,15 +338,37 @@ public class ClientLetter : MonoBehaviour
 
     public void UpdateLists()
     {
-        int index = clientsList.Count + 10;
-        //int check = 0;
+        int index = clientsList.Count + 10;     // failsafe to ensure the index is correct
 
-        foreach (ClientData c in clientsList)
+        /*foreach (ClientData c in clientsList)
         {
             if (c == clientLetter)
             {
                 index = clientsList.IndexOf(c);
-                //check++;
+                Debug.Log("Found client");
+            }
+            else
+            {
+                continue;
+            }
+        }
+        
+        if (index !> clientsList.Count)
+        {
+            clientsList.RemoveAt(index);
+            clientIconList.RemoveAt(index);
+        }*/
+
+        foreach (ClientData c in currentDayClientsList)
+        {
+            Debug.Log(c._clientName);
+            if (c == clientLetter)
+            {
+                index = currentDayClientsList.IndexOf(c);
+                Debug.Log("Found client.");
+                Debug.Log(index);
+                
+
             }
             else
             {
@@ -203,11 +376,16 @@ public class ClientLetter : MonoBehaviour
             }
         }
 
-        //if (check > 0)
-        if (index !> clientsList.Count)
+        currentDayClientsList.RemoveAt(index);
+        //Debug.Log(currentDayClientsList.Count + "NUMBERRR");
+        /*if (index !> currentDayClientsList.Count)
         {
-            clientsList.RemoveAt(index);
-            clientIconList.RemoveAt(index);
-        }
+            Debug.Log("Removing client.");
+            currentDayClientsList.RemoveAt(index);
+
+            List<ClientData> tempList = new List<ClientData>(currentDayClientsList);
+            Debug.Log(tempList.Count + "NUMBERRR");
+            // clientIconList.RemoveAt(index);
+        }*/
     }
 }

@@ -10,27 +10,33 @@ public class MenuManager : MonoBehaviour
     public CanvasGroup mainMenu;
     public CanvasGroup pauseMenu;
     public CanvasGroup popupMenu;
-    public List<CanvasGroup> allCanvasesMenus;
+    
+        public List<CanvasGroup> allCanvasesMenus;
     
     // COLOUR CHANGES
     // <color=red>  <#8A1E1E>
 
     //[Header("Pause Menu Buttons")]
-    //public Button resumeGameButton;
-    //public Button returnToMainMenuButton;
-    //public Button resetSceneButton;
-    private Vector2 spawnPosition;
+    //public Button resumeGameButton;               //resumeGameButton.onClick.AddListener(delegate { Resume(); });
+    //public Button returnToMainMenuButton;         //returnToMainMenuButton.onClick.AddListener(delegate { Return(); });
+    //public Button resetSceneButton;               //resetSceneButton.onClick.AddListener(delegate { Reset(); });
+
+    // PLACEHOLDER VECTORS FOR TUTORIAL POPUP LOCATIONS
+    private Vector2 initialPopupMenuPosition;
     private Vector2 movedDownPosition;
     private Vector2 movedUpPosition;
 
+    [Header("Popup Text References")]
     public TMP_Text popupTextBox;
-    string popupText;
-    bool diagnosisSheetPopup;
-    bool deskPopup;
-
     public TMP_Text popupPrompt;
-    string defaultPopupPromptText = "Click box to close.";
-    string continuePopupPromptText = "Click box to continue.";
+
+    private string popupText;
+    private string defaultPopupPromptText = "Click box to close.";
+    private string continuePopupPromptText = "Click box to continue.";
+
+    private bool diagnosisSheetPopupActive;
+    private bool setPositions;
+    //private bool deskPopupActive;
 
     private static MenuManager _instance;
     public static MenuManager Instance
@@ -43,38 +49,74 @@ public class MenuManager : MonoBehaviour
 
     void Awake()
     {
-        //if (_instance = null)
-        //{
+        //if (_instance = null)         {
             _instance = this;
-        //}
 
-        //resumeGameButton.onClick.AddListener(delegate { Resume(); });
-        //returnToMainMenuButton.onClick.AddListener(delegate { Return(); });
-        //resetSceneButton.onClick.AddListener(delegate { Reset(); });
+        InitialiseMenuManager();
+        
+        
+        // diagnosisSheetPopupActive = false;
+        // popupPrompt.text = defaultPopupPromptText;
 
-        InitialiseMenuCanvasGroupList();
-        diagnosisSheetPopup = false;
-        popupPrompt.text = defaultPopupPromptText;
-
-        spawnPosition = popupMenu.transform.position;
-        movedDownPosition = new Vector2(spawnPosition.x, spawnPosition.y-100f);
-        movedUpPosition = new Vector2(spawnPosition.x, spawnPosition.y+100f);
+        // initialPopupMenuPosition = popupMenu.transform.position;
+        // movedDownPosition = new Vector2(initialPopupMenuPosition.x, initialPopupMenuPosition.y-100f);
+        // movedUpPosition = new Vector2(initialPopupMenuPosition.x, initialPopupMenuPosition.y+100f);
         //HideMenuCanvases();
     }
 
-    public void Reset()
-    {
-        //GameManager.Instance.ResetScene();
-    }
+    // ---------------------------------
+    //      BASIC SETUP
+    // ---------------------------------
 
+    // Performs all basic functions required to run MenuManager 
+    void InitialiseMenuManager()
+    {
+        // Sets bool and default prompt text for popup
+        popupPrompt.text = defaultPopupPromptText;
+        diagnosisSheetPopupActive = false;
+        setPositions = false;
+        
+
+        InitialiseMenuCanvasGroupList();
+        GetPositions();
+    }
+    
+    // Creates a list of all menu canvases
     void InitialiseMenuCanvasGroupList()
     {
         allCanvasesMenus = new List<CanvasGroup>();
         allCanvasesMenus.Add(pauseMenu);
         allCanvasesMenus.Add(popupMenu);
             allCanvasesMenus.Add(mainMenu);
+
         //Debug.Log(allCanvasesMenus.Count + pauseMenu.name);
     }
+
+    // Plots the relevant locations for the tutorial popup
+    void GetPositions()
+    {
+        if (!setPositions)
+        {
+            initialPopupMenuPosition = popupMenu.transform.position;
+            movedDownPosition = new Vector2(initialPopupMenuPosition.x, initialPopupMenuPosition.y - 100f);
+            movedUpPosition = new Vector2(initialPopupMenuPosition.x, initialPopupMenuPosition.y + 100f);
+            setPositions = true;
+        }
+        else
+        {
+            Debug.Log("Set positions already exist.");
+            return;
+        }
+    }
+
+    // public void Reset()
+    // {
+        // GameManager.Instance.ResetScene();
+    // }
+
+    // ---------------------------------
+    //      MENU DISPLAY FUNCTIONS
+    // ---------------------------------
 
     public void OpenMenu(CanvasGroup menuCanvasGroup)
     {
@@ -113,6 +155,10 @@ public class MenuManager : MonoBehaviour
         }
     }
 
+    /// ---------------------------------
+    //      TUTORIAL POPUP FUNCTIONS
+    // ---------------------------------
+
     public void TutorialPopup(string popupType)
     {
         /*if (GameManager.Instance.runningTutorial)
@@ -143,14 +189,14 @@ public class MenuManager : MonoBehaviour
             popupMenu.transform.position = movedUpPosition;
             UIManager.Instance.HighlightCanvasElement("modifiers");
             popupPrompt.text = continuePopupPromptText;
-            diagnosisSheetPopup = true;
+            diagnosisSheetPopupActive = true;
             popupText = "Scan the ailment's description for clues to make a suitable treatment plan.\n\nYou can click and drag papers on your desk if you need to see something that's being obscured.\n\nNot all ailments require two targets, but some may require a <#8A1E1E>modifier</color>.";
             
         }
         else if (popupType == "diagnosisSheetTwo")
         {
             popupPrompt.text = defaultPopupPromptText;
-            diagnosisSheetPopup = false;
+            diagnosisSheetPopupActive = false;
             popupText = "For extreme cases or large clients, you can strengthen the treatment with the <b>enhancer</b>. You can also choose the <b>inverter</b> to achieve the opposite effect, if the description calls for it.\n\nClick <b>submit treatment plan</b> when you're ready.";
         }
         else if (popupType == "toHerbWall")
@@ -176,6 +222,10 @@ public class MenuManager : MonoBehaviour
         // INVOKE IT 3X? EACH TIME PERFORMING TIMESCALLED++ UNTIL 3X
         // THEN RESET TO 0 AND STOP RUNNING CHANGE COLOUR.
     }
+
+    // ---------------------------------
+    //      ALERT MESSAGE FUNCTIONS
+    // ---------------------------------
 
     public void InvalidPopup()
     {
@@ -203,23 +253,56 @@ public class MenuManager : MonoBehaviour
 
     public void ClosePopup()
     {
-        if (diagnosisSheetPopup)
+        // bool tutorialCheckComplete = false;
+        // Tutorial-specific conditions to check for
+        if (GameManager.Instance.runningTutorial)
         {
-            popupMenu.transform.position = spawnPosition;
-            TutorialPopup("diagnosisSheetTwo");
+            if (diagnosisSheetPopupActive)
+            {
+                popupMenu.transform.position = initialPopupMenuPosition;
+                TutorialPopup("diagnosisSheetTwo");
+                return;
+            }
+            else if (popupTextBox.text.Contains("Pay close attention to each ailment's description"))
+            {
+                //AilmentIconColourController.Instance.ResetAilmentIconBackground();
+                popupMenu.transform.position = initialPopupMenuPosition;
+                ExitMenu(popupMenu);
+                return;
+            }
         }
 
-        
-        /*else if (deskPopup)
+        // Constant conditions to check for
+        //else
+        //{
+            // Checks if trying to exit the game
+            if (popupTextBox.text.Contains("Thank-a-you so much for to playing our game!"))
+            {
+                ExitMenu(popupMenu);
+                Invoke(nameof(Quit), 1f);
+            }
+            else
+            {
+                ExitMenu(popupMenu);
+            }
+        // }
+
+
+        //if (diagnosisSheetPopupActive)
+        //{
+        //    popupMenu.transform.position = initialPopupMenuPosition;
+        //    TutorialPopup("diagnosisSheetTwo");
+        //}
+        /*else if (deskPopupActive)
         {
             TutorialPopup("grimoire");
-        }*/
+        }
         else
         {
             if (popupTextBox.text.Contains("Pay close attention to each ailment's description"))
             {
                 //AilmentIconColourController.Instance.ResetAilmentIconBackground();
-                popupMenu.transform.position = spawnPosition;
+                popupMenu.transform.position = initialPopupMenuPosition;
                 ExitMenu(popupMenu);
             }
             else if (popupTextBox.text.Contains("Thank-a-you so much for to playing our game!"))
@@ -231,7 +314,7 @@ public class MenuManager : MonoBehaviour
             {
                 ExitMenu(popupMenu);
             }
-        }
+        }*/
     }
 
     void Quit()

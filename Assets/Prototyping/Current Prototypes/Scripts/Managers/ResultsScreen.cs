@@ -27,7 +27,8 @@ public class ResultsScreen : MonoBehaviour
     public Image resultsIcon;
     //public Image resultsLogo;
 
-
+        public Button progressButton;
+        private TMP_Text progressButtonText;
 
     private bool clientCured;
     private Color textHidden;
@@ -45,6 +46,8 @@ public class ResultsScreen : MonoBehaviour
     void Awake()
     {
         _instance = this;
+
+        progressButtonText = progressButton.GetComponentInChildren<TMP_Text>();
     }
 
     /*void Start()
@@ -55,6 +58,18 @@ public class ResultsScreen : MonoBehaviour
         textHidden = new Color (1,1,1,0);
         InitialiseResultsDisplay();
     }*/
+
+    public void NextDayButton(bool lastClientOfDay)
+    {
+        if (lastClientOfDay)
+        {
+            progressButtonText.text = "End Day";
+        }
+        else
+        {
+            progressButtonText.text = "Next Client";
+        }
+    }
 
     public void ResetResultsScreen()
     {
