@@ -19,6 +19,7 @@ public class DialogueRunner : MonoBehaviour
 
     private bool notSeenDeskHint;
     private bool firstVisitDesk;
+    public bool cleanDesk;
     private bool notSeenDiagnosisSheetHint;
     private bool notSeenFinalDiagnosisPopup;
     private bool justSubmittedDiagnosis;
@@ -72,6 +73,7 @@ public class DialogueRunner : MonoBehaviour
 
         notSeenDeskHint = true;
         firstVisitDesk = false;
+        cleanDesk = false;
         notSeenDiagnosisSheetHint = true;
         notSeenFinalDiagnosisPopup = true;
         justSubmittedDiagnosis = false;
@@ -169,11 +171,17 @@ public class DialogueRunner : MonoBehaviour
                 SceneManager.Instance.EnableGameplay();
                 notSeenDeskHint = false;
             }
-            else if (firstVisitDesk)
+            else if (firstVisitDesk && !cleanDesk)
             {
                 CloseDialogueWindow();
-                MenuManager.Instance.TutorialPopup("grimoire");
+                MenuManager.Instance.TutorialPopup("initDeskPrompts");
                 firstVisitDesk = false;
+            }
+            else if ((!firstVisitDesk) && (cleanDesk))
+            {
+                CloseDialogueWindow();
+                // MenuManager.Instance.TutorialPopup("grimoire");
+                cleanDesk = false;  // just to avoid this in future checks
             }
             // if the player has submitted the ailment and hasn't seen the next set of hints
             else if (GameManager.Instance.ailmentChosen && notSeenDiagnosisSheetHint)
@@ -262,10 +270,17 @@ public class DialogueRunner : MonoBehaviour
             }
             else if (target == "desk")
             {
-                currentDialogue = DialogueHolder.Instance.deskIntroduction._dialogue;
+                // currentDialogue = DialogueHolder.Instance.deskIntroduction._dialogue;
+                currentDialogue = DialogueHolder.Instance.deskIntroductionPartOne._dialogue;
                 SetupDialogueForTutorial();
                 RunDialogue();
                 firstVisitDesk = true;
+            }
+            else if (target == "desk two")
+            {
+                currentDialogue = DialogueHolder.Instance.deskIntroductionPartTwo._dialogue;
+                SetupDialogueForTutorial();
+                RunDialogue();
             }
             else if (target == "ailmentSubmitted")
             {
@@ -383,13 +398,14 @@ public class DialogueRunner : MonoBehaviour
     void PerformAction(string stringToRead)
     {
         
-        if (stringToRead.Contains("Grimoire"))
+        /*if (stringToRead.Contains("Grimoire"))
         {
             Debug.Log("---.GetComponent<ThingThatDoesTheFlashy>().PulseColour();");
             UIManager.Instance.HighlightCanvasElement("grimoire");
-        }
+        }*/
         
-        else if (stringToRead.Contains("Each recipe has an"))
+        //else if (stringToRead.Contains("Each recipe has an"))
+        if (stringToRead.Contains("Each recipe has an"))
         {
             Debug.Log("---.GetComponent<ThingThatDoesTheFlashy>().PulseColour();");
             UIManager.Instance.HighlightCanvasElement("effect");
@@ -399,6 +415,10 @@ public class DialogueRunner : MonoBehaviour
             Debug.Log("---.GetComponent<ThingThatDoesTheFlashy>().PulseColour();");
             UIManager.Instance.HighlightCanvasElement("target");
         }
+        /*else if (stringToRead.Contains("left some old notes out"))
+        {
+
+        }*/
         else
         {
             return;

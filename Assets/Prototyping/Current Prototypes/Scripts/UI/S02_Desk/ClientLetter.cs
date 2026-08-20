@@ -118,7 +118,7 @@ public class ClientLetter : MonoBehaviour
 
     public void UpdateCurrentDayClientsList()
     {
-        // THIS WILL NEED TO BE FIXED. HONESTLY SHOULD PROBABLY MOVE ASSIGN DAILY TO HERE INSTEAD, BUT,,, IDK
+        // THIS WILL LIKELY NEED TO BE FIXED. HONESTLY SHOULD PROBABLY MOVE ASSIGN DAILY TO HERE INSTEAD, BUT,,, IDK
 
 
         if (DayManager.Instance.currentDayNumber == 1)
@@ -132,11 +132,11 @@ public class ClientLetter : MonoBehaviour
 
 
 
-
-        foreach (ClientData c in currentDayClientsList)
+        // Debug to check that the clients have been assigned correctly for the day:
+        /*foreach (ClientData c in currentDayClientsList)
         {
             Debug.Log(c._clientName);
-        }
+        }*/
     }
 
     // Creates the lists used to access the clients and their associated images
@@ -361,14 +361,12 @@ public class ClientLetter : MonoBehaviour
 
         foreach (ClientData c in currentDayClientsList)
         {
-            Debug.Log(c._clientName);
+            // Debug.Log(c._clientName);
             if (c == clientLetter)
             {
                 index = currentDayClientsList.IndexOf(c);
-                Debug.Log("Found client.");
-                Debug.Log(index);
-                
-
+                // Debug.Log("Found client.");
+                // Debug.Log(index);
             }
             else
             {

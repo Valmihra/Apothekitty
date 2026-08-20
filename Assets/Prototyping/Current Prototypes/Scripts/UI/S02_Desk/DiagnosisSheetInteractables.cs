@@ -16,6 +16,8 @@ public class DiagnosisSheetInteractables : MonoBehaviour
 
     public Button submitDiagnosisButton;
 
+    public CanvasGroup toggleBoxes;
+
     private List<TMP_Dropdown> dropdownsList;
     private List<Toggle> togglesList;
 
@@ -29,6 +31,9 @@ public class DiagnosisSheetInteractables : MonoBehaviour
         string slot02 = "x";
         string slot03 = "x";
         string slot04 = "x";
+
+        string defaultTargetDropdownText = "Please select a target";
+        string defaultEffectDropdownText = "Please select an effect";
     
     // Vector used to reset draggable objects
     private Vector2 startingPosition;
@@ -38,12 +43,10 @@ public class DiagnosisSheetInteractables : MonoBehaviour
     public TMP_Text clientExtras;
     public TMP_Text clientAilment;
 
-    // Start is called before the first frame update
+
     void Awake()
     {
-        startingPosition = transform.position;
-        //grimoireNavigation = UIManager.Instance.grimoireNavScript;
-            //FindObjectOfType<GrimoireNavigation>();
+        /*startingPosition = transform.position;
 
         GenerateLists();
 
@@ -56,14 +59,64 @@ public class DiagnosisSheetInteractables : MonoBehaviour
             invertor.onValueChanged.AddListener(delegate {ChangeToggleActivity(invertor); });
 
             submitDiagnosisButton.onClick.AddListener(delegate {SubmissionButtonPressed(); });
-
+            */
         //FillSheet();
     }
 
+    public void InitialiseDiagnosisSheet()
+    {
+        Debug.Log("Initialising the diagnosis sheet...");
+        startingPosition = transform.position;
+        GenerateLists();
+
+            primaryEffect.onValueChanged.AddListener(delegate {DropdownValueUpdate(primaryEffect); });
+            primaryTarget.onValueChanged.AddListener(delegate {DropdownValueUpdate(primaryTarget); });
+            secondaryEffect.onValueChanged.AddListener(delegate {DropdownValueUpdate(secondaryEffect); });
+            secondaryTarget.onValueChanged.AddListener(delegate {DropdownValueUpdate(secondaryTarget); });
+
+            enhancer.onValueChanged.AddListener(delegate {ChangeToggleActivity(enhancer); });
+            invertor.onValueChanged.AddListener(delegate {ChangeToggleActivity(invertor); });
+
+            submitDiagnosisButton.onClick.AddListener(delegate {SubmissionButtonPressed(); });
+
+            // ResetDiagnosisSheet();
+    }
+    
+    // Resets the position of the UI in the scene, and then checks which elements to display and resets all values.
     public void ResetDiagnosisSheet()
     {
         transform.position = startingPosition;
-        // allows interaction with the canvas elements
+
+        primaryEffect.options[0].text = defaultEffectDropdownText;
+        secondaryEffect.options[0].text = defaultEffectDropdownText;
+
+        primaryTarget.options[0].text = defaultTargetDropdownText;
+        secondaryTarget.options[0].text = defaultTargetDropdownText;
+
+        // checks to see which configuration to display
+        if (DayManager.Instance.currentDayNumber == 1)
+        {
+            Debug.Log("Setting up the simplified diagnosis sheet.");
+            //UIManager.Instance.DisableUI(secondaryEffect.GetComponent<CanvasGroup>());
+            secondaryEffect.gameObject.SetActive(false);
+            //UIManager.Instance.DisableUI(secondaryTarget.GetComponent<CanvasGroup>());
+            secondaryTarget.gameObject.SetActive(false);
+            //UIManager.Instance.DisableUI(toggleBoxes);
+            toggleBoxes.gameObject.SetActive(false);
+        }
+        else
+        {
+            Debug.Log("Setting up the full diagnosis sheet.");
+            //UIManager.Instance.EnableUI(secondaryEffect.GetComponent<CanvasGroup>());
+            secondaryEffect.gameObject.SetActive(true);
+            //UIManager.Instance.EnableUI(secondaryTarget.GetComponent<CanvasGroup>());
+            secondaryTarget.gameObject.SetActive(true);
+            //UIManager.Instance.EnableUI(toggleBoxes);
+            toggleBoxes.gameObject.SetActive(true);
+        }
+
+
+        // allows interaction with the canvas elements          -- check to see if safe to use this here or if need to disable interaction for hidden objs separately!
         foreach (TMP_Dropdown dropdown in dropdownsList)
         {
             dropdown.value = 0;
@@ -74,6 +127,8 @@ public class DiagnosisSheetInteractables : MonoBehaviour
             toggle.isOn = false;
             toggle.interactable = true;
         }
+
+        // allows the player to try to submit their combination
         submitDiagnosisButton.interactable = true;
     }
 
@@ -94,9 +149,6 @@ public class DiagnosisSheetInteractables : MonoBehaviour
 
         int listNumber = 0;
         int companionNumber = 0;
-
-        //Debug.Log("dropdownName is currently " + dropdownName + ".");
-        //Debug.Log("recipe is currently " + proposedRecipe.text + ".");
 
         if (selected == dropdownsList[0])
         {
@@ -129,6 +181,7 @@ public class DiagnosisSheetInteractables : MonoBehaviour
             if (dropdownsList[companionNumber].value == dropdownValue)
             {
                 selected.value = 0;
+                // maybe flash this and the companion dropdown to indicate that it's a double up?   (FOR SAUCE)
                 return;
             }
         }
@@ -213,22 +266,26 @@ public class DiagnosisSheetInteractables : MonoBehaviour
         if (dropdown == primaryEffect)
         {
             heldName01 = name;
-            UpdateSlotOne(name);
+            // UpdateSlotOne(name);
+            UpdateSlot(slot01, name);
         }
         else if (dropdown == primaryTarget)
         {
             heldName02 = name;
-            UpdateSlotTwo(name);
+            // UpdateSlotTwo(name);
+            UpdateSlot(slot02, name);
         }
         else if (dropdown == secondaryEffect)
         {
             heldName03 = name;
-            UpdateSlotThree(name);
+            // UpdateSlotThree(name);
+            UpdateSlot(slot03, name);
         }
         else if (dropdown == secondaryTarget)
         {
             heldName04 = name;
-            UpdateSlotFour(name);
+            // UpdateSlotFour(name);
+            UpdateSlot(slot04, name);
         }
         else
         {
@@ -238,33 +295,36 @@ public class DiagnosisSheetInteractables : MonoBehaviour
         //var name = (dropdown == primaryEffect) ? UpdateSlotOne(name) : (dropdown == primaryTarget) ? UpdateSlotTwo(name) : (dropdown == secondaryEffect) ? UpdateSlotThree(name) : UpdateSlotFour (name);
     }
 
-    void UpdateSlotOne(string name)
+    /*void UpdateSlotOne(string name)
     {
         slot01 = name;
-        //Debug.Log("call to slot one.");
         GenerateRecipe();
     }
 
     void UpdateSlotTwo(string name)
     {
         slot02 = name;
-        //Debug.Log("call to slot two.");
         GenerateRecipe();
     }
 
     void UpdateSlotThree(string name)
     {
         slot03 = name;
-        //Debug.Log("call to slot three.");
         GenerateRecipe();
     }
 
     void UpdateSlotFour(string name)
     {
         slot04 = name;
-        //Debug.Log("call to slot four.");
+        GenerateRecipe();
+    }*/
+
+    void UpdateSlot(string slotToUpdate, string infoToPass)
+    {
+        slotToUpdate = infoToPass;
         GenerateRecipe();
     }
+
 
     void GenerateRecipe()
     {
@@ -276,7 +336,7 @@ public class DiagnosisSheetInteractables : MonoBehaviour
         {
             proposedRecipe.text = ((slot01) + (" ") + (slot02) + (" ") + (slot03) + (" ") + (slot04)).ToString();
         }
-        Debug.Log("Recipe updated.");
+        // Debug.Log("Recipe updated.");
     }
 
     void GenerateLists()
@@ -294,8 +354,8 @@ public class DiagnosisSheetInteractables : MonoBehaviour
 
     void SubmissionButtonPressed()
     {
-        Debug.Log("Button Pressed!");
-        
+        // Debug.Log("Button Pressed!");
+        // shouldn't have to update these bools, since hidden dropdown values should always be 0.
         bool validPrimaryRecipeCombination = (primaryEffect.value <= 0) || (primaryTarget.value <= 0) ? false : true;
         bool validSecondaryRecipeCombination = (secondaryEffect.value <= 0) && (secondaryTarget.value <= 0) ? true : (secondaryEffect.value > 0) && (secondaryTarget.value > 0) ? true : false;
         
@@ -319,16 +379,14 @@ public class DiagnosisSheetInteractables : MonoBehaviour
             else
             {
                 MenuManager.Instance.InvalidPopup();
-                Debug.Log("Would bring up invalid recipe text, try again popup.");
+                // Debug.Log("Would bring up invalid recipe text, try again popup.");
             }
         }
         else
         {
             MenuManager.Instance.InvalidPopup();
-            Debug.Log("Would bring up invalid recipe text, try again popup.");
+            // Debug.Log("Would bring up invalid recipe text, try again popup.");
         }
-
-        //        
         
     }
 }

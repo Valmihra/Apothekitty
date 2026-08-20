@@ -6,6 +6,11 @@ using TMPro;
 
 public class GrimoireNavigation : MonoBehaviour
 {
+    [Header("Image Display")]
+        public Image frontCover;
+        public Image standardPage;
+        private Image displayImage;
+
     [Header("Navigation Buttons")]
         public Button navigationLeft;
         public Button navigationRight;
@@ -16,10 +21,14 @@ public class GrimoireNavigation : MonoBehaviour
         public TMP_Text ailmentDescription;
         public Image ailmentIcon;
         public GameObject selectionIcon;
+        public CanvasGroup ailmentIconCanvasGroup;
 
+        public Color defaultTextColour;
+        public Color hiddenTextColour;
         //public CanvasGroup pageContents;
 
     [Header("Ailment Icons")]
+    public Image tempIcon00;
         public Image ailmentIcon01;
         public Image ailmentIcon02;
         public Image ailmentIcon03;
@@ -39,6 +48,9 @@ public class GrimoireNavigation : MonoBehaviour
         public GameObject clientLetterObj;
         public GameObject diagnosisSheetObj;
         public GameObject navigationButtonsObj;
+
+        private Vector2 buttonsPositionPage;
+        private Vector2 buttonsPositionCover;
     
     [Header("Ailment Information")]
         public string selectedAilment;    // For display on the Diagnosis sheet later? may not be necessary if just use ... .text, ... .ailmentName etc.
@@ -50,6 +62,7 @@ public class GrimoireNavigation : MonoBehaviour
         private int spiritTabPageNum;
 
         public bool ailmentChosen;
+        private bool notOpened;
         
         // Vector used to reset draggable objects
         private Vector2 startingPosition;
@@ -57,6 +70,7 @@ public class GrimoireNavigation : MonoBehaviour
     void Awake()
     {
         startingPosition = transform.position;
+        displayImage = GetComponent<Image>();
     }
 
     void Start()
@@ -80,6 +94,8 @@ public class GrimoireNavigation : MonoBehaviour
     // Basic scene setup
     void InitialiseScene()
     {
+        notOpened = true;
+
         ailmentSelection.interactable = true;
         selectionIcon.SetActive(false);
         ailmentChosen = false;
@@ -87,6 +103,12 @@ public class GrimoireNavigation : MonoBehaviour
 
         // reset position on screen
         transform.position = startingPosition;
+
+        buttonsPositionPage = navigationButtonsObj.transform.position;
+        buttonsPositionCover = new Vector2((buttonsPositionPage.x + 100), buttonsPositionPage.y);
+
+        defaultTextColour = new Color(0,0,0);
+        hiddenTextColour= new Color(0,0,0,0);
     }
 
     // Immediately jumps to one of three key page numbers depending on tab chosen
@@ -114,6 +136,11 @@ public class GrimoireNavigation : MonoBehaviour
     // Determines which directions you can turn pages, and alters the UI's information to imitate a page turn 
     void GoToPage(int target)
     {
+        if (target != 0 && notOpened)
+        {
+            MenuManager.Instance.TutorialPopup("grimoire");
+            notOpened = false;
+        }
         navigationRight.enabled = true;
         navigationLeft.enabled = true;
         
@@ -122,16 +149,40 @@ public class GrimoireNavigation : MonoBehaviour
         {
             navigationRight.enabled = false;
         }
+
         if (target == 0)
         {
-            // closes the book? or just turns off navigation?
+            // turns details transparent
+            ailmentName.color = hiddenTextColour;
+            ailmentDescription.color = hiddenTextColour;
+            // UIManager.Instance.DisableUI(ailmentIconCanvasGroup);
+            ailmentIconCanvasGroup.gameObject.SetActive(false);
+
+            // hides left navigation and sets sprite icon
             navigationLeft.enabled = false;
+            displayImage.sprite = frontCover.sprite;
+
+            navigationButtonsObj.GetComponent<RectTransform>().transform.position = buttonsPositionCover;
             // close book option.enabled = true?
         }
+        else
+        {
+            ailmentName.color = defaultTextColour;
+            ailmentDescription.color = defaultTextColour;
+            // UIManager.Instance.EnableUI(ailmentIconCanvasGroup);
+            ailmentIconCanvasGroup.gameObject.SetActive(true);
+
+            displayImage.sprite = standardPage.sprite;
+
+            ailmentName.text = GrimoirePagesData.Instance.pagesArray[target]._ailmentName;
+            ailmentDescription.text = GrimoirePagesData.Instance.pagesArray[target]._ailmentDescription;
+            ailmentIcon.sprite = ailmentIcons[target].sprite;
+
+            navigationButtonsObj.GetComponent<RectTransform>().transform.position = buttonsPositionPage;
+        }
+        //if
+
         
-        ailmentName.text = GrimoirePagesData.Instance.pagesArray[target]._ailmentName;
-        ailmentDescription.text = GrimoirePagesData.Instance.pagesArray[target]._ailmentDescription;
-        ailmentIcon.sprite = ailmentIcons[target].sprite;
         
         currentPageNumber = target;
     }
@@ -168,6 +219,7 @@ public class GrimoireNavigation : MonoBehaviour
         //List<Image> icons = new List<Image>();
         ailmentIcons = new List<Image>();
 
+        ailmentIcons.Add(tempIcon00);
         ailmentIcons.Add(ailmentIcon01);
         ailmentIcons.Add(ailmentIcon02);
         ailmentIcons.Add(ailmentIcon03);

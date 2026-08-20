@@ -54,6 +54,7 @@ public class DayManager : MonoBehaviour
 
     public void InitialiseDayManager()
     {
+        Debug.Log("Initialising day manager...");
         InitialiseLists();
         AssignDailyClients();
     }

@@ -17,7 +17,9 @@ public class DialogueHolder : MonoBehaviour
 
     // Separate Dialogue Snippets
     public DialogueSnippet introduction;
-    public DialogueSnippet deskIntroduction;
+    //public DialogueSnippet deskIntroduction;
+    public DialogueSnippet deskIntroductionPartOne;
+    public DialogueSnippet deskIntroductionPartTwo;
     public DialogueSnippet ailmentSubmittedIntroduction;
     public DialogueSnippet diagnosisSheetIntroduction;
     public DialogueSnippet treatmentPlanSubmittedIntroduction;
@@ -72,10 +74,24 @@ public class DialogueHolder : MonoBehaviour
             introduction._dialogue.Add("Sounds busy out there. I'd better open up the shop!");
             //introduction._dialogue.Add("DEBUGGING TEST");
 
-        deskIntroduction = new DialogueSnippet();
+        /*deskIntroduction = new DialogueSnippet();
             deskIntroduction._dialogue = new List<string>();
             deskIntroduction._dialogue.Add("I haven't done this in a while... I'd better refamiliarise myself with the process.");
             deskIntroduction._dialogue.Add("Okay, all the information I'll need is on the New Patient Form. I just have to match it up to the <#8A1E1E>Grimoire</color>!");
+            */
+
+
+        deskIntroductionPartOne = new DialogueSnippet();
+            deskIntroductionPartOne._dialogue = new List<string>();
+            deskIntroductionPartOne._dialogue.Add("I haven't done this in a while... I'd better refamiliarise myself with the process.");
+            deskIntroductionPartOne._dialogue.Add("Oh, silly me! I've left some old notes out. I'd better <#8A1E1E>clean up the workspace</color> a bit before I get started.");
+
+        deskIntroductionPartTwo = new DialogueSnippet();
+            deskIntroductionPartTwo._dialogue = new List<string>();
+            deskIntroductionPartTwo._dialogue.Add("Much better!");
+            deskIntroductionPartTwo._dialogue.Add("Okay, all the information I'll need is on the New Patient Form. I just have to match it up to the <#8A1E1E>Grimoire</color>!");
+
+
 
         ailmentSubmittedIntroduction = new DialogueSnippet();
             ailmentSubmittedIntroduction._dialogue = new List<string>();

@@ -23,7 +23,7 @@ public class HerbDrawersController : MonoBehaviour
     void SetupList()
     {
         allHerbDrawers = new List<DrawerSensor>();
-        Debug.Log("Herb Drawers are resetting, list currently contains " + allHerbDrawers.Count + " drawers.");
+        // Debug.Log("Herb Drawers are resetting, list currently contains " + allHerbDrawers.Count + " drawers.");
         foreach (Transform child in transform)
         {
             DrawerSensor temp = child.GetComponent<DrawerSensor>();       // switch to trygetcomponent?
@@ -32,7 +32,7 @@ public class HerbDrawersController : MonoBehaviour
                 allHerbDrawers.Add(temp);
             }
         }
-        Debug.Log("Reset complete. There are " + allHerbDrawers.Count + " drawers to close.");
+        // Debug.Log("Reset complete. There are " + allHerbDrawers.Count + " drawers to close.");
     }
 
     public void ResetHerbDrawerIcons()

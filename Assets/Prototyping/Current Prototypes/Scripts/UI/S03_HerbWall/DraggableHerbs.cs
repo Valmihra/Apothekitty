@@ -54,7 +54,7 @@ public class DraggableHerbs : Draggable
             cuttingObject.transform.position = eventData.position;// - drag;
     }
 
-    // Checks to see if the UI is within the set boundaries, and places it accordingly
+    // Hides the cutting and moves it back to the drawer
     public override void OnEndDrag(PointerEventData eventData)
     {
         UIManager.Instance.DisableUI(movableCutting);

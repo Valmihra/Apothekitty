@@ -67,6 +67,11 @@ public class GrimoirePagesData : MonoBehaviour
 
     void SetPageData()  // alphabetically set up for now
     {
+                SinglePage cover = new SinglePage();
+                cover.UpdateName("cover");
+                cover.UpdateDescription("cover");
+                    pagesList.Add(cover);
+
         SinglePage chronicInsomnia = new SinglePage();
         chronicInsomnia.UpdateName("Chronic Insomnia");
         chronicInsomnia.UpdateDescription("Patients present with significant disturbances with their body's internal clock and circadian rhythm. These sleep complications are often shown to result in lower quality and quantity of sleep. \n\nDisturbances and symptoms have occurred longer than three months.");   //\n\nThis ");

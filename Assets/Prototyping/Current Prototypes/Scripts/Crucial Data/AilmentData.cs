@@ -13,7 +13,6 @@ public class AilmentData : MonoBehaviour
         public int secondaryEffectDropdownNumber;
         public int secondaryTargetDropdownNumber;
 
-            //public string modifierType;
         public int modifierType;
         public List<string> acceptableHerbs;
 
@@ -26,7 +25,7 @@ public class AilmentData : MonoBehaviour
                 // public string secondaryTargetHerb;
                 
 
-        // sets the name of the client with the associated ailment for the results screen to check
+        // Sets the affected client name                for the results screen to check
         public void AttachToClient(string targetClient)
         {
             affectedClientName = targetClient;
@@ -118,6 +117,7 @@ public class AilmentData : MonoBehaviour
             - "none"
             This is easier to read when checking results later.
             */
+            
     public void InitialiseAilmentData()
     {
         allAilments = new List<Ailment>();

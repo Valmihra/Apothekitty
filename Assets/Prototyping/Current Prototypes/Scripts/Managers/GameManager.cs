@@ -145,8 +145,11 @@ public class GameManager : MonoBehaviour
         ClientLetter.Instance.InitialiseClientLetter();
         AilmentData.Instance.InitialiseAilmentData();
         DayManager.Instance.InitialiseDayManager();
-
+        
         DayManager.Instance.ResetGameDays();
+
+        diagnosisSheetInteractables.InitialiseDiagnosisSheet();
+        
         ClientLetter.Instance.UpdateCurrentDayClientsList();
     }
 
@@ -199,6 +202,30 @@ public class GameManager : MonoBehaviour
 
                 // for positions, it might be easier to add a reset function to the 
                 // draggable components? then search for all of them and reset? idk.
+    }
+
+    public void DebugJumpDay(int dayNumber)
+    {
+        InitialiseAllGameData();
+
+        ResetBasicInformation();
+        ResetInteractableGameElements();
+
+        DayManager.Instance.currentDayNumber = dayNumber;
+        diagnosisSheetInteractables.InitialiseDiagnosisSheet();
+        ClientLetter.Instance.UpdateCurrentDayClientsList();
+        
+        
+
+
+        if (runningTutorial)
+        {
+            BeginTutorial();
+        }
+        else
+        {
+            Debug.Log("Skipping tutorial for debug purposes.");
+        }
     }
 
     // similar to full reset, but it maintains the day number and sets up accordingly

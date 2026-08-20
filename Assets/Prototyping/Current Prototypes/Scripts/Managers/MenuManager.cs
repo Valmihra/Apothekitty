@@ -178,6 +178,11 @@ public class MenuManager : MonoBehaviour
             UIManager.Instance.HighlightCanvasElement("arrows");
             popupText = "You'll find the patient form on your desk. Click the <#8A1E1E>arrows</color> in the bottom right to navigate between screens.\n\nIf you feel lost at any point, click the arrow by the quest log to see what you still need to do.";
         }
+        else if (popupType == "initDeskPrompts")
+        {
+            // UIManager.Instance.
+            popupText = "Papers pile up quickly, but you can always click and drag things on your desk to keep it organised. \n\nTry moving the old note to the bin.";
+        }
         else if (popupType == "grimoire")
         {
             popupMenu.transform.position = movedDownPosition;   //AilmentIconColourController.Instance.ShowAilmentIconBackground();   //UIManager.Instance.HighlightCanvasElement("ailmentIcon");
