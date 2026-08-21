@@ -25,7 +25,8 @@ public class HerbalistNotesOnHover : MonoBehaviour
 
     void Start()
     {
-        UIManager.Instance.DisableUI(herbalistNoteCanvasGroup);
+        herbalistNoteCanvasGroup.gameObject.SetActive(false);
+        //UIManager.Instance.DisableUI(herbalistNoteCanvasGroup);
         SetRespawnPosition();
     }
 
@@ -52,8 +53,8 @@ public class HerbalistNotesOnHover : MonoBehaviour
 
         //herbalistNoteCanvasGroup.anchoredPosition =
 
-
-        UIManager.Instance.EnableUI(herbalistNoteCanvasGroup);
+        herbalistNoteCanvasGroup.gameObject.SetActive(true);
+        //UIManager.Instance.EnableUI(herbalistNoteCanvasGroup);
     }
 
     // storedPosition is where the note will spawn at on hover

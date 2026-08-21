@@ -242,7 +242,7 @@ public class ClientLetter : MonoBehaviour
         Invoke(nameof(SpawnClient), 1.0f);*/
         else
         {
-            if (GameManager.Instance.seenFirstClient);
+            if (GameManager.Instance.seenFirstClient)//;
             {
                 Debug.Log("Seen first client");
                 Debug.Log(DayManager.Instance.currentDayNumber);

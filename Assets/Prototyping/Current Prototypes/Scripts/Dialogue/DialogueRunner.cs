@@ -196,7 +196,7 @@ public class DialogueRunner : MonoBehaviour
                 CloseDialogueWindow();
                 
                 notSeenFinalDiagnosisPopup = false;
-                MenuManager.Instance.TutorialPopup("diagnosisSheet");
+                // MenuManager.Instance.TutorialPopup("diagnosisSheet");
             }
             else if (justSubmittedDiagnosis)
             {

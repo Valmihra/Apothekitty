@@ -8,6 +8,9 @@ public class TutorialBin : MonoBehaviour, IDropHandler
 {
     public GameObject parentObject;
     private RectTransform rectTransform;
+
+    private int timesTossed;
+    private int numToTossOnDesk = 3;
     
     void Awake()
     {
@@ -36,14 +39,18 @@ public class TutorialBin : MonoBehaviour, IDropHandler
             if (eventData.pointerDrag.TryGetComponent<DraggableTutorialItem>(out DraggableTutorialItem draggableTutorialItem))
             {
                 Debug.Log("check works");
-                DialogueRunner.Instance.cleanDesk = true;
-                Debug.Log(DialogueRunner.Instance.cleanDesk);
-                DialogueRunner.Instance.GetDialogue("desk two");
-
 
                 Destroy(draggableTutorialItem.gameObject);
-                
-                Destroy(parentObject);
+                timesTossed++;
+
+                if (timesTossed == numToTossOnDesk)
+                {
+                    DialogueRunner.Instance.cleanDesk = true;
+                    Debug.Log(DialogueRunner.Instance.cleanDesk);
+                    DialogueRunner.Instance.GetDialogue("desk two");
+                    
+                    Destroy(parentObject);
+                }
             }
             
         }

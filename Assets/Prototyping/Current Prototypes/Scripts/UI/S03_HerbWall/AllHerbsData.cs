@@ -233,8 +233,9 @@ public class AllHerbsData : MonoBehaviour
 
     public void HideNote()
     {
+        herbalistNotesOnHover.herbalistNoteCanvasGroup.gameObject.SetActive(false);
         //Debug.Log("Sent")
-        UIManager.Instance.DisableUI(herbalistNotesOnHover.herbalistNoteCanvasGroup);
+        //UIManager.Instance.DisableUI(herbalistNotesOnHover.herbalistNoteCanvasGroup);
     }
 
     /*public void UpdateNoteLocation(GameObject activeHerb)
