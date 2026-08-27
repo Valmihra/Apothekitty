@@ -17,6 +17,6 @@ public class PlayButton : MonoBehaviour
     
     void PlayGame()
     {
-        MenuManager.Instance.ExitMenu(MenuManager.Instance.pauseMenu);
+        MenuManager.Instance.ExitMenu(MenuManager.Instance.pauseMenuCanvasGroup);
     }
 }

@@ -9,8 +9,10 @@ public class ResultsScreenNextClient : MonoBehaviour
     private Button nextClient;
     private TMP_Text buttonText;
 
+	// MIGHT NOT BE NEEDED, COULD DELETE? IDK
+
     // Start is called before the first frame update
-    void Start()
+    /*void Start()
     {
         nextClient = GetComponent<Button>();
         buttonText = nextClient.GetComponentInChildren<TMP_Text>();
@@ -19,7 +21,7 @@ public class ResultsScreenNextClient : MonoBehaviour
         {
             Debug.Log("text found!!!!!!!!!!!!!!!!!!!!");
             Debug.Log("Text is " + buttonText.text);
-        }*/
+        }/
         nextClient.onClick.AddListener(delegate {NextClient(); });    
     }
 
@@ -40,5 +42,5 @@ public class ResultsScreenNextClient : MonoBehaviour
             GameManager.Instance.GoNextClient();
         }
         
-    }
+    }*/
 }

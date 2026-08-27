@@ -24,11 +24,11 @@ public class UIManager : MonoBehaviour
         private List<CanvasGroup> allMainCanvases;
 
     [Header("Menu Canvas Groups")]
-    public CanvasGroup pauseMenu;
-        private List<CanvasGroup> allCanvasesMenus;
+    public CanvasGroup pauseMenuCanvasGroup;
+        private List<CanvasGroup> allMenuCanvasGroupsList;
 
     [Header("Determinant Canvas Groups")]   /// if child canvasgroup tagged DETERMINANT, maybe check what should be displayed(??)
-    public CanvasGroup clientLetter;
+    public CanvasGroup activeClientData;
     public CanvasGroup grimoire;
     public CanvasGroup diagnosisSheet;
     public CanvasGroup grimoireNavigation;
@@ -175,7 +175,7 @@ public class UIManager : MonoBehaviour
         allMainCanvases.Add(herbWallGroup);         // 1
         allMainCanvases.Add(clientWindowGroup);     // 2
 
-        letterSpawnPoint = clientLetter.GetComponent<RectTransform>().anchoredPosition;
+        letterSpawnPoint = activeClientData.GetComponent<RectTransform>().anchoredPosition;
         grimoireSpawnPoint = grimoire.GetComponent<RectTransform>().anchoredPosition;
         diagnosisSheetSpawnPoint = diagnosisSheet.GetComponent<RectTransform>().anchoredPosition;
 
@@ -199,8 +199,8 @@ public class UIManager : MonoBehaviour
             
             tempCanvasGroups = null;
 
-            allCanvasesMenus = new List<CanvasGroup>();
-                allCanvasesMenus.Add(pauseMenu);
+            allMenuCanvasGroupsList = new List<CanvasGroup>();
+                allMenuCanvasGroupsList.Add(pauseMenuCanvasGroup);
 
     }
 
@@ -254,7 +254,7 @@ public class UIManager : MonoBehaviour
     void SetupInitialScene()
     {
         // gets spawnpoints for UI 
-        letterSpawnPoint = clientLetter.GetComponent<RectTransform>().anchoredPosition;
+        letterSpawnPoint = activeClientData.GetComponent<RectTransform>().anchoredPosition;
         grimoireSpawnPoint = grimoire.GetComponent<RectTransform>().anchoredPosition;
         diagnosisSheetSpawnPoint = diagnosisSheet.GetComponent<RectTransform>().anchoredPosition;
         
@@ -263,7 +263,7 @@ public class UIManager : MonoBehaviour
         SetupUI(allCanvasesClientWindow);
             GameManager.Instance.ResetScene();
 
-        foreach (CanvasGroup c in allCanvasesMenus)
+        foreach (CanvasGroup c in allMenuCanvasGroupsList)
         {
             DisableUI(c);
         }
@@ -411,9 +411,9 @@ public class UIManager : MonoBehaviour
 
     void GenerateSpawnpoints()
     {
-        letterSpawnPoint = clientLetter.GetComponent<RectTransform>().anchoredPosition;
+        letterSpawnPoint = activeClientData.GetComponent<RectTransform>().anchoredPosition;
         grimoireSpawnPoint = grimoire.GetComponent<RectTransform>().anchoredPosition;
         diagnosisSheetSpawnPoint = diagnosisSheet.GetComponent<RectTransform>().anchoredPosition;
-        //herbalistGuideSpawnPoint = clientLetter.GetComponent<RectTransform>().anchoredPosition;  
+        //herbalistGuideSpawnPoint = activeClientData.GetComponent<RectTransform>().anchoredPosition;  
     }*/
 }

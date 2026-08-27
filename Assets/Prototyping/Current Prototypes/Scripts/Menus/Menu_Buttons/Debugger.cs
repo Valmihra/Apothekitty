@@ -27,7 +27,7 @@ public class Debugger : MonoBehaviour
 
     void JumpDayTwo()
     {
-        GameManager.Instance.DebugJumpDay(2);
+        GameManager.Instance.DebugJumpToDayNumber(2);
 
     }
 }

@@ -5,8 +5,22 @@ using UnityEngine.EventSystems;
 
 public class DialogueSensor : MonoBehaviour, IPointerClickHandler
 {
+    private AnimatedTextEffect textEffectDialogueBox;
+
+    void Start()
+    {
+        textEffectDialogueBox = GetComponent<AnimatedTextEffect>();
+    }
     public void OnPointerClick(PointerEventData eventData)
     {
-        DialogueRunner.Instance.RunDialogue();
+        if (!textEffectDialogueBox.currentlyAnimating)
+        {
+            DialogueRunner.Instance.RunDialogue();
+        }
+        else
+        {
+            textEffectDialogueBox.JumpEndLine();
+        }
+        
     }
 }

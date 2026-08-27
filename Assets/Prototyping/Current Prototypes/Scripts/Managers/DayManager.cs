@@ -7,28 +7,27 @@ public class DayManager : MonoBehaviour
     public class Day
     {
         public int _dayNumber;
+
+        private int _numberOfClientsInDay;
         // public List<ClientLetter.ClientData> _dailyClientsList;
 
         public void AssignDayNumber(int dayNum)
         {
             _dayNumber = dayNum;
         }
-        
-        //public void GiveListContents()
-        //{
-        //    Debug.Log("Client list for day " + _dayNumber + " is " + _dailyClientsList.Count + " entries long.");
-        //}
     }
-
-    public Day currentDay;
-    private List<Day> allGameDays;
-
-    // private int totalGameDays = 14;
-    private int totalGameDays = 2;
-    public int currentDayNumber;
     
-    public List<ClientLetter.ClientData> day01ClientsList;
-    public List<ClientLetter.ClientData> day02ClientsList;
+    // Single Day read by GameManager. Determines contents of the level.
+    public Day currentDay;
+    public int currentDayNumber;
+    // List of all Day objects expected to run in the game.
+    // private List<Day> allGameDays;
+    public List<Day> allGameDays {get; private set;}
+    private int totalGameDays = 3;      // private int totalGameDays = 14;
+    
+    
+    //public List<ClientLetter.ClientData> day01ClientsList;
+    //public List<ClientLetter.ClientData> day02ClientsList;
 
     private static DayManager _instance;
     public static DayManager Instance
@@ -47,7 +46,7 @@ public class DayManager : MonoBehaviour
 
     /*void Start()
     {
-        InitialiseLists();
+        // FillAllGameDays();
         AssignDailyClients();
     }*/
 
@@ -55,18 +54,19 @@ public class DayManager : MonoBehaviour
     public void InitialiseDayManager()
     {
         Debug.Log("Initialising day manager...");
-        InitialiseLists();
-        AssignDailyClients();
+        FillAllGameDays();
+        // AssignDailyClients();
     }
 
-    void AssignDailyClients()
+    /*void AssignDailyClients()
     {
-        List<ClientLetter.ClientData> temporaryClientList = new List<ClientLetter.ClientData>(ClientLetter.Instance.clientsList);
-        // List<ClientLetter.ClientData> temporaryClientList = ClientLetter.Instance.clientsList.ToList();
+        Debug.Log("Days set up. Filling out daily client lists...");
+        List<ClientLetter.ClientData> temporaryClientList = new List<ClientLetter.ClientData>(ClientLetter.Instance.allClientsList);
+        // List<ClientLetter.ClientData> temporaryClientList = ClientLetter.Instance.allClientsList.ToList();
 
         foreach (Day d in allGameDays)
         {
-            foreach (ClientLetter.ClientData c in ClientLetter.Instance.clientsList)        //foreach (ClientLetter.ClientData c in temporaryClientList)
+            foreach (ClientLetter.ClientData c in ClientLetter.Instance.allClientsList)        //foreach (ClientLetter.ClientData c in temporaryClientList)
             {
                 if (c._clientDayNumber == d._dayNumber)
                 {
@@ -96,21 +96,25 @@ public class DayManager : MonoBehaviour
         }
 
         
-        /*Debug.Log("Clients found for day number 1 are...");         // + debugNumber + " are...");
+        --*Debug.Log("Clients found for day number 1 are...");         // + debugNumber + " are...");
         foreach (ClientLetter.ClientData c in day01ClientsList)// allGameDays[debugNumber]._dailyClientsList)
         {
             Debug.Log(c._clientName);
-        }*/
-        // ClientLetter.Instance.UpdateCurrentDayClientsList();
-    }
+        }
+        // ClientLetter.Instance.SetCurrentDayClientsList();
+    }*/
 
 
-    void InitialiseLists()
+    void FillAllGameDays()
     {
-        // allGameDays = new List<Day>(totalGameDays);
         allGameDays = new List<Day>(totalGameDays);
 
-        // TUTORIAL DAY
+        // TUTORIAL DAY - JIMOTHY
+        Day day00 = new Day();
+        day00.AssignDayNumber(0);
+            allGameDays.Add(day00);
+        
+        // TEMP_NPC01, TEMP_NPC02
         Day day01 = new Day();
         day01.AssignDayNumber(1);
             allGameDays.Add(day01);
@@ -125,30 +129,32 @@ public class DayManager : MonoBehaviour
             Debug.Log("All game days set up and accounted for.");
         }
 
-        day01ClientsList = new List<ClientLetter.ClientData>();
-        day02ClientsList = new List<ClientLetter.ClientData>();
+        //day01ClientsList = new List<ClientLetter.ClientData>();
+        //day02ClientsList = new List<ClientLetter.ClientData>();
     }
 
-    void SetDay()
+    void SetActiveGameDay()
     {
-        currentDay = allGameDays[currentDayNumber - 1];
+        currentDay = allGameDays[currentDayNumber];
         Debug.Log("Current day is " + currentDay._dayNumber);
     }
 
-    public void GoNextDay()
+    public void GoNextGameDay()
     {
         currentDayNumber++;
-        SetDay();
+        SetActiveGameDay();
     }
 
     public void ResetGameDays()
     {
-        currentDayNumber = 1;
-        SetDay();
+        // currentDayNumber = 1;
+        currentDayNumber = 0;
+        SetActiveGameDay();
     }
 
-    public void DebugJumpDay(int dayNum)
+    public void DebugJumpToDayNumber(int dayNum)
     {
         currentDayNumber = dayNum;
+        // SetActiveGameDay();
     }
 }

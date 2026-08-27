@@ -7,11 +7,12 @@ using TMPro;
 public class MenuManager : MonoBehaviour
 {
     [Header("Menu Canvas Groups")]
-    public CanvasGroup mainMenu;
-    public CanvasGroup pauseMenu;
-    public CanvasGroup popupMenu;
+    public CanvasGroup mainMenuCanvasGroup;
+    public CanvasGroup pauseMenuCanvasGroup;
+    public CanvasGroup popupMenuCanvasGroup;
+    public CanvasGroup progressMenuCanvasGroup;
     
-        public List<CanvasGroup> allCanvasesMenus;
+        public List<CanvasGroup> allMenuCanvasGroupsList;
     
     // COLOUR CHANGES
     // <color=red>  <#8A1E1E>
@@ -29,13 +30,18 @@ public class MenuManager : MonoBehaviour
     [Header("Popup Text References")]
     public TMP_Text popupTextBox;
     public TMP_Text popupPrompt;
+    
+    [Header("Progress Popup References")]
+    public TMP_Text progressPromptText;
+    public Button progressExitButton;
+    public Button progressContinueButton;
 
     private string popupText;
     private string defaultPopupPromptText = "Click box to close.";
     private string continuePopupPromptText = "Click box to continue.";
 
     private bool diagnosisSheetPopupActive;
-    private bool setPositions;
+    private bool popupPositionsSet;
     //private bool deskPopupActive;
 
     private static MenuManager _instance;
@@ -58,10 +64,10 @@ public class MenuManager : MonoBehaviour
         // diagnosisSheetPopupActive = false;
         // popupPrompt.text = defaultPopupPromptText;
 
-        // initialPopupMenuPosition = popupMenu.transform.position;
+        // initialPopupMenuPosition = popupMenuCanvasGroup.transform.position;
         // movedDownPosition = new Vector2(initialPopupMenuPosition.x, initialPopupMenuPosition.y-100f);
         // movedUpPosition = new Vector2(initialPopupMenuPosition.x, initialPopupMenuPosition.y+100f);
-        //HideMenuCanvases();
+        //HideAllMenuCanvases();
     }
 
     // ---------------------------------
@@ -74,37 +80,36 @@ public class MenuManager : MonoBehaviour
         // Sets bool and default prompt text for popup
         popupPrompt.text = defaultPopupPromptText;
         diagnosisSheetPopupActive = false;
-        setPositions = false;
+        popupPositionsSet = false;
         
 
-        InitialiseMenuCanvasGroupList();
-        GetPositions();
+        CreateMenuCanvasGroupList();
+        CreatePopupMenuPositions();
     }
     
     // Creates a list of all menu canvases
-    void InitialiseMenuCanvasGroupList()
+    void CreateMenuCanvasGroupList()
     {
-        allCanvasesMenus = new List<CanvasGroup>();
-        allCanvasesMenus.Add(pauseMenu);
-        allCanvasesMenus.Add(popupMenu);
-            allCanvasesMenus.Add(mainMenu);
-
-        //Debug.Log(allCanvasesMenus.Count + pauseMenu.name);
+        allMenuCanvasGroupsList = new List<CanvasGroup>();
+        allMenuCanvasGroupsList.Add(pauseMenuCanvasGroup);
+        allMenuCanvasGroupsList.Add(popupMenuCanvasGroup);
+            allMenuCanvasGroupsList.Add(mainMenuCanvasGroup);
+            allMenuCanvasGroupsList.Add(progressMenuCanvasGroup);
     }
 
     // Plots the relevant locations for the tutorial popup
-    void GetPositions()
+    void CreatePopupMenuPositions()
     {
-        if (!setPositions)
+        if (!popupPositionsSet)
         {
-            initialPopupMenuPosition = popupMenu.transform.position;
+            initialPopupMenuPosition = popupMenuCanvasGroup.transform.position;
             movedDownPosition = new Vector2(initialPopupMenuPosition.x, initialPopupMenuPosition.y - 100f);
             movedUpPosition = new Vector2(initialPopupMenuPosition.x, initialPopupMenuPosition.y + 100f);
-            setPositions = true;
+            popupPositionsSet = true;
         }
         else
         {
-            Debug.Log("Set positions already exist.");
+            // Debug.Log("Set positions already exist.");
             return;
         }
     }
@@ -122,6 +127,7 @@ public class MenuManager : MonoBehaviour
     {
         // game is paused?
         UIManager.Instance.DisableInteraction(SceneManager.Instance.currentCanvasGroup);
+        
         if ((SceneManager.Instance.onDesk) && (GameManager.Instance.ailmentChosen))
         {
             UIManager.Instance.DisableInteraction(SceneManager.Instance.diagnosisSheet);
@@ -140,16 +146,16 @@ public class MenuManager : MonoBehaviour
             UIManager.Instance.EnableInteraction(SceneManager.Instance.diagnosisSheet);
         }
 
-        if (menuCanvasGroup == mainMenu)
+        if (menuCanvasGroup == mainMenuCanvasGroup)
         {
             GameManager.Instance.onMainMenu = false;
         }
         // game is no longer paused?
     }
 
-    public void HideMenuCanvases()
+    public void HideAllMenuCanvases()
     {
-        foreach (CanvasGroup c in allCanvasesMenus)
+        foreach (CanvasGroup c in allMenuCanvasGroupsList)
         {
             UIManager.Instance.DisableUI(c);
         }
@@ -159,14 +165,14 @@ public class MenuManager : MonoBehaviour
     //      TUTORIAL POPUP FUNCTIONS
     // ---------------------------------
 
-    public void TutorialPopup(string popupType)
+    public void OpenTutorialPopup(string popupType)
     {
         /*if (GameManager.Instance.runningTutorial)
         {
             ,,
         }*/
         
-        OpenMenu(popupMenu);
+        OpenMenu(popupMenuCanvasGroup);
         
         if (popupType == "initialTutorial")
         {
@@ -185,13 +191,13 @@ public class MenuManager : MonoBehaviour
         }
         else if (popupType == "grimoire")
         {
-            popupMenu.transform.position = movedDownPosition;   //AilmentIconColourController.Instance.ShowAilmentIconBackground();   //UIManager.Instance.HighlightCanvasElement("ailmentIcon");
-            UIManager.Instance.HighlightCanvasElement("ailmentIcon");
+            popupMenuCanvasGroup.transform.position = movedDownPosition;   //AilmentIconColourController.Instance.ShowAilmentIconBackground();   //UIManager.Instance.HighlightCanvasElement("ailmentIcon");
+            UIManager.Instance.HighlightCanvasElement("ailmentIcon");   // could be better to set this as a small script attached to the actual object?
             popupText = "Your Grimoire acts as your reference point for ailments. Pay close attention to each ailment's description and compare it to your client's symptoms.\n\nOnce you think you've found the correct diagnosis, click on the <#8A1E1E>ailment's picture</color> to select it!";
         }
         else if (popupType == "diagnosisSheet")
         {
-            popupMenu.transform.position = movedUpPosition;
+            popupMenuCanvasGroup.transform.position = movedUpPosition;
             UIManager.Instance.HighlightCanvasElement("modifiers");
             popupPrompt.text = continuePopupPromptText;
             diagnosisSheetPopupActive = true;
@@ -202,7 +208,7 @@ public class MenuManager : MonoBehaviour
         {
             popupPrompt.text = defaultPopupPromptText;
             diagnosisSheetPopupActive = false;
-            popupText = "For extreme cases or large clients, you can strengthen the treatment with the <b>enhancer</b>. You can also choose the <b>inverter</b> to achieve the opposite effect, if the description calls for it.\n\nClick <b>submit treatment plan</b> when you're ready.";
+            popupText = "For extreme cases or large clients, you can strengthen the treatment with the <b>enhancerToggle</b>. You can also choose the <b>inverter</b> to achieve the opposite effect, if the description calls for it.\n\nClick <b>submit treatment plan</b> when you're ready.";
         }
         else if (popupType == "toHerbWall")
         {
@@ -232,47 +238,68 @@ public class MenuManager : MonoBehaviour
     //      ALERT MESSAGE FUNCTIONS
     // ---------------------------------
 
-    public void InvalidPopup()
+    public void InvalidDiagnosisSheetCombinationPopup()
     {
         popupTextBox.text = "This combination is invalid.\n\nPlease ensure you are choosing <b> at least </b> a single effect and a target to pair it with.";
-        OpenMenu(popupMenu);
+        OpenMenu(popupMenuCanvasGroup);
     }
 
-    public void NothingChosenPopup()
+    public void HerbWallNothingChosenToSubmitPopup()
     {
         popupTextBox.text = "Bro, you can't give the client <i>nothing</i>. They're a paying customer!!";
-        OpenMenu(popupMenu);
+        OpenMenu(popupMenuCanvasGroup);
     }
 
-    public void OneHerbChosenPopup()
+    public void HerbWallOneHerbChosenToSubmitPopup()
     {
         popupTextBox.text = "Don't get stingy, you need to pick at least two herbs for a recipe to do something!!";
-        OpenMenu(popupMenu);
+        OpenMenu(popupMenuCanvasGroup);
+    }
+
+    public void ProgressDayPopup()
+    {
+        string messageToPlayer; 
+        if (ClientLetter.Instance.currentDayClientsList.Count > 1)
+        {
+            // setup popup for next client
+			messageToPlayer = "Looks like someone else is heading in now... better keep going!";
+            progressContinueButton.GetComponent<ProgressLevelButton>().patientsRemaining = true;
+        }
+        else
+        {
+			// setup popup for end of day + results screen
+            messageToPlayer = "Seems like no one else is coming today... time to close up!";
+            progressContinueButton.GetComponent<ProgressLevelButton>().patientsRemaining = false;
+        }
+
+		progressContinueButton.GetComponent<ProgressLevelButton>().UpdateProgressLevelButtonText();
+        
+        progressPromptText.text = messageToPlayer;
+        OpenMenu(progressMenuCanvasGroup);
     }
 
     public void ExitGamePopup()
     {
         popupTextBox.text = "The game should close after you click this box.\n\nThank-a-you so much for to playing our game!";
-        OpenMenu(popupMenu);
+        OpenMenu(popupMenuCanvasGroup);
     }
 
     public void ClosePopup()
     {
-        // bool tutorialCheckComplete = false;
         // Tutorial-specific conditions to check for
         if (GameManager.Instance.runningTutorial)
         {
             if (diagnosisSheetPopupActive)
             {
-                popupMenu.transform.position = initialPopupMenuPosition;
-                TutorialPopup("diagnosisSheetTwo");
+                popupMenuCanvasGroup.transform.position = initialPopupMenuPosition;
+                OpenTutorialPopup("diagnosisSheetTwo");
                 return;
             }
             else if (popupTextBox.text.Contains("Pay close attention to each ailment's description"))
             {
                 //AilmentIconColourController.Instance.ResetAilmentIconBackground();
-                popupMenu.transform.position = initialPopupMenuPosition;
-                ExitMenu(popupMenu);
+                popupMenuCanvasGroup.transform.position = initialPopupMenuPosition;
+                ExitMenu(popupMenuCanvasGroup);
                 return;
             }
         }
@@ -280,44 +307,45 @@ public class MenuManager : MonoBehaviour
         // Constant conditions to check for
         //else
         //{
+        
             // Checks if trying to exit the game
             if (popupTextBox.text.Contains("Thank-a-you so much for to playing our game!"))
             {
-                ExitMenu(popupMenu);
+                ExitMenu(popupMenuCanvasGroup);
                 Invoke(nameof(Quit), 1f);
             }
             else
             {
-                ExitMenu(popupMenu);
+                ExitMenu(popupMenuCanvasGroup);
             }
         // }
 
 
         //if (diagnosisSheetPopupActive)
         //{
-        //    popupMenu.transform.position = initialPopupMenuPosition;
-        //    TutorialPopup("diagnosisSheetTwo");
+        //    popupMenuCanvasGroup.transform.position = initialPopupMenuPosition;
+        //    OpenTutorialPopup("diagnosisSheetTwo");
         //}
         /*else if (deskPopupActive)
         {
-            TutorialPopup("grimoire");
+            OpenTutorialPopup("grimoire");
         }
         else
         {
             if (popupTextBox.text.Contains("Pay close attention to each ailment's description"))
             {
                 //AilmentIconColourController.Instance.ResetAilmentIconBackground();
-                popupMenu.transform.position = initialPopupMenuPosition;
-                ExitMenu(popupMenu);
+                popupMenuCanvasGroup.transform.position = initialPopupMenuPosition;
+                ExitMenu(popupMenuCanvasGroup);
             }
             else if (popupTextBox.text.Contains("Thank-a-you so much for to playing our game!"))
             {
-                ExitMenu(popupMenu);
+                ExitMenu(popupMenuCanvasGroup);
                 Invoke(nameof(Quit), 1f);
             }
             else
             {
-                ExitMenu(popupMenu);
+                ExitMenu(popupMenuCanvasGroup);
             }
         }*/
     }

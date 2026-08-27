@@ -22,8 +22,8 @@ public class GrimoirePagesData : MonoBehaviour
         }
     }
 
-    private List<SinglePage> pagesList;
-    public SinglePage[] pagesArray;
+    private List<SinglePage> grimoirePagesList;
+    public SinglePage[] grimoirePagesArray;
 
     int totalPages = 0;
 
@@ -42,27 +42,24 @@ public class GrimoirePagesData : MonoBehaviour
     {
         _instance = this;
         grimoireNavigation = GetComponent<GrimoireNavigation>();
-        // if (_instance != this)
-        // {
-        //     Destroy(GetComponent<GameObject>());
-        // }
-        
-        InitialiseList();
+    }
+
+    public void InitialiseGrimoirePagesData()
+    {
+        InitialiseGrimoirePagesList();
         SetPageData();
-        SetArray();
+        SetGrimoirePagesArray();
         
-        // Debug.Log("pagesList is currently " + pagesList.Count + " entries long!.");
+        grimoireNavigation.InitialiseGrimoireNavigation();
+    }
+    void InitialiseGrimoirePagesList()
+    {
+        grimoirePagesList = new List<SinglePage>();
     }
 
-    void InitialiseList()
+    void SetGrimoirePagesArray()
     {
-        pagesList = new List<SinglePage>();
-    }
-
-    void SetArray()
-    {
-        pagesArray = pagesList.ToArray();
-        // Debug.Log("pagesArray is " + pagesArray.Length + " units long!");
+        grimoirePagesArray = grimoirePagesList.ToArray();
     }
 
     void SetPageData()  // alphabetically set up for now
@@ -70,59 +67,59 @@ public class GrimoirePagesData : MonoBehaviour
                 SinglePage cover = new SinglePage();
                 cover.UpdateName("cover");
                 cover.UpdateDescription("cover");
-                    pagesList.Add(cover);
+                    grimoirePagesList.Add(cover);
 
         SinglePage chronicInsomnia = new SinglePage();
         chronicInsomnia.UpdateName("Chronic Insomnia");
         chronicInsomnia.UpdateDescription("Patients present with significant disturbances with their body's internal clock and circadian rhythm. These sleep complications are often shown to result in lower quality and quantity of sleep. \n\nDisturbances and symptoms have occurred longer than three months.");   //\n\nThis ");
-            pagesList.Add(chronicInsomnia);
+            grimoirePagesList.Add(chronicInsomnia);
 
         SinglePage contaminationOCD = new SinglePage();
         contaminationOCD.UpdateName("Contamination-Specific OCD");
         contaminationOCD.UpdateDescription("Patients present with extreme neuroticism of germs, diseases, and contaminants. This fear results in ritualistic and repetitive self-implemented systems to help sooth and regulate stress responses.");
-            pagesList.Add(contaminationOCD);
+            grimoirePagesList.Add(contaminationOCD);
 
         SinglePage dietDrift = new SinglePage();
         dietDrift.UpdateName("Diet Drift");     // should prob actually be fortify mind!!
         dietDrift.UpdateDescription("An ailment in which the patient develops an insatiable hunger for food unnatural to their species. For example, a herbivore craving meat.\n\nThis condition is typically triggered by a traumatic experience involving the consumption of that forbidden diet. In some cases, it may progress into cannibalism if the trauma involved consuming a member of the same species. Treatment should focus on stopping corrupted thoughts and clearing the body of any impurities. ");
-            pagesList.Add(dietDrift);
+            grimoirePagesList.Add(dietDrift);
 
         SinglePage honEye = new SinglePage();
         honEye.UpdateName("Hon-Eye Infection");
         honEye.UpdateDescription("An eye infection caused by eating bacteria-infested honey. By the time its amber-like crystals have begun to line the lower eyelid, the case is extreme and may need a strong dosage. Treatment should primarily focus on healing the affected eye(s). If left untreated, the eye(s) will permanently shut, and the patient will lose their vision.");
-            pagesList.Add(honEye);
+            grimoirePagesList.Add(honEye);
 
         SinglePage illnessAnxiety = new SinglePage();
         illnessAnxiety.UpdateName("Illness Anxiety");
         illnessAnxiety.UpdateDescription("Patients present with an irrational fear and are convinced of having a serious health condition, despite being healthy.");
-            pagesList.Add(illnessAnxiety);
+            grimoirePagesList.Add(illnessAnxiety);
 
         SinglePage orthorexia = new SinglePage();
         orthorexia.UpdateName("Orthorexia");
         orthorexia.UpdateDescription("Patients present fear of unhealthy food consumption, often believing food should only be eaten if it is clean, healthy, and pure, according to their understandings and standards. This often leads to malnutrition and disordered eating.");
-            pagesList.Add(orthorexia);
+            grimoirePagesList.Add(orthorexia);
 
         SinglePage sapEye = new SinglePage();
         sapEye.UpdateName("Sap-Eye Infection");
         sapEye.UpdateDescription("An eye infection caused by eating bacteria-infested tree sap. Takes the appearance of orange goo lining the lower eyelid. Treatment should primarily focus on healing the affected eye(s). If left untreated, the eye(s) will permanently shut, and the patient will lose their vision.");
-            pagesList.Add(sapEye);
+            grimoirePagesList.Add(sapEye);
 
         SinglePage theBlues = new SinglePage();
         theBlues.UpdateName("The Blues");
         theBlues.UpdateDescription("A mental and physical ailment triggered by a sudden and intense source of sadness. The patient's skin begins to turn blue and melt away, and they become paralysed due to the heavy weight on their mind. Treatment should focus on calming the mind and healing the skin. If left untreated, the patient will eventually melt into a puddle of tears. ");
-            pagesList.Add(theBlues);
+            grimoirePagesList.Add(theBlues);
 
         SinglePage theFanging = new SinglePage();
         theFanging.UpdateName("The Fanging");
         theFanging.UpdateDescription("An ailment transmitted through the bite of an infected Nocturnal Mosquito, causing the patient to transform into a bat-like creature.\n\nPatients may develop bat-like sensory processing, wings, sharpened teeth, and nocturnal instincts. If left untreated, the patient will fully transform into the bat-like creature. Treatment should focus on healing physical transformation and reinforcing the patient's sense of identity.");
-            pagesList.Add(theFanging);
+            grimoirePagesList.Add(theFanging);
         
         SinglePage theFawning = new SinglePage();
         theFawning.UpdateName("The Fawning");
         theFawning.UpdateDescription("An ailment in which predators begin to transform into prey after prolonged stress or self-esteem issues. Patients develop heightened fear responses, a nervous demeanour, and become increasingly paranoid of their surroundings.\n\nPhysical symptoms include a reduced appetite for meat, dulled teeth and claws, and the development of features of the prey species (such as antlers). Treatment should focus on healing physical transformation and gently restoring the patient's confidence and sense of identity.");
-            pagesList.Add(theFawning);
+            grimoirePagesList.Add(theFawning);
 
-        foreach (SinglePage s in pagesList)
+        foreach (SinglePage s in grimoirePagesList)
         {
             totalPages++;
         }
@@ -135,11 +132,4 @@ public class GrimoirePagesData : MonoBehaviour
     {
         grimoireNavigation.ResetGrimoireNavigation();
     }
-    
-    // List<string> ailmentDescriptions;
-
-
-    // string ailment
-    //
-    // public void UpdatePage
 }

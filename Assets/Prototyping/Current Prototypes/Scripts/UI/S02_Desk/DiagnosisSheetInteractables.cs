@@ -6,86 +6,127 @@ using TMPro;
 
 public class DiagnosisSheetInteractables : MonoBehaviour
 {
+    [Header("Property Dropdowns")]
     public TMP_Dropdown primaryEffect;
     public TMP_Dropdown primaryTarget;
     public TMP_Dropdown secondaryEffect;
     public TMP_Dropdown secondaryTarget;
+    private List<TMP_Dropdown> diagnosisSheetPropertyDropdownsList;
+        
+    [Header("Modifier Toggles")]
+    public Toggle enhancerToggle;
+    public Toggle inverterToggle;
+    public CanvasGroup diagnosisSheetToggleBoxes;
+    private List<Toggle> diagnosisSheetTogglesList;
+        
+    [Header("Displayed Text")]  // Text displayed at the top of the diagnosis sheet
+    public TMP_Text displayedClientName;
+    public TMP_Text displayedClientSpecies;
+    public TMP_Text displayedClientExtras;
+    public TMP_Text displayedClientAilment;
+    public TMP_Text proposedRecipeDisplayText;
+        /*private string heldName01;  // = " ";
+        private string heldName02;  // = " ";
+        private string heldName03;  // = " ";
+        private string heldName04;  // = " ";*/
 
-    public Toggle enhancer;
-    public Toggle invertor;
+        private string slot01; // = "x";
+        private string slot02; // = "x";
+        private string slot03; // = "x";
+        private string slot04; // = "x";
 
+        private string emptySlotText = "-";
+        private string defaultTargetDropdownText = "Please select a target";
+        private string defaultEffectDropdownText = "Please select an effect";
+
+        private bool updatedForMVP;
+            
+    [Header("Submission Button")]
     public Button submitDiagnosisButton;
-
-    public CanvasGroup toggleBoxes;
-
-    private List<TMP_Dropdown> dropdownsList;
-    private List<Toggle> togglesList;
-
-    public TMP_Text proposedRecipe;
-        string heldName01;// = " ";
-        string heldName02;// = " ";
-        string heldName03;// = " ";
-        string heldName04;// = " ";
-
-        string slot01 = "x";
-        string slot02 = "x";
-        string slot03 = "x";
-        string slot04 = "x";
-
-        string defaultTargetDropdownText = "Please select a target";
-        string defaultEffectDropdownText = "Please select an effect";
     
     // Vector used to reset draggable objects
-    private Vector2 startingPosition;
-    
-    public TMP_Text clientName;
-    public TMP_Text clientSpecies;
-    public TMP_Text clientExtras;
-    public TMP_Text clientAilment;
+    private Vector2 diagnosisSheetStartingPosition;
 
-
-    void Awake()
+    /*void Awake()
     {
-        /*startingPosition = transform.position;
-
-        GenerateLists();
-
-            primaryEffect.onValueChanged.AddListener(delegate {DropdownValueUpdate(primaryEffect); });
-            primaryTarget.onValueChanged.AddListener(delegate {DropdownValueUpdate(primaryTarget); });
-            secondaryEffect.onValueChanged.AddListener(delegate {DropdownValueUpdate(secondaryEffect); });
-            secondaryTarget.onValueChanged.AddListener(delegate {DropdownValueUpdate(secondaryTarget); });
-
-            enhancer.onValueChanged.AddListener(delegate {ChangeToggleActivity(enhancer); });
-            invertor.onValueChanged.AddListener(delegate {ChangeToggleActivity(invertor); });
-
-            submitDiagnosisButton.onClick.AddListener(delegate {SubmissionButtonPressed(); });
-            */
-        //FillSheet();
-    }
+        //
+    }*/
 
     public void InitialiseDiagnosisSheet()
     {
         Debug.Log("Initialising the diagnosis sheet...");
-        startingPosition = transform.position;
-        GenerateLists();
+        diagnosisSheetStartingPosition = transform.position;
+        GenerateDiagnosisSheetInteractablesLists();
 
-            primaryEffect.onValueChanged.AddListener(delegate {DropdownValueUpdate(primaryEffect); });
-            primaryTarget.onValueChanged.AddListener(delegate {DropdownValueUpdate(primaryTarget); });
-            secondaryEffect.onValueChanged.AddListener(delegate {DropdownValueUpdate(secondaryEffect); });
-            secondaryTarget.onValueChanged.AddListener(delegate {DropdownValueUpdate(secondaryTarget); });
+            primaryEffect.onValueChanged.AddListener(delegate {DiagnosisSheetPropertyValueUpdate(primaryEffect); });
+            primaryTarget.onValueChanged.AddListener(delegate {DiagnosisSheetPropertyValueUpdate(primaryTarget); });
+            secondaryEffect.onValueChanged.AddListener(delegate {DiagnosisSheetPropertyValueUpdate(secondaryEffect); });
+            secondaryTarget.onValueChanged.AddListener(delegate {DiagnosisSheetPropertyValueUpdate(secondaryTarget); });
 
-            enhancer.onValueChanged.AddListener(delegate {ChangeToggleActivity(enhancer); });
-            invertor.onValueChanged.AddListener(delegate {ChangeToggleActivity(invertor); });
+            enhancerToggle.onValueChanged.AddListener(delegate {OnModifierTogglePressed(enhancerToggle); });
+            inverterToggle.onValueChanged.AddListener(delegate {OnModifierTogglePressed(inverterToggle); });
 
-            submitDiagnosisButton.onClick.AddListener(delegate {SubmissionButtonPressed(); });
+            submitDiagnosisButton.onClick.AddListener(delegate {OnSubmissionButtonPressed(); });
+            
+        slot01 = emptySlotText;
+        slot02 = emptySlotText;
+        slot03 = emptySlotText;
+        slot04 = emptySlotText;
 
-            // ResetDiagnosisSheet();
+        updatedForMVP = false;
+        // UpdateProposedRecipeDisplay();
+        // ResetDiagnosisSheet();
     }
     
     // Resets the position of the UI in the scene, and then checks which elements to display and resets all values.
     public void ResetDiagnosisSheet()
     {
-        transform.position = startingPosition;
+        transform.position = diagnosisSheetStartingPosition;
+        
+        // Removes spirit from the target dropdowns if running current MVP version
+        if (GameManager.Instance.isMVP)
+        {
+            if (!updatedForMVP)
+            {
+                primaryTarget.options.RemoveAt(3);
+                primaryTarget.RefreshShownValue();
+                secondaryTarget.options.RemoveAt(3);
+                secondaryTarget.RefreshShownValue();
+                
+                updatedForMVP = true;
+            }
+            
+        }
+        
+        /*primaryEffect.options[0].text = defaultEffectDropdownText;
+        secondaryEffect.options[0].text = defaultEffectDropdownText;
+
+        primaryTarget.options[0].text = defaultTargetDropdownText;
+        secondaryTarget.options[0].text = defaultTargetDropdownText;*/
+
+        // checks to see which configuration to display
+        if (DayManager.Instance.currentDayNumber == 0)
+        {
+            Debug.Log("Setting up the simplified diagnosis sheet.");
+            //UIManager.Instance.DisableUI(secondaryEffect.GetComponent<CanvasGroup>());
+            //UIManager.Instance.DisableUI(secondaryTarget.GetComponent<CanvasGroup>());
+            //UIManager.Instance.DisableUI(diagnosisSheetToggleBoxes);
+            
+            secondaryEffect.gameObject.SetActive(false);
+            secondaryTarget.gameObject.SetActive(false);
+            diagnosisSheetToggleBoxes.gameObject.SetActive(false);
+        }
+        else
+        {
+            Debug.Log("Setting up the full diagnosis sheet.");
+            //UIManager.Instance.EnableUI(secondaryEffect.GetComponent<CanvasGroup>());
+            //UIManager.Instance.EnableUI(secondaryTarget.GetComponent<CanvasGroup>());
+            //UIManager.Instance.EnableUI(diagnosisSheetToggleBoxes);
+            
+            secondaryEffect.gameObject.SetActive(true);
+            secondaryTarget.gameObject.SetActive(true);
+            diagnosisSheetToggleBoxes.gameObject.SetActive(true);
+        }
 
         primaryEffect.options[0].text = defaultEffectDropdownText;
         secondaryEffect.options[0].text = defaultEffectDropdownText;
@@ -93,132 +134,114 @@ public class DiagnosisSheetInteractables : MonoBehaviour
         primaryTarget.options[0].text = defaultTargetDropdownText;
         secondaryTarget.options[0].text = defaultTargetDropdownText;
 
-        // checks to see which configuration to display
-        if (DayManager.Instance.currentDayNumber == 1)
-        {
-            Debug.Log("Setting up the simplified diagnosis sheet.");
-            //UIManager.Instance.DisableUI(secondaryEffect.GetComponent<CanvasGroup>());
-            secondaryEffect.gameObject.SetActive(false);
-            //UIManager.Instance.DisableUI(secondaryTarget.GetComponent<CanvasGroup>());
-            secondaryTarget.gameObject.SetActive(false);
-            //UIManager.Instance.DisableUI(toggleBoxes);
-            toggleBoxes.gameObject.SetActive(false);
-        }
-        else
-        {
-            Debug.Log("Setting up the full diagnosis sheet.");
-            //UIManager.Instance.EnableUI(secondaryEffect.GetComponent<CanvasGroup>());
-            secondaryEffect.gameObject.SetActive(true);
-            //UIManager.Instance.EnableUI(secondaryTarget.GetComponent<CanvasGroup>());
-            secondaryTarget.gameObject.SetActive(true);
-            //UIManager.Instance.EnableUI(toggleBoxes);
-            toggleBoxes.gameObject.SetActive(true);
-        }
-
-
         // allows interaction with the canvas elements          -- check to see if safe to use this here or if need to disable interaction for hidden objs separately!
-        foreach (TMP_Dropdown dropdown in dropdownsList)
+        foreach (TMP_Dropdown dropdown in diagnosisSheetPropertyDropdownsList)
         {
             dropdown.value = 0;
             dropdown.interactable = true;
+            dropdown.RefreshShownValue();
         }
-        foreach (Toggle toggle in togglesList)
+        foreach (Toggle toggle in diagnosisSheetTogglesList)
         {
             toggle.isOn = false;
             toggle.interactable = true;
         }
-
+        
         // allows the player to try to submit their combination
         submitDiagnosisButton.interactable = true;
-    }
-
-    public void FillSheet()
-    {
-        clientName.text = ClientLetter.Instance.clientName.text;
-        clientSpecies.text = ClientLetter.Instance.clientSpecies.text;
-        clientExtras.text = ClientLetter.Instance.clientExtras.text;
-        //clientAilment.text = g.selectedAilment;
-        clientAilment.text = SceneManager.Instance.selectedAilment;
+        
+        UpdateProposedRecipeDisplay();
         
     }
 
-    void DropdownValueUpdate(TMP_Dropdown selected)
+    // Uses data from player's previous interactions to fill the diagnosis sheet accurately
+    public void FillDiagnosisSheet()
     {
-        int dropdownValue = selected.value;
-        string dropdownName = selected.options[dropdownValue].text;
+        displayedClientName.text = ClientLetter.Instance.displayedClientName.text;
+        displayedClientSpecies.text = ClientLetter.Instance.displayedClientSpecies.text;
+        displayedClientExtras.text = ClientLetter.Instance.displayedClientExtras.text;
+        displayedClientAilment.text = SceneManager.Instance.selectedAilment;
+    }
 
-        int listNumber = 0;
-        int companionNumber = 0;
+    void DiagnosisSheetPropertyValueUpdate(TMP_Dropdown chosenDropdown)
+    {
+        int propertyDropdownValue = chosenDropdown.value;
+        string propertyDropdownName = chosenDropdown.options[propertyDropdownValue].text;
 
-        if (selected == dropdownsList[0])
+        Debug.Log("dropdown value stored as: " + propertyDropdownValue);
+        Debug.Log("dropdown name stored as: " + propertyDropdownName);
+
+        int numberInDropdownsList = 0;
+        int companionValue = 0;
+
+        if (chosenDropdown == diagnosisSheetPropertyDropdownsList[0])
         {
-            listNumber = 0;
-            companionNumber = 2; 
+            numberInDropdownsList = 0;
+            companionValue = 2; 
         }
-        else if (selected == dropdownsList[1])
+        else if (chosenDropdown == diagnosisSheetPropertyDropdownsList[1])
         {
-            listNumber = 1;
-            companionNumber = 3;
+            numberInDropdownsList = 1;
+            companionValue = 3;
         }
-        else if (selected == dropdownsList[2])
+        else if (chosenDropdown == diagnosisSheetPropertyDropdownsList[2])
         {
-            listNumber = 2;
-            companionNumber = 0;
+            numberInDropdownsList = 2;
+            companionValue = 0;
         }
-        else if (selected == dropdownsList[3])
+        else if (chosenDropdown == diagnosisSheetPropertyDropdownsList[3])
         {
-            listNumber = 3;
-            companionNumber = 1;
+            numberInDropdownsList = 3;
+            companionValue = 1;
         }
         else
         {
             Debug.Log("Error when trying to read dropdown values.");
         }
-        
-        if (dropdownValue > 0)
+        // Checks if trying to double up on targets or effects
+        if (propertyDropdownValue > 0)  
         {
-            // "Disables" duplicate targets and effects
-            if (dropdownsList[companionNumber].value == dropdownValue)
+            if (diagnosisSheetPropertyDropdownsList[companionValue].value == propertyDropdownValue)
             {
-                selected.value = 0;
                 // maybe flash this and the companion dropdown to indicate that it's a double up?   (FOR SAUCE)
+                chosenDropdown.value = 0;
+                
                 return;
             }
         }
         else
         {
             // If going back to primary option, recipe reflects the change.
-            dropdownName = "x";
+            propertyDropdownName = emptySlotText;
         }
 
-        UpdateRecipeDisplay(dropdownsList[listNumber], dropdownName);
+        UpdateRecipeDisplay(diagnosisSheetPropertyDropdownsList[numberInDropdownsList], propertyDropdownName);
     }
 
 
-    void ToggleValueUpdate(Toggle selected)
+    void DiagnosisSheetToggleValueUpdate(Toggle chosenToggle)     // Can remove inverter elements for now
     {
-        string invertedEffectName = "x";
-
-        if (selected == invertor)
+        Debug.Log("Adjusting recipe display for toggles...");
+        if (chosenToggle == inverterToggle)
         {
-            int dropdownValue = primaryEffect.value;
-
-            if (invertor.isOn)
+            if (inverterToggle.isOn)
             {
-                if (dropdownValue == 1)
+                string invertedEffectName = emptySlotText;  // int propertyDropdownValue = primaryEffect.value;
+                
+                if (primaryEffect.value == 1) // (propertyDropdownValue == 1)
                 {
                     invertedEffectName = "Weaken";
-                    UpdateRecipeDisplay(dropdownsList[0], invertedEffectName);
+                    UpdateRecipeDisplay(diagnosisSheetPropertyDropdownsList[0], invertedEffectName);
                 }
-                else if (dropdownValue == 2)
+                else if (primaryEffect.value == 2) // (propertyDropdownValue == 2)
                 {
                     invertedEffectName = "Damage";
-                    UpdateRecipeDisplay(dropdownsList[0], invertedEffectName);
+                    UpdateRecipeDisplay(diagnosisSheetPropertyDropdownsList[0], invertedEffectName);
                 }
-                else if (dropdownValue == 3)
+                else if (primaryEffect.value == 3) // (propertyDropdownValue == 3)
                 {
                     invertedEffectName = "Frenzy";
-                    UpdateRecipeDisplay(dropdownsList[0], invertedEffectName);
+                    UpdateRecipeDisplay(diagnosisSheetPropertyDropdownsList[0], invertedEffectName);
                 }
                 else
                 {
@@ -227,65 +250,62 @@ public class DiagnosisSheetInteractables : MonoBehaviour
             }
             else
             {
-                DropdownValueUpdate(primaryEffect);
+                DiagnosisSheetPropertyValueUpdate(primaryEffect);
             }
         }
-        else if (selected == enhancer)
+        else if (chosenToggle == enhancerToggle)
         {
-            DropdownValueUpdate(primaryEffect);
+            DiagnosisSheetPropertyValueUpdate(primaryEffect);
         }
     }
 
-    void ChangeToggleActivity(Toggle toggle)
+    void OnModifierTogglePressed(Toggle chosenToggle)
     {
-        if (toggle.isOn)
+        if (chosenToggle.isOn)
         {
-            for (int i = 0; i < togglesList.Count; i++)
+            for (int i = 0; i < diagnosisSheetTogglesList.Count; i++)
             {
-                if (togglesList[i] != toggle)
+                if (diagnosisSheetTogglesList[i] != chosenToggle)
                 {
-                    togglesList[i].enabled = false;
+                    diagnosisSheetTogglesList[i].enabled = false;
                 }
             }
         }
         else
         {
-            for (int i = 0; i < togglesList.Count; i++)
+            for (int i = 0; i < diagnosisSheetTogglesList.Count; i++)
             {
-                if (togglesList[i] != toggle)
+                if (diagnosisSheetTogglesList[i] != chosenToggle)
                 {
-                    togglesList[i].enabled = true;
+                    diagnosisSheetTogglesList[i].enabled = true;
                 }
             }
         }
-        ToggleValueUpdate(toggle);
+        DiagnosisSheetToggleValueUpdate(chosenToggle);
     }
 
     void UpdateRecipeDisplay(TMP_Dropdown dropdown, string name)
     {
+        Debug.Log("Updating recipe display...");
         if (dropdown == primaryEffect)
         {
-            heldName01 = name;
-            // UpdateSlotOne(name);
-            UpdateSlot(slot01, name);
+            slot01 = name;
+            UpdateProposedRecipeDisplay();
         }
         else if (dropdown == primaryTarget)
         {
-            heldName02 = name;
-            // UpdateSlotTwo(name);
-            UpdateSlot(slot02, name);
+            slot02 = name;
+            UpdateProposedRecipeDisplay();
         }
         else if (dropdown == secondaryEffect)
         {
-            heldName03 = name;
-            // UpdateSlotThree(name);
-            UpdateSlot(slot03, name);
+            slot03 = name;
+            UpdateProposedRecipeDisplay();
         }
         else if (dropdown == secondaryTarget)
         {
-            heldName04 = name;
-            // UpdateSlotFour(name);
-            UpdateSlot(slot04, name);
+            slot04 = name;
+            UpdateProposedRecipeDisplay();
         }
         else
         {
@@ -294,65 +314,52 @@ public class DiagnosisSheetInteractables : MonoBehaviour
         
         //var name = (dropdown == primaryEffect) ? UpdateSlotOne(name) : (dropdown == primaryTarget) ? UpdateSlotTwo(name) : (dropdown == secondaryEffect) ? UpdateSlotThree(name) : UpdateSlotFour (name);
     }
-
-    /*void UpdateSlotOne(string name)
+    
+    void UpdateProposedRecipeDisplay()
     {
-        slot01 = name;
-        GenerateRecipe();
-    }
-
-    void UpdateSlotTwo(string name)
-    {
-        slot02 = name;
-        GenerateRecipe();
-    }
-
-    void UpdateSlotThree(string name)
-    {
-        slot03 = name;
-        GenerateRecipe();
-    }
-
-    void UpdateSlotFour(string name)
-    {
-        slot04 = name;
-        GenerateRecipe();
-    }*/
-
-    void UpdateSlot(string slotToUpdate, string infoToPass)
-    {
-        slotToUpdate = infoToPass;
-        GenerateRecipe();
-    }
-
-
-    void GenerateRecipe()
-    {
-        if (enhancer.isOn)
+        Debug.Log("Updating proposed recipe display...");
+        if (enhancerToggle.isOn)
         {
-            proposedRecipe.text = (("Enhanced ") + (slot01) + (" ") + (slot02) + (" ") + (slot03) + (" ") + (slot04)).ToString();
+            if (GameManager.Instance.isMVP)
+            {
+                proposedRecipeDisplayText.text = (("Enhanced ") + (slot01) + (" ") + (slot02)).ToString();
+            }
+            else
+            {
+                proposedRecipeDisplayText.text = (("Enhanced ") + (slot01) + (" ") + (slot02) + (" ") + (slot03) + (" ") + (slot04)).ToString();
+            }
         }
         else
         {
-            proposedRecipe.text = ((slot01) + (" ") + (slot02) + (" ") + (slot03) + (" ") + (slot04)).ToString();
+            if (GameManager.Instance.isMVP)
+            {
+                proposedRecipeDisplayText.text = ((slot01) + (" ") + (slot02)).ToString();
+            }
+            else
+            {
+                proposedRecipeDisplayText.text = ((slot01) + (" ") + (slot02) + (" ") + (slot03) + (" ") + (slot04)).ToString();
+            }
+            
         }
+
+        // Debug.Log(proposedRecipeDisplayText.text);
         // Debug.Log("Recipe updated.");
     }
 
-    void GenerateLists()
+    void GenerateDiagnosisSheetInteractablesLists()
     {
-        dropdownsList = new List<TMP_Dropdown>();
-        dropdownsList.Add(primaryEffect);
-        dropdownsList.Add(primaryTarget);
-        dropdownsList.Add(secondaryEffect);
-        dropdownsList.Add(secondaryTarget);
+        diagnosisSheetPropertyDropdownsList = new List<TMP_Dropdown>();
+        diagnosisSheetPropertyDropdownsList.Add(primaryEffect);
+        diagnosisSheetPropertyDropdownsList.Add(primaryTarget);
+        diagnosisSheetPropertyDropdownsList.Add(secondaryEffect);
+        diagnosisSheetPropertyDropdownsList.Add(secondaryTarget);
 
-        togglesList = new List<Toggle>();
-        togglesList.Add(enhancer);
-        togglesList.Add(invertor);
+        diagnosisSheetTogglesList = new List<Toggle>();
+        diagnosisSheetTogglesList.Add(enhancerToggle);
+        diagnosisSheetTogglesList.Add(inverterToggle);
     }
 
-    void SubmissionButtonPressed()
+    void OnSubmissionButtonPressed()
     {
         // Debug.Log("Button Pressed!");
         // shouldn't have to update these bools, since hidden dropdown values should always be 0.
@@ -367,26 +374,23 @@ public class DiagnosisSheetInteractables : MonoBehaviour
                 SceneManager.Instance.SubmitDiagnosis();
 
                 // Prevents interaction with the canvas elements
-                foreach (TMP_Dropdown dropdown in dropdownsList)
+                foreach (TMP_Dropdown dropdown in diagnosisSheetPropertyDropdownsList)
                 {
                     dropdown.interactable = false;
                 }
-                foreach (Toggle toggle in togglesList)
+                foreach (Toggle toggle in diagnosisSheetTogglesList)
                 {
                     toggle.interactable = false;
                 }
             }
             else
             {
-                MenuManager.Instance.InvalidPopup();
-                // Debug.Log("Would bring up invalid recipe text, try again popup.");
+                MenuManager.Instance.InvalidDiagnosisSheetCombinationPopup();
             }
         }
         else
         {
-            MenuManager.Instance.InvalidPopup();
-            // Debug.Log("Would bring up invalid recipe text, try again popup.");
+            MenuManager.Instance.InvalidDiagnosisSheetCombinationPopup();
         }
-        
     }
 }

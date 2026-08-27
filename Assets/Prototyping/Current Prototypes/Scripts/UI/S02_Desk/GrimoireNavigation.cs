@@ -7,24 +7,25 @@ using TMPro;
 public class GrimoireNavigation : MonoBehaviour
 {
     [Header("Image Display")]
-        public Image frontCover;
-        public Image standardPage;
-        private Image displayImage;
+        public Image grimoireFrontCoverImage;
+        public Image grimoireStandardPageImage;
+        private Image grimoireDisplayedImage;
 
     [Header("Navigation Buttons")]
-        public Button navigationLeft;
-        public Button navigationRight;
-        public Button ailmentSelection;
+        public Button grimoireNavigationLeft;
+        public Button grimoireNavigationRight;
+        public Button grimoireAilmentSelectionButton;
 
     [Header("Page Display")]
-        public TMP_Text ailmentName;
-        public TMP_Text ailmentDescription;
-        public Image ailmentIcon;
-        public GameObject selectionIcon;
-        public CanvasGroup ailmentIconCanvasGroup;
+        public TMP_Text grimoireAilmentNameDisplay;
+        public TMP_Text grimoireAilmentDescriptionDisplay;
+        public Image grimoireAilmentIconDisplay;
+        public GameObject grimoireAilmentSelectionObject;
+        // public CanvasGroup grimoireAilmentIconCanvasGroup;
+        // might be able to remove canvasgroup? idk,,
 
-        public Color defaultTextColour;
-        public Color hiddenTextColour;
+        public Color defaultGrimoireTextColour;
+        public Color hiddenGrimoireTextColour;
         //public CanvasGroup pageContents;
 
     [Header("Ailment Icons")]
@@ -41,160 +42,145 @@ public class GrimoireNavigation : MonoBehaviour
         public Image ailmentIcon10;
         //public Image ailmentIcon11;
         //public Image ailmentIcon12;
-        //private Image[] ailmentIcons;
-        private List<Image> ailmentIcons;
+        private List<Image> grimoireAilmentIconsList;
 
     [Header("GameObject References")]
-        public GameObject clientLetterObj;
-        public GameObject diagnosisSheetObj;
-        public GameObject navigationButtonsObj;
+        // public GameObject clientLetterObj;
+        // public GameObject diagnosisSheetObj;
+        public GameObject navigationButtonsObject;
 
-        private Vector2 buttonsPositionPage;
-        private Vector2 buttonsPositionCover;
+        
     
     [Header("Ailment Information")]
-        public string selectedAilment;    // For display on the Diagnosis sheet later? may not be necessary if just use ... .text, ... .ailmentName etc.
+        public string selectedAilment;    // For display on the Diagnosis sheet later? may not be necessary if just use ... .text, ... .grimoireAilmentNameDisplay etc.
 
-    // Keeps track of page numbers
-        private int currentPageNumber;
-        private int mindTabPageNum;
-        private int bodyTabPageNum;
-        private int spiritTabPageNum;
-
+        // Key stats to track:
         public bool ailmentChosen;
-        private bool notOpened;
+        private bool notOpenedGrimoire;
+        private int currentGrimoirePageNumber;
         
-        // Vector used to reset draggable objects
-        private Vector2 startingPosition;
+        // Vectors to store relevant positions for UI
+        private Vector2 grimoireInitialPosition;
+        private Vector2 buttonsPositionPage; 
+        private Vector2 buttonsPositionCover;
 
     void Awake()
     {
-        startingPosition = transform.position;
-        displayImage = GetComponent<Image>();
+        
     }
 
     void Start()
     {
-        navigationLeft.onClick.AddListener(delegate { GoToPage(currentPageNumber -1); });
-        navigationRight.onClick.AddListener(delegate { GoToPage(currentPageNumber +1); });
-        ailmentSelection.onClick.AddListener(delegate {GetSelectedAilment (currentPageNumber); });
+        
     }
 
+    public void InitialiseGrimoireNavigation()
+    {
+        buttonsPositionPage = navigationButtonsObject.transform.position;
+        buttonsPositionCover = new Vector2((buttonsPositionPage.x + 100), buttonsPositionPage.y);
+        grimoireInitialPosition = transform.position;
+        
+        grimoireDisplayedImage = GetComponent<Image>();
+        
+        defaultGrimoireTextColour = new Color(0,0,0);
+        hiddenGrimoireTextColour= new Color(0,0,0,0);
+        
+        grimoireNavigationLeft.onClick.AddListener(delegate { GoToPage(currentGrimoirePageNumber -1); });
+        grimoireNavigationRight.onClick.AddListener(delegate { GoToPage(currentGrimoirePageNumber +1); });
+        grimoireAilmentSelectionButton.onClick.AddListener(delegate {GetSelectedAilment (currentGrimoirePageNumber); });
+        
+        
+        InitialiseGrimoireAilmentIconList();
+        ResetGrimoireNavigation();
+        // SetTabNumbers();
+
+        
+    }
+
+    // Basic scene setup
     public void ResetGrimoireNavigation()
     {
-        InitialiseScene();
-        //InitialiseList();
-        InitialiseArray();
-        SetTabNumbers();
+        notOpenedGrimoire = true;
+
+        grimoireAilmentSelectionButton.interactable = true;
+        grimoireAilmentSelectionObject.SetActive(false);
+        ailmentChosen = false;
+        //diagnosisSheetObj.SetActive(false);
+
+        // reset position on screen
+        transform.position = grimoireInitialPosition;
 
         // 0 is first num of array!     this whole setup section would later be replaced with better scene management.
         GoToPage(0);
     }
 
-    // Basic scene setup
-    void InitialiseScene()
-    {
-        notOpened = true;
-
-        ailmentSelection.interactable = true;
-        selectionIcon.SetActive(false);
-        ailmentChosen = false;
-        //diagnosisSheetObj.SetActive(false);
-
-        // reset position on screen
-        transform.position = startingPosition;
-
-        buttonsPositionPage = navigationButtonsObj.transform.position;
-        buttonsPositionCover = new Vector2((buttonsPositionPage.x + 100), buttonsPositionPage.y);
-
-        defaultTextColour = new Color(0,0,0);
-        hiddenTextColour= new Color(0,0,0,0);
-    }
-
-    // Immediately jumps to one of three key page numbers depending on tab chosen
-    // NOT CURRENTLY IMPLEMENTED, BUT BASIC PLAN TO LOOK AT:
-    void JumpTab(int tabNum)
-    {
-        if (tabNum == 1)
-        {
-            GoToPage(mindTabPageNum);
-        }
-        if (tabNum == 2)
-        {
-            GoToPage(bodyTabPageNum);
-        }
-        if (tabNum == 3)
-        {
-            GoToPage(spiritTabPageNum);
-        }
-        else
-        {
-            Debug.Log("Error while attempting to switch between main tabs.");
-        }
-    }
 
     // Determines which directions you can turn pages, and alters the UI's information to imitate a page turn 
     void GoToPage(int target)
     {
-        if (target != 0 && notOpened)
+        if (target != 0 && notOpenedGrimoire)
         {
-            MenuManager.Instance.TutorialPopup("grimoire");
-            notOpened = false;
+            MenuManager.Instance.OpenTutorialPopup("grimoire");
+            notOpenedGrimoire = false;
         }
-        navigationRight.enabled = true;
-        navigationLeft.enabled = true;
+        grimoireNavigationRight.enabled = true;
+        grimoireNavigationLeft.enabled = true;
         
         // disables L/R buttons when target int leads outside of array's bounds
-        if (target == GrimoirePagesData.Instance.pagesArray.Length - 1)
+        if (target == GrimoirePagesData.Instance.grimoirePagesArray.Length - 1)
         {
-            navigationRight.enabled = false;
+            grimoireNavigationRight.enabled = false;
         }
 
         if (target == 0)
         {
             // turns details transparent
-            ailmentName.color = hiddenTextColour;
-            ailmentDescription.color = hiddenTextColour;
-            // UIManager.Instance.DisableUI(ailmentIconCanvasGroup);
-            ailmentIconCanvasGroup.gameObject.SetActive(false);
+            grimoireAilmentNameDisplay.color = hiddenGrimoireTextColour;
+            grimoireAilmentDescriptionDisplay.color = hiddenGrimoireTextColour;
+            // UIManager.Instance.DisableUI(grimoireAilmentIconCanvasGroup);
+            grimoireAilmentSelectionObject.SetActive(false);
+			grimoireAilmentIconDisplay.gameObject.SetActive(false);
 
             // hides left navigation and sets sprite icon
-            navigationLeft.enabled = false;
-            displayImage.sprite = frontCover.sprite;
+            grimoireNavigationLeft.enabled = false;
+            grimoireDisplayedImage.sprite = grimoireFrontCoverImage.sprite;
 
-            navigationButtonsObj.GetComponent<RectTransform>().transform.position = buttonsPositionCover;
+            navigationButtonsObject.GetComponent<RectTransform>().transform.position = buttonsPositionCover;
             // close book option.enabled = true?
         }
         else
         {
-            ailmentName.color = defaultTextColour;
-            ailmentDescription.color = defaultTextColour;
-            // UIManager.Instance.EnableUI(ailmentIconCanvasGroup);
-            ailmentIconCanvasGroup.gameObject.SetActive(true);
+            grimoireAilmentNameDisplay.color = defaultGrimoireTextColour;
+            grimoireAilmentDescriptionDisplay.color = defaultGrimoireTextColour;
+            // UIManager.Instance.EnableUI(grimoireAilmentIconCanvasGroup);
+            // grimoireAilmentSelectionObject.SetActive(true);
+			grimoireAilmentIconDisplay.gameObject.SetActive(true);
 
-            displayImage.sprite = standardPage.sprite;
+            grimoireDisplayedImage.sprite = grimoireStandardPageImage.sprite;
 
-            ailmentName.text = GrimoirePagesData.Instance.pagesArray[target]._ailmentName;
-            ailmentDescription.text = GrimoirePagesData.Instance.pagesArray[target]._ailmentDescription;
-            ailmentIcon.sprite = ailmentIcons[target].sprite;
+            grimoireAilmentNameDisplay.text = GrimoirePagesData.Instance.grimoirePagesArray[target]._ailmentName;
+            grimoireAilmentDescriptionDisplay.text = GrimoirePagesData.Instance.grimoirePagesArray[target]._ailmentDescription;
+            grimoireAilmentIconDisplay.sprite = grimoireAilmentIconsList[target].sprite;
 
-            navigationButtonsObj.GetComponent<RectTransform>().transform.position = buttonsPositionPage;
+            navigationButtonsObject.GetComponent<RectTransform>().transform.position = buttonsPositionPage;
         }
         //if
 
         
         
-        currentPageNumber = target;
+        currentGrimoirePageNumber = target;
     }
+    
+    // if target 0, show hidden arrow to open/close book
 
     void GetSelectedAilment(int pageNum)
     {
-        selectionIcon.SetActive(true);
+        grimoireAilmentSelectionObject.SetActive(true);
         ailmentChosen = true;
         ///
-        ailmentSelection.interactable = false;
+        grimoireAilmentSelectionButton.interactable = false;
 
-        selectedAilment = GrimoirePagesData.Instance.pagesArray[pageNum]._ailmentName;
+        selectedAilment = GrimoirePagesData.Instance.grimoirePagesArray[pageNum]._ailmentName;
 
         SceneManager.Instance.UpdateAilment(selectedAilment);
         SceneManager.Instance.SubmitAilment();
@@ -204,45 +190,35 @@ public class GrimoireNavigation : MonoBehaviour
         //Debug.Log("Would open Diagnosis Sheet here.");
     }
 
-    /*void InitialiseList()
-    {
-        ailmentIcons = new List<Image>();
-
-        ailmentIcons.Add(ailmentIcon01);
-        ailmentIcons.Add(ailmentIcon02);
-        ailmentIcons.Add(ailmentIcon03);
-        ailmentIcons.Add(ailmentIcon04);
-    }*/
-
-    void InitialiseArray()
+    void InitialiseGrimoireAilmentIconList()
     {
         //List<Image> icons = new List<Image>();
-        ailmentIcons = new List<Image>();
+        grimoireAilmentIconsList = new List<Image>();
 
-        ailmentIcons.Add(tempIcon00);
-        ailmentIcons.Add(ailmentIcon01);
-        ailmentIcons.Add(ailmentIcon02);
-        ailmentIcons.Add(ailmentIcon03);
-        ailmentIcons.Add(ailmentIcon04);
-        ailmentIcons.Add(ailmentIcon05);
-        ailmentIcons.Add(ailmentIcon06);
-        ailmentIcons.Add(ailmentIcon07);
-        ailmentIcons.Add(ailmentIcon08);
-        ailmentIcons.Add(ailmentIcon09);
-        ailmentIcons.Add(ailmentIcon10);
-        //ailmentIcons.Add(ailmentIcon11);
-        //ailmentIcons.Add(ailmentIcon12);
+        grimoireAilmentIconsList.Add(tempIcon00);
+        grimoireAilmentIconsList.Add(ailmentIcon01);
+        grimoireAilmentIconsList.Add(ailmentIcon02);
+        grimoireAilmentIconsList.Add(ailmentIcon03);
+        grimoireAilmentIconsList.Add(ailmentIcon04);
+        grimoireAilmentIconsList.Add(ailmentIcon05);
+        grimoireAilmentIconsList.Add(ailmentIcon06);
+        grimoireAilmentIconsList.Add(ailmentIcon07);
+        grimoireAilmentIconsList.Add(ailmentIcon08);
+        grimoireAilmentIconsList.Add(ailmentIcon09);
+        grimoireAilmentIconsList.Add(ailmentIcon10);
+        //grimoireAilmentIconsList.Add(ailmentIcon11);
+        //grimoireAilmentIconsList.Add(ailmentIcon12);
 
-        //ailmentIcons = icons.ToArray();
-        //Debug.Log(ailmentIcons.Length + " icons registered.");
+        //grimoireAilmentIconsList = icons.ToArray();
+        //Debug.Log(grimoireAilmentIconsList.Length + " icons registered.");
     }
 
-    void SetTabNumbers()
+    /*void SetTabNumbers()
     {
         mindTabPageNum = 1;
         bodyTabPageNum = 2;
         spiritTabPageNum = 4;
-    }
+    }*/
 
 
 

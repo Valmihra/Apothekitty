@@ -19,13 +19,13 @@ public class RestartButton : MonoBehaviour
         // hide menu? 
         GameManager.Instance.reloaded = true;
         
-        MenuManager.Instance.ExitMenu(MenuManager.Instance.pauseMenu);
+        MenuManager.Instance.ExitMenu(MenuManager.Instance.pauseMenuCanvasGroup);
         GameManager.Instance.ResetLevel();
 
         //if (GameManager.Instance.onMainMenu)
         //{
             //
-        //    MenuManager.Instance.ExitMenu(MenuManager.Instance.mainMenu);
+        //    MenuManager.Instance.ExitMenu(MenuManager.Instance.mainMenuCanvasGroup);
         //}
         //else
         //{

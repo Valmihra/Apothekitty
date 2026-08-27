@@ -6,10 +6,10 @@ using UnityEngine.UI;
 public class GameManager : MonoBehaviour
 {
     // game states
-    private bool isPaused;
-    //private bool quitting;
+    //private bool isPaused;
     public bool quitting {get; private set;}
-    public bool seenFirstClient; // {get; private set;}
+	public bool isMVP {get; private set;}
+    public bool seenFirstClient;
     public bool onMainMenu;
      
     public bool beginningDay;
@@ -23,12 +23,14 @@ public class GameManager : MonoBehaviour
     public bool ailmentChosen;
     public bool diagnosisSubmitted;
     public bool herbsSubmitted;
-
+    
+    public bool lastClientOfDay;
     //private bool debugging;
     
     // public Button resetSceneButton;
     public DayTrigger curtainAccess;
     private DiagnosisSheetInteractables diagnosisSheetInteractables;
+    private ResultsCalculator resultsCalculator;
 
     private static GameManager _instance;
     public static GameManager Instance
@@ -71,6 +73,7 @@ public class GameManager : MonoBehaviour
 
         // links the manager to the diagnosis sheet script
         diagnosisSheetInteractables = FindObjectOfType<DiagnosisSheetInteractables>();      // should only ever be one in the game, but might be better way to do this. maybe search for all components in scene instead and delete any not on Constant UI?
+        resultsCalculator = FindObjectOfType<ResultsCalculator>();
             // Assigns function to the associated button
             // resetSceneButton.onClick.AddListener(delegate { ResetScene(); });
 
@@ -102,11 +105,11 @@ public class GameManager : MonoBehaviour
             Debug.Log("Pausing");
             if (isPaused)
             {
-                MenuManager.Instance.ExitMenu(MenuManager.Instance.pauseMenu);
+                MenuManager.Instance.ExitMenu(MenuManager.Instance.pauseMenuCanvasGroup);
             }
             else
             {
-                MenuManager.Instance.OpenMenu(MenuManager.Instance.pauseMenu);
+                MenuManager.Instance.OpenMenu(MenuManager.Instance.pauseMenuCanvasGroup);
             }
             isPaused = !isPaused;
         }*/
@@ -124,7 +127,8 @@ public class GameManager : MonoBehaviour
     void ResetBools()
     {
         quitting = false;
-        isPaused = false;
+		isMVP = true;
+        // isPaused = false;
         reloaded = false;
 
         // for now set to run automatically, but will only go on tutorial lv when Jimmy is implemented
@@ -142,15 +146,22 @@ public class GameManager : MonoBehaviour
 
     void InitialiseAllGameData()
     {
+        // Creates all data required to run the game
         ClientLetter.Instance.InitialiseClientLetter();
         AilmentData.Instance.InitialiseAilmentData();
         DayManager.Instance.InitialiseDayManager();
-        
-        DayManager.Instance.ResetGameDays();
-
+        resultsCalculator.InitialiseResultsCalculator();
         diagnosisSheetInteractables.InitialiseDiagnosisSheet();
-        
-        ClientLetter.Instance.UpdateCurrentDayClientsList();
+        GrimoirePagesData.Instance.InitialiseGrimoirePagesData();
+        ClientLetter.Instance.AssignClientsToGameDays();
+        // Resets the game to day 0 and sets client list accordingly
+        DayManager.Instance.ResetGameDays();
+        ClientLetter.Instance.SetCurrentDayClientsList();
+		if (runningTutorial)
+		{
+			TutorialItemController.Instance.InitialiseTutorialItemsDesk();
+		}
+		
     }
 
     // Resets all elements the player may have altered in-game
@@ -160,6 +171,10 @@ public class GameManager : MonoBehaviour
         curtainAccess.ResetCurtain();
 
         // Resets Desk UI
+		if (runningTutorial)
+		{
+			TutorialItemController.Instance.ResetTutorialItemsDesk();
+		}
         ClientLetter.Instance.ResetClientLetterPosition();
         GrimoirePagesData.Instance.ResetGrimoire();                 //AilmentIconColourController.Instance.ResetAilmentIconBackground();
         diagnosisSheetInteractables.ResetDiagnosisSheet();
@@ -172,6 +187,9 @@ public class GameManager : MonoBehaviour
         // Resets Extras
         ResultsScreen.Instance.ResetResultsScreen();
         DialogueRunner.Instance.ResetDialogueRunner();
+		
+		// Resets clients in calculator for the day
+		resultsCalculator.ResetTreatedClientData();
     }
 
     // Resets the scene entirely.
@@ -204,7 +222,7 @@ public class GameManager : MonoBehaviour
                 // draggable components? then search for all of them and reset? idk.
     }
 
-    public void DebugJumpDay(int dayNumber)
+    public void DebugJumpToDayNumber(int dayNumber)
     {
         InitialiseAllGameData();
 
@@ -213,7 +231,7 @@ public class GameManager : MonoBehaviour
 
         DayManager.Instance.currentDayNumber = dayNumber;
         diagnosisSheetInteractables.InitialiseDiagnosisSheet();
-        ClientLetter.Instance.UpdateCurrentDayClientsList();
+        ClientLetter.Instance.SetCurrentDayClientsList();
         
         
 
@@ -251,9 +269,16 @@ public class GameManager : MonoBehaviour
         DialogueRunner.Instance.GetDialogue("tutorial");
     }
 
+    public void PrepareForNextClient()
+    {
+        Debug.Log("preparing for the next client...");
+        // resultsCalculator.
+        MenuManager.Instance.ProgressDayPopup();//
+    }
     public void NextClient()
     {
         ResetClientProgress();
+        DialogueRunner.Instance.FixDialogueBools();
         //UIManager / ScreenNav - .ResetCanvasLocations         ? maybe ?
     }
     
@@ -261,6 +286,7 @@ public class GameManager : MonoBehaviour
     {
         ailmentChosen = false;
         diagnosisSubmitted = false;
+        
         // Debug.Log("Client Progress reset.");
     }
 
@@ -278,24 +304,24 @@ public class GameManager : MonoBehaviour
 
     public void GoNextClient()
     {
-        ClientLetter.Instance.UpdateLists();
+        ClientLetter.Instance.UpdateCurrentDayClientsList();
         Debug.Log("There are now " + ClientLetter.Instance.currentDayClientsList.Count + " clients remaining today.");
 
         
-        /*int index = ClientLetter.Instance.clientsList.FindIndex(ClientLetter.Instance.clientLetter);
+        /*int index = ClientLetter.Instance.allClientsList.FindIndex(ClientLetter.Instance.activeClientData);
 
-        if (ClientLetter.Instance.clientsList[index] == ClientLetter.Instance.clientLetter)
+        if (ClientLetter.Instance.allClientsList[index] == ClientLetter.Instance.activeClientData)
         {
-            ClientLetter.Instance.clientsList.Remove(ClientLetter.Instance.clientLetter);
+            ClientLetter.Instance.allClientsList.Remove(ClientLetter.Instance.activeClientData);
         }
-        if (ClientLetter.Instance.clientIconList[index] == ClientLetter.Instance.clientIcon)
+        if (ClientLetter.Instance.clientIconList[index] == ClientLetter.Instance.displayedClientIcon)
         {
-            ClientLetter.Instance.clientIconList.Remove(ClientLetter.Instance.clientIcon);
+            ClientLetter.Instance.clientIconList.Remove(ClientLetter.Instance.displayedClientIcon);
         }
         */
 
-        // ClientLetter.Instance.clientsList.Remove(ClientLetter.Instance.clientLetter);
-        // ClientLetter.Instance.treatedClientsList.Add(clientLetter);
+        // ClientLetter.Instance.allClientsList.Remove(ClientLetter.Instance.activeClientData);
+        // ClientLetter.Instance.treatedClientsList.Add(activeClientData);
 
 
         
@@ -322,6 +348,20 @@ public class GameManager : MonoBehaviour
         SummonClient();
     }
 
+	public void SubmitTreatmentToClient()
+    {
+        SceneManager.Instance.ReturnToClient();
+		DialogueRunner.Instance.GetDialogue("submit herbs to client");
+        
+        
+    }
+
+	public void GoResultsScreen()
+	{
+		resultsCalculator.GoResultsScreen();
+		// ResultsScreen.Instance.
+	}
+
 
     // STILL NEED SOMETHING TO SUBMIT THE FULL AILMENT WITH!!
 
@@ -329,11 +369,11 @@ public class GameManager : MonoBehaviour
     /*public void SetClientAilment()
     {
         string client;
-        foreach (Ailment a in AilmentData.Global.allAilments)
+        foreach (Ailment a in AilmentData.Global.allAilmentsList)
         {
-            if (a.affectedClientName == ClientData.Instance.clientLetter.name)
+            if (a._affectedClientName == ClientData.Instance.activeClientData.name)
             {
-                client = a.affectedClientName;
+                client = a._affectedClientName;
                 GameData.CalculateResultFor(client);
             }
             else
@@ -378,4 +418,16 @@ public class GameManager : MonoBehaviour
     {
         FullResetScene();
     }
+
+	public void GoNextDay()
+	{
+		Debug.Log("Beginning a new day!");
+		Debug.Log("Should be setting up for day " + (DayManager.Instance.currentDayNumber + 1).ToString());
+		DayManager.Instance.currentDayNumber++;
+
+		//ResetBasicInformation();
+		//ResetInteractableGameElements();
+
+		DebugJumpToDayNumber(DayManager.Instance.currentDayNumber);
+	}
 }

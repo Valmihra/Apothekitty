@@ -19,7 +19,7 @@ public class ResultsScreen : MonoBehaviour
     private string correctHerbs = "yes";
     private string incorrectHerbs = "no";
 
-    public TMP_Text clientName;
+    public TMP_Text displayedClientName;
     public TMP_Text ailmentResult;
     public TMP_Text recipeResult;
     public TMP_Text herbsResult;
@@ -59,15 +59,16 @@ public class ResultsScreen : MonoBehaviour
         InitialiseResultsDisplay();
     }*/
 
-    public void NextDayButton(bool lastClientOfDay)
+	// This should be the button seen on the results screen itself. Adjusts based on how many clients left
+    public void UpdateResultsScreenButtonText(bool lastClientOfDay)
     {
         if (lastClientOfDay)
         {
-            progressButtonText.text = "End Day";
+            progressButtonText.text = ("Begin day " + (DayManager.Instance.currentDayNumber + 1)).ToString();
         }
         else
         {
-            progressButtonText.text = "Next Client";
+            progressButtonText.text = "See results for next client";
         }
     }
 
@@ -96,10 +97,10 @@ public class ResultsScreen : MonoBehaviour
     }
 
 
-    public void GenerateResultsScreen(bool ailment, bool recipe, bool herbs)
+    public void GenerateResultsScreen(string name, bool ailment, bool recipe, bool herbs)
     {
-        clientName.text = ClientLetter.Instance.clientLetter._clientName;
-
+        // displayedClientName.text = ClientLetter.Instance.activeClientData._clientName;
+		displayedClientName.text = name;
         
         ailmentResult.text = ailment ? correctAilment : incorrectAilment;
         recipeResult.text = recipe ? correctRecipe : incorrectRecipe;
@@ -114,22 +115,24 @@ public class ResultsScreen : MonoBehaviour
             clientCured = true;
         }
 
-        UpdateResultsScreen();
+        UpdateResultsScreen(displayedClientName.text);
     }
 
-    void UpdateResultsScreen()
+    void UpdateResultsScreen(string name)
     {
         GameObject iconToFind;
         Image icon;
         string nameToSearch;
         if (clientCured)
         {
-            nameToSearch = ("Result - " + ClientLetter.Instance.clientLetter._clientName + " - Cured");
+            nameToSearch = ("Result - " + name + " - Cured");
+			// nameToSearch = ("Result - " + ClientLetter.Instance.activeClientData._clientName + " - Cured");
             //resultsLogo.sprite = 
         }
         else
         {
-            nameToSearch = ("Result - " + ClientLetter.Instance.clientLetter._clientName + " - Failed");
+            nameToSearch = ("Result - " + name + " - Failed");
+			// nameToSearch = ("Result - " + ClientLetter.Instance.activeClientData._clientName + " - Failed");
         }
         Debug.Log(nameToSearch);
 

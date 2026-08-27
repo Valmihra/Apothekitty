@@ -34,7 +34,7 @@ public class TutorialBin : MonoBehaviour, IDropHandler
         
         if(eventData.pointerDrag != null)
         {
-            Debug.Log("isn't null");
+            // Debug.Log("isn't null");
 
             if (eventData.pointerDrag.TryGetComponent<DraggableTutorialItem>(out DraggableTutorialItem draggableTutorialItem))
             {

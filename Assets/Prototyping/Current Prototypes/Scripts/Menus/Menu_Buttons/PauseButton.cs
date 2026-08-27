@@ -17,6 +17,6 @@ public class PauseButton : MonoBehaviour
     
     void PauseGame()
     {
-        MenuManager.Instance.OpenMenu(MenuManager.Instance.pauseMenu);
+        MenuManager.Instance.OpenMenu(MenuManager.Instance.pauseMenuCanvasGroup);
     }
 }

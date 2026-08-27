@@ -51,6 +51,8 @@ public class SceneManager : MonoBehaviour
     private Vector2 herbalistGuideSpawnPoint;     //if hanging, no need for this!
         private List<Vector2> canvasSpawnPoints;   
     
+
+	// [SerializeField] private GameObject tutorialObjects;
     
     
     // Information for the current display
@@ -131,7 +133,7 @@ public class SceneManager : MonoBehaviour
     {
         HideAllCanvases();                              // may not even be necessary, but trying for now just in case,,
         currentCanvasGroup = clientWindowGroup;   // preemptive fix. temporary.
-        MenuManager.Instance.OpenMenu(MenuManager.Instance.mainMenu);
+        MenuManager.Instance.OpenMenu(MenuManager.Instance.mainMenuCanvasGroup);
     }
     
     public void ResetScene()
@@ -210,10 +212,10 @@ public class SceneManager : MonoBehaviour
     {
         UIManager.Instance.EnableUI(diagnosisSheet);
 
-        diagnosisSheet.GetComponent<DiagnosisSheetInteractables>().FillSheet();
+        diagnosisSheet.GetComponent<DiagnosisSheetInteractables>().FillDiagnosisSheet();
         diagnosisSheet.GetComponent<RectTransform>().SetAsLastSibling();
 
-        //MenuManager.Instance.TutorialPopup("diagnosisSheet");
+        //MenuManager.Instance.OpenTutorialPopup("diagnosisSheet");
     }
 
     public void SubmitDiagnosis()
@@ -236,6 +238,8 @@ public class SceneManager : MonoBehaviour
         questLog.FinishQuestLog();
     }*/
 
+    // TODO: Fully change the submit treatment to send to clientwindow and show popup for next client/next day.
+        // separate the ResultsScreen from the
     public void ResultsScreenPrep()
     {
         questLog.FinishQuestLog();
@@ -245,11 +249,11 @@ public class SceneManager : MonoBehaviour
 
         if (ClientLetter.Instance.currentDayClientsList.Count == 1)
         {
-            ResultsScreen.Instance.NextDayButton(true);
+            ResultsScreen.Instance.UpdateResultsScreenButtonText(true);
         }
         else
         {
-            ResultsScreen.Instance.NextDayButton(false);
+            ResultsScreen.Instance.UpdateResultsScreenButtonText(false);
         }
     }
 
@@ -363,7 +367,7 @@ public class SceneManager : MonoBehaviour
                 if (firstVisitDesk)
                 {
                     DialogueRunner.Instance.GetDialogue("desk");
-                    //MenuManager.Instance.TutorialPopup("desk");
+                    //MenuManager.Instance.OpenTutorialPopup("desk");
                     firstVisitDesk = false;
                 }
         }
@@ -438,7 +442,7 @@ public class SceneManager : MonoBehaviour
         }
         // for enabling/disabling interaction when entering a menu
         currentCanvasGroup = canvasGroupList == allCanvasesDesk ? deskGroup : canvasGroupList == allCanvasesClientWindow ? clientWindowGroup : herbWallGroup;
-        MenuManager.Instance.HideMenuCanvases();
+        MenuManager.Instance.HideAllMenuCanvases();
     }
 
     public void UpdateAilment(string ailment)
@@ -473,7 +477,7 @@ public class SceneManager : MonoBehaviour
 
         if (GameManager.Instance.runningTutorial)
         {
-            MenuManager.Instance.TutorialPopup("toHerbWall");
+            MenuManager.Instance.OpenTutorialPopup("toHerbWall");
         }
         
         herbWallActive = true;
@@ -494,5 +498,14 @@ public class SceneManager : MonoBehaviour
         grimoireSpawnPoint = grimoire.GetComponent<RectTransform>().anchoredPosition;
         diagnosisSheetSpawnPoint = diagnosisSheet.GetComponent<RectTransform>().anchoredPosition;
         //herbalistGuideSpawnPoint = herbGuide.GetComponent<RectTransform>().anchoredPosition;  
+    }
+
+    public void ReturnToClient()
+    {
+        SetupUI(allCanvasesClientWindow);
+		
+        // DialogueRunner.Instance.GetDialogue("submit herbs to client");
+        
+        
     }
 }

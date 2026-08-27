@@ -6,17 +6,19 @@ using TMPro;
 
 public class DialogueRunner : MonoBehaviour
 {
-    public CanvasGroup dialogueBox;
-    //public Button nextDialogue;
-    public TMP_Text speakerName;
-    public TMP_Text currentString;
-    public TMP_Text promptString;
-
-    int currentLine;
-    bool dialogueSet;
-    public bool firstDialogueComplete;
-    public bool introductionComplete;
-
+    [Header("Dialogue Box Objects")]
+        public CanvasGroup dialogueBox;
+        public TMP_Text speakerName;
+        public TMP_Text currentString;
+        public TMP_Text promptString;
+    
+    // Values checked to run any dialogue
+    private int currentLineNumber;
+    private bool dialogueSet;
+    
+    // Tutorial-specific values to check
+    private bool firstDialogueComplete;
+    private bool introductionComplete;
     private bool notSeenDeskHint;
     private bool firstVisitDesk;
     public bool cleanDesk;
@@ -24,22 +26,27 @@ public class DialogueRunner : MonoBehaviour
     private bool notSeenFinalDiagnosisPopup;
     private bool justSubmittedDiagnosis;
     private bool justVisitedHerbWall;
+
+	private bool clientIsSpeaking;
+    private bool clientIsAnswering;
+	private bool canFinishDialogue;
     
-
-    string defaultSpeaker = null;
-    string defaultString = "You have encountered this due to an error with the DialogueRunner or DialogueHolder scripts";
-
-    string continuePrompt = "Click box to continue";
-    string closePrompt = "Click box to close";
-
-
-    string catName = "The Cat";
-
-    // oh i can't wait for the overarching "if (!tutorialCompleted) else that will RADICALLY influence how quickly I can navigate through all this,,
+    // Internal values to keep dialogue running safely
+    private string defaultSpeaker = null;
+    private string defaultString = "You have encountered this due to an error with the DialogueRunner or DialogueHolder scripts";
     
+    private string continuePrompt = "Click box to continue";
+    private string closePrompt = "Click box to close";
+    
+    private string catName = "The Cat";
 
-    List<string> currentDialogue;
-    private string client;
+    // oh i can't wait for the overarching "if (!tutorialCompleted) else that will
+    // RADICALLY influence how quickly I can navigate through all this,,
+    [SerializeField]
+	private AnimatedTextEffect dialogueAnimator;
+
+    private List<string> currentDialogue;
+    private string nameOfNPC;
 
     private static DialogueRunner _instance;
     public static DialogueRunner Instance
@@ -63,11 +70,9 @@ public class DialogueRunner : MonoBehaviour
 
     public void ResetDialogueRunner()
     {
-        UIManager.Instance.DisableUI(dialogueBox);
         Debug.Log("Resetting DialogueRunner...");
-
-        currentLine = 0;
-        dialogueSet = false;
+        FixDialogueBools();
+        
         introductionComplete = false;
         firstDialogueComplete = false;
 
@@ -80,63 +85,80 @@ public class DialogueRunner : MonoBehaviour
         justVisitedHerbWall = false;
     }
 
+    public void FixDialogueBools()
+    {
+        UIManager.Instance.DisableUI(dialogueBox);
+        currentLineNumber = 0;
+        
+		clientIsSpeaking = false;
+        clientIsAnswering = false;
+		canFinishDialogue = false;
+        dialogueSet = false;
+    }
+
     public void RunDialogue()
     {
-        //Debug.Log("Dialogue set? " + dialogueSet);
-        
-
         if (dialogueSet)
         {
-            Debug.Log("Right now, currentDialogue is holding " + currentDialogue.Count + " strings of dialogue.");
-            Debug.Log("You are currently on line: " + currentLine + ".");
+            // Debug.Log("Right now, currentDialogue is holding " + currentDialogue.Count + " strings of dialogue.");
+            // Debug.Log("You are currently on line: " + currentLineNumber + ".");
 
-            GetPromptString();
+            SetCorrectDialogueBoxPrompt();
 
-            if (currentLine >= currentDialogue.Count)
+            if (currentLineNumber >= currentDialogue.Count)
             {
                 // at or over the limit of the lines of dialogue
-                Debug.Log("currentLine is larger than currentDialogue.Count. Checking whether this is intentional or not.");
-                if ((currentDialogue == DialogueHolder.Instance.barry._dialogue) || (currentDialogue == DialogueHolder.Instance.arabella._dialogue) || (currentDialogue == DialogueHolder.Instance.lawrence._dialogue) || (currentDialogue == DialogueHolder.Instance.jimothy._dialogue) || (currentDialogue == DialogueHolder.Instance.TEMP_NPC01._dialogue) || (currentDialogue == DialogueHolder.Instance.TEMP_NPC02._dialogue))
+                Debug.Log("currentLineNumber is larger than currentDialogue.Count. Checking whether this is intentional or not.");
+                if (clientIsSpeaking)
                 {
                     if (!introductionComplete)
                     {
-                        currentDialogue = null;
-                        currentLine = 0;
-                        speakerName.text = catName;
-                        currentString.text = "You've come to the right place! Just pass me your patient form and take a seat. I'll take care of everything.";
-                        introductionComplete = true;
-                        dialogueSet = false;
+                        GetDialogue("cat responds to client");
+						clientIsSpeaking = false;
                     }
                     else
                     {
-                        Debug.Log("Bro how'd you fuck it up like this?");
+                        // CheckDialogueForActions();
+						// clientIsSpeaking = false; // 
+						Debug.Log("Bro how'd you fuck it up like this?");
                     }
                 }
                 else
                 {
-                    Debug.Log("You have reached the end of this DialogueSnippet.");
-                    /*if (!hasActionOnFinishDialogue)
-                    {
+					if (clientIsAnswering)
+					{
+						GetDialogue("client responds to cat");
+						clientIsSpeaking = false;
+					}
+					else
+					{
+						Debug.Log("You have reached the end of this DialogueSnippet.");
+                        /*if (!hasActionOnFinishDialogue)
+                        {
+                            FinishDialogueSnippet();
+                        }
+                        else
+                        {
+                            GetNextAction();
+                        }*/
                         FinishDialogueSnippet();
-                    }
-                    else
-                    {
-                        GetNextAction();
-                    }*/
-                    FinishDialogueSnippet();
+					}
+                    
                 }
             }
             else
             {
                 // within the limit of the lines of dialogue
-                if (currentLine < currentDialogue.Count)
+                if (currentLineNumber < currentDialogue.Count)
                 {
                     // updates the text
                     //CheckForSpeaker();
-                    currentString.text = currentDialogue[currentLine];
+                    currentString.text = currentDialogue[currentLineNumber];
+					// BEGINS ANIMATING THAT STRING HERE!!
+					dialogueAnimator.BeginAnimatingText(currentString.text);
                     CheckDialogueForActions();
-                    currentLine++;
-                    //Debug.Log("Next line will be: " + currentLine);
+                    currentLineNumber++;
+                    //Debug.Log("Next line will be: " + currentLineNumber);
                 }
             }
         }
@@ -153,75 +175,84 @@ public class DialogueRunner : MonoBehaviour
         // could probably put the client check here too instead of in RunDialogue if I wanted it cleaner!!
     void FinishDialogueSnippet()
     {
-        if (GameManager.Instance.runningTutorial)
+        if (canFinishDialogue)
         {
-            if (!firstDialogueComplete)
-            {
-                CloseDialogueWindow();
-                firstDialogueComplete = true;
-                // ****         MIGHT BE BETTER TO HAVE A SEPARATE TUTORIAL SCRIPT INSTEAD
-                MenuManager.Instance.TutorialPopup("initialTutorial");
-                GameManager.Instance.canStartDay = true;
-            }
-            else if (introductionComplete && notSeenDeskHint)
-            {
-                CloseDialogueWindow();
-                MenuManager.Instance.TutorialPopup("startPrompts");
-                // PUT NAVIGATION HERE INSTEAD
-                SceneManager.Instance.EnableGameplay();
-                notSeenDeskHint = false;
-            }
-            else if (firstVisitDesk && !cleanDesk)
-            {
-                CloseDialogueWindow();
-                MenuManager.Instance.TutorialPopup("initDeskPrompts");
-                firstVisitDesk = false;
-            }
-            else if ((!firstVisitDesk) && (cleanDesk))
-            {
-                CloseDialogueWindow();
-                // MenuManager.Instance.TutorialPopup("grimoire");
-                cleanDesk = false;  // just to avoid this in future checks
-            }
-            // if the player has submitted the ailment and hasn't seen the next set of hints
-            else if (GameManager.Instance.ailmentChosen && notSeenDiagnosisSheetHint)
-            {
-                SceneManager.Instance.GetDiagnosisSheet();
-                notSeenDiagnosisSheetHint = false;
-                JumpNextDialogue(DialogueHolder.Instance.diagnosisSheetIntroduction._dialogue);//GetDialogue()
-                
-            }
-            else if (GameManager.Instance.ailmentChosen && !notSeenDiagnosisSheetHint && notSeenFinalDiagnosisPopup)
-            {
-                CloseDialogueWindow();
-                
-                notSeenFinalDiagnosisPopup = false;
-                // MenuManager.Instance.TutorialPopup("diagnosisSheet");
-            }
-            else if (justSubmittedDiagnosis)
-            {
-                CloseDialogueWindow();
-                justSubmittedDiagnosis = false;
-
-                SceneManager.Instance.UnlockHerbWall();
-            }
-            else if (justVisitedHerbWall)
-            {
-                CloseDialogueWindow();
-                justVisitedHerbWall = false;
-
-                MenuManager.Instance.TutorialPopup("finalPopup");
-            }
+            CloseDialogueWindow();
+            canFinishDialogue = false;
+            GameManager.Instance.PrepareForNextClient();
         }
-        else if (!GameManager.Instance.runningTutorial)
+        else
         {
-            if (!firstDialogueComplete)
+            if (GameManager.Instance.runningTutorial)
             {
-                CloseDialogueWindow();
-                firstDialogueComplete = true;
-                // ****         MIGHT BE BETTER TO HAVE A SEPARATE TUTORIAL SCRIPT INSTEAD
-                GameManager.Instance.canStartDay = true;
-                SceneManager.Instance.EnableGameplay();
+                if (!firstDialogueComplete)
+                {
+                    CloseDialogueWindow();
+                    firstDialogueComplete = true;
+                    // ****         MIGHT BE BETTER TO HAVE A SEPARATE TUTORIAL SCRIPT INSTEAD
+                    MenuManager.Instance.OpenTutorialPopup("initialTutorial");
+                    GameManager.Instance.canStartDay = true;
+                }
+                else if (introductionComplete && notSeenDeskHint)
+                {
+                    CloseDialogueWindow();
+                    MenuManager.Instance.OpenTutorialPopup("startPrompts");
+                    // PUT NAVIGATION HERE INSTEAD
+                    SceneManager.Instance.EnableGameplay();
+                    notSeenDeskHint = false;
+                }
+                else if (firstVisitDesk && !cleanDesk)
+                {
+                    CloseDialogueWindow();
+                    MenuManager.Instance.OpenTutorialPopup("initDeskPrompts");
+                    firstVisitDesk = false;
+                }
+                else if ((!firstVisitDesk) && (cleanDesk))
+                {
+                    CloseDialogueWindow();
+                    // MenuManager.Instance.OpenTutorialPopup("grimoire");
+                    cleanDesk = false;  // just to avoid this in future checks
+                }
+                // if the player has submitted the ailment and hasn't seen the next set of hints
+                else if (GameManager.Instance.ailmentChosen && notSeenDiagnosisSheetHint)
+                {
+                    SceneManager.Instance.GetDiagnosisSheet();
+                    notSeenDiagnosisSheetHint = false;
+                    JumpNextDialogue(DialogueHolder.Instance.td_DiagnosisSheetIntroduction._dialogue);//GetDialogue()
+                    
+                }
+                else if (GameManager.Instance.ailmentChosen && !notSeenDiagnosisSheetHint && notSeenFinalDiagnosisPopup)
+                {
+                    CloseDialogueWindow();
+                    
+                    notSeenFinalDiagnosisPopup = false;
+                    // MenuManager.Instance.OpenTutorialPopup("diagnosisSheet");
+                }
+                else if (justSubmittedDiagnosis)
+                {
+                    CloseDialogueWindow();
+                    justSubmittedDiagnosis = false;
+
+                    SceneManager.Instance.UnlockHerbWall();
+                }
+                else if (justVisitedHerbWall)
+                {
+                    CloseDialogueWindow();
+                    justVisitedHerbWall = false;
+
+                    MenuManager.Instance.OpenTutorialPopup("finalPopup");
+                }
+            }
+            else if (!GameManager.Instance.runningTutorial)
+            {
+                if (!firstDialogueComplete)
+                {
+                    CloseDialogueWindow();
+                    firstDialogueComplete = true;
+                    // ****         MIGHT BE BETTER TO HAVE A SEPARATE TUTORIAL SCRIPT INSTEAD
+                    GameManager.Instance.canStartDay = true;
+                    SceneManager.Instance.EnableGameplay();
+                }
             }
         }
     }
@@ -231,7 +262,7 @@ public class DialogueRunner : MonoBehaviour
         Debug.Log("Closing dialogue window.");
         UIManager.Instance.DisableUI(dialogueBox);
         dialogueSet = false;
-        currentLine = 0;
+        currentLineNumber = 0;
 
         speakerName.text = defaultSpeaker;
         currentString.text = defaultString;
@@ -244,7 +275,7 @@ public class DialogueRunner : MonoBehaviour
     {
         //if (target == )
         currentDialogue = target;
-        SetupDialogueForTutorial();
+        SetupDialogueForCatSpeaker();
         RunDialogue();
 
         /*if (speaker == "NA")
@@ -264,41 +295,41 @@ public class DialogueRunner : MonoBehaviour
             Debug.Log("Tutorial toggled on. Running relevant dialogue.");
             if (target == "tutorial")
             {
-                currentDialogue = DialogueHolder.Instance.introduction._dialogue;
-                SetupDialogueForTutorial();
+                currentDialogue = DialogueHolder.Instance.td_Introduction._dialogue;
+                SetupDialogueForCatSpeaker();
                 RunDialogue();
             }
             else if (target == "desk")
             {
                 // currentDialogue = DialogueHolder.Instance.deskIntroduction._dialogue;
-                currentDialogue = DialogueHolder.Instance.deskIntroductionPartOne._dialogue;
-                SetupDialogueForTutorial();
+                currentDialogue = DialogueHolder.Instance.td_Desk01._dialogue;
+                SetupDialogueForCatSpeaker();
                 RunDialogue();
                 firstVisitDesk = true;
             }
             else if (target == "desk two")
             {
-                currentDialogue = DialogueHolder.Instance.deskIntroductionPartTwo._dialogue;
-                SetupDialogueForTutorial();
+                currentDialogue = DialogueHolder.Instance.td_Desk02._dialogue;
+                SetupDialogueForCatSpeaker();
                 RunDialogue();
             }
             else if (target == "ailmentSubmitted")
             {
-                currentDialogue = DialogueHolder.Instance.ailmentSubmittedIntroduction._dialogue;
-                SetupDialogueForTutorial();
+                currentDialogue = DialogueHolder.Instance.td_GrimoireAilmentSubmitted._dialogue;
+                SetupDialogueForCatSpeaker();
                 RunDialogue();
             }
             else if (target == "treatmentPlanSubmitted")
             {
-                currentDialogue = DialogueHolder.Instance.treatmentPlanSubmittedIntroduction._dialogue;
-                SetupDialogueForTutorial();
+                currentDialogue = DialogueHolder.Instance.td_DiagnosisSheetSubmitted._dialogue;
+                SetupDialogueForCatSpeaker();
                 RunDialogue();
                 justSubmittedDiagnosis = true;
             }
             else if (target == "onHerbWall")
             {
-                currentDialogue = DialogueHolder.Instance.herbWallIntroduction._dialogue;
-                SetupDialogueForTutorial();
+                currentDialogue = DialogueHolder.Instance.td_HerbWall._dialogue;
+                SetupDialogueForCatSpeaker();
                 RunDialogue();
                 justVisitedHerbWall = true;
             }
@@ -307,7 +338,31 @@ public class DialogueRunner : MonoBehaviour
         if (target == "patientArrive")
         {
             //Debug.Log("Patient time!");
-            GetDialogueByClient();
+            GetDialogueByClient("entry");
+        }
+
+        if (target == "cat responds to client")
+        {
+            introductionComplete = true;
+            
+            int randomisedNumber = Random.Range(0, 3);
+            currentDialogue = DialogueHolder.Instance.pd_TheCatResponsesList[randomisedNumber]._dialogue;
+            
+            SetupDialogueForCatSpeaker();
+            RunDialogue();
+        }
+
+        if (target == "client responds to cat")
+        {
+            GetDialogueByClient("finish");
+        }
+
+        if (target == "submit herbs to client")
+        {
+            currentDialogue = DialogueHolder.Instance.pd_TheCatSubmitHerbs._dialogue;
+            SetupDialogueForCatSpeaker();
+            RunDialogue();
+			clientIsAnswering = true;
         }
 
         else
@@ -317,61 +372,108 @@ public class DialogueRunner : MonoBehaviour
         }
     }
 
-    void SetupDialogueForTutorial()
+    void SetupDialogueForCatSpeaker()
     {
         speakerName.text = catName;
         dialogueSet = true;
-        currentLine = 0;// (?)?
+        currentLineNumber = 0;  // (?)?
 
         UIManager.Instance.EnableUI(dialogueBox);
     }
 
-    void GetDialogueByClient()
+    void GetDialogueByClient(string dialogueType)
     {
-        client = ClientLetter.Instance.clientName.text;
-        speakerName.text = client;
+        nameOfNPC = ClientLetter.Instance.displayedClientName.text;
+        speakerName.text = nameOfNPC;
+        currentLineNumber = 0;
+
+		// clientIsSpeaking = true;
+		
+
+        if (dialogueType == "entry")
+        {
+			clientIsSpeaking = true;
+            if (nameOfNPC == "Barry Buff")
+            {
+                currentDialogue = DialogueHolder.Instance.cd_BarryEnter._dialogue;
+            }
+            else if (nameOfNPC == "Arabella Bunny")
+            {
+                currentDialogue = DialogueHolder.Instance.cd_ArabellaEnter._dialogue;
+            }
+            else if (nameOfNPC == "Lawrence Lark")
+            {
+                currentDialogue = DialogueHolder.Instance.cd_LawrenceEnter._dialogue;
+            }
+            else if (nameOfNPC == "Jimothy")
+            {
+                currentDialogue = DialogueHolder.Instance.cd_JimothyEnter._dialogue;
+            }
+            else if (nameOfNPC == "cd_TEMP_NPC01Enter")
+            {
+                currentDialogue = DialogueHolder.Instance.cd_TEMP_NPC01Enter._dialogue;
+            }
+            else if (nameOfNPC == "cd_TEMP_NPC02Enter")
+            {
+                currentDialogue = DialogueHolder.Instance.cd_TEMP_NPC02Enter._dialogue;
+            }
+            else
+            {
+                Debug.Log("bruh you goofed it");
+            }
+        }
+
+        if (dialogueType == "finish")
+        {
+            clientIsAnswering = false;
+			canFinishDialogue = true;
+            if (nameOfNPC == "Barry Buff")
+            {
+                currentDialogue = DialogueHolder.Instance.cd_BarryFinish._dialogue;
+            }
+            else if (nameOfNPC == "Arabella Bunny")
+            {
+                currentDialogue = DialogueHolder.Instance.cd_ArabellaFinish._dialogue;
+            }
+            else if (nameOfNPC == "Lawrence Lark")
+            {
+                currentDialogue = DialogueHolder.Instance.cd_LawrenceFinish._dialogue;
+            }
+            else if (nameOfNPC == "Jimothy")
+            {
+                currentDialogue = DialogueHolder.Instance.cd_JimothyFinish._dialogue;
+            }
+            else if (nameOfNPC == "cd_TEMP_NPC01Enter")
+            {
+                currentDialogue = DialogueHolder.Instance.cd_TEMP_NPC01Finish._dialogue;
+            }
+            else if (nameOfNPC == "cd_TEMP_NPC02Enter")
+            {
+                currentDialogue = DialogueHolder.Instance.cd_TEMP_NPC02Finish._dialogue;
+            }
+            else
+            {
+                Debug.Log("bruh you goofed it");
+            }
+        }
         
-        if (client == "Barry Buff")
-        {
-            currentDialogue = DialogueHolder.Instance.barry._dialogue;
-        }
-        else if (client == "Arabella Bunny")
-        {
-            currentDialogue = DialogueHolder.Instance.arabella._dialogue;
-        }
-        else if (client == "Lawrence Lark")
-        {
-            currentDialogue = DialogueHolder.Instance.lawrence._dialogue;
-        }
-        else if (client == "Jimothy")
-        {
-            currentDialogue = DialogueHolder.Instance.jimothy._dialogue;
-        }
-        else if (client == "TEMP_NPC01")
-        {
-            currentDialogue = DialogueHolder.Instance.TEMP_NPC01._dialogue;
-        }
-        else if (client == "TEMP_NPC02")
-        {
-            currentDialogue = DialogueHolder.Instance.TEMP_NPC02._dialogue;
-        }
         
-        Debug.Log("SET DIALOGUE: " + client); //currentDialogue)
+        // Debug.Log("SET DIALOGUE: " + nameOfNPC); //currentDialogue)
         dialogueSet = true;
         UIManager.Instance.EnableUI(dialogueBox);
         RunDialogue();
     }
 
-    void GetPromptString()
+    void SetCorrectDialogueBoxPrompt()
     {
-        if (currentLine < currentDialogue.Count - 1)
+        if (currentLineNumber < currentDialogue.Count - 1)
         {
             promptString.text = continuePrompt;
         }
         else
         {
             // might be -1... unsure rn,,,,
-            /*if ((currentLine == currentDialogue.Count) && (currentDialogue == DialogueHolder.Instance.barry._dialogue) || (currentDialogue == DialogueHolder.Instance.arabella._dialogue) || (currentDialogue == DialogueHolder.Instance.lawrence._dialogue))
+            /*if ((currentLineNumber == currentDialogue.Count) && (currentDialogue == DialogueHolder.Instance.cd_BarryEnter._dialogue) || (currentDialogue == DialogueHolder.Instance.cd_ArabellaEnter._dialogue) || (currentDialogue == DialogueHolder.Instance.cd_LawrenceEnter._dialogue))
             {
                 promptString.text = continuePrompt;
             }
@@ -391,28 +493,27 @@ public class DialogueRunner : MonoBehaviour
         }
         else
         {
-            return;
+			if (clientIsAnswering)
+			{
+				// Might rely on current submission dialogue only having one line!!
+				GetDialogueByClient("finish");
+			}
+			else
+			{
+				return;
+			}
         }
     }
 
     void PerformAction(string stringToRead)
     {
-        
-        /*if (stringToRead.Contains("Grimoire"))
-        {
-            Debug.Log("---.GetComponent<ThingThatDoesTheFlashy>().PulseColour();");
-            UIManager.Instance.HighlightCanvasElement("grimoire");
-        }*/
-        
-        //else if (stringToRead.Contains("Each recipe has an"))
+		// Highlights the corresponding canvas element through UIManager
         if (stringToRead.Contains("Each recipe has an"))
         {
-            Debug.Log("---.GetComponent<ThingThatDoesTheFlashy>().PulseColour();");
             UIManager.Instance.HighlightCanvasElement("effect");
         }
         else if (stringToRead.Contains("I just need to choose a"))
         {
-            Debug.Log("---.GetComponent<ThingThatDoesTheFlashy>().PulseColour();");
             UIManager.Instance.HighlightCanvasElement("target");
         }
         /*else if (stringToRead.Contains("left some old notes out"))
@@ -433,9 +534,9 @@ public class DialogueRunner : MonoBehaviour
 
     /*void CheckForSpeaker()
     {
-        if (currentDialogue == DialogueHolder.Instance.introduction)
+        if (currentDialogue == DialogueHolder.Instance.td_Introduction)
         {
-            if (currentLine == 2)
+            if (currentLineNumber == 2)
             {
                 speakerName = null;
                 currentString.FontStyle.Italic;
