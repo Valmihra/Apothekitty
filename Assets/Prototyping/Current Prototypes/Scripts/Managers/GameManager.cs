@@ -136,12 +136,12 @@ public class GameManager : MonoBehaviour
     }
     
     // Resets all basic information in the scene
-    void ResetBasicInformation()
+    void OnDayReset()
     {
         SceneManager.Instance.ResetScene();             // Quest Log also resets in this SceneManager function
             beginningDay = true;
             canStartDay = false;
-            ResetClientProgress();
+            // ResetClientProgress();
     }
 
     void InitialiseAllGameData()
@@ -157,6 +157,7 @@ public class GameManager : MonoBehaviour
         // Resets the game to day 0 and sets client list accordingly
         DayManager.Instance.ResetGameDays();
         ClientLetter.Instance.SetCurrentDayClientsList();
+
 		if (runningTutorial)
 		{
 			TutorialItemController.Instance.InitialiseTutorialItemsDesk();
@@ -171,13 +172,14 @@ public class GameManager : MonoBehaviour
         curtainAccess.ResetCurtain();
 
         // Resets Desk UI
-		if (runningTutorial)
-		{
-			TutorialItemController.Instance.ResetTutorialItemsDesk();
-		}
         ClientLetter.Instance.ResetClientLetterPosition();
         GrimoirePagesData.Instance.ResetGrimoire();                 //AilmentIconColourController.Instance.ResetAilmentIconBackground();
         diagnosisSheetInteractables.ResetDiagnosisSheet();
+
+        if (runningTutorial)
+		{
+			TutorialItemController.Instance.ResetTutorialItemsDesk();
+		}
             
         // Resets Herb Wall UI
         HerbalistGuidePages.Instance.ResetHerbalistGuide();
@@ -193,7 +195,7 @@ public class GameManager : MonoBehaviour
     }
 
     // Resets the scene entirely.
-    public void FullResetScene()
+    public void StartNewGame()
     {
         Debug.Log("Resetting scene for a new game...");
 
@@ -201,7 +203,7 @@ public class GameManager : MonoBehaviour
         InitialiseAllGameData();
 
         // Reset the game scene
-        ResetBasicInformation();
+        OnDayReset();
         ResetInteractableGameElements();
 
         // Debug options. Build will only require BeginTutorial!
@@ -222,11 +224,24 @@ public class GameManager : MonoBehaviour
                 // draggable components? then search for all of them and reset? idk.
     }
 
+    // void NextDa
+    public void GoNextDay()
+	{
+		Debug.Log("Beginning a new day!");
+		Debug.Log("Should be setting up for day " + (DayManager.Instance.currentDayNumber + 1).ToString());
+		DayManager.Instance.currentDayNumber++;
+
+		//OnDayReset();
+		//ResetInteractableGameElements();
+
+		DebugJumpToDayNumber(DayManager.Instance.currentDayNumber);
+	}
+
     public void DebugJumpToDayNumber(int dayNumber)
     {
         InitialiseAllGameData();
 
-        ResetBasicInformation();
+        OnDayReset();
         ResetInteractableGameElements();
 
         DayManager.Instance.currentDayNumber = dayNumber;
@@ -253,7 +268,7 @@ public class GameManager : MonoBehaviour
         Debug.Log("Resetting the current level...");
 
         // Reset the game scene
-        ResetBasicInformation();
+        OnDayReset();
         ResetInteractableGameElements();
 
         if (runningTutorial)
@@ -414,20 +429,8 @@ public class GameManager : MonoBehaviour
         SceneManager.Instance.SetupMainMenu();
     }
 
-    public void NewGame()
-    {
-        FullResetScene();
-    }
-
-	public void GoNextDay()
-	{
-		Debug.Log("Beginning a new day!");
-		Debug.Log("Should be setting up for day " + (DayManager.Instance.currentDayNumber + 1).ToString());
-		DayManager.Instance.currentDayNumber++;
-
-		//ResetBasicInformation();
-		//ResetInteractableGameElements();
-
-		DebugJumpToDayNumber(DayManager.Instance.currentDayNumber);
-	}
+    //public void StartNewGame()
+    //{
+    //    StartNewGame();
+    //}
 }
