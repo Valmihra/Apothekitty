@@ -368,6 +368,9 @@ public class ResultsCalculator : MonoBehaviour
 		if (currentClientResultNumber == dailyTreatedClientsList.Count)
 		{
 			// Go Next Day
+            // Sets the day in DayManager
+            //
+            // Goes to the next day in GameManager
 			GameManager.Instance.GoNextDay();
 		}
 		else

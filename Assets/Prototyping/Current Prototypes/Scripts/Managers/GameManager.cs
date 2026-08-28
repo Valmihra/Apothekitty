@@ -230,6 +230,7 @@ public class GameManager : MonoBehaviour
 		Debug.Log("Beginning a new day!");
 		Debug.Log("Should be setting up for day " + (DayManager.Instance.currentDayNumber + 1).ToString());
 		DayManager.Instance.currentDayNumber++;
+        Debug.Log("Current day is: " + DayManager.Instance.currentDayNumber);
 
 		//OnDayReset();
 		//ResetInteractableGameElements();
