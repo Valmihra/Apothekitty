@@ -6,8 +6,8 @@ using TMPro;
 
 public class ClientLetter : MonoBehaviour
 {
-    // name should really be changed to PatientForm or Client / PatientInfo
-    // functions could probably be split into two scripts (?)
+    // name should really be changed to ClientForm or Client / ClientInfo
+    // functions could probably have been split into two scripts (?)
 
     public class ClientData
     {
@@ -29,9 +29,6 @@ public class ClientLetter : MonoBehaviour
             _clientName = newName;
             _clientSpecies = newSpecies;
             _clientExtras = newExtras;
-
-            // could also include the ailment & possibly key/mandatory ingredients/targets
-            // for treatment as information to be compared against later on in the game.
         }
 
         public void SetClientLetterText(string letterText)
@@ -50,15 +47,8 @@ public class ClientLetter : MonoBehaviour
         }
     }
 
-    [HideInInspector]
-    public List<ClientData> allClientsList;
-    public ClientData activeClientData;
-    // public List<ClientData> treatedClientsList;
-    
-    
-    // private ClientData[] clientsArray;
-    // private List<Image> clientIconList;
-    // private Image[] clientIconArray;
+    [HideInInspector] public List<ClientData> allClientsList {get; private set;}
+    [HideInInspector] public ClientData activeClientData {get; private set;}
     
     // Variables used to display the active client's data on the screen
     public TMP_Text displayedClientName;
@@ -68,6 +58,7 @@ public class ClientLetter : MonoBehaviour
     public Image displayedClientIcon;
 
     // all client images here
+		// *TAG* - Might be able to instead work out another nameToSearch function and update it like that? not a priority rn,,
     public Image clientIcon01;
     public Image clientIcon02;
     public Image clientIcon03;
@@ -75,20 +66,14 @@ public class ClientLetter : MonoBehaviour
     public Image clientIcon04;
     public Image clientIcon05;
     public Image clientIcon06;
-
-
-    public List<ClientData> currentDayClientsList;
     
     public List<ClientData> day00ClientsList;
     public List<ClientData> day01ClientsList;
     public List<ClientData> day02ClientsList;
-    
-     private Dictionary<int, List<ClientData>> dailyClientsDictionary;
-    //private List<List<ClientData>> allClientListsForEachGameDay;
-    
-    // public ClientData Jimothy;
 
-    // Vector used to reset draggable objects
+	public List<ClientData> currentDayClientsList;
+    private Dictionary<int, List<ClientData>> dailyClientsDictionary;
+
     private Vector2 clientLetterStartingPosition;
     private ResultsCalculator resultsCalculator;
 
@@ -112,7 +97,7 @@ public class ClientLetter : MonoBehaviour
 
     public void InitialiseClientLetter()
     {
-        Debug.Log("Creating all clients...");
+        // Debug.Log("Creating all clients...");
         CreateClientInformation();
         clientLetterStartingPosition = transform.position;
         
@@ -136,24 +121,15 @@ public class ClientLetter : MonoBehaviour
         dailyClientsDictionary[0] = day00ClientsList;
         dailyClientsDictionary[1] = day01ClientsList;
         dailyClientsDictionary[2] = day02ClientsList;
-        //int key = 0;
 
         return;
         //if (!dailyClientsDictionary.TryGetValue(key, out))
     }
-    
-    // void 
 
     public void SetCurrentDayClientsList()
     {
         currentDayClientsList = dailyClientsDictionary[DayManager.Instance.currentDayNumber];
-        
-        /*Debug.Log("Current day is " + DayManager.Instance.currentDayNumber + " and the current day clients are...");
-        
-        foreach (ClientData c in currentDayClientsList)
-        {
-            Debug.Log(c._clientName);
-        }*/
+        // Debug.Log("Current day is " + DayManager.Instance.currentDayNumber + " and the current day clients are...");
     }
 
     public void AssignClientsToGameDays()
@@ -170,16 +146,14 @@ public class ClientLetter : MonoBehaviour
                 }
             }
         }
-
-        Debug.Log("Number of clients present for day 1 is: " + dailyClientsDictionary[1].Count);
+        // Debug.Log("Number of clients present for day 1 is: " + dailyClientsDictionary[1].Count);
     }
 
-    // Creates the individual ClientData objects and fills them out with information related to each specific client.
-    void CreateClientInformation()
+    
+    void CreateClientInformation()              // *TAG* - Would be good to reorder, but then I'll have to fix a bunch,,, HHHHHHHHbruhhhhhh
     {
+        // Creates the individual ClientData objects and fills them out with information related to each specific client.
         allClientsList = new List<ClientData>();
-
-
 
         ClientData barry = new ClientData();
         barry.SetClientInformation("Barry Buff", "Bear", "Large, Omnivore");
@@ -212,91 +186,69 @@ public class ClientLetter : MonoBehaviour
         jimothy.SetClientIcon(clientIcon04);
             allClientsList.Add(jimothy);
 
-        ClientData TEMP_NPC01 = new ClientData();
-        TEMP_NPC01.SetClientInformation("TEMP_NPC01", "PLACEHOLDER", "PLACEHOLDER, PLACEHOLDER");
-        TEMP_NPC01.SetClientLetterText("PLACEHOLDER LETTER TEXT - TEMP_NPC01");
-        TEMP_NPC01.AttachClientToDay(1);
-        TEMP_NPC01.SetClientIcon(clientIcon05);
-            allClientsList.Add(TEMP_NPC01);
+        ClientData TEMP_PATIENT01 = new ClientData();
+        TEMP_PATIENT01.SetClientInformation("TEMP_PATIENT01", "PLACEHOLDER", "PLACEHOLDER, PLACEHOLDER");
+        TEMP_PATIENT01.SetClientLetterText("PLACEHOLDER LETTER TEXT - TEMP_PATIENT01");
+        TEMP_PATIENT01.AttachClientToDay(1);
+        TEMP_PATIENT01.SetClientIcon(clientIcon05);
+            allClientsList.Add(TEMP_PATIENT01);
 
-        ClientData TEMP_NPC02 = new ClientData();
-        TEMP_NPC02.SetClientInformation("TEMP_NPC02", "PLACEHOLDER", "PLACEHOLDER, PLACEHOLDER");
-        TEMP_NPC02.SetClientLetterText("PLACEHOLDER LETTER TEXT - TEMP_NPC02");
-        TEMP_NPC02.AttachClientToDay(1);
-        TEMP_NPC02.SetClientIcon(clientIcon06);
-            allClientsList.Add(TEMP_NPC02);
+        ClientData TEMP_PATIENT02 = new ClientData();
+        TEMP_PATIENT02.SetClientInformation("TEMP_PATIENT02", "PLACEHOLDER", "PLACEHOLDER, PLACEHOLDER");
+        TEMP_PATIENT02.SetClientLetterText("PLACEHOLDER LETTER TEXT - TEMP_PATIENT02");
+        TEMP_PATIENT02.AttachClientToDay(1);
+        TEMP_PATIENT02.SetClientIcon(clientIcon06);
+            allClientsList.Add(TEMP_PATIENT02);
     }
- 
-    // Randomises the client that visits the player
+    
     public void RandomiseIncomingClientLetter()
     {
+        // Randomises the client that visits the player
         if (GameManager.Instance.runningTutorial)
         {
-            activeClientData = allClientsList[3];  // Jimothy;
+            // Sets to Jimothy specifically. If changing his position in list, update from 3!!
+			activeClientData = allClientsList[3];  
             displayedClientIcon.sprite = activeClientData._clientIcon.sprite;
-                // Maybe activeClientData = tutorialClient (as a set private ClientData object?)
             Invoke(nameof(SpawnClient), 1.0f);
-            // should add function into client data that assigns sprite from set image to the one onscreen
         }
         else
         {
-            /*if (GameManager.Instance.seenFirstClient)//;
-            {
-                Debug.Log("First client has already been treated. It is currently day " + DayManager.Instance.currentDayNumber + ", and there are " + currentDayClientsList.Count + " clients that still require a treatment submission.");
-                // Removes specific tutorial character from list to avoid pulling again
-                if ((DayManager.Instance.currentDayNumber == 1) && (currentDayClientsList.Count == 3))
-                {
-                    // WILL NEED TO REWORK AFTER SEPARATING JIMOTHY TO A SINGLE CLIENT DAY!!
-                    currentDayClientsList.RemoveAt(0);
-                    //int indexNumber = 
-                }
-            }
-            */
-
-            int randomisedNumber = Random.Range(0, currentDayClientsList.Count);
+			int randomisedNumber = Random.Range(0, currentDayClientsList.Count);
             activeClientData = currentDayClientsList[randomisedNumber];
             displayedClientIcon.sprite = activeClientData._clientIcon.sprite;
-            //displayedClientIcon.sprite = clientIconList[randomisedNumber].sprite;
-
-            /*if (!GameManager.Instance.seenFirstClient)
-            {
-                GameManager.Instance.seenFirstClient = true;
-            }*/
 
             Invoke(nameof(SpawnClient), 1.0f);
-
         }
     }
-
-    // "spawns" the randomised client, and updates the relevant scripts with their information.
+    
     void SpawnClient()
     {
+        // "spawns" the randomised client, and updates the relevant scripts with their information.
         SceneManager.Instance.ShowClient(displayedClientIcon);
         InitialiseLetterDisplay(activeClientData);
         SetClientAilment(activeClientData);
         
-        DialogueRunner.Instance.GetDialogue("patientArrive");
+        DialogueRunner.Instance.GetDialogue("clientArrive");
     }
-
-    // Updates the text on the letter UI with the information from the specified ClientData
+    
     void InitialiseLetterDisplay(ClientData data)
     {
+        // Updates the text on the letter UI with the information from the specified ClientData
         displayedClientName.text = data._clientName;
         displayedClientSpecies.text = data._clientSpecies;
         displayedClientExtras.text = data._clientExtras;
         displayedClientLetterText.text = data._clientLetterText;
     }
 
-    // Sends the current client's name to AilmentData to link it with the correct ailment
+    
     void SetClientAilment(ClientData client)
     {
+        // Uses client name to find and set their ailment in AilmentData
         string currentData = client._clientName;
-        // uses client name to find their ailment and set it as currentAilment in AilmentData
         AilmentData.Instance.SetCurrentAilmentByClient(currentData);
-        
         currentData = AilmentData.Instance.ConvertClientNameToAilmentName(currentData);
         resultsCalculator.SetClientData(currentData);
-        Debug.Log("Linking ailment with randomised client.");
+        // Debug.Log("Linking ailment with randomised client.");
     }
 
 
@@ -315,8 +267,9 @@ public class ClientLetter : MonoBehaviour
                 continue;
             }
         }
-
+        
+        // if (index < allClientsList.Count + 10)
         currentDayClientsList.RemoveAt(index);
-        // Debug.Log("There are currently " + currentDayClientsList.Count + " clients left today.");
+        Debug.Log("Clients remaining today: " + currentDayClientsList.Count);
     }
 }

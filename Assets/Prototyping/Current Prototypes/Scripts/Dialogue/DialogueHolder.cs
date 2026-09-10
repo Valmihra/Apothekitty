@@ -39,12 +39,11 @@ public class DialogueHolder : MonoBehaviour
     public DialogueSnippet cd_JimothyEnter;
     public DialogueSnippet cd_JimothyFinish;
 
-    public DialogueSnippet cd_TEMP_NPC01Enter;
-    public DialogueSnippet cd_TEMP_NPC01Finish;
+    public DialogueSnippet cd_TEMP_PATIENT01Enter;
+    public DialogueSnippet cd_TEMP_PATIENT01Finish;
 
-    public DialogueSnippet cd_TEMP_NPC02Enter;
-    public DialogueSnippet cd_TEMP_NPC02Finish;
-    
+    public DialogueSnippet cd_TEMP_PATIENT02Enter;
+    public DialogueSnippet cd_TEMP_PATIENT02Finish;
     
     public  DialogueSnippet pd_TheCatResponse01;
     public  DialogueSnippet pd_TheCatResponse02;
@@ -82,15 +81,7 @@ public class DialogueHolder : MonoBehaviour
             td_Introduction._dialogue = new List<string>();
             td_Introduction._dialogue.Add("Back to work...");
             td_Introduction._dialogue.Add("Sounds busy out there. I'd better open up the shop!");
-            //td_Introduction._dialogue.Add("DEBUGGING TEST");
-
-        /*deskIntroduction = new DialogueSnippet();
-            deskIntroduction._dialogue = new List<string>();
-            deskIntroduction._dialogue.Add("I haven't done this in a while... I'd better refamiliarise myself with the process.");
-            deskIntroduction._dialogue.Add("Okay, all the information I'll need is on the New Patient Form. I just have to match it up to the <#8A1E1E>Grimoire</color>!");
-            */
-
-
+            
         td_Desk01 = new DialogueSnippet();
             td_Desk01._dialogue = new List<string>();
             td_Desk01._dialogue.Add("I haven't done this in a while... I'd better refamiliarise myself with the process.");
@@ -99,23 +90,16 @@ public class DialogueHolder : MonoBehaviour
         td_Desk02 = new DialogueSnippet();
             td_Desk02._dialogue = new List<string>();
             td_Desk02._dialogue.Add("Much better!");
-            td_Desk02._dialogue.Add("Okay, all the information I'll need is on the New Patient Form. I just have to match it up to the <#8A1E1E>Grimoire</color>!");
-
-
-
+            td_Desk02._dialogue.Add("Okay, all the information I'll need is on the New Client Form. I just have to match it up to the <#8A1E1E>Grimoire</color>!");     // should be "New Patient Form" ,,,!
+                    
         td_GrimoireAilmentSubmitted = new DialogueSnippet();
             td_GrimoireAilmentSubmitted._dialogue = new List<string>();
             td_GrimoireAilmentSubmitted._dialogue.Add("Yay! I've got a good feeling about this... Now I need to come up with the treatment plan!");
-            //IF ISSUE WITH JUST ONE ITEM IN LIST: td_GrimoireAilmentSubmitted._dialogue.Add("Let's see...");
         
         td_DiagnosisSheetIntroduction = new DialogueSnippet();
             td_DiagnosisSheetIntroduction._dialogue = new List<string>();
-            // td_DiagnosisSheetIntroduction._dialogue.Add("Let's see... Each recipe has an <b>effect</b>. I can choose to <#8A1E1E>heal</color>, <#8A1E1E>ease</color>, or <#8A1E1E>fortify</color>.");
             td_DiagnosisSheetIntroduction._dialogue.Add("Let's see... Each recipe has an <#8A1E1E>effect</color>. I can choose to <b>heal</b>, <b>ease</b>, or <b>fortify</b>.");
-            /*NEEDS ATTENTION!*/    // td_DiagnosisSheetIntroduction._dialogue.Add("<#8A1E1E>Heal</color> restores damage, <#8A1E1E>ease</color> provides a soothing effect, and <#8A1E1E>fortify</color> builds resistance and resilience.");
-                                    td_DiagnosisSheetIntroduction._dialogue.Add("<b>Heal</b> restores damage, <b>ease</b> provides a soothing effect, and <b>fortify</b> builds resistance and resilience.");
-            // td_DiagnosisSheetIntroduction._dialogue.Add("Then, I just need to choose a target area for that effect. I can treat the client's <#8A1E1E>mind</color>, <#8A1E1E>body</color>, or <#8A1E1E>spirit</color>.");
-            // td_DiagnosisSheetIntroduction._dialogue.Add("Then, I just need to choose a <#8A1E1E>target</color> area for that effect. I can treat the client's <b>mind</b>, <b>body</b>, or <b>spirit</b>.");
+            td_DiagnosisSheetIntroduction._dialogue.Add("<b>Heal</b> restores damage, <b>ease</b> provides a soothing effect, and <b>fortify</b> builds resistance and resilience.");
             td_DiagnosisSheetIntroduction._dialogue.Add("Then, I just need to choose a <#8A1E1E>target</color> area for that effect. I can treat the client's <b>mind</b> or <b>body</b>.");
 
         td_DiagnosisSheetSubmitted = new DialogueSnippet();
@@ -125,20 +109,14 @@ public class DialogueHolder : MonoBehaviour
         td_HerbWall = new DialogueSnippet();
             td_HerbWall._dialogue = new List<string>();
             td_HerbWall._dialogue.Add("Hello, my precious herb collection! Let's see... I can click each drawer to see what's inside... And if I hover over the contents, it'll give me a description.");
-            td_HerbWall._dialogue.Add("The <#8A1E1E>herb guide</color> on the left of the screen will tell me the characteristics of the herbs I need to treat the client. I need to find one herb for each effect, target, and enhancerToggle or inverter I have chosen.");
+            td_HerbWall._dialogue.Add("The <#8A1E1E>herb guide</color> on the left of the screen will tell me the characteristics of the herbs I need to treat the client. I need to find one herb for each effect and each target I have chosen.");
             td_HerbWall._dialogue.Add("Once I think I found the right herb, I can click and drag them across into my inventory.");
             td_HerbWall._dialogue.Add("And if I think I've made the wrong choice, I can click the <#8A1E1E>remove herb</color> button to get rid of it!");
 
-            //
-        
-
-
-
-
-
-
-
-
+            
+            
+            
+            
         // Character dialogue snippets
         cd_BarryEnter = new DialogueSnippet();
             cd_BarryEnter._dialogue = new List<string>();
@@ -183,30 +161,32 @@ public class DialogueHolder : MonoBehaviour
         cd_JimothyFinish = new DialogueSnippet();
             cd_JimothyFinish._dialogue = new List<string>();
             cd_JimothyFinish._dialogue.Add("PLACEHOLDER TEXT: sayounara you later");
+            
+
+        cd_TEMP_PATIENT01Enter = new DialogueSnippet();
+            cd_TEMP_PATIENT01Enter._dialogue = new List<string>();
+            cd_TEMP_PATIENT01Enter._dialogue.Add("PLACEHOLDER TEXT: i don't exist yet!");
+
+        cd_TEMP_PATIENT01Finish = new DialogueSnippet();
+            cd_TEMP_PATIENT01Finish._dialogue = new List<string>();
+            cd_TEMP_PATIENT01Finish._dialogue.Add("PLACEHOLDER TEXT: ariga-thank you for your treatment");
 
 
-        cd_TEMP_NPC01Enter = new DialogueSnippet();
-            cd_TEMP_NPC01Enter._dialogue = new List<string>();
-            cd_TEMP_NPC01Enter._dialogue.Add("PLACEHOLDER TEXT: i don't exist yet!");
+        cd_TEMP_PATIENT02Enter = new DialogueSnippet();
+            cd_TEMP_PATIENT02Enter._dialogue = new List<string>();
+            cd_TEMP_PATIENT02Enter._dialogue.Add("PLACEHOLDER TEXT: why do they call it oven when you of in the cold food of out hot eat the food?");
 
-        cd_TEMP_NPC01Finish = new DialogueSnippet();
-            cd_TEMP_NPC01Finish._dialogue = new List<string>();
-            cd_TEMP_NPC01Finish._dialogue.Add("PLACEHOLDER TEXT: ariga-thank you for your treatment");
-
-
-        cd_TEMP_NPC02Enter = new DialogueSnippet();
-            cd_TEMP_NPC02Enter._dialogue = new List<string>();
-            cd_TEMP_NPC02Enter._dialogue.Add("PLACEHOLDER TEXT: why do they call it oven when you of in the cold food of out hot eat the food?");
-
-        cd_TEMP_NPC02Finish = new DialogueSnippet();
-            cd_TEMP_NPC02Finish._dialogue = new List<string>();
-            cd_TEMP_NPC02Finish._dialogue.Add("PLACEHOLDER TEXT: nvm apothekitty, i think i had a stroke actually");
+        cd_TEMP_PATIENT02Finish = new DialogueSnippet();
+            cd_TEMP_PATIENT02Finish._dialogue = new List<string>();
+            cd_TEMP_PATIENT02Finish._dialogue.Add("PLACEHOLDER TEXT: nvm apothekitty, i think i had a stroke actually");
+            
+            
             
             
             
         pd_TheCatResponse01 = new DialogueSnippet();
             pd_TheCatResponse01._dialogue = new List<string>();
-            pd_TheCatResponse01._dialogue.Add("You've come to the right place! Just pass me your patient form and take a seat. I'll take care of everything.");
+            pd_TheCatResponse01._dialogue.Add("You've come to the right place! Just pass me your client form and take a seat. I'll take care of everything.");
             
         pd_TheCatResponse02 = new DialogueSnippet();
             pd_TheCatResponse02._dialogue = new List<string>();
@@ -215,12 +195,15 @@ public class DialogueHolder : MonoBehaviour
         pd_TheCatResponse03 = new DialogueSnippet();
             pd_TheCatResponse03._dialogue = new List<string>();
             pd_TheCatResponse03._dialogue.Add("You're in safe hands, my friend. Thank you for completing the paperwork, I'll get you feeling better in no time.");
-            //
             
-            pd_TheCatResponsesList = new List<DialogueSnippet>();
+        pd_TheCatResponsesList = new List<DialogueSnippet>();
             pd_TheCatResponsesList.Add(pd_TheCatResponse01);
             pd_TheCatResponsesList.Add(pd_TheCatResponse02);
             pd_TheCatResponsesList.Add(pd_TheCatResponse03);
+            
+            
+            
+            
             
         pd_TheCatSubmitHerbs = new DialogueSnippet();
             pd_TheCatSubmitHerbs._dialogue = new List<string>();

@@ -33,14 +33,9 @@ public class DraggableHerbs : Draggable
     // Sets the initial position of the UI prior to movement and brings the selected panel to the front on the screen
     public override void OnBeginDrag(PointerEventData eventData)
     {
-        //drag = eventData.pressPosition - (Vector2)transform.position;
-            //rectTransform.SetAsLastSibling();
         cuttingObject.transform.position = eventData.pressPosition;
-
         UIManager.Instance.EnableUI(movableCutting);
-        
-
-        UIManager.Instance.DisableInteraction(SceneManager.Instance.herbDrawers);
+        UIManager.Instance.DisableInteraction(SceneManager.Instance.canvasGroupHerbDrawers);
     }
 
     // Updates the UI position according to the mouse's movement
@@ -59,7 +54,7 @@ public class DraggableHerbs : Draggable
     {
         UIManager.Instance.DisableUI(movableCutting);
         cuttingObject.transform.position = initialPositionOnDrag;
-        UIManager.Instance.EnableInteraction(SceneManager.Instance.herbDrawers);        
+        UIManager.Instance.EnableInteraction(SceneManager.Instance.canvasGroupHerbDrawers);        
     }
 
     void LocateRect()

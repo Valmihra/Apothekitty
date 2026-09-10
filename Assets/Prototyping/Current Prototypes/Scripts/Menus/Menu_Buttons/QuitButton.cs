@@ -16,22 +16,14 @@ public class QuitButton : MonoBehaviour
     
     void ExitGame()
     {
-        //Debug.Log("got to pressing button");
         if (GameManager.Instance.onMainMenu)
         {
-            //MenuManager.Instance.ExitMenu(MenuManager.Instance.mainMenuCanvasGroup);         nvm,,
-            //Debug.Log("passed closing menu");
             MenuManager.Instance.ExitGamePopup();
-            //Debug.Log("called the exit popup");
-            
         }
         else
         {
             MenuManager.Instance.ExitMenu(MenuManager.Instance.pauseMenuCanvasGroup);
             GameManager.Instance.GoMainMenu();
-            // if this doesn't work, can try just exit and open main menu in menu manager,, ((!!))
         }
-        
-        
     }
 }

@@ -110,7 +110,7 @@ public class AllHerbsData : MonoBehaviour
 
         SingleHerb heavensHollyhock = new SingleHerb();
             heavensHollyhock.UpdateName("heavensHollyhock");
-            heavensHollyhock.UpdateDetails("Delicate clusters of blooming white flowers that overlap amongst each other.", "Treatment Rules:\n1. Having a secondary effect / using another herb as an enhancerToggle will nullify the treatment");
+            heavensHollyhock.UpdateDetails("Delicate clusters of blooming white flowers that overlap amongst each other.", "Treatment Rules:\n1. Having a secondary effect / using another herb as an enhancer will nullify the treatment");
             heavensHollyhock.SetEffects(false, false, false);
             heavensHollyhock.SetTargets(true, false, true);
             heavensHollyhock.SetModifiers(true, false);
@@ -118,7 +118,7 @@ public class AllHerbsData : MonoBehaviour
 
         SingleHerb crystalMoss = new SingleHerb();
             crystalMoss.UpdateName("crystalMoss");
-            crystalMoss.UpdateDetails("Attached to bark, Crystal Moss is a green herb with white growths. These growths are neither fruit nor flower.", "Treatment Rules:\n1. Only works as a secondary effect or as an enhancerToggle\n2. Won't enhance without a secondary effect");
+            crystalMoss.UpdateDetails("Attached to bark, Crystal Moss is a green herb with white growths. These growths are neither fruit nor flower.", "Treatment Rules:\n1. Only works as a secondary effect or as an enhancer\n2. Won't enhance without a secondary effect");
             crystalMoss.SetEffects(false, false, true);
             crystalMoss.SetTargets(false, true, true);
             crystalMoss.SetModifiers(true, false);
@@ -158,7 +158,7 @@ public class AllHerbsData : MonoBehaviour
 
         SingleHerb pupilPetal = new SingleHerb();
             pupilPetal.UpdateName("pupilPetal");
-            pupilPetal.UpdateDetails("Its red flowers stand on long spindly stems.", "Treatment Rules:\n1. Can only target the mind\n2. Won't work without an enhancerToggle");
+            pupilPetal.UpdateDetails("Its red flowers stand on long spindly stems.", "Treatment Rules:\n1. Can only target the mind\n2. Won't work without an enhancer");
             pupilPetal.SetEffects(false, true, true);
             pupilPetal.SetTargets(false, false, false);
             pupilPetal.SetModifiers(false, false);
@@ -166,7 +166,7 @@ public class AllHerbsData : MonoBehaviour
 
         SingleHerb queensReed = new SingleHerb();
             queensReed.UpdateName("queensReed");
-            queensReed.UpdateDetails("A green and purple herb, bearing no flowers or fruit.", "Treatment Rules:\n1. Can only impact the treatment's primary effect or enhancerToggle\n2. Only enhances when targeting the body");
+            queensReed.UpdateDetails("A green and purple herb, bearing no flowers or fruit.", "Treatment Rules:\n1. Can only impact the treatment's primary effect or enhancer\n2. Only enhances when targeting the body");
             queensReed.SetEffects(false, false, false);
             queensReed.SetTargets(false, true, true);
             queensReed.SetModifiers(true, false);
@@ -174,7 +174,7 @@ public class AllHerbsData : MonoBehaviour
 
         SingleHerb bumbleBlooms = new SingleHerb();
             bumbleBlooms.UpdateName("bumbleBlooms");
-            bumbleBlooms.UpdateDetails("Small yellow fruit with long green stems.", "Treatment Rules:\n1. Only works when effect is 'ease'\n2. needs two effects, won't work with an enhancerToggle");
+            bumbleBlooms.UpdateDetails("Small yellow fruit with long green stems.", "Treatment Rules:\n1. Only works when effect is 'ease'\n2. needs two effects, won't work with an enhancer");
             bumbleBlooms.SetEffects(false, false, false);
             bumbleBlooms.SetTargets(true, false, false);
             bumbleBlooms.SetModifiers(false, false);

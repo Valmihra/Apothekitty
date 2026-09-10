@@ -40,7 +40,7 @@ public class Inventory : MonoBehaviour, IDropHandler
     void SetupList()
     {
         inventorySlots = new List<InventorySlot>();
-        Debug.Log("Inventory is resetting, currently contains " + inventorySlots.Count + " slots.");
+        // Debug.Log("Inventory is resetting, currently contains " + inventorySlots.Count + " slots.");
         foreach (Transform child in transform)
         {
             InventorySlot temp = child.GetComponent<InventorySlot>();       // switch to trygetcomponent?
@@ -49,8 +49,7 @@ public class Inventory : MonoBehaviour, IDropHandler
                 inventorySlots.Add(temp);
             }
         }
-        Debug.Log("Reset complete. Inventory has found " + inventorySlots.Count + " slots.");
-        //Debug.Log("There are currently " + inventorySlots.Count + "inventory slots.");
+        // Debug.Log("Reset complete. Inventory has found " + inventorySlots.Count + " slots.");
     }
 
     public void ResetInventory()
@@ -79,8 +78,32 @@ public class Inventory : MonoBehaviour, IDropHandler
         Image iconToUpdate = draggedHerb.cuttingImage;
         Sprite spriteToUpdate = iconToUpdate.sprite;
 
-        SearchAndUpdate(spriteToUpdate, draggedHerb);
+        CheckForDuplicates(spriteToUpdate, draggedHerb);
+        // SearchAndUpdate(spriteToUpdate, draggedHerb);
         //UpdateInventory(iconToUpdate);
+    }
+
+    void CheckForDuplicates(Sprite spriteToCheck, DraggableHerbs draggedHerb)
+    {
+        bool duplicateFound = false;
+        foreach (InventorySlot i in inventorySlots)
+        {
+            if (i.inventorySlot.sprite == spriteToCheck)
+            {
+                duplicateFound = true;
+                MenuManager.Instance.HerbWallDuplicatePopup();
+                break;
+            }
+            else
+            {
+                continue;
+            }
+        }
+
+        if (!duplicateFound)
+        {
+            SearchAndUpdate(spriteToCheck, draggedHerb);
+        }
     }
     
 
@@ -108,15 +131,23 @@ public class Inventory : MonoBehaviour, IDropHandler
         {
             if (i.isEmpty)
             {
-                //Debug.Log("Slot located at " + inventorySlots[i])
-                Debug.Log("Updating " + i.gameObject.name + " with " + spriteToUpdate.name);
+                // Debug.Log("Updating " + i.gameObject.name + " with " + spriteToUpdate.name);
 
                 i.UpdateIcon(spriteToUpdate);
                 i.UpdateContents(draggedHerb.herbType);
                 return;
             }
             else
-            continue;
+            {
+                if (i.inventorySlot.sprite == spriteToUpdate)
+                {
+                    MenuManager.Instance.HerbWallDuplicatePopup();
+                }
+                else
+                {
+                    continue;
+                }
+            }
         }
 
         // UPDATE CURRENT INVENTORY CONTENTS HERE

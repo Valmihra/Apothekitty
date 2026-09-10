@@ -7,52 +7,34 @@ using UnityEngine.EventSystems;
 public class TutorialBin : MonoBehaviour, IDropHandler
 {
     public GameObject parentObject;
-    private RectTransform rectTransform;
+    // private RectTransform rectTransform;
 
     private int timesTossed;
     private int numToTossOnDesk = 3;
     
-    void Awake()
-    {
-        rectTransform = GetComponent<RectTransform>();
-        Debug.Log("reading");
-    }
+    // void Awake()
+    // {
+    //     rectTransform = GetComponent<RectTransform>();
+    // }
 
 
     public void OnDrop(PointerEventData eventData)
     {
-       
-       /* if(eventData.pointerDrag != null)
-        {
-            Debug.Log("This drop works!");
-            //  Debug.Log("Drop Detected");
-            //Image temp = eventData.pointerDrag.GetComponent<Image>();
-            //DraggableHerbs temp = eventData.pointerDrag.GetComponent<DraggableHerbs>();
-            //GetImage(temp);
-            //GetImageAndUpdateInventory(temp);
-        }*/
-        
         if(eventData.pointerDrag != null)
         {
-            // Debug.Log("isn't null");
-
             if (eventData.pointerDrag.TryGetComponent<DraggableTutorialItem>(out DraggableTutorialItem draggableTutorialItem))
             {
-                Debug.Log("check works");
-
                 Destroy(draggableTutorialItem.gameObject);
                 timesTossed++;
 
                 if (timesTossed == numToTossOnDesk)
                 {
-                    DialogueRunner.Instance.cleanDesk = true;
-                    Debug.Log(DialogueRunner.Instance.cleanDesk);
+                    DialogueRunner.Instance.deskIsClean = true;
                     DialogueRunner.Instance.GetDialogue("desk two");
                     
                     Destroy(parentObject);
                 }
             }
-            
         }
     }
 }

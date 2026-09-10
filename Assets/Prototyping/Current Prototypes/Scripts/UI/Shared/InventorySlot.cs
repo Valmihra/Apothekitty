@@ -27,11 +27,6 @@ public class InventorySlot : MonoBehaviour
         //slotContents = null;
     }
 
-    /*void FindParents()
-    {
-        /
-    }*/
-
     // assigns the correct 'empty' images
     void SetupImages()
     {
@@ -40,19 +35,9 @@ public class InventorySlot : MonoBehaviour
 
         inventorySlot = herbSlot.GetComponent<Image>();
         
-        //Image temporaryImage = GetComponent<Image>();
         // makes a transparent sprite for the starting inventory image, based on a preexisting sprite in the scene
         GameObject temporaryObject = GameObject.Find("Empty Inventory Icon");
         inventorySlotEmpty = temporaryObject.GetComponent<Image>();
-
-            // have instead made sprite transparent in unity
-        // Color temporaryColour = new Color(1,1,1,0);
-        // temporaryImage.color = temporaryColour;
-
-        // assigns the blank sprite to the empty slot
-        //inventorySlotEmpty.sprite = temporaryImage.sprite;
-
-        //inventorySlotEmpty = GetComponent<Image>();//inventorySlot;
         //Debug.Log("Image is set as " + inventorySlot.name);
     }
 
@@ -67,7 +52,7 @@ public class InventorySlot : MonoBehaviour
 
     public void UpdateContents(string contents)
     {
-        if (contents == "x")
+        if (contents == "emptyInventorySlot")
         {
             slotContents = null;
         }
@@ -82,8 +67,12 @@ public class InventorySlot : MonoBehaviour
     public void RemoveHerb()
     {
         inventorySlot.sprite = inventorySlotEmpty.sprite;
-        // Debug.Log("Removing herb");
-        UpdateContents("x");
+        UpdateContents("emptyInventorySlot");
         isEmpty = true;
     }
+    
+    // *TAG* - Add a draggable version to test instead of 'click to remove'
+        // would it need a secondary child component to drag with?
+        ///// uhhhhhhh
+        // probably not, right?
 }

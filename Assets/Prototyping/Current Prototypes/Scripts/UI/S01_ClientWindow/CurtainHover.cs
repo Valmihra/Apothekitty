@@ -21,7 +21,7 @@ public class CurtainHover : MouseHover, IPointerEnterHandler, IPointerExitHandle
     
     public override void OnPointerEnter(PointerEventData eventData)
     {
-        if (GameManager.Instance.canStartDay)
+        if (GameManager.Instance.canOpenShop)
         {
             curtainImage.color = hoverCurtainColour;
         }
@@ -30,7 +30,7 @@ public class CurtainHover : MouseHover, IPointerEnterHandler, IPointerExitHandle
 
     public override void OnPointerExit(PointerEventData eventData)
     {
-        if (GameManager.Instance.canStartDay)
+        if (GameManager.Instance.canOpenShop)
         {
             curtainImage.color = defaultCurtainColour;
         }

@@ -11,21 +11,18 @@ public class MenuManager : MonoBehaviour
     public CanvasGroup pauseMenuCanvasGroup;
     public CanvasGroup popupMenuCanvasGroup;
     public CanvasGroup progressMenuCanvasGroup;
+	public CanvasGroup newDayMenuCanvasGroup;
+	public CanvasGroup endOfMVPMenuCanvasGroup;
     
         public List<CanvasGroup> allMenuCanvasGroupsList;
     
     // COLOUR CHANGES
     // <color=red>  <#8A1E1E>
 
-    //[Header("Pause Menu Buttons")]
-    //public Button resumeGameButton;               //resumeGameButton.onClick.AddListener(delegate { Resume(); });
-    //public Button returnToMainMenuButton;         //returnToMainMenuButton.onClick.AddListener(delegate { Return(); });
-    //public Button resetSceneButton;               //resetSceneButton.onClick.AddListener(delegate { Reset(); });
-
     // PLACEHOLDER VECTORS FOR TUTORIAL POPUP LOCATIONS
     private Vector2 initialPopupMenuPosition;
-    private Vector2 movedDownPosition;
-    private Vector2 movedUpPosition;
+    // private Vector2 movedDownPosition;
+    // private Vector2 movedUpPosition;
 
     [Header("Popup Text References")]
     public TMP_Text popupTextBox;
@@ -37,12 +34,21 @@ public class MenuManager : MonoBehaviour
     public Button progressContinueButton;
 
     private string popupText;
-    private string defaultPopupPromptText = "Click box to close.";
-    private string continuePopupPromptText = "Click box to continue.";
+    private string defaultPopupPromptText = "Click to close.";
+    private string continuePopupPromptText = "Click to continue.";
 
     private bool diagnosisSheetPopupActive;
     private bool popupPositionsSet;
     //private bool deskPopupActive;
+
+	// *TAG* - Trying to see if splitting up some of the longer messages would help::
+	[SerializeField] private PopupSensor popupSensor;
+	[SerializeField] private AnimatedTextEffectNewDay newDayAnimatedTextComponent;
+
+	[SerializeField] private TMP_Text endScreenClientsSeen;
+	[SerializeField] private TMP_Text endScreenClientsCured;
+	[SerializeField] private TMP_Text endScreenCallToAction;
+	
 
     private static MenuManager _instance;
     public static MenuManager Instance
@@ -59,15 +65,6 @@ public class MenuManager : MonoBehaviour
             _instance = this;
 
         InitialiseMenuManager();
-        
-        
-        // diagnosisSheetPopupActive = false;
-        // popupPrompt.text = defaultPopupPromptText;
-
-        // initialPopupMenuPosition = popupMenuCanvasGroup.transform.position;
-        // movedDownPosition = new Vector2(initialPopupMenuPosition.x, initialPopupMenuPosition.y-100f);
-        // movedUpPosition = new Vector2(initialPopupMenuPosition.x, initialPopupMenuPosition.y+100f);
-        //HideAllMenuCanvases();
     }
 
     // ---------------------------------
@@ -81,7 +78,6 @@ public class MenuManager : MonoBehaviour
         popupPrompt.text = defaultPopupPromptText;
         diagnosisSheetPopupActive = false;
         popupPositionsSet = false;
-        
 
         CreateMenuCanvasGroupList();
         CreatePopupMenuPositions();
@@ -95,6 +91,8 @@ public class MenuManager : MonoBehaviour
         allMenuCanvasGroupsList.Add(popupMenuCanvasGroup);
             allMenuCanvasGroupsList.Add(mainMenuCanvasGroup);
             allMenuCanvasGroupsList.Add(progressMenuCanvasGroup);
+			allMenuCanvasGroupsList.Add(newDayMenuCanvasGroup);
+			allMenuCanvasGroupsList.Add(endOfMVPMenuCanvasGroup);
     }
 
     // Plots the relevant locations for the tutorial popup
@@ -103,8 +101,11 @@ public class MenuManager : MonoBehaviour
         if (!popupPositionsSet)
         {
             initialPopupMenuPosition = popupMenuCanvasGroup.transform.position;
-            movedDownPosition = new Vector2(initialPopupMenuPosition.x, initialPopupMenuPosition.y - 100f);
-            movedUpPosition = new Vector2(initialPopupMenuPosition.x, initialPopupMenuPosition.y + 100f);
+            
+	        // currently trying version without altered menu positions
+            // movedDownPosition = new Vector2(initialPopupMenuPosition.x, initialPopupMenuPosition.y - 100f);
+            // movedUpPosition = new Vector2(initialPopupMenuPosition.x, initialPopupMenuPosition.y + 100f);
+            
             popupPositionsSet = true;
         }
         else
@@ -114,11 +115,6 @@ public class MenuManager : MonoBehaviour
         }
     }
 
-    // public void Reset()
-    // {
-        // GameManager.Instance.ResetScene();
-    // }
-
     // ---------------------------------
     //      MENU DISPLAY FUNCTIONS
     // ---------------------------------
@@ -127,11 +123,7 @@ public class MenuManager : MonoBehaviour
     {
         // game is paused?
         UIManager.Instance.DisableInteraction(SceneManager.Instance.currentCanvasGroup);
-        
-        if ((SceneManager.Instance.onDesk) && (GameManager.Instance.ailmentChosen))
-        {
-            UIManager.Instance.DisableInteraction(SceneManager.Instance.diagnosisSheet);
-        }
+        SceneManager.Instance.OnGameplaySuspended();
 
         UIManager.Instance.EnableUI(menuCanvasGroup);
         menuCanvasGroup.GetComponent<RectTransform>().SetAsLastSibling();
@@ -141,10 +133,7 @@ public class MenuManager : MonoBehaviour
     {
         UIManager.Instance.DisableUI(menuCanvasGroup);
         UIManager.Instance.EnableInteraction(SceneManager.Instance.currentCanvasGroup);
-        if ((SceneManager.Instance.onDesk) && (GameManager.Instance.ailmentChosen))
-        {
-            UIManager.Instance.EnableInteraction(SceneManager.Instance.diagnosisSheet);
-        }
+        SceneManager.Instance.OnReturnToGame();
 
         if (menuCanvasGroup == mainMenuCanvasGroup)
         {
@@ -167,37 +156,34 @@ public class MenuManager : MonoBehaviour
 
     public void OpenTutorialPopup(string popupType)
     {
-        /*if (GameManager.Instance.runningTutorial)
-        {
-            ,,
-        }*/
-        
         OpenMenu(popupMenuCanvasGroup);
         
         if (popupType == "initialTutorial")
         {
-            //UIManager.Instance.HighlightCanvasElement("curtain");
-            popupText = "Welcome to Apothekitty!\n\nAs the town healer, it's your job to carefully diagnose and treat your patients. \n\nClick on the <#8A1E1E>curtain</color> to receive your first client!";
+			// FOR DEBUGGING EOMVP MENU EARLY: EndOfMVPMenu();
+            popupText = "Welcome to Apothekitty!\n\nAs the town healer, it's your job to carefully diagnose and treat your clients. \n\nClick on the <#8A1E1E>curtain</color> to receive your first client!";
         }
         else if (popupType == "startPrompts")
         {
             UIManager.Instance.HighlightCanvasElement("arrows");
-            popupText = "You'll find the patient form on your desk. Click the <#8A1E1E>arrows</color> in the bottom right to navigate between screens.\n\nIf you feel lost at any point, click the arrow by the quest log to see what you still need to do.";
+            popupText = "You'll find the client form on your desk. Click the <#8A1E1E>arrows</color> in the bottom right to navigate between screens.\n\nIf you feel lost at any point, click the arrow by the quest log to see what you still need to do.";
         }
         else if (popupType == "initDeskPrompts")
         {
-            // UIManager.Instance.
-            popupText = "Papers pile up quickly, but you can always click and drag things on your desk to keep it organised. \n\nTry moving the old note to the bin.";
+            popupText = "Papers pile up quickly, but you can always click and drag things on your desk to keep it organised. \n\nTry moving those old notes to the bin.";
         }
         else if (popupType == "grimoire")
         {
-            popupMenuCanvasGroup.transform.position = movedDownPosition;   //AilmentIconColourController.Instance.ShowAilmentIconBackground();   //UIManager.Instance.HighlightCanvasElement("ailmentIcon");
-            UIManager.Instance.HighlightCanvasElement("ailmentIcon");   // could be better to set this as a small script attached to the actual object?
-            popupText = "Your Grimoire acts as your reference point for ailments. Pay close attention to each ailment's description and compare it to your client's symptoms.\n\nOnce you think you've found the correct diagnosis, click on the <#8A1E1E>ailment's picture</color> to select it!";
+            // popupMenuCanvasGroup.transform.position = movedDownPosition;
+			List <string> infoToSend = new List <string> {"Your Grimoire acts as your reference point for ailments.",  " Pay close attention to each ailment's description and compare it to your client's symptoms.", "Once you think you've found the correct diagnosis, click on the <#8A1E1E>ailment's picture</color> to select it!"};
+            
+			popupSensor.SetupLongPopupText(infoToSend);
+			// UIManager.Instance.HighlightCanvasElement("ailmentIcon");   // could be better to set this as a small script attached to the actual object?
+            // popupText = "Your Grimoire acts as your reference point for ailments. Pay close attention to each ailment's description and compare it to your client's symptoms.\n\nOnce you think you've found the correct diagnosis, click on the <#8A1E1E>ailment's picture</color> to select it!";
         }
         else if (popupType == "diagnosisSheet")
         {
-            popupMenuCanvasGroup.transform.position = movedUpPosition;
+            // popupMenuCanvasGroup.transform.position = movedUpPosition;
             UIManager.Instance.HighlightCanvasElement("modifiers");
             popupPrompt.text = continuePopupPromptText;
             diagnosisSheetPopupActive = true;
@@ -208,25 +194,34 @@ public class MenuManager : MonoBehaviour
         {
             popupPrompt.text = defaultPopupPromptText;
             diagnosisSheetPopupActive = false;
-            popupText = "For extreme cases or large clients, you can strengthen the treatment with the <b>enhancerToggle</b>. You can also choose the <b>inverter</b> to achieve the opposite effect, if the description calls for it.\n\nClick <b>submit treatment plan</b> when you're ready.";
+            popupText = "For extreme cases or large clients, you can strengthen the treatment with the <b>enhancer</b>. You can also choose the <b>inverter</b> to achieve the opposite effect, if the description calls for it.\n\nClick <b>submit treatment plan</b> when you're ready.";
         }
         else if (popupType == "toHerbWall")
         {
-            //UIManager.Instance.HighlightCanvasElement("arrows");
             popupText = "Now that you've chosen a treatment plan, you can access your herb stores to create your treatment.\n\nClick the new arrow in the bottom right to navigate to the <#8A1E1E>herb wall</color>.";
         }
+		else if (popupType == "endOfMVP")
+		{
+			// popupMenuCanvasGroup.transform.position = movedDownPosition;
+			List <string> infoToSend = new List <string> {"And that's all we've got right now!", "Thank you for taking the time to play the current version of our game. \n\nAs a reward for playing to the end, here's a review of your results!", "Click the exit button to go back to the main menu at any time"};
+			
+			popupSensor.SetupLongPopupText(infoToSend);
+		}
+		else if (popupSensor.readingLongPopup)
+		{
+			popupText = popupSensor.longPopupText;
+			if (popupText.Contains("<#8A1E1E>"))
+			{
+				UIManager.Instance.HighlightCanvasElement("ailmentIcon");
+			}
+		}
         else
         {
             popupText = "If you forget your chosen treatment plan, you can click the arrow in the bottom right to navigate to the desk.\n\nOnce you're done, click <b>'submit treatment'</b> to hand your recipe to the client.\n\nMake sure you're 100% certain before submitting, as there's no going back!";// how to submit and view results
         }
         popupTextBox.text = popupText;
 
-        /*if (popupTextBox.text.Contains("</color>"))
-        {
-            popupTextBox.text = "works";
-        }*/
-
-
+		// *TAG* - ADD A JOURNAL THAT RECORDS THESE STRINGS AND LETS PLAYERS COME BACK TO THEM IF THEY NEED IT!!		USEFUL SAUCE FOR LATER!
 
         // IF RED IS PRESENT, WAIT .5F AND THEN INVOKE CHANGE COLOUR ON THE OBJECT
         // CHANGE COLOUR (WAITS .5F AND THEN SETS BACK TO DEFAULT COLOUR?)
@@ -238,11 +233,54 @@ public class MenuManager : MonoBehaviour
     //      ALERT MESSAGE FUNCTIONS
     // ---------------------------------
 
-    public void InvalidDiagnosisSheetCombinationPopup()
+	public void NewDayMenu(string command)
+	{
+		if (command == "open")
+		{
+			HideAllMenuCanvases();
+            OpenMenu(newDayMenuCanvasGroup);
+
+            newDayAnimatedTextComponent.NewDayAnimation();
+		}
+		if (command == "close")
+		{
+			ExitMenu(newDayMenuCanvasGroup);
+		}
+	}
+
+	public void EndOfMVPMenu()
+	{
+		// *TAG* - This group should have the client results, qr code, etc.
+		int numberCuredPatients = GameManager.Instance.GetCuredPatients();//0;
+		Debug.Log(numberCuredPatients);
+		//GameManager.Instance.GetCuredPatients(numberCuredPatients);
+		//Debug.Log(numberCuredPatients);
+		endScreenClientsSeen.text = ("<b>Total patients seen:</b> " + ClientLetter.Instance.allClientsList.Count).ToString();
+		endScreenClientsCured.text = ("<b>Total patients cured:</b> " + numberCuredPatients).ToString();
+		
+		if (numberCuredPatients == 0)
+		{
+			endScreenCallToAction.text = "You weren't able to cure any patients. \n\nThis shows us we need to do something to help clarify how the mechanics of our game work. We'd really appreciate your feedback.";
+		}
+		else
+		{
+			endScreenCallToAction.text = "You cured someone!! \n\nNot gonna lie, I'm kinda celebrating, because for a while there, nobody was really doing that lmao";
+		}
+		
+		OpenMenu(endOfMVPMenuCanvasGroup);
+	}
+
+    public void DiagnosisSheetInvalidCombinationPopup()
     {
         popupTextBox.text = "This combination is invalid.\n\nPlease ensure you are choosing <b> at least </b> a single effect and a target to pair it with.";
         OpenMenu(popupMenuCanvasGroup);
     }
+
+	public void DiagnosisSheetCategoryDoubleUpPopup()
+	{
+		popupTextBox.text = "You have already using this target or effect in your treatment plan.\n\nPlease choose another to continue.";
+		OpenMenu(popupMenuCanvasGroup);
+	}
 
     public void HerbWallNothingChosenToSubmitPopup()
     {
@@ -256,6 +294,12 @@ public class MenuManager : MonoBehaviour
         OpenMenu(popupMenuCanvasGroup);
     }
 
+	public void HerbWallDuplicatePopup()
+	{
+		popupTextBox.text = "You cannot create an effective treatment with two of the same herb. Try submitting something else!";
+		OpenMenu(popupMenuCanvasGroup);
+	}
+
     public void ProgressDayPopup()
     {
         string messageToPlayer; 
@@ -263,13 +307,13 @@ public class MenuManager : MonoBehaviour
         {
             // setup popup for next client
 			messageToPlayer = "Looks like someone else is heading in now... better keep going!";
-            progressContinueButton.GetComponent<ProgressLevelButton>().patientsRemaining = true;
+            progressContinueButton.GetComponent<ProgressLevelButton>().clientsRemaining = true;
         }
         else
         {
 			// setup popup for end of day + results screen
             messageToPlayer = "Seems like no one else is coming today... time to close up!";
-            progressContinueButton.GetComponent<ProgressLevelButton>().patientsRemaining = false;
+            progressContinueButton.GetComponent<ProgressLevelButton>().clientsRemaining = false;
         }
 
 		progressContinueButton.GetComponent<ProgressLevelButton>().UpdateProgressLevelButtonText();
@@ -308,7 +352,7 @@ public class MenuManager : MonoBehaviour
         //else
         //{
         
-            // Checks if trying to exit the game
+            // Checks if trying to exit the game		-- should probably come before the other check ^^
             if (popupTextBox.text.Contains("Thank-a-you so much for to playing our game!"))
             {
                 ExitMenu(popupMenuCanvasGroup);
@@ -319,59 +363,12 @@ public class MenuManager : MonoBehaviour
                 ExitMenu(popupMenuCanvasGroup);
             }
         // }
-
-
-        //if (diagnosisSheetPopupActive)
-        //{
-        //    popupMenuCanvasGroup.transform.position = initialPopupMenuPosition;
-        //    OpenTutorialPopup("diagnosisSheetTwo");
-        //}
-        /*else if (deskPopupActive)
-        {
-            OpenTutorialPopup("grimoire");
-        }
-        else
-        {
-            if (popupTextBox.text.Contains("Pay close attention to each ailment's description"))
-            {
-                //AilmentIconColourController.Instance.ResetAilmentIconBackground();
-                popupMenuCanvasGroup.transform.position = initialPopupMenuPosition;
-                ExitMenu(popupMenuCanvasGroup);
-            }
-            else if (popupTextBox.text.Contains("Thank-a-you so much for to playing our game!"))
-            {
-                ExitMenu(popupMenuCanvasGroup);
-                Invoke(nameof(Quit), 1f);
-            }
-            else
-            {
-                ExitMenu(popupMenuCanvasGroup);
-            }
-        }*/
     }
 
     void Quit()
     {
         Debug.Log("got to the quit command");
         GameManager.Instance.ExitGame();
-        //Debug.Log("got past instance.exit");
     }
 
-    /*public void MiniPopup()
-    {
-        miniText.text = "Patient form is on your desk.";
-
-        miniText.text = "Access to herb wall granted.";
-
-        miniText.text = "Submitting.";
-    }*/
-
-
-    // QUEST LOG
-        // TREAT CLIENT
-        // DIAGNOSE AILMENT
-        // MAKE A RECIPE
-        // SELECT THE HERBS
-        // SUBMIT TO CLIENT
-    //public void Po
 }

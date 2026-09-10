@@ -10,7 +10,7 @@ public class DraggableTutorialItem : Draggable
 
     public override void OnBeginDrag(PointerEventData eventData)
     {
-         editedDelta = eventData.pressPosition - (Vector2)transform.position;
+        editedDelta = eventData.pressPosition - (Vector2)transform.position;
         rectTransform.SetAsLastSibling();
         gameObject.GetComponent<Image>().raycastTarget = false;
     }
@@ -32,21 +32,7 @@ public class DraggableTutorialItem : Draggable
 
     void Reset()
     {
+        // Makes the object accept raycasts again
         gameObject.GetComponent<Image>().raycastTarget = true;
     }
-    /*public GameObject parentObject;
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    public void OnDrop()
-    {
-        if(eventData.pointerDrag != null)
-        {
-
-        }
-    }*/
 }

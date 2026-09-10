@@ -2,12 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class ResultsCalculator : MonoBehaviour
 {
     public class FinishedClient
     {
-        public string _treatedClientName; // public string _treatedClientAilment;
+        public string _treatedClientName;
         public bool _correctAilment;
         public bool _correctRecipe;
         public bool _correctHerbs;
@@ -18,12 +19,13 @@ public class ResultsCalculator : MonoBehaviour
         {
             _clientDataStored = false;
         }
+
         public void FinishTreatingClient()
         {
             _clientDataStored = true;
             Debug.Log("Client treatment data stored.");
             
-            // do smth else here? or no?
+            // *TAG* - do smth else here? or no? // public string _treatedClientAilment;
         }
         
         public void StoreCurrentProgressForThisClient(bool ailment, bool recipe, bool herbs)
@@ -35,6 +37,7 @@ public class ResultsCalculator : MonoBehaviour
             _correctHerbs = herbs;
         }
     }
+
     public List<FinishedClient> dailyTreatedClientsList;
 	private FinishedClient currentClientToDisplay;
     
@@ -47,49 +50,25 @@ public class ResultsCalculator : MonoBehaviour
     public bool correctRecipe;
     public bool correctHerbs;
 
-	// private int timesCalculated;
-	int totalClientResults;
+	private int totalClientResults;
 	private int currentClientResultNumber;
-    
-    [SerializeField]
-	private Button submissionButton;
+
+    [SerializeField] private Button submitHerbsButton;
+	[SerializeField] private Button resultsScreenNavigationButton;
+    private TMP_Text resultsScreenNavigationButtonText;
 
     private Inventory inventory;
-    // private FinishedClientsData finishedClientsData;
-    private DiagnosisSheetInteractables diagnosisSheetInteractables;
+    private DiagnosisSheetInteractables treatmentPlanInteractables;
 
-	[SerializeField]
-	private Button goNextButton;
-	// [SerializeField]
-	// private Button goBackButton;
-
-    /*void Awake()
-    {
-        submissionButton = GetComponent<Button>();
-        submissionButton.onClick.AddListener(delegate { CalculateResults(); });
-        
-        inventory = FindObjectOfType<Inventory>();
-        finishedClientsData = FindObjectOfType<FinishedClientsData>();
-        diagnosisSheetInteractables = FindObjectOfType<DiagnosisSheetInteractables>();
-    }*/
-    
-    void Start()
-    {
-        // add warning popup first? (!!!!)
-        // ResetBools();
-    }
 
     public void InitialiseResultsCalculator()
     {
-        // submissionButton = GetComponent<Button>();
-        submissionButton.onClick.AddListener(delegate { CalculateResults(); });
-
-		goNextButton.onClick.AddListener(delegate { OnProgressButtonPushed(); });
-		// goBackButton.onClick.AddListener(delegate { GoBackScreen(); });
+        submitHerbsButton.onClick.AddListener(delegate { CalculateResults(); });
+		resultsScreenNavigationButton.onClick.AddListener(delegate { OnNextResultButtonPushed(); });
         
         inventory = FindObjectOfType<Inventory>();
-        // finishedClientsData = FindObjectOfType<FinishedClientsData>();
-        diagnosisSheetInteractables = FindObjectOfType<DiagnosisSheetInteractables>();
+        treatmentPlanInteractables = FindObjectOfType<DiagnosisSheetInteractables>();
+		resultsScreenNavigationButtonText = resultsScreenNavigationButton.GetComponentInChildren<TMP_Text>();
     }
 
     void CheckInventoryContents()
@@ -102,7 +81,6 @@ public class ResultsCalculator : MonoBehaviour
             {
                 Debug.Log(i.slotContents);
                 inventoryContentsOnSubmission.Add(i.slotContents);
-                // would be read by the results checker
             }
         }
         return;
@@ -116,10 +94,10 @@ public class ResultsCalculator : MonoBehaviour
         correctHerbs = false;
     }
 
-    public void ResetTreatedClientData()
+    public void ResetDailyTreatedClientData()
     {
         // called at the beginning of each day to ensure the clients are up to date
-		Debug.Log("Resetting treated client data for a new day...");
+		// Debug.Log("Resetting treated client data for a new day...");
         CreateDailyTreatedClientsList();
         AdjustListForNumberDailyClients();
 		totalClientResults = 0;
@@ -145,21 +123,16 @@ public class ResultsCalculator : MonoBehaviour
         {
             // Resets for calculation
             ResetResultsCalculatorValues();
-            
-            // GOES BACK TO CLIENT WINDOW HERE INSTEAD?
-            // SceneManager.Instance.ResultsScreenPrep();
+
             CheckCorrectAilment();
             CheckCorrectRecipe();
             CheckCorrectHerbs();
             
             // Stores the data in a container
             StoreClientTreatmentData();
-
-
+			// Continues the game
             GameManager.Instance.SubmitTreatmentToClient();
         }
-
-        // function to send to end screen w/results
     }
 
     void CheckCorrectAilment()
@@ -173,9 +146,9 @@ public class ResultsCalculator : MonoBehaviour
     void CheckCorrectRecipe()
     {
         bool correct = false;
-        if ((diagnosisSheetInteractables.primaryEffect.value == AilmentData.Instance.currentAilment._primaryEffectDropdownNumber) && (diagnosisSheetInteractables.primaryTarget.value == AilmentData.Instance.currentAilment._primaryTargetDropdownNumber))
+        if ((treatmentPlanInteractables.primaryEffect.value == AilmentData.Instance.currentAilment._primaryEffectDropdownNumber) && (treatmentPlanInteractables.primaryTarget.value == AilmentData.Instance.currentAilment._primaryTargetDropdownNumber))
         {
-            if ((diagnosisSheetInteractables.secondaryEffect.value == AilmentData.Instance.currentAilment._secondaryEffectDropdownNumber) && (diagnosisSheetInteractables.secondaryTarget.value == AilmentData.Instance.currentAilment._secondaryTargetDropdownNumber))
+            if ((treatmentPlanInteractables.secondaryEffect.value == AilmentData.Instance.currentAilment._secondaryEffectDropdownNumber) && (treatmentPlanInteractables.secondaryTarget.value == AilmentData.Instance.currentAilment._secondaryTargetDropdownNumber))
             {
                 correct = true;
             }
@@ -185,21 +158,21 @@ public class ResultsCalculator : MonoBehaviour
         {
             if (AilmentData.Instance.currentAilment._modifierTypeByNumber == 0)
             {
-                if (!diagnosisSheetInteractables.enhancerToggle.isOn && !diagnosisSheetInteractables.inverterToggle.isOn)
+                if (!treatmentPlanInteractables.enhancerToggle.isOn && !treatmentPlanInteractables.inverterToggle.isOn)
                 {
                     correctRecipe = true;
                 }
             }
             else if (AilmentData.Instance.currentAilment._modifierTypeByNumber == 1)
             {
-                if (diagnosisSheetInteractables.enhancerToggle.isOn && !diagnosisSheetInteractables.inverterToggle.isOn)
+                if (treatmentPlanInteractables.enhancerToggle.isOn && !treatmentPlanInteractables.inverterToggle.isOn)
                 {
                     correctRecipe = true;
                 }
             }
             else if (AilmentData.Instance.currentAilment._modifierTypeByNumber == 2)
             {
-                if (!diagnosisSheetInteractables.enhancerToggle.isOn && diagnosisSheetInteractables.inverterToggle.isOn)
+                if (!treatmentPlanInteractables.enhancerToggle.isOn && treatmentPlanInteractables.inverterToggle.isOn)
                 {
                     correctRecipe = true;
                 }
@@ -214,25 +187,20 @@ public class ResultsCalculator : MonoBehaviour
 
     void CheckCorrectHerbs()
     {
-        // bool match = false;
         int numMatches = 0;
         int targetIngredientCount = AilmentData.Instance.currentAilment._acceptableHerbsForTreatment.Count;
-        //bool final
-
         int ingredientsChosen = 0;
+
         foreach (string ingredient in inventoryContentsOnSubmission)
         {
             ingredientsChosen++;
         }
 
-        //if (ingredientsChosen == AilmentData.Instance.currentAilment._acceptableHerbsForTreatment.Count)
         if (ingredientsChosen == targetIngredientCount)
         {
-            
-            //foreach (string h in AilmentData.Instance.currentAilment._acceptableHerbsForTreatment)
             foreach (string ingredient in inventoryContentsOnSubmission)
             {
-                Debug.Log("Checking for: " + ingredient);
+                Debug.Log("Checking to see whether " + ingredient + " is a valid ingredient to treat this ailment...");
 
                 for (int i = 0; i < ingredientsChosen; i++)
                 {
@@ -248,22 +216,18 @@ public class ResultsCalculator : MonoBehaviour
                 }
             }
         }
-        /*else
-        {
-            match = false;
-        }*/
         
         if (numMatches == targetIngredientCount)
         {
             correctHerbs = true;
+			GameManager.Instance.RecordCuredPatient();
         }
         
-        // GoResultsScreen();
         return;
         
     }
 
-    public void GoResultsScreen()
+    public void UpdateAndShowResultsScreen()
     {
         // first call will always be at 0, for the first client in the list
 		currentClientToDisplay = dailyTreatedClientsList[currentClientResultNumber];
@@ -271,30 +235,37 @@ public class ResultsCalculator : MonoBehaviour
 		currentClientResultNumber++;
 		
 		// checks if last client of day and updates the text on the button accordingly
-		ResultsScreen.Instance.UpdateResultsScreenButtonText(currentClientResultNumber == dailyTreatedClientsList.Count);
+		UpdateResultsScreenButtonText(currentClientResultNumber == dailyTreatedClientsList.Count);
+		ResultsScreen.Instance.PrepNextClientResultScreen();
 		ResultsScreen.Instance.GenerateResultsScreen(currentClientToDisplay._treatedClientName, currentClientToDisplay._correctAilment, currentClientToDisplay._correctRecipe, currentClientToDisplay._correctHerbs);
+    }
+
+	// This should be the button seen on the results screen itself. Adjusts based on how many clients left
+    void UpdateResultsScreenButtonText(bool isFinalClientToReview)
+    {
+        if (isFinalClientToReview)
+        {
+            resultsScreenNavigationButtonText.text = ("Begin day " + (DayManager.Instance.currentDayNumber + 1)).ToString();
+        }
+        else
+        {
+            resultsScreenNavigationButtonText.text = "See results for next client";
+        }
     }
 
 
     public void SetClientData(string ailmentName)
     {
-        //foreach (SinglePage s in GrimoirePagesData.SinglePage)
-    
+        // uses the correct information from ClientLetter to set the ailment.
         currentAilment = ailmentName;
         currentClient = ClientLetter.Instance.displayedClientName.text;
-        Debug.Log("Current client in ResultsCalculator is " + currentClient + " and the current ailment is " + currentAilment);
-    }
-    
-    
-    void InitialiseFinishedClientsData()
-    {
-        // resultsCalculator = FindObjectOfType<ResultsCalculator>();
+        // Debug.Log("Current client in ResultsCalculator is " + currentClient + " and the current ailment is " + currentAilment);
     }
 
     void CreateDailyTreatedClientsList()
     {
         dailyTreatedClientsList = new List<FinishedClient>();
-        
+        // assuming 5 is the maximum number of clients per day
         FinishedClient treatedClient01 = new FinishedClient();
             treatedClient01.SetupEmptyClientSlot();
             dailyTreatedClientsList.Add(treatedClient01);
@@ -316,33 +287,22 @@ public class ResultsCalculator : MonoBehaviour
             dailyTreatedClientsList.Add(treatedClient05);
             
             return;
-        // AdjustListForNumberDailyClients();
     }
     
     void AdjustListForNumberDailyClients()
     {
-        // assuming 5 is the maximum number of clients per day
-        
-            //dailyTreatedClientsList.Add
-        
-
         for (int i = dailyTreatedClientsList.Count; i > ClientLetter.Instance.currentDayClientsList.Count; i--)
         {
             dailyTreatedClientsList.RemoveAt(i - 1);
         }
 
-        Debug.Log("There are " + dailyTreatedClientsList.Count + " clients to be treated today.");
+        // Debug.Log("Clients to be treated today: " + dailyTreatedClientsList.Count);
     }
     
 
     void StoreClientTreatmentData()
     {
-        /*if (dailyTreatedClientsList == null || dailyTreatedClientsList.Count == 0)
-        {
-            dailyTreatedClientsList = new List<FinishedClient>();
-            // (ClientLetter.Instance.currentDayClientsList.Count);
-        }*/
-
+        // *TAG* - better to do this in a for loop or okay like this?
         foreach (FinishedClient f in dailyTreatedClientsList)
         {
             if (!f._clientDataStored)
@@ -358,21 +318,26 @@ public class ResultsCalculator : MonoBehaviour
                 break;
             }
         }
-        
-        
-        //
     }
 
-	void OnProgressButtonPushed()
+	void OnNextResultButtonPushed()
 	{
 		if (currentClientResultNumber == dailyTreatedClientsList.Count)
 		{
-			// Go Next Day
-			GameManager.Instance.GoNextDay();
+			if (DayManager.Instance.currentDayNumber == DayManager.Instance.allGameDays.Count - 1)
+			{
+				// GameManager.Instance.GoEndMVP();
+				// MENUMANAGER INST.
+				MenuManager.Instance.OpenTutorialPopup("endOfMVP");
+			}
+			else
+			{
+				GameManager.Instance.GoNextDay();
+			}
 		}
 		else
 		{
-			GoResultsScreen();
+			UpdateAndShowResultsScreen();
 		}
 	}
     
@@ -386,5 +351,28 @@ public class ResultsCalculator : MonoBehaviour
 		// 
 		//
 	}*/
+
+
+
+
+
+
+    // STILL NEED SOMETHING TO SUBMIT THE FULL AILMENT WITH!!
+
+    // maybe trigger on submission to client?
+    /*public void SetClientAilment()
+    {
+        string client;
+        foreach (Ailment a in AilmentData.Global.allAilmentsList)
+        {
+            if (a._affectedClientName == ClientData.Instance.activeClientData.name)
+            {
+                client = a._affectedClientName;
+                GameData.CalculateResultFor(client);
+            }
+            else
+            continue;
+        }
+    }*/
     
 }

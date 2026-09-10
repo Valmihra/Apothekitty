@@ -9,28 +9,26 @@ public class GameManager : MonoBehaviour
     //private bool isPaused;
     public bool quitting {get; private set;}
 	public bool isMVP {get; private set;}
-    public bool seenFirstClient;
     public bool onMainMenu;
      
-    public bool beginningDay;
-    public bool canStartDay;
-    public bool reloaded;
+    public bool shopIsClosed;
+    public bool canOpenShop;
 
         // tutorial marker
         public bool runningTutorial;
 
     // player progress markers
-    public bool ailmentChosen;
+    public bool ailmentSubmitted;
     public bool diagnosisSubmitted;
     public bool herbsSubmitted;
+    //public bool onLastClientOfDay;
     
-    public bool lastClientOfDay;
-    //private bool debugging;
     
-    // public Button resetSceneButton;
     public DayTrigger curtainAccess;
-    private DiagnosisSheetInteractables diagnosisSheetInteractables;
+    private DiagnosisSheetInteractables treatmentPlanInteractables;
     private ResultsCalculator resultsCalculator;
+
+	private GameData _gameData;
 
     private static GameManager _instance;
     public static GameManager Instance
@@ -72,19 +70,10 @@ public class GameManager : MonoBehaviour
         
 
         // links the manager to the diagnosis sheet script
-        diagnosisSheetInteractables = FindObjectOfType<DiagnosisSheetInteractables>();      // should only ever be one in the game, but might be better way to do this. maybe search for all components in scene instead and delete any not on Constant UI?
+        treatmentPlanInteractables = FindObjectOfType<DiagnosisSheetInteractables>();      // should only ever be one in the game, but might be better way to do this. maybe search for all components in scene instead and delete any not on Constant UI?
         resultsCalculator = FindObjectOfType<ResultsCalculator>();
-            // Assigns function to the associated button
-            // resetSceneButton.onClick.AddListener(delegate { ResetScene(); });
 
-        // sets bools
-        ResetBools();
-            //quitting = false;
-            //isPaused = false;
-            //reloaded = false;
-
-        // for now set to run automatically, but will only go on tutorial lv when Jimmy is implemented
-        //runningTutorial = true;
+        ResetGameStatusBools();
     }
 
     // GameManager should be first script to run
@@ -98,8 +87,8 @@ public class GameManager : MonoBehaviour
 
     }
 
-    void Update()
-    {
+    // void Update()
+    // {
         /*if (Input.GetKeyDown(KeyCode.Escape))
         {
             Debug.Log("Pausing");
@@ -117,31 +106,17 @@ public class GameManager : MonoBehaviour
         {
             Application.Quit();
         }*/
-    }
+    // }
 
     // ---------------------------------
     //      GAME MANAGEMENT
     // ---------------------------------
 
 
-    void ResetBools()
+    void ResetGameStatusBools()
     {
         quitting = false;
 		isMVP = true;
-        // isPaused = false;
-        reloaded = false;
-
-        // for now set to run automatically, but will only go on tutorial lv when Jimmy is implemented
-        // runningTutorial = true;
-    }
-    
-    // Resets all basic information in the scene
-    void ResetBasicInformation()
-    {
-        SceneManager.Instance.ResetScene();             // Quest Log also resets in this SceneManager function
-            beginningDay = true;
-            canStartDay = false;
-            ResetClientProgress();
     }
 
     void InitialiseAllGameData()
@@ -151,12 +126,13 @@ public class GameManager : MonoBehaviour
         AilmentData.Instance.InitialiseAilmentData();
         DayManager.Instance.InitialiseDayManager();
         resultsCalculator.InitialiseResultsCalculator();
-        diagnosisSheetInteractables.InitialiseDiagnosisSheet();
+        treatmentPlanInteractables.InitialiseDiagnosisSheet();
         GrimoirePagesData.Instance.InitialiseGrimoirePagesData();
         ClientLetter.Instance.AssignClientsToGameDays();
-        // Resets the game to day 0 and sets client list accordingly
-        DayManager.Instance.ResetGameDays();
-        ClientLetter.Instance.SetCurrentDayClientsList();
+        
+        ResultsScreen.Instance.InitialiseResultsScreen();
+        DialogueRunner.Instance.InitialiseDialogueRunner();
+        
 		if (runningTutorial)
 		{
 			TutorialItemController.Instance.InitialiseTutorialItemsDesk();
@@ -164,78 +140,75 @@ public class GameManager : MonoBehaviour
 		
     }
 
-    // Resets all elements the player may have altered in-game
-    void ResetInteractableGameElements()
+    void ResetGameElementsOnNewDay()
     {
-        // Resets Client Window UI
+        shopIsClosed = true;
+        canOpenShop = false;
         curtainAccess.ResetCurtain();
+        
+        ClientLetter.Instance.SetCurrentDayClientsList();
+        resultsCalculator.ResetDailyTreatedClientData();
+		treatmentPlanInteractables.SetDiagnosisSheetConfiguration();
+        ResultsScreen.Instance.HideResultsScreen();
+    }
 
+    void ResetInteractablesBetweenClients()
+    {
+        // Resets all elements the player may have altered in-game. Used before any new client arrives
+        
+        // Resets the markers used to check progress with a single client
+        ailmentSubmitted = false;
+        diagnosisSubmitted = false;
+        
         // Resets Desk UI
-		if (runningTutorial)
-		{
-			TutorialItemController.Instance.ResetTutorialItemsDesk();
-		}
         ClientLetter.Instance.ResetClientLetterPosition();
-        GrimoirePagesData.Instance.ResetGrimoire();                 //AilmentIconColourController.Instance.ResetAilmentIconBackground();
-        diagnosisSheetInteractables.ResetDiagnosisSheet();
+        GrimoirePagesData.Instance.ResetGrimoire();
+        treatmentPlanInteractables.ResetDiagnosisSheet();
             
         // Resets Herb Wall UI
         HerbalistGuidePages.Instance.ResetHerbalistGuide();
         HerbDrawersController.Instance.ResetHerbDrawerIcons();
         Inventory.Instance.ResetInventory();
 
-        // Resets Extras
-        ResultsScreen.Instance.ResetResultsScreen();
+
         DialogueRunner.Instance.ResetDialogueRunner();
-		
-		// Resets clients in calculator for the day
-		resultsCalculator.ResetTreatedClientData();
+        // DialogueRunner.Instance.FixDialogueBools();         //UIManager / ScreenNav - .ResetCanvasLocations         ? maybe ?
     }
-
+    
     // Resets the scene entirely.
-    public void FullResetScene()
+    void OnNewDay()
     {
-        Debug.Log("Resetting scene for a new game...");
-
-        // Generate the clients and ailments
-        InitialiseAllGameData();
+        // Reset the data for a new day
+        ResetGameElementsOnNewDay();
+        
+        // Reset game elements for a new client
+        ResetInteractablesBetweenClients();
 
         // Reset the game scene
-        ResetBasicInformation();
-        ResetInteractableGameElements();
+        SceneManager.Instance.ResetScene();
+		MenuManager.Instance.NewDayMenu("open");
+    }
 
-        // Debug options. Build will only require BeginTutorial!
-        if (runningTutorial)
+    // ---------------------------------
+    //      ,,,
+    // ---------------------------------
+	public void StartDay()
+	{
+		SceneManager.Instance.ResetScene();
+		if (runningTutorial)
         {
+            TutorialItemController.Instance.ResetTutorialItemsDesk();
             BeginTutorial();
         }
-        else
-        {
-            Debug.Log("Skipping tutorial for debug purposes.");
-        }
-        // BEGINS TUTORIAL DIALOGUE
-        // BeginTutorial();
-        //SceneManager.Instance.SetupInitialScene();
-
-
-                // for positions, it might be easier to add a reset function to the 
-                // draggable components? then search for all of them and reset? idk.
-    }
+	}
 
     public void DebugJumpToDayNumber(int dayNumber)
     {
+        CreateNewGameData();
         InitialiseAllGameData();
-
-        ResetBasicInformation();
-        ResetInteractableGameElements();
-
-        DayManager.Instance.currentDayNumber = dayNumber;
-        diagnosisSheetInteractables.InitialiseDiagnosisSheet();
-        ClientLetter.Instance.SetCurrentDayClientsList();
+        DayManager.Instance.JumpToDayNumber(dayNumber);
+        OnNewDay();
         
-        
-
-
         if (runningTutorial)
         {
             BeginTutorial();
@@ -245,189 +218,136 @@ public class GameManager : MonoBehaviour
             Debug.Log("Skipping tutorial for debug purposes.");
         }
     }
+    
+    
 
-    // similar to full reset, but it maintains the day number and sets up accordingly
-    public void ResetLevel()
-    {
-        // int dayNumber = DayManager.Instance.currentDayNumber;       // will eventually add gamedata for this stuff!!
-        Debug.Log("Resetting the current level...");
-
-        // Reset the game scene
-        ResetBasicInformation();
-        ResetInteractableGameElements();
-
-        if (runningTutorial)
-        {
-            BeginTutorial();
-        }
-        
-    }
-
-    // Initiates the series of dialogue, checks, and popups related to the tutorial
+    
     void BeginTutorial()
     {
+        // Initiates the series of dialogue, checks, and popups related to the tutorial
         DialogueRunner.Instance.GetDialogue("tutorial");
     }
-
-    public void PrepareForNextClient()
+	
+    // ---------------------------------
+    //      GAME DATA RETRIEVAL
+    // ---------------------------------
+    private void CreateNewGameData()
     {
-        Debug.Log("preparing for the next client...");
-        // resultsCalculator.
-        MenuManager.Instance.ProgressDayPopup();//
-    }
-    public void NextClient()
-    {
-        ResetClientProgress();
-        DialogueRunner.Instance.FixDialogueBools();
-        //UIManager / ScreenNav - .ResetCanvasLocations         ? maybe ?
+        _gameData = new GameData();
     }
     
-    void ResetClientProgress()
-    {
-        ailmentChosen = false;
-        diagnosisSubmitted = false;
-        
-        // Debug.Log("Client Progress reset.");
-    }
+	public void RecordCuredPatient()
+	{
+		_gameData.numberPatientsCured++;
+	}
 
-    // Triggered by the curtain interaction.
+	public int GetCuredPatients()
+	{
+		int numberCuredPatients = _gameData.numberPatientsCured;
+		Debug.Log(numberCuredPatients);
+		return numberCuredPatients;
+	}
+    
+    // ---------------------------------
+    //      ,,,
+    // ---------------------------------
+    
     public void SummonClient()
     {
+        // Set separately because is also triggered by the curtain interaction at start of each day. Randomises client.
+		_gameData.numberPatientsSeen++;
         ClientLetter.Instance.RandomiseIncomingClientLetter();
-        //DialogueRunner.Instance.GetDialogue("patientArrive");
-        // randomises the client and reads DayData to set the relevant information?
-            // once randomised, mimic movement onto the screen? or just fade in?
-        // Spawn Client once randomised (invoke 2.0f) 
-            // Client/PatientData::
-            // SpawnClient
+        // DialogueRunner.Instance.GetDialogue("clientArrive");    // *TAG* - MOVED FROM CLIENT LETTER
     }
-
+    
     public void GoNextClient()
     {
+        // updates the number of clients left to treat in the day
         ClientLetter.Instance.UpdateCurrentDayClientsList();
-        Debug.Log("There are now " + ClientLetter.Instance.currentDayClientsList.Count + " clients remaining today.");
-
         
-        /*int index = ClientLetter.Instance.allClientsList.FindIndex(ClientLetter.Instance.activeClientData);
-
-        if (ClientLetter.Instance.allClientsList[index] == ClientLetter.Instance.activeClientData)
-        {
-            ClientLetter.Instance.allClientsList.Remove(ClientLetter.Instance.activeClientData);
-        }
-        if (ClientLetter.Instance.clientIconList[index] == ClientLetter.Instance.displayedClientIcon)
-        {
-            ClientLetter.Instance.clientIconList.Remove(ClientLetter.Instance.displayedClientIcon);
-        }
-        */
-
-        // ClientLetter.Instance.allClientsList.Remove(ClientLetter.Instance.activeClientData);
-        // ClientLetter.Instance.treatedClientsList.Add(activeClientData);
-
-
-        
-
-        // Resets without altering bools
+        ResetInteractablesBetweenClients();
         SceneManager.Instance.ResetScene();
-        ResetClientProgress();
-
-        // Resets Desk UI
-        ClientLetter.Instance.ResetClientLetterPosition();
-        GrimoirePagesData.Instance.ResetGrimoire();                     //AilmentIconColourController.Instance.ResetAilmentIconBackground();
-        diagnosisSheetInteractables.ResetDiagnosisSheet();
-            
-        // Resets Herb Wall UI
-        HerbalistGuidePages.Instance.ResetHerbalistGuide();
-        HerbDrawersController.Instance.ResetHerbDrawerIcons();
-        Inventory.Instance.ResetInventory();
-
-        // Resets Extras
-        ResultsScreen.Instance.ResetResultsScreen();
-        DialogueRunner.Instance.ResetDialogueRunner();
-
-        // Calls in the next client
+        
         SummonClient();
+            // *TAG* - DO I NEED TO DO ANYTHING ELSE HERE??
     }
 
 	public void SubmitTreatmentToClient()
     {
         SceneManager.Instance.ReturnToClient();
 		DialogueRunner.Instance.GetDialogue("submit herbs to client");
-        
-        
     }
-
+    
+    // ---------------------------------
+    //      GAME DATA RETRIEVAL
+    // ---------------------------------
+    
+    public void GoNextDay()
+    {
+        Debug.Log("Should be setting up for day " + (DayManager.Instance.currentDayNumber + 1).ToString());
+        DayManager.Instance.GoNextGameDay();
+        
+        OnNewDay();
+    }
+    
 	public void GoResultsScreen()
 	{
-		resultsCalculator.GoResultsScreen();
-		// ResultsScreen.Instance.
+        // preparing for game data implementation. would pass more data here.
+		resultsCalculator.UpdateAndShowResultsScreen();
 	}
 
-
-    // STILL NEED SOMETHING TO SUBMIT THE FULL AILMENT WITH!!
-
-    // maybe trigger on submission to patient?
-    /*public void SetClientAilment()
-    {
-        string client;
-        foreach (Ailment a in AilmentData.Global.allAilmentsList)
-        {
-            if (a._affectedClientName == ClientData.Instance.activeClientData.name)
-            {
-                client = a._affectedClientName;
-                GameData.CalculateResultFor(client);
-            }
-            else
-            continue;
-        }
-    }*/
-
-    public void ExitGame()
-    {
-        //Debug.Log("got to the final exit command");
-        //Invoke(nameof(QuitApplication), 1f);
-        //QuitApplication();
-        Application.Quit();
-    }
-
-    /*void QuitApplication()
-    {
-        //Application.Quit();
-        //quitting = true;
-        Application.Quit();
-        /*#if UNITY_EDITOR
-        UnityEditor.EditorApplication.isPlaying = false;
-        #endif\/
-    }*/
+    
 
     void FirstOpenGame()
     {
         // for now set to run automatically, but will only go on tutorial lv when Jimmy is implemented
+        // **   set separately so that you can toggle tutorial bool off in debug!!
         runningTutorial = true;
-        seenFirstClient = false;
-        Debug.Log("SFC is: " + seenFirstClient);
     }
 
-    //
+    
     public void GoMainMenu()
     {
         onMainMenu = true;
         SceneManager.Instance.SetupMainMenu();
     }
 
+    
+
+	
+
+    // ---------------------------------
+    //      BASIC UTILITY FUNCTIONS
+    // ---------------------------------
+    
     public void NewGame()
     {
-        FullResetScene();
+        Debug.Log("Setting up a new game...");
+        CreateNewGameData();
+        
+        // Generate the clients and ailments and reset the scene for a new day
+        InitialiseAllGameData();
+        OnNewDay();
+
+        Debug.Log("CURRENT DAY IS " + DayManager.Instance.currentDayNumber);
     }
+    
+    public void ExitGame()
+    {
+        Application.Quit();
+    }
+    
+    public void RestartLevel()
+    {
+        // Reset the level so that the player can start the current day again
+        Debug.Log("Resetting the current level...");
+        OnNewDay();
 
-	public void GoNextDay()
-	{
-		Debug.Log("Beginning a new day!");
-		Debug.Log("Should be setting up for day " + (DayManager.Instance.currentDayNumber + 1).ToString());
-		DayManager.Instance.currentDayNumber++;
-
-		//ResetBasicInformation();
-		//ResetInteractableGameElements();
-
-		DebugJumpToDayNumber(DayManager.Instance.currentDayNumber);
-	}
+        if (runningTutorial)
+        {
+            TutorialItemController.Instance.ResetTutorialItemsDesk();
+            BeginTutorial();
+        }
+        
+    }
 }

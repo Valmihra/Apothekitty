@@ -82,7 +82,7 @@ public class QuestLog : MonoBehaviour
 
     public void UpdateQuestLog()
     {
-        if (GameManager.Instance.ailmentChosen)
+        if (GameManager.Instance.ailmentSubmitted)
         {
             if (GameManager.Instance.diagnosisSubmitted)
             {

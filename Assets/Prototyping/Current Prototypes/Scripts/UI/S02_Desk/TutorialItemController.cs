@@ -4,11 +4,15 @@ using UnityEngine;
 
 public class TutorialItemController : MonoBehaviour
 {
-    [SerializeField] private DraggableTutorialItem draggableTutorialItem01;
-    [SerializeField] private DraggableTutorialItem draggableTutorialItem02;
-    [SerializeField] private DraggableTutorialItem draggableTutorialItem03;
+    [SerializeField] 
+	private DraggableTutorialItem draggableTutorialItem01;
+    [SerializeField] 
+	private DraggableTutorialItem draggableTutorialItem02;
+    [SerializeField] 
+	private DraggableTutorialItem draggableTutorialItem03;
 
-    [SerializeField] private TutorialBin tutorialBin;
+    [SerializeField] 
+	private TutorialBin tutorialBin;
     
     private static TutorialItemController _instance;
     public static TutorialItemController Instance
@@ -23,6 +27,7 @@ public class TutorialItemController : MonoBehaviour
     {
         _instance = this;
     }
+
     public void InitialiseTutorialItemsDesk()
     {
         draggableTutorialItem01.gameObject.SetActive(false);

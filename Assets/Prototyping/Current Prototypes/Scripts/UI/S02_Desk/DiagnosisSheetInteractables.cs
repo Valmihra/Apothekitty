@@ -25,36 +25,29 @@ public class DiagnosisSheetInteractables : MonoBehaviour
     public TMP_Text displayedClientExtras;
     public TMP_Text displayedClientAilment;
     public TMP_Text proposedRecipeDisplayText;
-        /*private string heldName01;  // = " ";
-        private string heldName02;  // = " ";
-        private string heldName03;  // = " ";
-        private string heldName04;  // = " ";*/
-
-        private string slot01; // = "x";
-        private string slot02; // = "x";
-        private string slot03; // = "x";
-        private string slot04; // = "x";
-
+        private string slot01;
+        private string slot02;
+        private string slot03;
+        private string slot04;
+        
         private string emptySlotText = "-";
         private string defaultTargetDropdownText = "Please select a target";
         private string defaultEffectDropdownText = "Please select an effect";
 
         private bool updatedForMVP;
+        private bool usingSimpleConfiguration;
+        // private bool usingIntermediateConfiguration;
+        // private bool usingComplicatedConfiguration;
             
-    [Header("Submission Button")]
+    [Header("Treatment Submission Button")]
     public Button submitDiagnosisButton;
     
     // Vector used to reset draggable objects
     private Vector2 diagnosisSheetStartingPosition;
 
-    /*void Awake()
-    {
-        //
-    }*/
 
     public void InitialiseDiagnosisSheet()
     {
-        Debug.Log("Initialising the diagnosis sheet...");
         diagnosisSheetStartingPosition = transform.position;
         GenerateDiagnosisSheetInteractablesLists();
 
@@ -74,8 +67,10 @@ public class DiagnosisSheetInteractables : MonoBehaviour
         slot04 = emptySlotText;
 
         updatedForMVP = false;
-        // UpdateProposedRecipeDisplay();
-        // ResetDiagnosisSheet();
+        
+        usingSimpleConfiguration = false;
+        // usingIntermediateConfiguration = false;
+        // usingComplicatedConfiguration = false;
     }
     
     // Resets the position of the UI in the scene, and then checks which elements to display and resets all values.
@@ -95,34 +90,20 @@ public class DiagnosisSheetInteractables : MonoBehaviour
                 
                 updatedForMVP = true;
             }
-            
         }
-        
-        /*primaryEffect.options[0].text = defaultEffectDropdownText;
-        secondaryEffect.options[0].text = defaultEffectDropdownText;
-
-        primaryTarget.options[0].text = defaultTargetDropdownText;
-        secondaryTarget.options[0].text = defaultTargetDropdownText;*/
 
         // checks to see which configuration to display
-        if (DayManager.Instance.currentDayNumber == 0)
+        if (usingSimpleConfiguration)
         {
-            Debug.Log("Setting up the simplified diagnosis sheet.");
-            //UIManager.Instance.DisableUI(secondaryEffect.GetComponent<CanvasGroup>());
-            //UIManager.Instance.DisableUI(secondaryTarget.GetComponent<CanvasGroup>());
-            //UIManager.Instance.DisableUI(diagnosisSheetToggleBoxes);
-            
+            // Debug.Log("Setting up the simplified diagnosis sheet.");
             secondaryEffect.gameObject.SetActive(false);
             secondaryTarget.gameObject.SetActive(false);
             diagnosisSheetToggleBoxes.gameObject.SetActive(false);
         }
         else
         {
-            Debug.Log("Setting up the full diagnosis sheet.");
-            //UIManager.Instance.EnableUI(secondaryEffect.GetComponent<CanvasGroup>());
-            //UIManager.Instance.EnableUI(secondaryTarget.GetComponent<CanvasGroup>());
-            //UIManager.Instance.EnableUI(diagnosisSheetToggleBoxes);
-            
+            // Debug.Log("Setting up the full diagnosis sheet.");
+            // would/could also include check for intermediateConfig too
             secondaryEffect.gameObject.SetActive(true);
             secondaryTarget.gameObject.SetActive(true);
             diagnosisSheetToggleBoxes.gameObject.SetActive(true);
@@ -149,9 +130,19 @@ public class DiagnosisSheetInteractables : MonoBehaviour
         
         // allows the player to try to submit their combination
         submitDiagnosisButton.interactable = true;
-        
         UpdateProposedRecipeDisplay();
-        
+    }
+
+    public void SetDiagnosisSheetConfiguration()
+    {
+        if ((DayManager.Instance.currentDayNumber == 0) || (DayManager.Instance.currentDayNumber == 1))
+        {
+            usingSimpleConfiguration = true;
+        }
+        else if (DayManager.Instance.currentDayNumber >= 2)
+        {
+            usingSimpleConfiguration = false;
+        }
     }
 
     // Uses data from player's previous interactions to fill the diagnosis sheet accurately
@@ -168,8 +159,8 @@ public class DiagnosisSheetInteractables : MonoBehaviour
         int propertyDropdownValue = chosenDropdown.value;
         string propertyDropdownName = chosenDropdown.options[propertyDropdownValue].text;
 
-        Debug.Log("dropdown value stored as: " + propertyDropdownValue);
-        Debug.Log("dropdown name stored as: " + propertyDropdownName);
+        // Debug.Log("dropdown value stored as: " + propertyDropdownValue);
+        // Debug.Log("dropdown name stored as: " + propertyDropdownName);
 
         int numberInDropdownsList = 0;
         int companionValue = 0;
@@ -198,20 +189,22 @@ public class DiagnosisSheetInteractables : MonoBehaviour
         {
             Debug.Log("Error when trying to read dropdown values.");
         }
-        // Checks if trying to double up on targets or effects
+        
         if (propertyDropdownValue > 0)  
         {
             if (diagnosisSheetPropertyDropdownsList[companionValue].value == propertyDropdownValue)
             {
-                // maybe flash this and the companion dropdown to indicate that it's a double up?   (FOR SAUCE)
+                // *TAG* - maybe flash this and the companion dropdown to indicate that it's a double up?   (FOR SAUCE)
+                
+                // (for now)
                 chosenDropdown.value = 0;
+                MenuManager.Instance.DiagnosisSheetCategoryDoubleUpPopup();
                 
                 return;
             }
         }
         else
         {
-            // If going back to primary option, recipe reflects the change.
             propertyDropdownName = emptySlotText;
         }
 
@@ -286,7 +279,7 @@ public class DiagnosisSheetInteractables : MonoBehaviour
 
     void UpdateRecipeDisplay(TMP_Dropdown dropdown, string name)
     {
-        Debug.Log("Updating recipe display...");
+        // Debug.Log("Updating recipe display...");
         if (dropdown == primaryEffect)
         {
             slot01 = name;
@@ -317,7 +310,7 @@ public class DiagnosisSheetInteractables : MonoBehaviour
     
     void UpdateProposedRecipeDisplay()
     {
-        Debug.Log("Updating proposed recipe display...");
+        // Debug.Log("Updating proposed recipe display...");
         if (enhancerToggle.isOn)
         {
             if (GameManager.Instance.isMVP)
@@ -341,7 +334,6 @@ public class DiagnosisSheetInteractables : MonoBehaviour
             }
             
         }
-
         // Debug.Log(proposedRecipeDisplayText.text);
         // Debug.Log("Recipe updated.");
     }
@@ -385,12 +377,12 @@ public class DiagnosisSheetInteractables : MonoBehaviour
             }
             else
             {
-                MenuManager.Instance.InvalidDiagnosisSheetCombinationPopup();
+                MenuManager.Instance.DiagnosisSheetInvalidCombinationPopup();
             }
         }
         else
         {
-            MenuManager.Instance.InvalidDiagnosisSheetCombinationPopup();
+            MenuManager.Instance.DiagnosisSheetInvalidCombinationPopup();
         }
     }
 }

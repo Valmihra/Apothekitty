@@ -10,31 +10,12 @@ public class RestartButton : MonoBehaviour
     void Start()
     {
         restartButton = GetComponent<Button>();
-        restartButton.onClick.AddListener(delegate { RestartLevel(); });
+        restartButton.onClick.AddListener(delegate { OnRestartButtonPushed(); });
     }
-
     
-    void RestartLevel()
+    void OnRestartButtonPushed()
     {
-        // hide menu? 
-        GameManager.Instance.reloaded = true;
-        
         MenuManager.Instance.ExitMenu(MenuManager.Instance.pauseMenuCanvasGroup);
-        GameManager.Instance.ResetLevel();
-
-        //if (GameManager.Instance.onMainMenu)
-        //{
-            //
-        //    MenuManager.Instance.ExitMenu(MenuManager.Instance.mainMenuCanvasGroup);
-        //}
-        //else
-        //{
-            
-            //GameManager.Instance.GoMainMenu();
-            // if this doesn't work, can try just exit and open main menu in menu manager,, ((!!))
-        //}
-        
-        
-        
+        GameManager.Instance.RestartLevel();
     }
 }

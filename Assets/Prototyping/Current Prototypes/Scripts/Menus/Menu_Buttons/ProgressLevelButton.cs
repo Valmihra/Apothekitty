@@ -9,15 +9,15 @@ public class ProgressLevelButton : MonoBehaviour
 	// Button to be displayed on the popup between clients after submission
     private Button progressLevelButton;
 	private TMP_Text progressLevelButtonText;
-	// Text displayed on the popup button
-    string noPatientsLeftToTreatText = "Finish day";
-    string patientsLeftToTreatText = "Next patient";
+
+    private string noClientsLeftToTreatText = "Finish day";
+    private string clientsLeftToTreatText = "Next client";
     
-    public bool patientsRemaining;
+    public bool clientsRemaining;
     
     void Awake()
     {
-        patientsRemaining = true;
+        clientsRemaining = true;
 		progressLevelButton = GetComponent<Button>();
         progressLevelButton.onClick.AddListener(delegate { OnProgressLevelButtonPressed(); });
         progressLevelButtonText = progressLevelButton.GetComponentInChildren<TMP_Text>();
@@ -26,13 +26,13 @@ public class ProgressLevelButton : MonoBehaviour
 	// Called from MenuManager!
     public void UpdateProgressLevelButtonText()
     {
-        if (patientsRemaining)
+        if (clientsRemaining)
         {
-            progressLevelButtonText.text = patientsLeftToTreatText;
+            progressLevelButtonText.text = clientsLeftToTreatText;
         }
         else
         {
-            progressLevelButtonText.text = noPatientsLeftToTreatText;
+            progressLevelButtonText.text = noClientsLeftToTreatText;
         }
     }
 
@@ -45,7 +45,7 @@ public class ProgressLevelButton : MonoBehaviour
         }
         
         
-        if (patientsRemaining)
+        if (clientsRemaining)
         {
 			MenuManager.Instance.ExitMenu(MenuManager.Instance.progressMenuCanvasGroup);
             GameManager.Instance.GoNextClient();
