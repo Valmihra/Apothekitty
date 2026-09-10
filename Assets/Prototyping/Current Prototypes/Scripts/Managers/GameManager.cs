@@ -202,6 +202,20 @@ public class GameManager : MonoBehaviour
         }
 	}
 
+    // void NextDa
+    public void GoNextDay()
+	{
+		Debug.Log("Beginning a new day!");
+		Debug.Log("Should be setting up for day " + (DayManager.Instance.currentDayNumber + 1).ToString());
+		DayManager.Instance.currentDayNumber++;
+        Debug.Log("Current day is: " + DayManager.Instance.currentDayNumber);
+
+		//OnDayReset();
+		//ResetInteractableGameElements();
+
+		DebugJumpToDayNumber(DayManager.Instance.currentDayNumber);
+	}
+
     public void DebugJumpToDayNumber(int dayNumber)
     {
         CreateNewGameData();
