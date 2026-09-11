@@ -190,7 +190,7 @@ public class GameManager : MonoBehaviour
     }
 
     // ---------------------------------
-    //      ,,,
+    //      SWITCHING BETWEEN DAYS
     // ---------------------------------
 	public void StartDay()
 	{
@@ -201,20 +201,14 @@ public class GameManager : MonoBehaviour
             BeginTutorial();
         }
 	}
-
-    // void NextDa
+    
     public void GoNextDay()
 	{
-		Debug.Log("Beginning a new day!");
 		Debug.Log("Should be setting up for day " + (DayManager.Instance.currentDayNumber + 1).ToString());
-		DayManager.Instance.currentDayNumber++;
-        Debug.Log("Current day is: " + DayManager.Instance.currentDayNumber);
-
-		//OnDayReset();
-		//ResetInteractableGameElements();
-
-		DebugJumpToDayNumber(DayManager.Instance.currentDayNumber);
-	}
+        
+        DayManager.Instance.GoNextGameDay();
+        OnNewDay();
+    }
 
     public void DebugJumpToDayNumber(int dayNumber)
     {
@@ -236,11 +230,7 @@ public class GameManager : MonoBehaviour
     
 
     
-    void BeginTutorial()
-    {
-        // Initiates the series of dialogue, checks, and popups related to the tutorial
-        DialogueRunner.Instance.GetDialogue("tutorial");
-    }
+    
 	
     // ---------------------------------
     //      GAME DATA RETRIEVAL
@@ -258,7 +248,7 @@ public class GameManager : MonoBehaviour
 	public int GetCuredPatients()
 	{
 		int numberCuredPatients = _gameData.numberPatientsCured;
-		Debug.Log(numberCuredPatients);
+		Debug.Log("Number of cured patients is currently: " + numberCuredPatients);
 		return numberCuredPatients;
 	}
     
@@ -292,17 +282,15 @@ public class GameManager : MonoBehaviour
 		DialogueRunner.Instance.GetDialogue("submit herbs to client");
     }
     
+    void BeginTutorial()
+    {
+        // Initiates the series of dialogue, checks, and popups related to the tutorial
+        DialogueRunner.Instance.GetDialogue("tutorial");
+    }
+    
     // ---------------------------------
     //      GAME DATA RETRIEVAL
     // ---------------------------------
-    
-    public void GoNextDay()
-    {
-        Debug.Log("Should be setting up for day " + (DayManager.Instance.currentDayNumber + 1).ToString());
-        DayManager.Instance.GoNextGameDay();
-        
-        OnNewDay();
-    }
     
 	public void GoResultsScreen()
 	{

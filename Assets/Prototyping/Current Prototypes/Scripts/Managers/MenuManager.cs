@@ -175,7 +175,7 @@ public class MenuManager : MonoBehaviour
         else if (popupType == "grimoire")
         {
             // popupMenuCanvasGroup.transform.position = movedDownPosition;
-			List <string> infoToSend = new List <string> {"Your Grimoire acts as your reference point for ailments.",  " Pay close attention to each ailment's description and compare it to your client's symptoms.", "Once you think you've found the correct diagnosis, click on the <#8A1E1E>ailment's picture</color> to select it!"};
+			List <string> infoToSend = new List <string> {"HELLO GAMERS IN CLASS TODAY! I AM COMING TO YOU FROM THE DISTANT PAST (9:34AM THIS MORNING) \n\nI remember that the length of these popups was making some people skip through, so I've split a couple longer ones up into multiple short ones. \n\nDoes this fix the issue, or help it a bit? Let me know what you think!!", "Your Grimoire acts as your reference point for ailments.",  " Pay close attention to each ailment's description and compare it to your client's symptoms.", "Once you think you've found the correct diagnosis, click on the <#8A1E1E>ailment's picture</color> to select it!"};
             
 			popupSensor.SetupLongPopupText(infoToSend);
 			// UIManager.Instance.HighlightCanvasElement("ailmentIcon");   // could be better to set this as a small script attached to the actual object?
@@ -260,11 +260,11 @@ public class MenuManager : MonoBehaviour
 		
 		if (numberCuredPatients == 0)
 		{
-			endScreenCallToAction.text = "You weren't able to cure any patients. \n\nThis shows us we need to do something to help clarify how the mechanics of our game work. We'd really appreciate your feedback.";
+			endScreenCallToAction.text = "You weren't able to cure any patients. \n\nHere, we'd say smth like 'This shows us we need to do something to help clarify how the mechanics of our game work. We'd really appreciate your feedback.'";
 		}
 		else
 		{
-			endScreenCallToAction.text = "You cured someone!! \n\nNot gonna lie, I'm kinda celebrating, because for a while there, nobody was really doing that lmao";
+			endScreenCallToAction.text = "You cured someone!! \n\nHere, we'd say smth to celebrate and then ask them to give feedback anyway lmao";
 		}
 		
 		OpenMenu(endOfMVPMenuCanvasGroup);

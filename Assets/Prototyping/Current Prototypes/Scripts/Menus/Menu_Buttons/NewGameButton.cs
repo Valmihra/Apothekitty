@@ -17,6 +17,6 @@ public class NewGameButton : MonoBehaviour
     void StartNewGame()
     {
         MenuManager.Instance.ExitMenu(MenuManager.Instance.mainMenuCanvasGroup);
-        GameManager.Instance.StartNewGame();
+        GameManager.Instance.NewGame();
     }
 }
