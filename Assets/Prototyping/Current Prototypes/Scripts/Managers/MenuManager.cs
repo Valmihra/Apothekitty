@@ -175,7 +175,7 @@ public class MenuManager : MonoBehaviour
         else if (popupType == "grimoire")
         {
             // popupMenuCanvasGroup.transform.position = movedDownPosition;
-			List <string> infoToSend = new List <string> {"HELLO GAMERS IN CLASS TODAY! I AM COMING TO YOU FROM THE DISTANT PAST (9:34AM THIS MORNING) \n\nI remember that the length of these popups was making some people skip through, so I've split a couple longer ones up into multiple short ones. \n\nDoes this fix the issue, or help it a bit? Let me know what you think!!", "Your Grimoire acts as your reference point for ailments.",  " Pay close attention to each ailment's description and compare it to your client's symptoms.", "Once you think you've found the correct diagnosis, click on the <#8A1E1E>ailment's picture</color> to select it!"};
+			List <string> infoToSend = new List <string> {"Your Grimoire acts as your reference point for ailments.",  " Pay close attention to each ailment's description and compare it to your client's symptoms.", "Once you think you've found the correct diagnosis, click on the <#8A1E1E>ailment's picture</color> to select it!"};
             
 			popupSensor.SetupLongPopupText(infoToSend);
 			// UIManager.Instance.HighlightCanvasElement("ailmentIcon");   // could be better to set this as a small script attached to the actual object?
@@ -255,7 +255,7 @@ public class MenuManager : MonoBehaviour
 		Debug.Log(numberCuredPatients);
 		//GameManager.Instance.GetCuredPatients(numberCuredPatients);
 		//Debug.Log(numberCuredPatients);
-		endScreenClientsSeen.text = ("<b>Total patients seen:</b> " + ClientLetter.Instance.allClientsList.Count).ToString();
+		endScreenClientsSeen.text = ("<b>Total patients seen:</b> " + PatientData.Instance.allPatientsList.Count).ToString();
 		endScreenClientsCured.text = ("<b>Total patients cured:</b> " + numberCuredPatients).ToString();
 		
 		if (numberCuredPatients == 0)
@@ -303,7 +303,7 @@ public class MenuManager : MonoBehaviour
     public void ProgressDayPopup()
     {
         string messageToPlayer; 
-        if (ClientLetter.Instance.currentDayClientsList.Count > 1)
+        if (PatientData.Instance.currentDayPatientsList.Count > 1)
         {
             // setup popup for next client
 			messageToPlayer = "Looks like someone else is heading in now... better keep going!";

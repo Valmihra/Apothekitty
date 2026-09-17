@@ -194,7 +194,7 @@ public class SceneManager : MonoBehaviour
     {
         UIManager.Instance.EnableUI(canvasGroupTreatmentPlan);
 
-        canvasGroupTreatmentPlan.GetComponent<DiagnosisSheetInteractables>().FillDiagnosisSheet();
+        canvasGroupTreatmentPlan.GetComponent<TreatmentPlanInteractables>().FillDiagnosisSheet();
         canvasGroupTreatmentPlan.GetComponent<RectTransform>().SetAsLastSibling();
 
         // MenuManager.Instance.OpenTutorialPopup("diagnosisSheet");
@@ -231,7 +231,7 @@ public class SceneManager : MonoBehaviour
         UIManager.Instance.DisableUI(canvasGroupSceneNavigationArrows);
         UIManager.Instance.DisableUI(canvasGroupSubmitHerbCombinationButton);
 
-        if (ClientLetter.Instance.currentDayClientsList.Count == 1)
+        if (PatientData.Instance.currentDayPatientsList.Count == 1)
         {
             ResultsScreen.Instance.UpdateResultsScreenButtonText(true);
         }
@@ -287,7 +287,7 @@ public class SceneManager : MonoBehaviour
             //else if 
             UIManager.Instance.DisableUI(switchDeskClientButton.GetComponent<CanvasGroup>());
             // switchDeskClientButton.gameObject.enabled = false;
-            switchDeskHerbButton.GetComponent<Image>().sprite = iconArrowLeft.sprite;
+            UIManager.Instance.SpriteShift(switchDeskHerbButton.GetComponent<Image>(), iconArrowLeft.sprite);
 
             SetupUI(allCanvasesHerbWall);
         }
@@ -295,7 +295,7 @@ public class SceneManager : MonoBehaviour
         {
             UIManager.Instance.EnableUI(switchDeskClientButton.GetComponent<CanvasGroup>());
             // switchDeskClientButton.SetActive(true);
-            switchDeskHerbButton.GetComponent<Image>().sprite = iconArrowRight.sprite;
+            UIManager.Instance.SpriteShift(switchDeskHerbButton.GetComponent<Image>(), iconArrowRight.sprite);
 
             SetupUI(allCanvasesDesk);
         }
@@ -308,7 +308,7 @@ public class SceneManager : MonoBehaviour
         {
             UIManager.Instance.DisableUI(switchDeskHerbButton.GetComponent<CanvasGroup>());
             // switchDeskHerbButton.SetActive(false);
-            switchDeskClientButton.GetComponent<Image>().sprite = iconArrowDown.sprite;
+            UIManager.Instance.SpriteShift(switchDeskClientButton.GetComponent<Image>(), iconArrowDown.sprite);
 
             SetupUI(allCanvasesClientWindow);
         }
@@ -325,7 +325,7 @@ public class SceneManager : MonoBehaviour
                 // switchDeskHerbButton.SetActive(false);
             }
             
-            switchDeskClientButton.GetComponent<Image>().sprite = iconArrowUp.sprite;
+            UIManager.Instance.SpriteShift(switchDeskClientButton.GetComponent<Image>(), iconArrowUp.sprite);
             SetupUI(allCanvasesDesk);
 
                 if (firstVisitDesk)
@@ -356,8 +356,8 @@ public class SceneManager : MonoBehaviour
     void CleanupScene()
     {
         // Resets direction of arrows
-        switchDeskClientButton.GetComponent<Image>().sprite = iconArrowDown.sprite;
-        switchDeskHerbButton.GetComponent<Image>().sprite = iconArrowRight.sprite;
+        UIManager.Instance.SpriteShift(switchDeskClientButton.GetComponent<Image>(), iconArrowDown.sprite);
+        UIManager.Instance.SpriteShift(switchDeskHerbButton.GetComponent<Image>(), iconArrowRight.sprite);
 
         UIManager.Instance.DisableUI(switchDeskHerbButton.GetComponent<CanvasGroup>());
         UIManager.Instance.DisableUI(questLog.GetComponent<CanvasGroup>());
@@ -403,7 +403,7 @@ public class SceneManager : MonoBehaviour
         selectedAilment = ailment;
     }
 
-    public void ShowClient(Image imageToUpdate)
+    public void ShowPatient(Image imageToUpdate)
     {
         if (DayManager.Instance.currentDayNumber == 0)
         {
@@ -424,8 +424,8 @@ public class SceneManager : MonoBehaviour
 
         // once randomised, mimic movement onto the screen? or just fade in?
         // Spawn Client once randomised (invoke 2.0f) 
-        // Client/ClientData::
-        // SpawnClient
+        // Client/SinglePatientData::
+        // SpawnPatient
     }
 
     public void EnableGameplay()
@@ -450,10 +450,6 @@ public class SceneManager : MonoBehaviour
         
     }
 
-    /*public void SpriteShift(Image image, Sprite sprite)
-    {
-        image.sprite = sprite;
-    }*/
     public void OnReturnToGame()
     {
         if ((onDesk) && (GameManager.Instance.ailmentSubmitted))

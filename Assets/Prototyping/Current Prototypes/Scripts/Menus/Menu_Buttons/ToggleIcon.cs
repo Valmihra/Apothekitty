@@ -10,8 +10,17 @@ public class ToggleIcon : MonoBehaviour
 
     bool toggleActive;
 
-    // Start is called before the first frame update
-    void Start()
+    // larger version would probably want a toggle manager to handle all of them, right? idk bruhhhh
+    /*void Start()
+    {
+        toggleActive = false;
+        toggleButton.onClick.AddListener( delegate { Toggle(); });
+        objectToToggle.SetActive(false);
+    }*/
+    
+    // public void Toggle()
+
+    public void InitialiseToggleIcon()
     {
         toggleActive = false;
         toggleButton.onClick.AddListener( delegate { Toggle(); });

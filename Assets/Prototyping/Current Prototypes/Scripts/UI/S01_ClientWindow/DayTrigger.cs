@@ -17,12 +17,42 @@ public class DayTrigger : MonoBehaviour, IPointerClickHandler
     private CanvasGroup curtainCanvasGroup;
 
 
-    void Awake()
+    public void InitialiseDayTrigger()
     {
-		// *TAG* - could set as an Init finction to call from GameManager? works like this for now though, so,,
         curtainCanvasGroup = gameObject.GetComponent<CanvasGroup>();
         openCurtainSpriteVariant = openCurtainImage.sprite;
         closedCurtainSpriteVariant = closedCurtainImage.sprite;
+    }
+    
+    public void ResetCurtain()
+    {
+		// Enables Interaction on the curtain and sets the sprite to closed variant
+		UIManager.Instance.EnableInteraction(curtainCanvasGroup);
+        if (displayedCurtainImage.sprite != closedCurtainSpriteVariant)
+        {
+            UIManager.Instance.SpriteShift(displayedCurtainImage, closedCurtainSpriteVariant);
+        }
+        return;
+    }
+    
+    // Toggles curtain sprite and disables interaction depending on time of day.
+    void ToggleCurtainState()
+    {
+        // If it's the beginning of the day
+        if (GameManager.Instance.shopIsClosed == true)
+        {
+            if (displayedCurtainImage.sprite == closedCurtainSpriteVariant)
+            {
+				UIManager.Instance.SpriteShift(displayedCurtainImage, openCurtainSpriteVariant);
+                UIManager.Instance.DisableInteraction(curtainCanvasGroup);
+                GameManager.Instance.shopIsClosed = false;
+                GameManager.Instance.SummonClient();
+            }
+            else
+            {
+                Debug.Log("Issue with logic on setup.");
+            }
+        }
     }
 
     public void OnPointerClick(PointerEventData eventData)
@@ -38,60 +68,4 @@ public class DayTrigger : MonoBehaviour, IPointerClickHandler
             GameManager.Instance.canOpenShop = false;
         }
     }
-
-    
-    public void ResetCurtain()
-    {
-		// Enables Interaction on the curtain and sets the sprite to closed variant
-        //EnableDayTrigger();
-		UIManager.Instance.EnableInteraction(curtainCanvasGroup);
-        if (displayedCurtainImage.sprite != closedCurtainSpriteVariant)
-        {
-            UIManager.Instance.SpriteShift(displayedCurtainImage, closedCurtainSpriteVariant);
-        }
-        return;
-    }
-
-    // Enables interaction on the curtain. Called separately so that tutorial dialogue can run first.
-    // void EnableDayTrigger()
-    // {
-    //     UIManager.Instance.EnableInteraction(curtainCanvasGroup);
-    // }
-
-
-    // Toggles curtain sprite and disables interaction depending on time of day.
-    void ToggleCurtainState()
-    {
-        // If it's the beginning of the day
-        if (GameManager.Instance.shopIsClosed == true)
-        {
-            if (displayedCurtainImage.sprite == closedCurtainSpriteVariant)
-            {
-                // Debug.Log("Registered as closed");
-                	// SpriteShift(displayedCurtainImage, openCurtainSpriteVariant);
-				UIManager.Instance.SpriteShift(displayedCurtainImage, openCurtainSpriteVariant);
-                UIManager.Instance.DisableInteraction(curtainCanvasGroup);
-                GameManager.Instance.shopIsClosed = false;
-                GameManager.Instance.SummonClient();
-                // TriggerDay();
-            }
-            else
-            {
-                Debug.Log("Issue with logic on setup.");
-            }
-        }
-    }
-
-    		// Changes the image's sprite to a known sprite
-    		// void SpriteShift(Image image, Sprite sprite)
-    		// {
-    		//     image.sprite = sprite;
-    		// }
-
-    
-    /*void TriggerDay()
-    {
-		// Begins the day
-        GameManager.Instance.SummonClient();
-    }*/
 }

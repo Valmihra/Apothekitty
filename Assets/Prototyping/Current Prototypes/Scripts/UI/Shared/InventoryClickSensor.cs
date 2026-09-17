@@ -3,9 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class InventoryClickSensor : MonoBehaviour, IPointerClickHandler
+public class InventoryClickSensor : MonoBehaviour//, IPointerClickHandler
 {
-    private InventoryBin binReference;
+    /*
+     
+            TESTING DRAGGABLE INTERACTION INSTEAD!!
+     
+     private InventoryBin binReference;
     private InventorySlot inventorySlot;
 
     void Awake ()
@@ -40,5 +44,5 @@ public class InventoryClickSensor : MonoBehaviour, IPointerClickHandler
 
             // still needs to update the contents of the inventory?
         }
-    }
+    }*/
 }

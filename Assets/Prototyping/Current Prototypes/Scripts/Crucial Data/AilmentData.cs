@@ -97,7 +97,7 @@ public class AilmentData : MonoBehaviour
             any other number will not be registered correctly.
 
                 AttachAilmentToSpecificClient:
-            To attach the ailment to the correct client, refer to the client's place in ClientLetter.Instance.allClientsList
+            To attach the ailment to the correct client, refer to the client's place in PatientData.Instance.allPatientsList
             If the ailment has no set client, write:
             - "none"
             This is easier to read when checking results later.
@@ -110,7 +110,7 @@ public class AilmentData : MonoBehaviour
         Ailment chronicInsomnia = new Ailment();
             chronicInsomnia.SetAilmentInformation("ease", "mind", "heal", "body", 0);
             //chronicInsomnia.AttachAilmentToSpecificClient("none");
-                            chronicInsomnia.AttachAilmentToSpecificClient(ClientLetter.Instance.allClientsList[3]._clientName); // Jimothy
+                            chronicInsomnia.AttachAilmentToSpecificClient(PatientData.Instance.allPatientsList[3]._patientName); // Jimothy
             allAilmentsList.Add(chronicInsomnia);
             List<string> _acceptableHerbsForTreatment = new List<string>{"spiceLeaf", "bumbleBlooms", "warmWhisper", "meltingRoot"};
             chronicInsomnia.SpecifyAcceptableHerbsForTreatment(_acceptableHerbsForTreatment);
@@ -118,21 +118,21 @@ public class AilmentData : MonoBehaviour
         Ailment contaminationOCD = new Ailment();
             contaminationOCD.SetAilmentInformation("ease", "mind", "x", "x", 1);
             //contaminationOCD.AttachAilmentToSpecificClient("none");
-                            contaminationOCD.AttachAilmentToSpecificClient(ClientLetter.Instance.allClientsList[4]._clientName);   //temp1
+                            contaminationOCD.AttachAilmentToSpecificClient(PatientData.Instance.allPatientsList[4]._patientName);   //temp1
             allAilmentsList.Add(contaminationOCD);
             _acceptableHerbsForTreatment = new List<string>{"pupilPetal", "spiceLeaf", "watchersWeed"};
             contaminationOCD.SpecifyAcceptableHerbsForTreatment(_acceptableHerbsForTreatment);
 
         Ailment dietDrift = new Ailment();
             dietDrift.SetAilmentInformation("ease", "mind", "heal", "body", 1);
-            dietDrift.AttachAilmentToSpecificClient(ClientLetter.Instance.allClientsList[1]._clientName);
+            dietDrift.AttachAilmentToSpecificClient(PatientData.Instance.allPatientsList[1]._patientName);
             allAilmentsList.Add(dietDrift);
             _acceptableHerbsForTreatment = new List<string>{"pupilPetal", "spiceLeaf", "warmWhisper", "meltingRoot", "crystalMoss"};
             dietDrift.SpecifyAcceptableHerbsForTreatment(_acceptableHerbsForTreatment);
 
         Ailment honEye = new Ailment();
             honEye.SetAilmentInformation("heal", "body", "x", "x", 1);
-            honEye.AttachAilmentToSpecificClient(ClientLetter.Instance.allClientsList[0]._clientName);
+            honEye.AttachAilmentToSpecificClient(PatientData.Instance.allPatientsList[0]._patientName);
             allAilmentsList.Add(honEye);
             _acceptableHerbsForTreatment = new List<string>{"sweetRotCap", "crystalVine", "queensReed"};
             honEye.SpecifyAcceptableHerbsForTreatment(_acceptableHerbsForTreatment);
@@ -140,7 +140,7 @@ public class AilmentData : MonoBehaviour
         Ailment illnessAnxiety = new Ailment();
             illnessAnxiety.SetAilmentInformation("ease", "mind", "x", "x", 0);
             //illnessAnxiety.AttachAilmentToSpecificClient("none");
-                            illnessAnxiety.AttachAilmentToSpecificClient(ClientLetter.Instance.allClientsList[5]._clientName);
+                            illnessAnxiety.AttachAilmentToSpecificClient(PatientData.Instance.allPatientsList[5]._patientName);
             allAilmentsList.Add(illnessAnxiety);
             _acceptableHerbsForTreatment = new List<string>{"crystalVine", "heavensHollyhock"};
             illnessAnxiety.SpecifyAcceptableHerbsForTreatment(_acceptableHerbsForTreatment);
@@ -168,7 +168,7 @@ public class AilmentData : MonoBehaviour
 
         Ailment theFanging = new Ailment();
             theFanging.SetAilmentInformation("heal", "body", "fortify", "mind", 0);
-            theFanging.AttachAilmentToSpecificClient(ClientLetter.Instance.allClientsList[2]._clientName);
+            theFanging.AttachAilmentToSpecificClient(PatientData.Instance.allPatientsList[2]._patientName);
             allAilmentsList.Add(theFanging);
             _acceptableHerbsForTreatment = new List<string>{"warmWhisper", "meltingRoot", "hexacore", "spiceLeaf"};
             theFanging.SpecifyAcceptableHerbsForTreatment(_acceptableHerbsForTreatment);
@@ -181,10 +181,10 @@ public class AilmentData : MonoBehaviour
             theFawning.SpecifyAcceptableHerbsForTreatment(_acceptableHerbsForTreatment);
     }
 
-    // Called from ClientLetter once the current client has been set. 
+    // Called from PatientData once the current client has been set. 
     // This searches through the current ailments in the list for a name that matches the
     // current client. If found, it links the client and ailment for the results screen.
-    public void SetCurrentAilmentByClient(string name)      //(Ailment ailment)
+    public void SetCurrentAilmentByPatient(string name)      //(Ailment ailment)
     {
         // Debug.Log("String sent is: " + name);
         foreach (Ailment a in allAilmentsList)
@@ -201,7 +201,7 @@ public class AilmentData : MonoBehaviour
     }
 
     // Takes a client name string and turns it into an ailment name string.
-    public string ConvertClientNameToAilmentName(string name)
+    public string ConvertPatientNameToAilmentName(string name)
     {
         string ailmentName = name;
         // ailmentName = name;

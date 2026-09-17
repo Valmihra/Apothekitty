@@ -334,7 +334,7 @@ public class DialogueRunner : MonoBehaviour
             }
         }
         
-        if (target == "clientArrive")
+        if (target == "patientArrive")
         {
             GetDialogueByClient("entry");
         }
@@ -381,7 +381,7 @@ public class DialogueRunner : MonoBehaviour
 
     void GetDialogueByClient(string dialogueType)
     {
-        nameOfNPC = ClientLetter.Instance.displayedClientName.text;
+        nameOfNPC = PatientData.Instance.activePatientData._patientName;
         speakerName.text = nameOfNPC;
         currentLineNumber = 0;
 

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class TutorialItemController : MonoBehaviour
 {
@@ -50,5 +51,18 @@ public class TutorialItemController : MonoBehaviour
         {
             return;
         }
+    }
+    
+    public void DebugDestroyTutorialItems()
+    {
+        Destroy(draggableTutorialItem01.gameObject);
+        Destroy(draggableTutorialItem02.gameObject);
+        Destroy(draggableTutorialItem03.gameObject);
+        Destroy(tutorialBin.gameObject);
+        
+        DialogueRunner.Instance.deskIsClean = true;
+        
+        this.gameObject.GetComponent<Image>().raycastTarget = false;
+        //Destroy();
     }
 }

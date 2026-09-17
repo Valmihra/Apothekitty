@@ -4,13 +4,13 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-public class DiagnosisSheetInteractables : MonoBehaviour
+public class TreatmentPlanInteractables : MonoBehaviour
 {
     [Header("Property Dropdowns")]
-    public TMP_Dropdown primaryEffect;
-    public TMP_Dropdown primaryTarget;
-    public TMP_Dropdown secondaryEffect;
-    public TMP_Dropdown secondaryTarget;
+    public TMP_Dropdown primaryEffectDropdown;
+    public TMP_Dropdown primaryTargetDropdown;
+    public TMP_Dropdown secondaryEffectDropdown;
+    public TMP_Dropdown secondaryTargetDropdown;
     private List<TMP_Dropdown> diagnosisSheetPropertyDropdownsList;
         
     [Header("Modifier Toggles")]
@@ -20,9 +20,9 @@ public class DiagnosisSheetInteractables : MonoBehaviour
     private List<Toggle> diagnosisSheetTogglesList;
         
     [Header("Displayed Text")]  // Text displayed at the top of the diagnosis sheet
-    public TMP_Text displayedClientName;
-    public TMP_Text displayedClientSpecies;
-    public TMP_Text displayedClientExtras;
+    public TMP_Text displayedPatientName;
+    public TMP_Text displayedPatientSpecies;
+    public TMP_Text displayedPatientExtras;
     public TMP_Text displayedClientAilment;
     public TMP_Text proposedRecipeDisplayText;
         private string slot01;
@@ -51,10 +51,10 @@ public class DiagnosisSheetInteractables : MonoBehaviour
         diagnosisSheetStartingPosition = transform.position;
         GenerateDiagnosisSheetInteractablesLists();
 
-            primaryEffect.onValueChanged.AddListener(delegate {DiagnosisSheetPropertyValueUpdate(primaryEffect); });
-            primaryTarget.onValueChanged.AddListener(delegate {DiagnosisSheetPropertyValueUpdate(primaryTarget); });
-            secondaryEffect.onValueChanged.AddListener(delegate {DiagnosisSheetPropertyValueUpdate(secondaryEffect); });
-            secondaryTarget.onValueChanged.AddListener(delegate {DiagnosisSheetPropertyValueUpdate(secondaryTarget); });
+            primaryEffectDropdown.onValueChanged.AddListener(delegate {DiagnosisSheetPropertyValueUpdate(primaryEffectDropdown); });
+            primaryTargetDropdown.onValueChanged.AddListener(delegate {DiagnosisSheetPropertyValueUpdate(primaryTargetDropdown); });
+            secondaryEffectDropdown.onValueChanged.AddListener(delegate {DiagnosisSheetPropertyValueUpdate(secondaryEffectDropdown); });
+            secondaryTargetDropdown.onValueChanged.AddListener(delegate {DiagnosisSheetPropertyValueUpdate(secondaryTargetDropdown); });
 
             enhancerToggle.onValueChanged.AddListener(delegate {OnModifierTogglePressed(enhancerToggle); });
             inverterToggle.onValueChanged.AddListener(delegate {OnModifierTogglePressed(inverterToggle); });
@@ -83,10 +83,10 @@ public class DiagnosisSheetInteractables : MonoBehaviour
         {
             if (!updatedForMVP)
             {
-                primaryTarget.options.RemoveAt(3);
-                primaryTarget.RefreshShownValue();
-                secondaryTarget.options.RemoveAt(3);
-                secondaryTarget.RefreshShownValue();
+                primaryTargetDropdown.options.RemoveAt(3);
+                primaryTargetDropdown.RefreshShownValue();
+                secondaryTargetDropdown.options.RemoveAt(3);
+                secondaryTargetDropdown.RefreshShownValue();
                 
                 updatedForMVP = true;
             }
@@ -96,24 +96,24 @@ public class DiagnosisSheetInteractables : MonoBehaviour
         if (usingSimpleConfiguration)
         {
             // Debug.Log("Setting up the simplified diagnosis sheet.");
-            secondaryEffect.gameObject.SetActive(false);
-            secondaryTarget.gameObject.SetActive(false);
+            secondaryEffectDropdown.gameObject.SetActive(false);
+            secondaryTargetDropdown.gameObject.SetActive(false);
             diagnosisSheetToggleBoxes.gameObject.SetActive(false);
         }
         else
         {
             // Debug.Log("Setting up the full diagnosis sheet.");
             // would/could also include check for intermediateConfig too
-            secondaryEffect.gameObject.SetActive(true);
-            secondaryTarget.gameObject.SetActive(true);
+            secondaryEffectDropdown.gameObject.SetActive(true);
+            secondaryTargetDropdown.gameObject.SetActive(true);
             diagnosisSheetToggleBoxes.gameObject.SetActive(true);
         }
 
-        primaryEffect.options[0].text = defaultEffectDropdownText;
-        secondaryEffect.options[0].text = defaultEffectDropdownText;
+        primaryEffectDropdown.options[0].text = defaultEffectDropdownText;
+        secondaryEffectDropdown.options[0].text = defaultEffectDropdownText;
 
-        primaryTarget.options[0].text = defaultTargetDropdownText;
-        secondaryTarget.options[0].text = defaultTargetDropdownText;
+        primaryTargetDropdown.options[0].text = defaultTargetDropdownText;
+        secondaryTargetDropdown.options[0].text = defaultTargetDropdownText;
 
         // allows interaction with the canvas elements          -- check to see if safe to use this here or if need to disable interaction for hidden objs separately!
         foreach (TMP_Dropdown dropdown in diagnosisSheetPropertyDropdownsList)
@@ -148,9 +148,14 @@ public class DiagnosisSheetInteractables : MonoBehaviour
     // Uses data from player's previous interactions to fill the diagnosis sheet accurately
     public void FillDiagnosisSheet()
     {
-        displayedClientName.text = ClientLetter.Instance.displayedClientName.text;
-        displayedClientSpecies.text = ClientLetter.Instance.displayedClientSpecies.text;
-        displayedClientExtras.text = ClientLetter.Instance.displayedClientExtras.text;
+        /*displayedPatientName.text = PatientData.Instance.displayedPatientName.text;
+        displayedPatientSpecies.text = PatientData.Instance.displayedPatientSpecies.text;
+        displayedPatientExtras.text = PatientData.Instance.displayedPatientExtras.text;
+        displayedClientAilment.text = SceneManager.Instance.selectedAilment;*/
+        
+        displayedPatientName.text = PatientData.Instance.activePatientData._patientName;
+        displayedPatientSpecies.text = PatientData.Instance.activePatientData._patientSpecies;
+        displayedPatientExtras.text = PatientData.Instance.activePatientData._patientExtras;
         displayedClientAilment.text = SceneManager.Instance.selectedAilment;
     }
 
@@ -219,19 +224,19 @@ public class DiagnosisSheetInteractables : MonoBehaviour
         {
             if (inverterToggle.isOn)
             {
-                string invertedEffectName = emptySlotText;  // int propertyDropdownValue = primaryEffect.value;
+                string invertedEffectName = emptySlotText;  // int propertyDropdownValue = primaryEffectDropdown.value;
                 
-                if (primaryEffect.value == 1) // (propertyDropdownValue == 1)
+                if (primaryEffectDropdown.value == 1) // (propertyDropdownValue == 1)
                 {
                     invertedEffectName = "Weaken";
                     UpdateRecipeDisplay(diagnosisSheetPropertyDropdownsList[0], invertedEffectName);
                 }
-                else if (primaryEffect.value == 2) // (propertyDropdownValue == 2)
+                else if (primaryEffectDropdown.value == 2) // (propertyDropdownValue == 2)
                 {
                     invertedEffectName = "Damage";
                     UpdateRecipeDisplay(diagnosisSheetPropertyDropdownsList[0], invertedEffectName);
                 }
-                else if (primaryEffect.value == 3) // (propertyDropdownValue == 3)
+                else if (primaryEffectDropdown.value == 3) // (propertyDropdownValue == 3)
                 {
                     invertedEffectName = "Frenzy";
                     UpdateRecipeDisplay(diagnosisSheetPropertyDropdownsList[0], invertedEffectName);
@@ -243,12 +248,12 @@ public class DiagnosisSheetInteractables : MonoBehaviour
             }
             else
             {
-                DiagnosisSheetPropertyValueUpdate(primaryEffect);
+                DiagnosisSheetPropertyValueUpdate(primaryEffectDropdown);
             }
         }
         else if (chosenToggle == enhancerToggle)
         {
-            DiagnosisSheetPropertyValueUpdate(primaryEffect);
+            DiagnosisSheetPropertyValueUpdate(primaryEffectDropdown);
         }
     }
 
@@ -280,22 +285,22 @@ public class DiagnosisSheetInteractables : MonoBehaviour
     void UpdateRecipeDisplay(TMP_Dropdown dropdown, string name)
     {
         // Debug.Log("Updating recipe display...");
-        if (dropdown == primaryEffect)
+        if (dropdown == primaryEffectDropdown)
         {
             slot01 = name;
             UpdateProposedRecipeDisplay();
         }
-        else if (dropdown == primaryTarget)
+        else if (dropdown == primaryTargetDropdown)
         {
             slot02 = name;
             UpdateProposedRecipeDisplay();
         }
-        else if (dropdown == secondaryEffect)
+        else if (dropdown == secondaryEffectDropdown)
         {
             slot03 = name;
             UpdateProposedRecipeDisplay();
         }
-        else if (dropdown == secondaryTarget)
+        else if (dropdown == secondaryTargetDropdown)
         {
             slot04 = name;
             UpdateProposedRecipeDisplay();
@@ -305,7 +310,7 @@ public class DiagnosisSheetInteractables : MonoBehaviour
             Debug.Log("Issue while attempting to update recipe display.");
         }
         
-        //var name = (dropdown == primaryEffect) ? UpdateSlotOne(name) : (dropdown == primaryTarget) ? UpdateSlotTwo(name) : (dropdown == secondaryEffect) ? UpdateSlotThree(name) : UpdateSlotFour (name);
+        //var name = (dropdown == primaryEffectDropdown) ? UpdateSlotOne(name) : (dropdown == primaryTargetDropdown) ? UpdateSlotTwo(name) : (dropdown == secondaryEffectDropdown) ? UpdateSlotThree(name) : UpdateSlotFour (name);
     }
     
     void UpdateProposedRecipeDisplay()
@@ -341,10 +346,10 @@ public class DiagnosisSheetInteractables : MonoBehaviour
     void GenerateDiagnosisSheetInteractablesLists()
     {
         diagnosisSheetPropertyDropdownsList = new List<TMP_Dropdown>();
-        diagnosisSheetPropertyDropdownsList.Add(primaryEffect);
-        diagnosisSheetPropertyDropdownsList.Add(primaryTarget);
-        diagnosisSheetPropertyDropdownsList.Add(secondaryEffect);
-        diagnosisSheetPropertyDropdownsList.Add(secondaryTarget);
+        diagnosisSheetPropertyDropdownsList.Add(primaryEffectDropdown);
+        diagnosisSheetPropertyDropdownsList.Add(primaryTargetDropdown);
+        diagnosisSheetPropertyDropdownsList.Add(secondaryEffectDropdown);
+        diagnosisSheetPropertyDropdownsList.Add(secondaryTargetDropdown);
 
         diagnosisSheetTogglesList = new List<Toggle>();
         diagnosisSheetTogglesList.Add(enhancerToggle);
@@ -355,8 +360,8 @@ public class DiagnosisSheetInteractables : MonoBehaviour
     {
         // Debug.Log("Button Pressed!");
         // shouldn't have to update these bools, since hidden dropdown values should always be 0.
-        bool validPrimaryRecipeCombination = (primaryEffect.value <= 0) || (primaryTarget.value <= 0) ? false : true;
-        bool validSecondaryRecipeCombination = (secondaryEffect.value <= 0) && (secondaryTarget.value <= 0) ? true : (secondaryEffect.value > 0) && (secondaryTarget.value > 0) ? true : false;
+        bool validPrimaryRecipeCombination = (primaryEffectDropdown.value <= 0) || (primaryTargetDropdown.value <= 0) ? false : true;
+        bool validSecondaryRecipeCombination = (secondaryEffectDropdown.value <= 0) && (secondaryTargetDropdown.value <= 0) ? true : (secondaryEffectDropdown.value > 0) && (secondaryTargetDropdown.value > 0) ? true : false;
         
         if(validPrimaryRecipeCombination)
         {

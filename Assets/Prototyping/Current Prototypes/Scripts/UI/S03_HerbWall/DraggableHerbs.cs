@@ -6,7 +6,7 @@ using UnityEngine.EventSystems;
 
 public class DraggableHerbs : Draggable
 {
-    // References for the child gameObject that will appear and get dragged
+    // *TAG* - woof, I should revisit this. LocateRect seems SUPER convoluted. could clean up.
     [HideInInspector]
     public Image cuttingImage;
     private RectTransform cuttingRectTransform;
@@ -36,6 +36,7 @@ public class DraggableHerbs : Draggable
         cuttingObject.transform.position = eventData.pressPosition;
         UIManager.Instance.EnableUI(movableCutting);
         UIManager.Instance.DisableInteraction(SceneManager.Instance.canvasGroupHerbDrawers);
+                // maybe just change disable appearence in the inspector for the buttons?? uerghhhh idk,,
     }
 
     // Updates the UI position according to the mouse's movement
@@ -75,20 +76,11 @@ public class DraggableHerbs : Draggable
 
     void AssignCanvasGroup()
     {
-        //if (cuttingRectTransform != null)
-        //{
-            //Debug.Log(cuttingRectTransform.gameObject.name);
-        //}
-        
         CanvasGroup[] getCanvasGroup = GetComponentsInChildren<CanvasGroup>();
         if (getCanvasGroup[0].gameObject != gameObject)
         {
             movableCutting = getCanvasGroup[0];
             cuttingImage = movableCutting.gameObject.GetComponent<Image>();
-
-            //UIManager.Instance.DisableUI(movableCutting);
-            //Debug.Log(movableCutting.gameObject.name);
-            //UIManager.Instance.DisableUI(this.movableCutting);
             return;
         }
     }

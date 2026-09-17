@@ -106,8 +106,11 @@ public class GrimoireNavigation : MonoBehaviour
     {
         if (target != 0 && notOpenedGrimoire)
         {
-            MenuManager.Instance.OpenTutorialPopup("grimoire");
             notOpenedGrimoire = false;
+            if (GameManager.Instance.runningTutorial)
+            {
+                MenuManager.Instance.OpenTutorialPopup("grimoire");
+            }
         }
         
         grimoireNavigationLeft.gameObject.SetActive(true);
@@ -127,8 +130,8 @@ public class GrimoireNavigation : MonoBehaviour
             grimoireStampObject.SetActive(false);
 			grimoireAilmentIconDisplay.gameObject.SetActive(false);
             grimoireNavigationLeft.gameObject.SetActive(false);
-            
-			grimoireDisplayedImage.sprite = grimoireFrontCoverImage.sprite;
+
+            UIManager.Instance.SpriteShift(grimoireDisplayedImage, grimoireFrontCoverImage.sprite);
             navigationButtonsObject.transform.position = buttonsPositionCover;
         }
         else
@@ -140,13 +143,13 @@ public class GrimoireNavigation : MonoBehaviour
                 grimoireAilmentIconDisplay.gameObject.SetActive(true);
                 
                 navigationButtonsObject.transform.position = buttonsPositionPage;
-                grimoireDisplayedImage.sprite = grimoireStandardPageImage.sprite;
+                UIManager.Instance.SpriteShift(grimoireDisplayedImage, grimoireStandardPageImage.sprite);
             }
             
             grimoireAilmentNameDisplay.text = GrimoirePagesData.Instance.grimoirePagesArray[target]._ailmentName;
             grimoireAilmentDescriptionDisplay.text = GrimoirePagesData.Instance.grimoirePagesArray[target]._ailmentDescription;
             
-            grimoireAilmentIconDisplay.sprite = grimoireAilmentIconsList[target].sprite;        // could maybe try to link in the same way I had been linking patient info and patient icons??
+            UIManager.Instance.SpriteShift(grimoireAilmentIconDisplay, grimoireAilmentIconsList[target].sprite);
         }
         
         currentGrimoirePageNumber = target;

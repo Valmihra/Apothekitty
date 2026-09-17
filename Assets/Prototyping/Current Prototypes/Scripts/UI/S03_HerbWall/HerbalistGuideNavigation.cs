@@ -16,9 +16,7 @@ public class HerbalistGuideNavigation : MonoBehaviour
         public TMP_Text propertyName;
         public TMP_Text propertyDescription;
 
-    // Keeps track of page numbers
         private int currentPageNumber;
-        
 
     void Start()
     {
@@ -27,25 +25,19 @@ public class HerbalistGuideNavigation : MonoBehaviour
 
         navigationLeft.onClick.AddListener(delegate { GoToPage(currentPageNumber -1); });
         navigationRight.onClick.AddListener(delegate { GoToPage(currentPageNumber +1); });
-
     }
 
     // Determines which directions you can turn pages, and alters the UI's information to imitate a page turn 
     void GoToPage(int target)
     {
-        //if (target )
-        
-        /*navigationRight.enabled = true;
-        navigationLeft.enabled = true;*/
-
         UIManager.Instance.EnableUI(navigationLeftCanvasGroup);
         UIManager.Instance.EnableUI(navigationRightCanvasGroup);
         navigationLeft.interactable = true;
         navigationRight.interactable = true;
         
         // disables L/R buttons when target int leads outside of array's bounds
-        if (target == HerbalistGuidePages.Instance.pagesArray.Length - 1)
-        {
+        // if (target == HerbalistGuidePages.Instance.pagesArray.Length - 1)
+        if (target == HerbalistGuidePages.Instance.pagesList.Count - 1){
             //navigationRight.enabled = false;
             UIManager.Instance.DisableUI(navigationRightCanvasGroup);
             navigationRight.interactable = false;
@@ -57,21 +49,16 @@ public class HerbalistGuideNavigation : MonoBehaviour
             navigationLeft.interactable = false;
         }
         
-        propertyName.text = HerbalistGuidePages.Instance.pagesArray[target].propertyType_;
-        propertyDescription.text = HerbalistGuidePages.Instance.pagesArray[target].propertyDescription_;
-        
+        // propertyName.text = HerbalistGuidePages.Instance.pagesArray[target]._treatmentCategoryName;
+        // propertyDescription.text = HerbalistGuidePages.Instance.pagesArray[target]._treatmentCategoryDescription;
+        propertyName.text = HerbalistGuidePages.Instance.pagesList[target]._treatmentCategoryName;
+        propertyDescription.text = HerbalistGuidePages.Instance.pagesList[target]._treatmentCategoryDescription;
+
         currentPageNumber = target;
     }
 
     public void ResetHerbalistGuideNavigation()
     {
-        // initialise
-        // list/array
-
-        // no tab numbers rn, but will eventually set up UI to represent 
-        // all elements on cards that can be pulled out of slots on the wall 
-        // in the same place as the guide icon is currently.
-
         GoToPage(0);
     }
 }

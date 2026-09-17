@@ -9,9 +9,9 @@ public class NoteSensor : MouseHover
     
     void Start()
     {
-        //herbalistNote = 
+        //botanicalCodex = 
 
-        //RectTransform rectTransform = herbalistNoteCanvasGroup.GetComponent<RectTransform>();
+        //RectTransform rectTransform = botanicalCodexCanvasGroup.GetComponent<RectTransform>();
         //noteWidth = rectTransform.width + notePadding;
         
     }
@@ -53,7 +53,7 @@ public class NoteSensor : MouseHover
 
         // invoke after 1 second?
 
-        //herbalistNote = eventData.
+        //botanicalCodex = eventData.
 
 
         /*var x = eventData.position.x / Screen.width;

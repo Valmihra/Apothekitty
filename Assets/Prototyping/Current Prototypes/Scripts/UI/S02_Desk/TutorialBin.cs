@@ -17,7 +17,6 @@ public class TutorialBin : MonoBehaviour, IDropHandler
     //     rectTransform = GetComponent<RectTransform>();
     // }
 
-
     public void OnDrop(PointerEventData eventData)
     {
         if(eventData.pointerDrag != null)

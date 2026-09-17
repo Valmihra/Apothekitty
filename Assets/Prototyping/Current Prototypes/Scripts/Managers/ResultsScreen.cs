@@ -15,7 +15,7 @@ public class ResultsScreen : MonoBehaviour
 	private string positiveResult = "yes";
 	private string negativeResult = "no";
 
-    public TMP_Text displayedClientName;
+    public TMP_Text displayedPatientName;
     public TMP_Text ailmentResult;
     public TMP_Text recipeResult;
     public TMP_Text herbsResult;
@@ -62,8 +62,8 @@ public class ResultsScreen : MonoBehaviour
 
     public void GenerateResultsScreen(string name, bool ailment, bool recipe, bool herbs)
     {
-        // displayedClientName.text = ClientLetter.Instance.activeClientData._clientName;
-		displayedClientName.text = name;
+        // displayedPatientName.text = PatientData.Instance.activePatientData._patientName;
+		displayedPatientName.text = name;
         
         ailmentResult.text = ailment ? positiveResult : negativeResult;
         recipeResult.text = recipe ? positiveResult : negativeResult;
@@ -78,7 +78,7 @@ public class ResultsScreen : MonoBehaviour
             clientCured = true;
         }
 
-        UpdateResultsScreen(displayedClientName.text);
+        UpdateResultsScreen(displayedPatientName.text);
     }
 
     void UpdateResultsScreen(string name)
@@ -99,7 +99,7 @@ public class ResultsScreen : MonoBehaviour
         iconToFind = GameObject.Find(nameToSearch);
         Debug.Log(iconToFind);
         icon = iconToFind.GetComponent<Image>();
-        resultsIcon.sprite = icon.sprite;
+        UIManager.Instance.SpriteShift(resultsIcon, icon.sprite);
         StartShowResults();
         
     }

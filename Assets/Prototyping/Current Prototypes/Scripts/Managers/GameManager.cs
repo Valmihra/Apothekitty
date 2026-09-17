@@ -25,8 +25,10 @@ public class GameManager : MonoBehaviour
     
     
     public DayTrigger curtainAccess;
-    private DiagnosisSheetInteractables treatmentPlanInteractables;
+    private TreatmentPlanInteractables treatmentPlanInteractables;
     private ResultsCalculator resultsCalculator;
+
+    [SerializeField] private ToggleIcon testingDay2AnswerSheet;
 
 	private GameData _gameData;
 
@@ -70,8 +72,11 @@ public class GameManager : MonoBehaviour
         
 
         // links the manager to the diagnosis sheet script
-        treatmentPlanInteractables = FindObjectOfType<DiagnosisSheetInteractables>();      // should only ever be one in the game, but might be better way to do this. maybe search for all components in scene instead and delete any not on Constant UI?
+        treatmentPlanInteractables = FindObjectOfType<TreatmentPlanInteractables>();      // should only ever be one in the game, but might be better way to do this. maybe search for all components in scene instead and delete any not on Constant UI?
         resultsCalculator = FindObjectOfType<ResultsCalculator>();
+        
+        // DEBUG TAG - FOR DEBUGGING
+        testingDay2AnswerSheet = FindObjectOfType<ToggleIcon>();
 
         ResetGameStatusBools();
     }
@@ -122,13 +127,17 @@ public class GameManager : MonoBehaviour
     void InitialiseAllGameData()
     {
         // Creates all data required to run the game
-        ClientLetter.Instance.InitialiseClientLetter();
+        PatientData.Instance.InitialisePatientLetter();
         AilmentData.Instance.InitialiseAilmentData();
+        AllHerbsData.Instance.InitialiseAllHerbsData();
+        HerbalistGuidePages.Instance.InitialiseHerbalistGuide();
         DayManager.Instance.InitialiseDayManager();
         resultsCalculator.InitialiseResultsCalculator();
         treatmentPlanInteractables.InitialiseDiagnosisSheet();
         GrimoirePagesData.Instance.InitialiseGrimoirePagesData();
-        ClientLetter.Instance.AssignClientsToGameDays();
+        PatientData.Instance.AssignPatientsToGameDays();
+        Inventory.Instance.InitialiseInventorySlots();
+        curtainAccess.InitialiseDayTrigger();
         
         ResultsScreen.Instance.InitialiseResultsScreen();
         DialogueRunner.Instance.InitialiseDialogueRunner();
@@ -137,7 +146,15 @@ public class GameManager : MonoBehaviour
 		{
 			TutorialItemController.Instance.InitialiseTutorialItemsDesk();
 		}
-		
+        else
+        {
+            TutorialItemController.Instance.DebugDestroyTutorialItems();
+        }
+        
+        // Controls showing/hiding the answers for day 2
+        // DEBUG TAG - FOR DEBUGGING
+        testingDay2AnswerSheet.gameObject.SetActive(false);
+
     }
 
     void ResetGameElementsOnNewDay()
@@ -146,10 +163,16 @@ public class GameManager : MonoBehaviour
         canOpenShop = false;
         curtainAccess.ResetCurtain();
         
-        ClientLetter.Instance.SetCurrentDayClientsList();
+        PatientData.Instance.SetCurrentDayPatientsList();
         resultsCalculator.ResetDailyTreatedClientData();
 		treatmentPlanInteractables.SetDiagnosisSheetConfiguration();
         ResultsScreen.Instance.HideResultsScreen();
+        
+        // DEBUG TAG - FOR DEBUGGING
+        if (DayManager.Instance.currentDayNumber == 2)
+        {
+            testingDay2AnswerSheet.gameObject.SetActive(true);
+        }
     }
 
     void ResetInteractablesBetweenClients()
@@ -161,7 +184,8 @@ public class GameManager : MonoBehaviour
         diagnosisSubmitted = false;
         
         // Resets Desk UI
-        ClientLetter.Instance.ResetClientLetterPosition();
+        //PatientData.Instance.ResetPatientLetterPosition();
+        PatientData.Instance.ResetPatientLetter();
         GrimoirePagesData.Instance.ResetGrimoire();
         treatmentPlanInteractables.ResetDiagnosisSheet();
             
@@ -260,14 +284,14 @@ public class GameManager : MonoBehaviour
     {
         // Set separately because is also triggered by the curtain interaction at start of each day. Randomises client.
 		_gameData.numberPatientsSeen++;
-        ClientLetter.Instance.RandomiseIncomingClientLetter();
-        // DialogueRunner.Instance.GetDialogue("clientArrive");    // *TAG* - MOVED FROM CLIENT LETTER
+        PatientData.Instance.RandomiseIncomingPatientData();
+        // DialogueRunner.Instance.GetDialogue("patientArrive");    // *TAG* - MOVED FROM CLIENT LETTER
     }
     
     public void GoNextClient()
     {
         // updates the number of clients left to treat in the day
-        ClientLetter.Instance.UpdateCurrentDayClientsList();
+        PatientData.Instance.UpdateCurrentDayPatientsList();
         
         ResetInteractablesBetweenClients();
         SceneManager.Instance.ResetScene();
