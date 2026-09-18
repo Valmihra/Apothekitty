@@ -36,6 +36,8 @@ public class _PrototypeLeafletsOnHover : MouseHover, IBeginDragHandler, IDragHan
 
     private bool docked;
     private bool initSetPosition;
+
+    // vector for on mouse hover animation:
     // private Vector3 hoverLeafletPosition;
     
     public void GetInformation(Image incomingImage)
@@ -53,8 +55,6 @@ public class _PrototypeLeafletsOnHover : MouseHover, IBeginDragHandler, IDragHan
             "This is just to prove the detail switching works.\n\nThis card has information about the following treatment category: ";
         leafletDetailText = (temporaryString + leafletTitleText).ToString();
         
-        // selfRectTransform = GetComponent<RectTransform>();
-        // defaultContainerPosition = selfRectTransform.anchoredPosition;
         defaultLeafletPosition = rectTransform.position;
         var x = defaultLeafletPosition.x / Screen.width;
         var y = defaultLeafletPosition.y / Screen.height;
@@ -117,6 +117,9 @@ public class _PrototypeLeafletsOnHover : MouseHover, IBeginDragHandler, IDragHan
 
     public void OnEndDrag(PointerEventData eventData)
     {
+        // if in the bounding box, shrink back to default size and return to position
+
+
         /*var x = eventData.position.x / Screen.width;
         var y = eventData.position.y / Screen.height;
         
@@ -150,6 +153,7 @@ public class _PrototypeLeafletsOnHover : MouseHover, IBeginDragHandler, IDragHan
 
     public void SetBoundingBox(float minX, float minY, float maxX, float maxY)
     {
+        // would make more sense to just get these directly from the main controller script
         boundingBoxMinX = minX;
         boundingBoxMinY = minY;
         boundingBoxMaxX = maxX;
@@ -165,21 +169,12 @@ public class _PrototypeLeafletsOnHover : MouseHover, IBeginDragHandler, IDragHan
 
     public void HideInformation()
     {
-        // make small
         // hide information
-        // Debug.Log("info gets hidden here");
-
-        // selfRectTransform.anchoredPosition = defaultContainerPosition;
-        // rectTransform.anchoredPosition = defaultLeafletPosition;
+        // titleText.gameObject.SetActive(false);
         docked = true;
-        
-        // transform.position = defaultContainerPosition;
-        // rectTransform.position = defaultLeafletPosition;
-            //defaultLeafletPosition;
-        
     }
 
-    // Stops other coroutines and 
+    // Stops other coroutines and begins resize
     public void StartResize(Vector2 sizeToChangeTo)
     {
         StopAllCoroutines();
@@ -192,9 +187,7 @@ public class _PrototypeLeafletsOnHover : MouseHover, IBeginDragHandler, IDragHan
         Vector2 targetSize = Vector2.zero;
         Vector2 currentSize = Vector2.zero;
         
-        // bool shrinking = false;
-        // var heldPosition = rectTransform.position;
-        
+        // hides the text so that it can change 
         titleText.gameObject.SetActive(false);
         
         if (sizeToChangeTo == largestSize)
@@ -205,8 +198,6 @@ public class _PrototypeLeafletsOnHover : MouseHover, IBeginDragHandler, IDragHan
         }
         else
         {
-            // shrinking = true;
-            // HideInformation();
             targetSize = smallestSize;
             currentSize = largestSize;
             titleText.text = leafletTitleText;
@@ -226,15 +217,6 @@ public class _PrototypeLeafletsOnHover : MouseHover, IBeginDragHandler, IDragHan
             
             yield return null;
         }
-
-        /*if (sizeToChangeTo == largestSize)
-        {
-            DisplayInformation();
-        }
-        else
-        {
-            titleText.gameObject.SetActive(true);
-        }*/
 
         if (sizeToChangeTo == largestSize)
         {
@@ -284,4 +266,15 @@ public class _PrototypeLeafletsOnHover : MouseHover, IBeginDragHandler, IDragHan
         
         rectTransform.sizeDelta = smallestSize;
     }*/
+
+    public void StartHoverAnimation(Vector2 targetDestination)
+    {
+        StopAllCoroutines();
+        StartCoroutine(MoveToTarget(targetDestination));
+    }
+
+    IEnumerator MoveToTarget(Vector2 targetDestination)
+    {
+        //
+    }
 }
