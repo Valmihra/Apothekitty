@@ -10,6 +10,11 @@ public class ToggleIcon : MonoBehaviour
 
     bool toggleActive;
 
+    private void Awake() 
+    {
+        InitialiseToggleIcon();
+    }
+
     // larger version would probably want a toggle manager to handle all of them, right? idk bruhhhh
     /*void Start()
     {

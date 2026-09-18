@@ -7,21 +7,20 @@ using UnityEngine.EventSystems;
 
 public class _PrototypeLeafletsOnHover : MouseHover, IBeginDragHandler, IDragHandler, IEndDragHandler//, IDropHandler// , Draggable
 {
+    // try add on click handler and put resize coroutine on click
+    // OOOUH -- OR!!!
+    // have them come out horizontally instead of upwards
     public Image leafletImage;
     public Color defaultLeafletColour;
     public Color hoverLeafletColour;
     
     private Vector3 defaultContainerPosition;
-    private Vector3 defaultLeafletPosition;
+    public Vector3 defaultLeafletPosition;
     
-        private RectTransform rectTransform;
-        // private RectTransform selfRectTransform;
-        
-        // private Vector2 smallestSize = new Vector2(140f, 150f);
-        // private Vector2 largestSize = new Vector2(560f, 600f);
+        public RectTransform rectTransform;
         
         public Vector2 smallestSize = new Vector2(150f, 90f);
-        private Vector2 largestSize = new Vector2(600f, 360f);
+        public Vector2 largestSize = new Vector2(600f, 360f);
         public float timeToResize = 1f;
     
     private float boundingBoxMaxX;
@@ -29,13 +28,14 @@ public class _PrototypeLeafletsOnHover : MouseHover, IBeginDragHandler, IDragHan
     private float boundingBoxMinX;
     private float boundingBoxMinY;
     
-    private TMP_Text titleText;
+    [HideInInspector] public TMP_Text titleText;
     private string leafletDetailText;
     private string leafletTitleText;
     
     private Vector2 moveDelta;
 
     private bool docked;
+    private bool initSetPosition;
     // private Vector3 hoverLeafletPosition;
     
     public void GetInformation(Image incomingImage)
@@ -44,8 +44,7 @@ public class _PrototypeLeafletsOnHover : MouseHover, IBeginDragHandler, IDragHan
         defaultLeafletColour = new Color (.8f, .8f, .8f);
         hoverLeafletColour = leafletImage.color;
         leafletImage.color = defaultLeafletColour;
-                
-                // rectTransform = incomingImage.GetComponent<RectTransform>();
+        
         rectTransform = GetComponent<RectTransform>();
         titleText = GetComponentInChildren<TMP_Text>();
         leafletTitleText = titleText.text;
@@ -56,24 +55,45 @@ public class _PrototypeLeafletsOnHover : MouseHover, IBeginDragHandler, IDragHan
         
         // selfRectTransform = GetComponent<RectTransform>();
         // defaultContainerPosition = selfRectTransform.anchoredPosition;
-        defaultLeafletPosition = rectTransform.anchoredPosition;
+        defaultLeafletPosition = rectTransform.position;
+        var x = defaultLeafletPosition.x / Screen.width;
+        var y = defaultLeafletPosition.y / Screen.height;
+        Vector2 tempVector = new Vector2(x, y);
+        defaultLeafletPosition = tempVector;
+        Debug.Log(tempVector);
+        Debug.Log((Vector2)transform.position);
+        
+        
+        //delta = eventData.pressPosition - (Vector2)transform.position;
         // defaultContainerPosition = transform.position;
         // defaultLeafletPosition = rectTransform.gameObject.transform.position;
         docked = true;
+        initSetPosition = false;
     }
 
     public override void OnPointerEnter(PointerEventData eventData)
     {
+        // Begin raise animation
         leafletImage.color = hoverLeafletColour;
     }
 
     public override void OnPointerExit(PointerEventData eventData)
     {
+        if (docked)
+        {
+            // Begin lower animation
+        }
+
         leafletImage.color = defaultLeafletColour;
     }
 
     public void OnBeginDrag(PointerEventData eventData)
     {
+        if (!initSetPosition)
+        {
+            defaultLeafletPosition = (Vector2)transform.position;
+            Debug.Log(defaultLeafletPosition);
+        }
         // _PrototypeHerbGuideMockupController.
         moveDelta = eventData.pressPosition - (Vector2)transform.position;
 
@@ -83,20 +103,6 @@ public class _PrototypeLeafletsOnHover : MouseHover, IBeginDragHandler, IDragHan
             // titleText.gameObject.SetActive(false);
             StartResize(largestSize);
         }
-        
-        /*Vector3[] corners = new Vector3[4];
-        rectTransform.GetWorldCorners(corners);
-        var minX = corners[0].x;
-        var maxX = corners[2].x;
-        var dist = maxX - minX;
-        
-        if (dist != largestSize.x)
-        {
-            titleText.gameObject.SetActive(false);
-            StartResize(largestSize);
-        }*/
-        
-        // rectTransform.SetAsLastSibling();
     }
 
     public void OnDrag(PointerEventData eventData)
@@ -107,8 +113,6 @@ public class _PrototypeLeafletsOnHover : MouseHover, IBeginDragHandler, IDragHan
         if(x is < 0.02f or > 0.98f || y is < 0.02f or > 0.98f) return;
 
         transform.position = eventData.position - moveDelta;
-        // selfRectTransform.anchoredPosition = eventData.position - moveDelta;
-        // GetComponent<RectTransform>().anchoredPosition = eventData.position - moveDelta;
     }
 
     public void OnEndDrag(PointerEventData eventData)
@@ -150,15 +154,14 @@ public class _PrototypeLeafletsOnHover : MouseHover, IBeginDragHandler, IDragHan
         boundingBoxMinY = minY;
         boundingBoxMaxX = maxX;
         boundingBoxMaxY = maxY;
-        // Debug.Log(boundingBoxMaxX + " is max X in boundingBox");
     }
 
-    void DisplayInformation()
+    /*void DisplayInformation()
     {
         // if (size != maxSize) make big
         // show information
         Debug.Log("info gets displayed here");
-    }
+    }*/
 
     public void HideInformation()
     {
@@ -167,7 +170,7 @@ public class _PrototypeLeafletsOnHover : MouseHover, IBeginDragHandler, IDragHan
         // Debug.Log("info gets hidden here");
 
         // selfRectTransform.anchoredPosition = defaultContainerPosition;
-        rectTransform.anchoredPosition = defaultLeafletPosition;
+        // rectTransform.anchoredPosition = defaultLeafletPosition;
         docked = true;
         
         // transform.position = defaultContainerPosition;
@@ -176,7 +179,8 @@ public class _PrototypeLeafletsOnHover : MouseHover, IBeginDragHandler, IDragHan
         
     }
 
-    public void StartResize(Vector2 sizeToChangeTo)    // could probs just reference the declared size vector instead
+    // Stops other coroutines and 
+    public void StartResize(Vector2 sizeToChangeTo)
     {
         StopAllCoroutines();
         StartCoroutine(ResizeLeaflet(sizeToChangeTo));
@@ -231,7 +235,16 @@ public class _PrototypeLeafletsOnHover : MouseHover, IBeginDragHandler, IDragHan
         {
             titleText.gameObject.SetActive(true);
         }*/
-        titleText.GetComponent<RectTransform>().sizeDelta = targetSize;
+
+        if (sizeToChangeTo == largestSize)
+        {
+            titleText.GetComponent<RectTransform>().sizeDelta = new Vector2(targetSize.x - 200f, targetSize.y - 20f); //- (20f, ;
+        }
+        else
+        {
+            titleText.GetComponent<RectTransform>().sizeDelta = targetSize;
+        }
+        
         titleText.gameObject.SetActive(true);
         rectTransform.sizeDelta = targetSize;
     }

@@ -79,8 +79,46 @@ public class _PrototypeHerbGuideMockupController : MonoBehaviour, IDropHandler
     {
         if (eventData.pointerDrag.TryGetComponent<_PrototypeLeafletsOnHover>(out _PrototypeLeafletsOnHover leaflet))
         {
+            
             leaflet.StartResize(leaflet.smallestSize);
-            leaflet.HideInformation();
+
+            // Vector2 tempVector = leaflet.GetComponent<RectTransform>().position;//eventData.pressPosition; 
+            ReturnToOrigin(leaflet, leaflet.rectTransform.position);
         }
+    }
+
+    public void ReturnToOrigin(_PrototypeLeafletsOnHover leaflet, Vector3 vector)
+    {
+        Vector2 v = new Vector2(vector.x, vector.y);
+        StopAllCoroutines();
+        StartCoroutine(ShrinkAndPullLeaflet(leaflet, vector));
+    }
+
+    IEnumerator ShrinkAndPullLeaflet(_PrototypeLeafletsOnHover leaflet, Vector2 vector)
+    {
+        float elapsedTime = 0.0f;
+        Vector2 targetSize = leaflet.smallestSize;
+        Vector2 currentSize = leaflet.largestSize;
+        
+        var heldPosition = vector;
+        var targetPosition = leaflet.defaultLeafletPosition;
+        Debug.Log (vector);
+        // HIDE TEXT
+        leaflet.titleText.gameObject.SetActive(false);
+
+        while (elapsedTime < leaflet.timeToResize)
+        {
+            elapsedTime += Time.deltaTime;
+            float t = Mathf.Clamp01(elapsedTime/leaflet.timeToResize);
+            
+            leaflet.rectTransform.sizeDelta = Vector2.Lerp(currentSize, targetSize, t);
+            leaflet.rectTransform.position = Vector2.Lerp(heldPosition, targetPosition, t);
+            
+            yield return null;
+        }
+        
+        leaflet.titleText.gameObject.SetActive(true);
+        leaflet.rectTransform.sizeDelta = targetSize;
+        leaflet.HideInformation();
     }
 }
