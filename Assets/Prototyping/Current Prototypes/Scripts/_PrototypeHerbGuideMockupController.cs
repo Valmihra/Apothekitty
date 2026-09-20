@@ -5,120 +5,51 @@ using UnityEngine.UI;
 using TMPro;
 using UnityEngine.EventSystems;
 
-public class _PrototypeHerbGuideMockupController : MonoBehaviour, IDropHandler
+public class _PrototypeHerbGuideMockupController : MonoBehaviour
 {
     private List<TMP_Text> leafletTitlesList;
     private List<_PrototypeLeafletsOnHover> leafletsOnHoverReferenceList;
     
-    private float minX;
+    /*private float minX;
     private float minY;
     private float maxX;
-    private float maxY;
+    private float maxY;*/
     
-    void Start()
+    // *TAG* - For use on slider: Maybe if roller is open, interaction blocker prevents touching the drawers? idk.
+    
+    
+    void Awake()
     {
-        RectTransform rectTransform = GetComponent<RectTransform>();
-        Vector3[] corners = new Vector3[4];
-        
-        rectTransform.GetWorldCorners(corners);
-        minX = corners[0].x;
-        maxX = corners[2].x;
-        minY = corners[0].y;
-        maxY = corners[2].y;
-        
         InitialiseHGMockupController();
-        // Debug.Log(corners[2].y);
     }
 
     void InitialiseHGMockupController()
     {
+        Vector3[] corners = new Vector3[4];
+        RectTransform rectTransform = GetComponent<RectTransform>();
+        rectTransform.GetWorldCorners(corners);
+            float minX = corners[0].x;
+            float maxX = corners[2].x;
+            float minY = corners[0].y;
+            float maxY = corners[2].y;
+            
         List<string> titles = new List<string> { "Fortify", "Heal", "Ease", "Mind", "Body" };
-        TMP_Text[] tmpArray = GetComponentsInChildren<TMP_Text>();
-        leafletTitlesList = new List<TMP_Text>(tmpArray);
+            TMP_Text[] tmpArray = GetComponentsInChildren<TMP_Text>();
+            leafletTitlesList = new List<TMP_Text>(tmpArray);
+            
         leafletsOnHoverReferenceList = new List<_PrototypeLeafletsOnHover>();
         
         for (int i = 0; i < titles.Count; i++)
         {
+            // Assigns the title from the list to the TMPro element at the same position in the relevant list
             leafletTitlesList[i].text = titles[i];
-            _PrototypeLeafletsOnHover tempLeaflet = leafletTitlesList[i].GetComponentInParent<_PrototypeLeafletsOnHover>();
-            leafletsOnHoverReferenceList.Add(leafletTitlesList[i].GetComponentInParent<_PrototypeLeafletsOnHover>());
-            
             leafletTitlesList[i].raycastTarget = false;
-            /* if (leafletTitlesList[i].gameObject.TryGetComponentInParent<_PrototypeLeafletsOnHover>(out _PrototypeLeafletsOnHover tempLeaflet))
-            {
-                leafletsOnHoverReference.Add(tempLeaflet);
-            }*/
-        }
-
-        for (int i = 0; i < titles.Count; i++)
-        {
-            // Image childImage = leafletsOnHoverReferenceList[i].gameObject.FindInChildren("Leaflet").GetComponent<Image>();
-            // leafletsOnHoverReferenceList[i].GetInformation(leafletsOnHoverReferenceList[i].gameObject.GetComponentInChildren<Image>());
-            // GameObject childObject = leafletsOnHoverReferenceList[i].transform.Find("Leaflet");
             
-            /*Transform childObject = leafletsOnHoverReferenceList[i].transform.GetChild(0);
-            // Debug.Log(childObject);
-            Image childImage = childObject.GetComponent<Image>();
-            leafletsOnHoverReferenceList[i].GetInformation(childImage);*/
-            leafletsOnHoverReferenceList[i].GetInformation(leafletsOnHoverReferenceList[i].GetComponent<Image>());
+            leafletsOnHoverReferenceList.Add(leafletTitlesList[i].GetComponentInParent<_PrototypeLeafletsOnHover>());
+            leafletsOnHoverReferenceList[i].InitialisePrototypeLeaflet();
             leafletsOnHoverReferenceList[i].SetBoundingBox(minX, minY, maxX, maxY);
-        }
-        
-        // leafletsOnHoverReference = GetComponent<_PrototypeLeafletsOnHover>();
-        
-    }
-
-    public static void DisableInteraction()
-    {
-        // find parent object and foreach child, blocks raycasts = false
-        
-        // and then enable would be the opposite
-    }
-    
-    public void OnDrop(PointerEventData eventData)
-    {
-        if (eventData.pointerDrag.TryGetComponent<_PrototypeLeafletsOnHover>(out _PrototypeLeafletsOnHover leaflet))
-        {
-            
-            leaflet.StartResize(leaflet.smallestSize);
-
-            // Vector2 tempVector = leaflet.GetComponent<RectTransform>().position;//eventData.pressPosition; 
-            ReturnToOrigin(leaflet, leaflet.rectTransform.position);
+            // leafletsOnHoverReferenceList[i].AssignResizeSpeed(resizeSpeedVariable);
         }
     }
 
-    public void ReturnToOrigin(_PrototypeLeafletsOnHover leaflet, Vector3 vector)
-    {
-        Vector2 v = new Vector2(vector.x, vector.y);
-        StopAllCoroutines();
-        StartCoroutine(ShrinkAndPullLeaflet(leaflet, vector));
-    }
-
-    IEnumerator ShrinkAndPullLeaflet(_PrototypeLeafletsOnHover leaflet, Vector2 vector)
-    {
-        float elapsedTime = 0.0f;
-        Vector2 targetSize = leaflet.smallestSize;
-        Vector2 currentSize = leaflet.largestSize;
-        
-        var heldPosition = vector;
-        var targetPosition = leaflet.defaultLeafletPosition;
-        Debug.Log (vector);
-        // HIDE TEXT
-        leaflet.titleText.gameObject.SetActive(false);
-
-        while (elapsedTime < leaflet.timeToResize)
-        {
-            elapsedTime += Time.deltaTime;
-            float t = Mathf.Clamp01(elapsedTime/leaflet.timeToResize);
-            
-            leaflet.rectTransform.sizeDelta = Vector2.Lerp(currentSize, targetSize, t);
-            leaflet.rectTransform.position = Vector2.Lerp(heldPosition, targetPosition, t);
-            
-            yield return null;
-        }
-        
-        leaflet.titleText.gameObject.SetActive(true);
-        leaflet.rectTransform.sizeDelta = targetSize;
-        leaflet.HideInformation();
-    }
 }
