@@ -30,4 +30,14 @@ public class MouseHover : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
         //Debug.Log("Mouse registered - exited UI");
         image.color = defaultColour;
     }
+    /*
+    public void DisableHoverScript()
+    {
+        //
+    }
+
+    public void EnableHoverScript()
+    {
+        //
+    }*/
 }

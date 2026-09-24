@@ -57,22 +57,10 @@ public class UIManager : MonoBehaviour
         textToShow.enabled = true;
     }
 
-    void MovePosition()
-    {
-        //position = Vector2.Lerp(randomisedOrigin, diagnosisSheetSpawnPoint, Random.value);
-            //MimicAnimation();
-    }
-
-    void SetPosition()
-    {
-        //diagnosisSheet.GetComponent<RectTransform>().anchoredPosition = diagnosisSheetSpawnPoint;
-    }
-
     public void SpriteShift(Image image, Sprite sprite)
     {
         image.sprite = sprite;
     }
-
     
     public void EnableInteraction(CanvasGroup canvasGroup)
     {

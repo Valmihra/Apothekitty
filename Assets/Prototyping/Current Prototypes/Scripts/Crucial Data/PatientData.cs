@@ -133,13 +133,40 @@ public class PatientData : MonoBehaviour
             {
                 if (c._patientDayNumber == i)
                 {
+                    // If the patient's day number matches i (the day to check for)
                     dailyPatientsDictionary[i].Add(c);
                 }
             }
         }
+        
+        // determines the day with the most clients and feeds that number into the results calculator
+        // results calculator uses this to set up its dailyTreatedClientsList!!
+        GetmostPatientsInAnyGameDay();
+        
+        
+        
         // Debug.Log("Number of patients present for day 1 is: " + dailyPatientsDictionary[1].Count);
     }
 
+    void GetmostPatientsInAnyGameDay()
+    {
+        int mostPatientsInAnyGameDay = 0;
+        
+        for (int i = 0; i < dailyPatientsDictionary.Count; i++)
+        {
+            if (dailyPatientsDictionary[i].Count > mostPatientsInAnyGameDay)
+            {
+                mostPatientsInAnyGameDay = dailyPatientsDictionary[i].Count;
+            }
+            else
+            {
+                continue;
+            }
+        }
+        
+        Debug.Log(mostPatientsInAnyGameDay);
+        resultsCalculatorReference.SetMaxPatientsNumber(mostPatientsInAnyGameDay);
+    }
     
     void CreatePatientInformation()              // *TAG* - Would be good to reorder, but then I'll have to fix a bunch,,, HHHHHHHHbruhhhhhh
     {

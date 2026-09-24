@@ -5,8 +5,22 @@ using UnityEngine.UI;
 using TMPro;
 using UnityEngine.EventSystems;
 
-public class _PrototypeLeafletsOnHover : MouseHover, IBeginDragHandler, IDragHandler, IEndDragHandler//, IPointerClickHandler//, IDropHandler// , Draggable
+public class _PrototypeLeafletsOnHover : MouseHover, IBeginDragHandler, IDragHandler, IPointerDownHandler, IPointerUpHandler
 {
+    /*  CURRENT ISSUE IS THAT LEAFLETS DO NOT SETASLASTSIBLING ON DRAG/POINTERDOWN,
+     WHICH MEANS THEY ARE HARD TO KEEP ORGANISED. 
+     
+     COULD POTENTIALLY FIX THIS WITH AN INSTANTIATE PREFAB ON POINTERDOWN, HIDE THE
+     REAL LEAFLET OBJECT AT SAME TIME, AND DRAG THE FAKE ONE AROUND? 
+     
+     WOULD NEED A GAMEOBJECT PARENT LOCATION TO SHARE WITH THE OTHER LEAFLETS -- AND
+     PROBABLY ALSO SOMTHING IN PLACE TO MAKE SURE THEY RETURN WELL. ALSO, CLICKING 
+     AND DRAGGING ON THEM WOULD HAVE TO BE FIXED SOMEHOW, SINCE THE OG SCRIPT WOULD
+     STILL BE IN THE DOCK. HMMMMMMRRRMMMHHH,,,,
+     
+     */
+    
+    
     // Leaflet display properties
     private Image leafletImage;
     private Color defaultLeafletColour;
@@ -21,90 +35,114 @@ public class _PrototypeLeafletsOnHover : MouseHover, IBeginDragHandler, IDragHan
     private Vector3 hoverLeafletPosition;
     private Vector3 defaultLeafletPosition;
     private Vector3 currentLeafletPosition;
-        
+    [SerializeField] private float hoverLeafletOffset = 30f;
+    
+    // Leaflet size and movement variables
+    private RectTransform rectTransform;
+    private Rect hiddenPanelRectBounds;
+    private Rect leafletRectBounds;
+    private Vector2 moveDelta;
+    
     private Vector2 smallestSize = new Vector2(150f, 90f);
     private Vector2 largestSize = new Vector2(600f, 360f);
     private Vector2 currentSize;
     private float timeToResize = 0.1f;
     
-    private Vector2 moveDelta;
-    public RectTransform rectTransform;
-    
-    private float boundingBoxMaxX;
-    private float boundingBoxMaxY;
-    private float boundingBoxMinX;
-    private float boundingBoxMinY;
-    
+    // Leaflet status checks
     private bool isDocked;
-    // private bool justActivated;
+    private bool draggingFromDock;
+    private bool goingBackToDock;
+    private bool currentlyResizing;
     private bool defaultPositionsSet;
     
     public void InitialisePrototypeLeaflet()
     {
+        defaultLeafletColour = new Color (.65f, .65f, .65f, 1f);
+        
         rectTransform = GetComponent<RectTransform>();
         leafletImage = GetComponent<Image>();
-            defaultLeafletColour = new Color (.65f, .65f, .65f);
-            hoverLeafletColour = leafletImage.color;
-            leafletImage.color = defaultLeafletColour;
+        
+        hoverLeafletColour = leafletImage.color;
+        leafletImage.color = defaultLeafletColour;
         
         titleText = GetComponentInChildren<TMP_Text>();
-            leafletTitleText = titleText.text;
-            leafletDetailText = (tempLeafletPrefaceText + "<b>" + leafletTitleText + "</b>").ToString();
+        leafletTitleText = titleText.text;
+        leafletDetailText = (tempLeafletPrefaceText + "<b>" + leafletTitleText + "</b>").ToString();
+        
+        // Default bool values should be:
+        isDocked = true;
+        goingBackToDock = false;
+        draggingFromDock = false;
+        currentlyResizing =  false;
+        defaultPositionsSet = false;
         
         currentSize = smallestSize;
+    }
+
+    public void AssignRect(Rect rect)
+    {
+        hiddenPanelRectBounds = rect;
+    }
+
+    void CreateSelfRect()
+    {
+        // Uses rectTransform to set the rect for this leaflet
+        Vector3[] corners = new Vector3[4];
+        rectTransform.GetWorldCorners(corners);
         
-        isDocked = true;
-        // justActivated = false;
-        defaultPositionsSet = false;
+        Vector2 min = corners[0];
+        Vector2 max = corners[2];
+        Vector2 size = max - min;
+
+        leafletRectBounds = new Rect(min, size);
     }
     
-    private Vector3 GetLeafletPosition()
+    private Vector3 GetPositionFromTransform()
     {
+        // Uses the current transform to set a position vector
         Vector3 leafletPositionToSet = transform.position;
         return leafletPositionToSet;
     }
 
     public override void OnPointerEnter(PointerEventData eventData)
     {
+        // Always lights up if mouse is on the object
         leafletImage.color = hoverLeafletColour;
         
         if (isDocked)
         {
+            // Sets default positions if they do not exist
             if (!defaultPositionsSet)
             {
-                // sets the default positions for the leaflet and its hover destination
-                defaultLeafletPosition = GetLeafletPosition();
-                hoverLeafletPosition = new Vector3 (defaultLeafletPosition.x, defaultLeafletPosition.y + 30.0f,  defaultLeafletPosition.z);
+                CreateSelfRect();
+                defaultLeafletPosition = GetPositionFromTransform();
+                hoverLeafletPosition = new Vector3(defaultLeafletPosition.x, defaultLeafletPosition.y + hoverLeafletOffset,  defaultLeafletPosition.z);
                 defaultPositionsSet = true;
             }
             
-            // Begin raise animation here
+            // Lifts up to hoverLeafletPosition inside the dock
             StartHoverAnimation(hoverLeafletPosition);
         }
     }
-
-    public override void OnPointerExit(PointerEventData eventData)
-    {
-        leafletImage.color = defaultLeafletColour;
-        
-        if (isDocked)
-        {
-            // Begin lower animation here
-            StartHoverAnimation(defaultLeafletPosition);
-        }
-    }
+    
+    public void OnPointerDown(PointerEventData eventData)
+     {
+         // Enlarges the leaflet if it is docked
+         if (isDocked)
+         {
+             isDocked = false;
+             draggingFromDock = true;
+             
+             if (currentSize != largestSize && !currentlyResizing)
+             {
+                 StartResize();
+             }
+         }
+     }
     
     public void OnBeginDrag(PointerEventData eventData)
     {
         moveDelta = eventData.pressPosition - (Vector2)transform.position;
-        
-        // if in the default location, resizes to large
-        if (isDocked)
-        {
-            isDocked = false;
-            // justActivated = true;
-            StartResize();
-        }
     }
 
     public void OnDrag(PointerEventData eventData)
@@ -113,42 +151,132 @@ public class _PrototypeLeafletsOnHover : MouseHover, IBeginDragHandler, IDragHan
         var y = eventData.position.y / Screen.height;
         //try to prevent dragging the element offscreen
         if(x is < 0.02f or > 0.98f || y is < 0.02f or > 0.98f) return;
-
-        transform.position = eventData.position - moveDelta;
-    }
-
-    public void OnEndDrag(PointerEventData eventData)
-    {
-        // Get the location of the leaflet at the end of the drag
-        currentLeafletPosition = GetLeafletPosition();
         
-        // If inside the bounding box, resize and return to dock
-        if (currentLeafletPosition.x >= boundingBoxMinX && currentLeafletPosition.x <= boundingBoxMaxX && currentLeafletPosition.y >= boundingBoxMinY && currentLeafletPosition.y <= boundingBoxMaxY)
+        // Updates the position of the leaflet and its associated rect
+        transform.position = eventData.position - moveDelta;
+        leafletRectBounds.center = transform.position;
+        
+        // If not over hidden panel, checks size and drag status
+        if (!leafletRectBounds.Overlaps(hiddenPanelRectBounds))
+        {
+            if (draggingFromDock)
+            {
+                draggingFromDock = false;
+            }
+            
+            if (currentSize != largestSize && !currentlyResizing)
+            {
+                StartResize();
+            }
+        }
+        
+        // If not the initial drag from dock, leaflet shrinks when over hidden panel
+        if (leafletRectBounds.Overlaps(hiddenPanelRectBounds) && !draggingFromDock)
+        {
+            if (currentSize != smallestSize && !currentlyResizing)
+            {
+                StartResize();
+            }
+        }
+    }
+    
+    public void OnPointerUp(PointerEventData eventData)
+    {
+        CheckForCoroutineCompletion("OnPointerUp");
+
+        if (currentSize == largestSize && leafletRectBounds.Overlaps(hiddenPanelRectBounds))
         {
             StartResize();
         }
-        
-        // justActivated = false;
-    }
 
-    public void SetBoundingBox(float minX, float minY, float maxX, float maxY)
+        // Ensures that the drag check is always reset
+        if (draggingFromDock)
+        {
+            draggingFromDock = false;
+        }
+    }
+    
+    public override void OnPointerExit(PointerEventData eventData)
     {
-        // would make more sense to just get these directly from the main controller script
-        boundingBoxMinX = minX;
-        boundingBoxMinY = minY;
-        boundingBoxMaxX = maxX;
-        boundingBoxMaxY = maxY;
+        leafletImage.color = defaultLeafletColour;
         
-        Debug.Log("Bounding box set. x axis coordinates are: " + boundingBoxMinX + " - " + boundingBoxMaxX + ". y axis coordinates are: " + boundingBoxMinY + " - " + boundingBoxMaxY + ".");
+        // Returns to defaultLeafletPosition in the dock
+        if (isDocked)
+        {
+            StartHoverAnimation(defaultLeafletPosition);
+        }
     }
-
+    
+    
+    void CheckForCoroutineCompletion(string caller)
+    {
+        // If leaflet is small or coroutine is still running when mouse lifts
+        if ((currentlyResizing || currentSize == smallestSize) || (currentSize == smallestSize && !isDocked && goingBackToDock))
+        {
+            Debug.Log("Check from: " + caller + " was called before the resize coroutine could finish completely. Setting values and returning to dock.");
+            currentLeafletPosition = GetPositionFromTransform();
+            goingBackToDock = true;
+            ReturnToDock();
+        }
+    }
     
     public void StartResize()
     {
+        currentlyResizing = true;
         StopAllCoroutines();
         StartCoroutine(ResizeLeaflet());
     }
+    
+    IEnumerator ResizeLeaflet() 
+    {
+        float elapsedTime = 0.0f;
+        titleText.gameObject.SetActive(false);
+         
+        // Uses currentSize to determine targetSize and titleText to determine updatedText
+        Vector2 targetSize = currentSize == smallestSize ? largestSize : smallestSize;
+        string updatedTextDisplay = titleText.text == leafletDetailText ? leafletTitleText : leafletDetailText;
 
+        // Separate operations depending on resize value
+        if (targetSize == largestSize)
+        {
+            while (elapsedTime < timeToResize)
+            {
+                elapsedTime += Time.deltaTime;
+                float t = Mathf.Clamp01(elapsedTime/timeToResize);
+             
+                rectTransform.sizeDelta = Vector2.Lerp(currentSize, targetSize, t);
+             
+                yield return null;
+            }
+             // Updates the text component's rectTransform
+             float textRectOffset = 200f;
+             titleText.GetComponent<RectTransform>().sizeDelta = new Vector2(targetSize.x - textRectOffset, targetSize.y - (textRectOffset / 10));
+        }
+        else
+        {
+            while (elapsedTime < timeToResize)
+            {
+                elapsedTime += Time.deltaTime;
+                float t = Mathf.Clamp01(elapsedTime/timeToResize);
+
+                rectTransform.sizeDelta = Vector2.Lerp(currentSize, targetSize, t);
+         
+                yield return null;
+            }
+         
+            titleText.GetComponent<RectTransform>().sizeDelta = targetSize;
+        }
+
+        // updates and shows the text again
+        titleText.text = updatedTextDisplay;
+        titleText.gameObject.SetActive(true);
+
+        // ensures size is correct
+        rectTransform.sizeDelta = targetSize;
+        currentSize = targetSize;
+        currentlyResizing = false;
+    }
+    
     public void StartHoverAnimation(Vector3 hoverDestination)
     {
         if ((hoverDestination == defaultLeafletPosition) || (hoverDestination == hoverLeafletPosition))
@@ -158,59 +286,6 @@ public class _PrototypeLeafletsOnHover : MouseHover, IBeginDragHandler, IDragHan
         }
     }
     
-    IEnumerator ResizeLeaflet()
-    {
-        float elapsedTime = 0.0f;
-        titleText.gameObject.SetActive(false);
-        
-        // sets the target size and text according to the current leaflet display
-        Vector2 targetSize = currentSize == smallestSize ? largestSize : smallestSize;
-        string updatedTextDisplay = titleText.text == leafletDetailText ? leafletTitleText : leafletDetailText;
-        
-        // Separate operations depending on resize value
-        if (targetSize == largestSize)
-        {
-            while (elapsedTime < timeToResize)
-            {
-                elapsedTime += Time.deltaTime;
-                float t = Mathf.Clamp01(elapsedTime/timeToResize);
-            
-                rectTransform.sizeDelta = Vector2.Lerp(currentSize, targetSize, t);
-            
-                yield return null;
-            }
-            
-            titleText.GetComponent<RectTransform>().sizeDelta = new Vector2(targetSize.x - 200f, targetSize.y - 20f);
-        }
-        else
-        {
-            var heldPosition = currentLeafletPosition;
-            var targetPosition = defaultLeafletPosition;
-            
-            while (elapsedTime < timeToResize)
-            {
-                elapsedTime += Time.deltaTime;
-                float t = Mathf.Clamp01(elapsedTime/timeToResize);
-            
-                rectTransform.sizeDelta = Vector2.Lerp(currentSize, targetSize, t);
-                rectTransform.position = Vector2.Lerp(heldPosition, targetPosition, t);
-                
-                yield return null;
-            }
-            
-            titleText.GetComponent<RectTransform>().sizeDelta = targetSize;
-            isDocked = true;
-        }
-        
-        // updates and shows the text again
-        titleText.text = updatedTextDisplay;
-        titleText.gameObject.SetActive(true);
-        
-        // ensures size is correct, and updates the currentSize vector to match
-        rectTransform.sizeDelta = targetSize;
-        currentSize = targetSize;
-    }
-
     IEnumerator MoveLeafletToDestination(Vector3 destination)
     {
         float elapsedTime = 0.0f;
@@ -228,5 +303,48 @@ public class _PrototypeLeafletsOnHover : MouseHover, IBeginDragHandler, IDragHan
         }
         
         rectTransform.position = target;
+    }
+    
+    public void ReturnToDock()
+     {
+         goingBackToDock = false;
+         StopAllCoroutines();
+         StartCoroutine(MoveLeafletToDock());
+     }
+
+    IEnumerator MoveLeafletToDock()
+    {
+        // In case shrink coroutine was not completed before mouse up
+        if (currentSize != smallestSize || titleText.text != leafletTitleText || !titleText.gameObject.activeInHierarchy)
+        {
+            Debug.Log("Previous coroutine incomplete. Setting values before continuing.");
+            rectTransform.sizeDelta = smallestSize;
+            currentSize = smallestSize;
+            titleText.text = leafletTitleText;
+            titleText.gameObject.SetActive(true);
+            currentlyResizing = false;
+        }
+        
+        float elapsedTime = 0.0f;
+        var heldPosition = currentLeafletPosition;
+        var targetPosition = defaultLeafletPosition;
+                
+        while (elapsedTime < timeToResize)
+        {
+            elapsedTime += Time.deltaTime;
+            float t = Mathf.Clamp01(elapsedTime/timeToResize);
+            
+            rectTransform.position = Vector2.Lerp(heldPosition, targetPosition, t);
+                
+            yield return null;
+        }
+        
+        isDocked = true;
+        goingBackToDock = false;
+        
+        // Ensures locators are set to correct position at end of coroutine
+        rectTransform.position = targetPosition;
+        leafletRectBounds.center = targetPosition;
+        currentSize = smallestSize;
     }
 }

@@ -14,17 +14,18 @@ public class GrimoireNavigation : MonoBehaviour
     [Header("Navigation Buttons")]
         public Button grimoireNavigationLeft;
         public Button grimoireNavigationRight;
+        public GameObject navigationButtonsObject;
 
     [Header("Page Display")]
         public TMP_Text grimoireAilmentNameDisplay;
         public TMP_Text grimoireAilmentDescriptionDisplay;
         public Image grimoireAilmentIconDisplay;
         
-        public Button grimoireAilmentSelectionButton;
+        // public Button grimoireAilmentSelectionButton;
         public GameObject grimoireStampObject;
 
     [Header("Ailment Icons")]
-    public Image tempIcon00;
+        public Image tempIcon00;
         public Image ailmentIcon01;
         public Image ailmentIcon02;
         public Image ailmentIcon03;
@@ -38,34 +39,17 @@ public class GrimoireNavigation : MonoBehaviour
         //public Image ailmentIcon11;
         //public Image ailmentIcon12;
         private List<Image> grimoireAilmentIconsList;
-
-    [Header("GameObject References")]
-        public GameObject navigationButtonsObject;
-
         
-    
-    [Header("Ailment Information")]
-        // private string selectedAilmentName;    // For display on the Diagnosis sheet later? may not be necessary if just use ... .text, ... .grimoireAilmentNameDisplay etc.
+        
 
         // Key stats to track:
-        // public bool ailmentSubmitted;
         private bool notOpenedGrimoire;
-        private int currentGrimoirePageNumber;
+        public int currentGrimoirePageNumber;       // *TAG* - private it again once I've got this check working !!!
         
         // Vectors to store relevant positions for UI
         private Vector2 grimoireInitialPosition;
         private Vector2 buttonsPositionPage; 
         private Vector2 buttonsPositionCover;
-
-    /*void Awake()
-    {
-        
-    }
-
-    void Start()
-    {
-        
-    }*/
 
     public void InitialiseGrimoireNavigation()
     {
@@ -77,7 +61,7 @@ public class GrimoireNavigation : MonoBehaviour
         
         grimoireNavigationLeft.onClick.AddListener(delegate { GoToPage(currentGrimoirePageNumber -1); });
         grimoireNavigationRight.onClick.AddListener(delegate { GoToPage(currentGrimoirePageNumber +1); });
-        grimoireAilmentSelectionButton.onClick.AddListener(delegate {GetSelectedAilment (currentGrimoirePageNumber); });
+        // grimoireAilmentSelectionButton.onClick.AddListener(delegate {GetSelectedAilment (currentGrimoirePageNumber); });
         
         notOpenedGrimoire = true;
         InitialiseGrimoireAilmentIconList();
@@ -90,9 +74,8 @@ public class GrimoireNavigation : MonoBehaviour
     // Basic scene setup
     public void ResetGrimoireNavigation()
     {
-        grimoireAilmentSelectionButton.interactable = true;
+        // grimoireAilmentSelectionButton.interactable = true;
         grimoireStampObject.SetActive(false);
-        // ailmentSubmitted = false;
 
         // reset position on screen
         transform.position = grimoireInitialPosition;
@@ -155,10 +138,16 @@ public class GrimoireNavigation : MonoBehaviour
         currentGrimoirePageNumber = target;
     }
 
+    public void TempSelectionCheck()
+    {
+        GetSelectedAilment(currentGrimoirePageNumber);
+    }
+    
+            // *TAG* - Private it again once stamp interaction is working!!!!
     void GetSelectedAilment(int pageNum)
     {
         grimoireStampObject.SetActive(true);
-        grimoireAilmentSelectionButton.interactable = false;
+        // grimoireAilmentSelectionButton.interactable = false;
         GameManager.Instance.ailmentSubmitted = true;
         
         string selectedAilmentName = GrimoirePagesData.Instance.grimoirePagesArray[pageNum]._ailmentName;
@@ -190,34 +179,4 @@ public class GrimoireNavigation : MonoBehaviour
         //grimoireAilmentIconsList = icons.ToArray();
         //Debug.Log(grimoireAilmentIconsList.Length + " icons registered.");
     }
-
-    /*void SetTabNumbers()
-    {
-        mindTabPageNum = 1;
-        bodyTabPageNum = 2;
-        spiritTabPageNum = 4;
-    }*/
-
-
-
-    /*
-    void OpenBook()
-    {
-        // hides the book cover OR changes the icon of the background? WHICH TO DO??
-
-        uiManagerTemp.EnableUI(pageContents);
-        GoToPage(0);
-
-        // enable buttons
-        // disable cover button
-    }
-
-    void CloseBook()
-    {
-        // Hides the page contents and main navigation buttons, enables the cover navigation button
-        uiManagerTemp.DisableUI(pageContents);
-        // disable buttons
-        // enable cover button
-    }
-    */
 }

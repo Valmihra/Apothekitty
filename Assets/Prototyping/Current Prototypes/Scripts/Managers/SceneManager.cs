@@ -162,16 +162,6 @@ public class SceneManager : MonoBehaviour
        
     }*/
 
-    /*void MovePosition()
-    {
-        position = Vector2.Lerp(randomisedOrigin, diagnosisSheetSpawnPoint, Random.value);
-    }
-
-    void SetPosition()
-    {
-        diagnosisSheet.GetComponent<RectTransform>().anchoredPosition = diagnosisSheetSpawnPoint;
-    }*/
-
 
 
     // Hides the navigation buttons on the grimoire and enables the diagnosis sheet.

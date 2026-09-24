@@ -28,6 +28,8 @@ public class GrimoirePagesData : MonoBehaviour
     int totalPages = 0;
 
     private GrimoireNavigation grimoireNavigation;
+    private Stamp stamp;
+    private Rect grimoireRect;
 
     private static GrimoirePagesData _instance;
     public static GrimoirePagesData Instance
@@ -43,6 +45,47 @@ public class GrimoirePagesData : MonoBehaviour
         _instance = this;
         grimoireNavigation = GetComponent<GrimoireNavigation>();
     }
+    
+        // For Stamp
+        public Rect GetAndReturnGrimoireRect()
+        {
+            // Currently using the whole page, but could set to ailment icon specifically if that's preferred!!
+            grimoireRect.center = transform.position;
+            return grimoireRect;
+        }
+
+        public bool SelectedPageIsNotTheCover()
+        {
+            /*if (grimoireNavigation.currentGrimoirePageNumber > 0)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }*/
+            
+            bool boolToReturn = grimoireNavigation.currentGrimoirePageNumber > 0 ? true : false;
+            return boolToReturn;
+        }
+        
+        public void TempSelectionCheck()
+        {
+            grimoireNavigation.TempSelectionCheck();
+        }
+
+        private void GetGrimoireRect()
+        {
+            // Initialises the rect for Stamp
+            Vector3[] corners = new Vector3[4];
+            GetComponent<RectTransform>().GetWorldCorners(corners);
+
+            Vector2 min = corners[0];
+            Vector2 max = corners[2];
+            Vector2 size = max - min;
+
+            grimoireRect = new Rect(min, size);
+        }
 
     public void InitialiseGrimoirePagesData()
     {
@@ -51,7 +94,14 @@ public class GrimoirePagesData : MonoBehaviour
         SetGrimoirePagesArray();
         
         grimoireNavigation.InitialiseGrimoireNavigation();
+        
+        stamp = FindObjectOfType<Stamp>();
+        stamp.InitialiseStamp();
+        GetGrimoireRect();
+        
     }
+    
+    // *TAG* - Should probably just use list instead of array lmao, why do i need both??
     void InitialiseGrimoirePagesList()
     {
         grimoirePagesList = new List<SinglePage>();
@@ -131,5 +181,6 @@ public class GrimoirePagesData : MonoBehaviour
     public void ResetGrimoire()
     {
         grimoireNavigation.ResetGrimoireNavigation();
+        stamp.ResetStamp();
     }
 }

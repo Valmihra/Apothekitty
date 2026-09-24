@@ -41,7 +41,7 @@ public class ResultsCalculator : MonoBehaviour
     public List<FinishedPatient> dailyTreatedPatientsList;
 	private FinishedPatient currentPatientToDisplay;
     
-    private string currentPatientResult;
+    // private string currentPatientResult;
     private string currentPatientAilmentFromClientData;
     private List<string> inventoryContentsOnSubmission;
 
@@ -51,6 +51,7 @@ public class ResultsCalculator : MonoBehaviour
 
 	private int totalClientResults;
 	private int currentClientResultNumber;
+    private int maxNumberOfDailyClientResults;
 
     [SerializeField] private Button submitHerbsButton;
 	[SerializeField] private Button resultsScreenNavigationButton;
@@ -96,17 +97,17 @@ public class ResultsCalculator : MonoBehaviour
     public void ResetDailyTreatedClientData()
     {
         // called at the beginning of each day to ensure the patients are up to date
-		// Debug.Log("Resetting treated patient data for a new day...");
         CreateDailyTreatedPatientsList();
         AdjustListForNumberDailyClients();
 		totalClientResults = 0;
 		currentClientResultNumber = 0;
-
     }
 
-    // Called when submit button is pressed
+    
     void CalculateResults()
     { 
+        // Called when submit button is pressed
+        
         // Checks the inventory contents and compares with the requirements for the patient.
         CheckInventoryContents();
         
@@ -227,9 +228,8 @@ public class ResultsCalculator : MonoBehaviour
 
     public void UpdateAndShowResultsScreen()
     {
-        // first call will always be at 0, for the first patient in the list
+        // first call will always be at 0, for the first patient in the list. Increments AFTER this.
 		currentPatientToDisplay = dailyTreatedPatientsList[currentClientResultNumber];
-		// increments number
 		currentClientResultNumber++;
 		
 		// checks if last patient of day and updates the text on the button accordingly
@@ -238,9 +238,10 @@ public class ResultsCalculator : MonoBehaviour
 		ResultsScreen.Instance.GenerateResultsScreen(currentPatientToDisplay._treatedPatientName, currentPatientToDisplay._correctAilment, currentPatientToDisplay._correctRecipe, currentPatientToDisplay._correctHerbs);
     }
 
-	// This should be the button seen on the results screen itself. Adjusts based on how many patients left
+	
     void UpdateResultsScreenButtonText(bool isFinalClientToReview)
     {
+        // Adjusts what is shown on the results screen button based on how many patient results are left to review
         if (isFinalClientToReview)
         {
             resultsScreenNavigationButtonText.text = ("Begin day " + (DayManager.Instance.currentDayNumber + 1)).ToString();
@@ -254,17 +255,24 @@ public class ResultsCalculator : MonoBehaviour
 
     public void SetPatientData(string ailmentName)
     {
-        // uses the correct information from PatientData to set the ailment.
+        // Called from PatientData when receiving a new patient. Updates the current ailment to treat for.
         currentPatientAilmentFromClientData = ailmentName;
-        currentPatientResult = PatientData.Instance.activePatientData._patientName; //.displayedPatientName.text;
-        // Debug.Log("Current patient in ResultsCalculator is " + currentPatientResult + " and the current ailment is " + currentAilment);
+        // currentPatientResult = PatientData.Instance.activePatientData._patientName;
+    }
+
+    public void SetMaxPatientsNumber(int maxPatientsNumber)
+    {
+        // Remove one from the number to adjust for the initial 0 value of a list
+        maxNumberOfDailyClientResults = maxPatientsNumber;
+        Debug.Log("Max number of patients to see will be: " + maxNumberOfDailyClientResults);
     }
 
     void CreateDailyTreatedPatientsList()
     {
         dailyTreatedPatientsList = new List<FinishedPatient>();
+        
         // assuming 5 is the maximum number of patients per day
-        FinishedPatient treatedClient01 = new FinishedPatient();
+        /*FinishedPatient treatedClient01 = new FinishedPatient();
             treatedClient01.SetupEmptyPatientSlot();
             dailyTreatedPatientsList.Add(treatedClient01);
             
@@ -283,6 +291,18 @@ public class ResultsCalculator : MonoBehaviour
         FinishedPatient treatedClient05 = new FinishedPatient();
             treatedClient05.SetupEmptyPatientSlot();
             dailyTreatedPatientsList.Add(treatedClient05);
+            */
+
+        for (int i = 0; i < maxNumberOfDailyClientResults; i++)
+        {
+            FinishedPatient f = new FinishedPatient();
+            // f.Name = "treatedClient " + i;
+            // Debug.Log(f.Name);
+            f.SetupEmptyPatientSlot();
+            dailyTreatedPatientsList.Add(f);
+        }
+        
+        Debug.Log("dailyTreatedPatientsList is " + dailyTreatedPatientsList.Count + " entries long.");
             
             return;
     }
