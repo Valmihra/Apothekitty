@@ -187,7 +187,9 @@ public class ResultsCalculator : MonoBehaviour
     void CheckCorrectHerbs()
     {
         int numMatches = 0;
-        int targetIngredientCount = AilmentData.Instance.currentAilment._acceptableHerbsForTreatment.Count;
+		// *TAG* - no modifiers, so either 2 or 4
+		int targetIngredientCount = AilmentData.Instance.currentAilment._secondaryEffectDropdownNumber == 0 ? 2 : 4;
+        // int targetIngredientCount = AilmentData.Instance.currentAilment._acceptableHerbsForTreatment.Count;
         int ingredientsChosen = 0;
 
         foreach (string ingredient in inventoryContentsOnSubmission)
@@ -213,6 +215,41 @@ public class ResultsCalculator : MonoBehaviour
                         continue;
                     }
                 }
+
+				/* int ingredientsChosen = 0;
+
+        foreach (string ingredient in inventoryContentsOnSubmission)
+        {
+            ingredientsChosen++;
+        }
+		
+
+		
+        		// *TAG* - no modifiers, so either 2 or 4
+        int targetIngredientCount = AilmentData.Instance.currentAilment._secondaryEffectDropdownNumber == 0 ? 2 : 4;
+		int numMatches = 0;
+
+
+		
+        if (ingredientsChosen == targetIngredientCount)
+        {
+            foreach (string ingredient in inventoryContentsOnSubmission)
+            {
+				for (int h = 0; h < AllHerbsData.Instance.herbDrawerContents.Count; h++)
+				{
+					if (AllHerbsData.Instance.herbDrawerContents[h]._herbName == ingredient)
+					{
+						CheckHerb
+					}
+					else
+					{
+						continue;
+					}
+				}
+
+                Debug.Log("Checking to see whether " + ingredient + " is a valid ingredient to treat this ailment...");
+				
+				if */
             }
         }
         

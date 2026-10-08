@@ -122,6 +122,10 @@ public class Inventory : MonoBehaviour, IDropHandler
 
     public void OnDrop(PointerEventData eventData)
     {
+        // *TAG* - PROTOTYPE CURSOR EVENT
+        // _PrototypeCursor.Instance.EndLongClick();
+        
+        
         if (!draggingFromInventory)
         {
             if(eventData.pointerDrag != null)

@@ -154,6 +154,11 @@ public class GrimoirePagesData : MonoBehaviour
         sapEye.UpdateDescription("An eye infection caused by eating bacteria-infested tree sap. Takes the appearance of orange goo lining the lower eyelid. Treatment should primarily focus on healing the affected eye(s). If left untreated, the eye(s) will permanently shut, and the client will lose their vision.");
             grimoirePagesList.Add(sapEye);
 
+		SinglePage stageFright = new SinglePage();
+		stageFright.UpdateName("Stage Fright");
+		stageFright.UpdateDescription("TEMPORARY TEXT: \n\nPerformance Anxiety - The Musical: The Ailment");
+			grimoirePagesList.Add(stageFright);
+
         SinglePage theBlues = new SinglePage();
         theBlues.UpdateName("The Blues");
         theBlues.UpdateDescription("A mental and physical ailment triggered by a sudden and intense source of sadness. The client's skin begins to turn blue and melt away, and they become paralysed due to the heavy weight on their mind. Treatment should focus on calming the mind and healing the skin. If left untreated, the client will eventually melt into a puddle of tears. ");

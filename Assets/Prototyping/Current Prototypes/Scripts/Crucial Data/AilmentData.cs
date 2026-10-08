@@ -42,6 +42,8 @@ public class AilmentData : MonoBehaviour
                 _acceptableHerbsForTreatment.Add(s);
             }
         }
+        
+        // public void SetHerb
         // 
         /*private void SetModifier(int number)
         {
@@ -109,76 +111,85 @@ public class AilmentData : MonoBehaviour
 
         Ailment chronicInsomnia = new Ailment();
             chronicInsomnia.SetAilmentInformation("ease", "mind", "heal", "body", 0);
-            //chronicInsomnia.AttachAilmentToSpecificClient("none");
-                            chronicInsomnia.AttachAilmentToSpecificClient(PatientData.Instance.allPatientsList[3]._patientName); // Jimothy
+            chronicInsomnia.AttachAilmentToSpecificClient("none");
             allAilmentsList.Add(chronicInsomnia);
-            List<string> _acceptableHerbsForTreatment = new List<string>{"spiceLeaf", "bumbleBlooms", "warmWhisper", "meltingRoot"};
-            chronicInsomnia.SpecifyAcceptableHerbsForTreatment(_acceptableHerbsForTreatment);
+                // unedited
+                List<string> _acceptableHerbsForTreatment = new List<string>{"spiceLeaf", "bumbleBlooms", "warmWhisper", "meltingRoot"};
+                chronicInsomnia.SpecifyAcceptableHerbsForTreatment(_acceptableHerbsForTreatment);
 
         Ailment contaminationOCD = new Ailment();
             contaminationOCD.SetAilmentInformation("ease", "mind", "x", "x", 1);
-            //contaminationOCD.AttachAilmentToSpecificClient("none");
-                            contaminationOCD.AttachAilmentToSpecificClient(PatientData.Instance.allPatientsList[4]._patientName);   //temp1
+            contaminationOCD.AttachAilmentToSpecificClient("none");
             allAilmentsList.Add(contaminationOCD);
-            _acceptableHerbsForTreatment = new List<string>{"pupilPetal", "spiceLeaf", "watchersWeed"};
-            contaminationOCD.SpecifyAcceptableHerbsForTreatment(_acceptableHerbsForTreatment);
+                // unedited
+                _acceptableHerbsForTreatment = new List<string>{"pupilPetal", "spiceLeaf", "watchersWeed"};
+                contaminationOCD.SpecifyAcceptableHerbsForTreatment(_acceptableHerbsForTreatment);
 
         Ailment dietDrift = new Ailment();
-            dietDrift.SetAilmentInformation("ease", "mind", "heal", "body", 1);
+            dietDrift.SetAilmentInformation("ease", "mind", "heal", "body", 0); //, 1);
             dietDrift.AttachAilmentToSpecificClient(PatientData.Instance.allPatientsList[1]._patientName);
             allAilmentsList.Add(dietDrift);
-            _acceptableHerbsForTreatment = new List<string>{"pupilPetal", "spiceLeaf", "warmWhisper", "meltingRoot", "crystalMoss"};
-            dietDrift.SpecifyAcceptableHerbsForTreatment(_acceptableHerbsForTreatment);
+                _acceptableHerbsForTreatment = new List<string>{"featherFern", "heavensHollyhock", "bumbleBlooms", "bellBloom"}; //, "crystalMoss"};
+                dietDrift.SpecifyAcceptableHerbsForTreatment(_acceptableHerbsForTreatment);
 
         Ailment honEye = new Ailment();
-            honEye.SetAilmentInformation("heal", "body", "x", "x", 1);
+            honEye.SetAilmentInformation("heal", "body", "x", "x", 0); //1);
             honEye.AttachAilmentToSpecificClient(PatientData.Instance.allPatientsList[0]._patientName);
             allAilmentsList.Add(honEye);
-            _acceptableHerbsForTreatment = new List<string>{"sweetRotCap", "crystalVine", "queensReed"};
-            honEye.SpecifyAcceptableHerbsForTreatment(_acceptableHerbsForTreatment);
+                _acceptableHerbsForTreatment = new List<string>{"morningMint", "Lavendear"};
+                honEye.SpecifyAcceptableHerbsForTreatment(_acceptableHerbsForTreatment);
 
         Ailment illnessAnxiety = new Ailment();
             illnessAnxiety.SetAilmentInformation("ease", "mind", "x", "x", 0);
-            //illnessAnxiety.AttachAilmentToSpecificClient("none");
-                            illnessAnxiety.AttachAilmentToSpecificClient(PatientData.Instance.allPatientsList[5]._patientName);
+            illnessAnxiety.AttachAilmentToSpecificClient("none");
             allAilmentsList.Add(illnessAnxiety);
-            _acceptableHerbsForTreatment = new List<string>{"crystalVine", "heavensHollyhock"};
-            illnessAnxiety.SpecifyAcceptableHerbsForTreatment(_acceptableHerbsForTreatment);
+                // unedited
+                _acceptableHerbsForTreatment = new List<string>{"crystalVine", "heavensHollyhock"};
+                illnessAnxiety.SpecifyAcceptableHerbsForTreatment(_acceptableHerbsForTreatment);
 
         Ailment orthorexia = new Ailment();
             orthorexia.SetAilmentInformation("ease", "mind", "heal", "body", 0);
-            orthorexia.AttachAilmentToSpecificClient("none");
+            orthorexia.AttachAilmentToSpecificClient(PatientData.Instance.allPatientsList[5]._patientName);     // pangolin
             allAilmentsList.Add(orthorexia);
-            _acceptableHerbsForTreatment = new List<string>{"spiceLeaf", "bumbleBlooms", "warmWhisper", "meltingRoot"};
-            orthorexia.SpecifyAcceptableHerbsForTreatment(_acceptableHerbsForTreatment);
+                _acceptableHerbsForTreatment = new List<string>{"pupilPetal", "wingroot", "crystalVine", "lavendear"};
+                orthorexia.SpecifyAcceptableHerbsForTreatment(_acceptableHerbsForTreatment);
 
         Ailment sapEye = new Ailment();
             sapEye.SetAilmentInformation("heal", "body", "x", "x", 0);
             sapEye.AttachAilmentToSpecificClient("none");
             allAilmentsList.Add(sapEye);
-            _acceptableHerbsForTreatment = new List<string>{"sweetRotCap", "crystalVine"};
-            sapEye.SpecifyAcceptableHerbsForTreatment(_acceptableHerbsForTreatment);
+                // unedited
+                _acceptableHerbsForTreatment = new List<string>{"sweetRotCap", "crystalVine"};
+                sapEye.SpecifyAcceptableHerbsForTreatment(_acceptableHerbsForTreatment);
+
+        Ailment stageFright = new Ailment();
+            stageFright.SetAilmentInformation("ease", "mind", "x", "x", 0);
+            stageFright.AttachAilmentToSpecificClient(PatientData.Instance.allPatientsList[3]._patientName); // Jimothy
+            allAilmentsList.Add(stageFright);
+                _acceptableHerbsForTreatment = new List<string>{"lavendear", "heavensHollyhock"};
+                stageFright.SpecifyAcceptableHerbsForTreatment(_acceptableHerbsForTreatment);
 
         Ailment theBlues = new Ailment();
             theBlues.SetAilmentInformation("ease", "mind", "heal", "body", 0);
             theBlues.AttachAilmentToSpecificClient("none");
             allAilmentsList.Add(theBlues);
-            _acceptableHerbsForTreatment = new List<string>{"spiceLeaf", "bumbleBlooms", "warmWhisper", "meltingRoot"};
-            theBlues.SpecifyAcceptableHerbsForTreatment(_acceptableHerbsForTreatment);
+                // unedited
+                _acceptableHerbsForTreatment = new List<string>{"spiceLeaf", "bumbleBlooms", "warmWhisper", "meltingRoot"};
+                theBlues.SpecifyAcceptableHerbsForTreatment(_acceptableHerbsForTreatment);
 
         Ailment theFanging = new Ailment();
             theFanging.SetAilmentInformation("heal", "body", "fortify", "mind", 0);
             theFanging.AttachAilmentToSpecificClient(PatientData.Instance.allPatientsList[2]._patientName);
             allAilmentsList.Add(theFanging);
-            _acceptableHerbsForTreatment = new List<string>{"warmWhisper", "meltingRoot", "hexacore", "spiceLeaf"};
-            theFanging.SpecifyAcceptableHerbsForTreatment(_acceptableHerbsForTreatment);
+                _acceptableHerbsForTreatment = new List<string>{"spiceleaf", "heavensHollyhock", "bumbleBlooms", "lavendear"};
+                theFanging.SpecifyAcceptableHerbsForTreatment(_acceptableHerbsForTreatment);
 
         Ailment theFawning = new Ailment();
             theFawning.SetAilmentInformation("heal", "body", "ease", "mind", 0);
-            theFawning.AttachAilmentToSpecificClient("none");
+            theFawning.AttachAilmentToSpecificClient(PatientData.Instance.allPatientsList[4]._patientName);   // Ferguson
             allAilmentsList.Add(theFawning);
-            _acceptableHerbsForTreatment = new List<string>{"warmWhisper", "meltingRoot", "crystalMoss", "bumbleBlooms"};
-            theFawning.SpecifyAcceptableHerbsForTreatment(_acceptableHerbsForTreatment);
+                _acceptableHerbsForTreatment = new List<string>{"sweetRotCap", "wingroot", "crystalVine", "lavendear"};
+                theFawning.SpecifyAcceptableHerbsForTreatment(_acceptableHerbsForTreatment);
     }
 
     // Called from PatientData once the current client has been set. 

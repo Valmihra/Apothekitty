@@ -96,6 +96,12 @@ public class _PrototypeLeafletsOnHover : MouseHover, IBeginDragHandler, IDragHan
 
         leafletRectBounds = new Rect(min, size);
     }
+
+	public void UpdateLeafletText(int numberInGuide)
+	{
+		leafletTitleText = HerbalistGuidePages.Instance.pagesList[numberInGuide]._treatmentCategoryName;
+		leafletDetailText = (leafletTitleText + "\n\n" + HerbalistGuidePages.Instance.pagesList[numberInGuide]._treatmentCategoryDescription).ToString();
+	}
     
     private Vector3 GetPositionFromTransform()
     {
@@ -126,19 +132,22 @@ public class _PrototypeLeafletsOnHover : MouseHover, IBeginDragHandler, IDragHan
     }
     
     public void OnPointerDown(PointerEventData eventData)
-     {
-         // Enlarges the leaflet if it is docked
-         if (isDocked)
-         {
-             isDocked = false;
-             draggingFromDock = true;
+    {
+		// *TAG* - PROTOTYPE CURSOR EVENT
+        // _PrototypeCursor.Instance.BeginLongClick();
+
+        // Enlarges the leaflet if it is docked
+        if (isDocked)
+        {
+        	isDocked = false;
+            draggingFromDock = true;
              
-             if (currentSize != largestSize && !currentlyResizing)
-             {
-                 StartResize();
-             }
-         }
-     }
+            if (currentSize != largestSize && !currentlyResizing)
+            {
+                StartResize();
+            }
+        }
+    }
     
     public void OnBeginDrag(PointerEventData eventData)
     {
@@ -182,6 +191,9 @@ public class _PrototypeLeafletsOnHover : MouseHover, IBeginDragHandler, IDragHan
     
     public void OnPointerUp(PointerEventData eventData)
     {
+		// *TAG* - PROTOTYPE CURSOR EVENT
+        // _PrototypeCursor.Instance.EndLongClick();
+
         CheckForCoroutineCompletion("OnPointerUp");
 
         if (currentSize == largestSize && leafletRectBounds.Overlaps(hiddenPanelRectBounds))

@@ -397,7 +397,8 @@ public class SceneManager : MonoBehaviour
     {
         if (DayManager.Instance.currentDayNumber == 0)
         {
-            patientWindowPatientObject.transform.position = new Vector2(defaultPatientImagePosition.x, (defaultPatientImagePosition.y - 200f));
+            patientWindowPatientObject.transform.position = new Vector2((defaultPatientImagePosition.x + 150f), defaultPatientImagePosition.y);
+			//(defaultPatientImagePosition.x, (defaultPatientImagePosition.y - 200f));
         }
         
         Sprite tempSprite = imageToUpdate.sprite;

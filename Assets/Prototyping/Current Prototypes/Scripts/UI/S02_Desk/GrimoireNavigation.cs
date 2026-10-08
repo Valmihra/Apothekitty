@@ -22,9 +22,9 @@ public class GrimoireNavigation : MonoBehaviour
         public Image grimoireAilmentIconDisplay;
         
         // public Button grimoireAilmentSelectionButton;
-        public GameObject grimoireStampObject;
+        public GameObject grimoireInkFromStampObject;
 
-    [Header("Ailment Icons")]
+    /*[Header("Ailment Icons")]
         public Image tempIcon00;
         public Image ailmentIcon01;
         public Image ailmentIcon02;
@@ -37,7 +37,7 @@ public class GrimoireNavigation : MonoBehaviour
         public Image ailmentIcon09;
         public Image ailmentIcon10;
         //public Image ailmentIcon11;
-        //public Image ailmentIcon12;
+        //public Image ailmentIcon12;*/
         private List<Image> grimoireAilmentIconsList;
         
         
@@ -75,7 +75,7 @@ public class GrimoireNavigation : MonoBehaviour
     public void ResetGrimoireNavigation()
     {
         // grimoireAilmentSelectionButton.interactable = true;
-        grimoireStampObject.SetActive(false);
+        grimoireInkFromStampObject.SetActive(false);
 
         // reset position on screen
         transform.position = grimoireInitialPosition;
@@ -110,7 +110,7 @@ public class GrimoireNavigation : MonoBehaviour
             grimoireAilmentNameDisplay.enabled = false;
             grimoireAilmentDescriptionDisplay.enabled = false;
             
-            grimoireStampObject.SetActive(false);
+            grimoireInkFromStampObject.SetActive(false);
 			grimoireAilmentIconDisplay.gameObject.SetActive(false);
             grimoireNavigationLeft.gameObject.SetActive(false);
 
@@ -146,7 +146,7 @@ public class GrimoireNavigation : MonoBehaviour
             // *TAG* - Private it again once stamp interaction is working!!!!
     void GetSelectedAilment(int pageNum)
     {
-        grimoireStampObject.SetActive(true);
+        grimoireInkFromStampObject.SetActive(true);
         // grimoireAilmentSelectionButton.interactable = false;
         GameManager.Instance.ailmentSubmitted = true;
         
@@ -161,8 +161,15 @@ public class GrimoireNavigation : MonoBehaviour
     {
         //List<Image> icons = new List<Image>();
         grimoireAilmentIconsList = new List<Image>();
+		
+		Transform ailmentIconHolder = GameObject.Find("[Ailment Icon Storage]").transform;
 
-        grimoireAilmentIconsList.Add(tempIcon00);
+		foreach (Transform child in ailmentIconHolder)
+		{
+			grimoireAilmentIconsList.Add(child.GetComponent<Image>());
+		}
+
+        /*grimoireAilmentIconsList.Add(tempIcon00);
         grimoireAilmentIconsList.Add(ailmentIcon01);
         grimoireAilmentIconsList.Add(ailmentIcon02);
         grimoireAilmentIconsList.Add(ailmentIcon03);
@@ -172,7 +179,8 @@ public class GrimoireNavigation : MonoBehaviour
         grimoireAilmentIconsList.Add(ailmentIcon07);
         grimoireAilmentIconsList.Add(ailmentIcon08);
         grimoireAilmentIconsList.Add(ailmentIcon09);
-        grimoireAilmentIconsList.Add(ailmentIcon10);
+        grimoireAilmentIconsList.Add(ailmentIcon10);*/
+
         //grimoireAilmentIconsList.Add(ailmentIcon11);
         //grimoireAilmentIconsList.Add(ailmentIcon12);
 

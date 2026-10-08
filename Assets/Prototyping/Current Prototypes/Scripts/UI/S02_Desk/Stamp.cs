@@ -85,6 +85,9 @@ public class Stamp : MonoBehaviour, IPointerClickHandler
     
     public void OnPointerClick(PointerEventData eventData)
     {
+        // *TAG* - PROTOTYPE CURSOR EVENT
+        // _PrototypeCursor.Instance.QuickClick();
+        
         // Ensures interaction only works if ailment isn't already submitted
         if (!GameManager.Instance.ailmentSubmitted)
         {
@@ -98,11 +101,16 @@ public class Stamp : MonoBehaviour, IPointerClickHandler
                 // Brings the parent object of the stamp to the front of the screen
                 if (GameObject.Find("Panel - Stamp Dock").TryGetComponent<RectTransform>(out RectTransform rectTransform))
                 {
+                    // *TAG* - this sets the entire game object as the last sibling though, which does mean that the stamp dock rests above the other elements. might not be ideal.
                     rectTransform.SetAsLastSibling();
+                }
+                else
+                {
+                    Debug.Log("Missing stamp dock, error when trying to move stamp.");
+                    return;
                 }
                 
                 UIManager.Instance.SpriteShift(stampImage, stampUp);
-                // GameObject.Find("Panel - Stamp Dock").GetComponent<RectTransform>().SetAsLastSibling();
                 
                 currentlyHoldingStamp = true;
                 stampIsActive = true;

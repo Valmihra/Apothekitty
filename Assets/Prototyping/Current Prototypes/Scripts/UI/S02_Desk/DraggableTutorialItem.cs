@@ -10,6 +10,9 @@ public class DraggableTutorialItem : Draggable
 
     public override void OnBeginDrag(PointerEventData eventData)
     {
+        // *TAG* - PROTOTYPE CURSOR EVENT
+        // _PrototypeCursor.Instance.BeginLongClick();
+        
         editedDelta = eventData.pressPosition - (Vector2)transform.position;
         rectTransform.SetAsLastSibling();
         gameObject.GetComponent<Image>().raycastTarget = false;
@@ -27,6 +30,9 @@ public class DraggableTutorialItem : Draggable
 
     public override void OnEndDrag(PointerEventData eventData)
     {
+        // *TAG* - PROTOTYPE CURSOR EVENT
+        // _PrototypeCursor.Instance.EndLongClick();
+        
         Invoke(nameof(Reset), 0.5f);
     }
 

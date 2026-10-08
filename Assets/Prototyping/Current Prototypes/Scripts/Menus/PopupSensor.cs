@@ -14,6 +14,9 @@ public class PopupSensor : MonoBehaviour, IPointerClickHandler
     
     public void OnPointerClick(PointerEventData eventData)
     {
+        // *TAG* - PROTOTYPE CURSOR EVENT
+        // _PrototypeCursor.Instance.QuickClick();
+        
         if (!readingLongPopup)
         {
             MenuManager.Instance.ClosePopup();

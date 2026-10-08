@@ -73,6 +73,9 @@ public class InventorySlot : Draggable//MonoBehaviour
     
     public override void OnBeginDrag(PointerEventData eventData)
     {
+        // *TAG* - PROTOTYPE CURSOR EVENT
+        // _PrototypeCursor.Instance.BeginLongClick();
+        
         Inventory.Instance.draggingFromInventory = true;
         dragDelta = eventData.pressPosition - (Vector2)transform.position;
         
@@ -97,6 +100,9 @@ public class InventorySlot : Draggable//MonoBehaviour
 
     public override void OnEndDrag(PointerEventData eventData)
     {
+        // *TAG* - PROTOTYPE CURSOR EVENT
+        // _PrototypeCursor.Instance.EndLongClick();
+        
         Inventory.Instance.draggingFromInventory = false;
         
         herbSlot.gameObject.SetActive(true);

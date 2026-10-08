@@ -18,7 +18,7 @@ public class HerbalistGuideNavigation : MonoBehaviour
 
         private int currentPageNumber;
 
-    void Start()
+    public void InitialiseHerbalistGuideNavigation()
     {
         navigationLeftCanvasGroup = navigationLeft.GetComponent<CanvasGroup>();
         navigationRightCanvasGroup = navigationRight.GetComponent<CanvasGroup>();

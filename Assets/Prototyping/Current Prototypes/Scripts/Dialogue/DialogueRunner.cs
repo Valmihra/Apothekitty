@@ -404,9 +404,9 @@ public class DialogueRunner : MonoBehaviour
             {
                 currentDialogue = DialogueHolder.Instance.cd_JimothyEnter._dialogue;
             }
-            else if (nameOfNPC == "TEMP_PATIENT01")
+            else if (nameOfNPC == "Ferguson")
             {
-                currentDialogue = DialogueHolder.Instance.cd_TEMP_PATIENT01Enter._dialogue;
+                currentDialogue = DialogueHolder.Instance.cd_FergusonEnter._dialogue;
             }
             else if (nameOfNPC == "TEMP_PATIENT02")
             {
@@ -439,9 +439,9 @@ public class DialogueRunner : MonoBehaviour
                 {
                     currentDialogue = DialogueHolder.Instance.cd_JimothyFinish._dialogue;
                 }
-                else if (nameOfNPC == "TEMP_PATIENT01")
+                else if (nameOfNPC == "Ferguson")
                 {
-                    currentDialogue = DialogueHolder.Instance.cd_TEMP_PATIENT01Finish._dialogue;
+                    currentDialogue = DialogueHolder.Instance.cd_FergusonFinish._dialogue;
                 }
                 else if (nameOfNPC == "TEMP_PATIENT02")
                 {

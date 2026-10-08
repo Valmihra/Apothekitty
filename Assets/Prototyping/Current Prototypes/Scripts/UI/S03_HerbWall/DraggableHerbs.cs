@@ -33,6 +33,9 @@ public class DraggableHerbs : Draggable
     // Sets the initial position of the UI prior to movement and brings the selected panel to the front on the screen
     public override void OnBeginDrag(PointerEventData eventData)
     {
+        // *TAG* - PROTOTYPE CURSOR EVENT
+        // _PrototypeCursor.Instance.BeginLongClick();
+        
         cuttingObject.transform.position = eventData.pressPosition;
         UIManager.Instance.EnableUI(movableCutting);
         UIManager.Instance.DisableInteraction(SceneManager.Instance.canvasGroupHerbDrawers);
@@ -53,6 +56,9 @@ public class DraggableHerbs : Draggable
     // Hides the cutting and moves it back to the drawer
     public override void OnEndDrag(PointerEventData eventData)
     {
+        // *TAG* - PROTOTYPE CURSOR EVENT
+        // _PrototypeCursor.Instance.EndLongClick();
+        
         UIManager.Instance.DisableUI(movableCutting);
         cuttingObject.transform.position = initialPositionOnDrag;
         UIManager.Instance.EnableInteraction(SceneManager.Instance.canvasGroupHerbDrawers);        

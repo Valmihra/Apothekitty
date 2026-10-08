@@ -12,6 +12,18 @@ public class BotanicalCodexOnHover : MonoBehaviour
     [SerializeField] private TMP_Text botanicalCodexDisplayedHerbName;
     [SerializeField] private TMP_Text botanicalCodexDisplayedHerbDescription;
     [SerializeField] private TMP_Text botanicalCodexDisplayedHerbExtras;
+
+    [SerializeField] private GameObject sizeIconSmall;
+    [SerializeField] private GameObject sizeIconMedium;
+    [SerializeField] private GameObject sizeIconLarge;
+    
+    [SerializeField] private GameObject dietIconCarnivore;
+    [SerializeField] private GameObject dietIconHerbivore;
+    [SerializeField] private GameObject dietIconOmnivore;
+
+
+    private List<GameObject> sizeIconList;
+    private List<GameObject> dietIconList;
     
     private int botanicalCodexPotencyReferenceNumber;
     private int botanicalCodexDietaryReferenceNumber;
@@ -25,22 +37,78 @@ public class BotanicalCodexOnHover : MonoBehaviour
         }
     }*/
 
+	// public void Update
+
     public void InitialiseBotanicalCodex()
     {
         botanicalCodexCanvasGroup.gameObject.SetActive(false);
         //UIManager.Instance.DisableUI(botanicalCodexCanvasGroup);
         RectTransform rectTransform = botanicalCodexCanvasGroup.GetComponent<RectTransform>();
         botanicalCodexStoredPosition = rectTransform.anchoredPosition;
+
+
+        sizeIconList = new List<GameObject>();
+            sizeIconList.Add(sizeIconSmall);
+            sizeIconList.Add(sizeIconMedium);
+            sizeIconList.Add(sizeIconLarge);
+
+        dietIconList = new List<GameObject>();
+            dietIconList.Add(dietIconCarnivore);
+            dietIconList.Add(dietIconHerbivore);
+            dietIconList.Add(dietIconOmnivore);
     }
 
     // Updates the text displayed on the note popup
     public void ReceiveInformation(string displayName, string displayDescription, string displayExtras)
     {
+        Debug.Log("Information received");
         botanicalCodexDisplayedHerbName.text = displayName;
         botanicalCodexDisplayedHerbDescription.text = displayDescription;
-        botanicalCodexDisplayedHerbExtras.text = displayExtras;
+        // botanicalCodexDisplayedHerbExtras.text = displayExtras;
+        botanicalCodexDisplayedHerbExtras.text = "test";
+        
 
         // PlaceUI();
+        botanicalCodexCanvasGroup.gameObject.SetActive(true);
+    }
+
+    public void PrototypeReceiveInformation(string displayName, string displayDescription, List<bool> sizes, List<bool> diets)
+    {
+        Debug.Log("Information received");
+        botanicalCodexDisplayedHerbName.text = displayName;
+        botanicalCodexDisplayedHerbDescription.text = displayDescription;
+        
+        botanicalCodexDisplayedHerbExtras.text = "test";
+
+        /*foreach (bool size in sizes)
+        {
+            
+        }*/
+        
+        for (int i = 0; i < sizes.Count; i++)
+        {
+            if (sizes[i] == true)
+            {
+                Debug.Log("Showing");
+                sizeIconList[i].SetActive(true);
+            }
+            else
+            {
+                Debug.Log("Hiding");
+                sizeIconList[i].SetActive(false);
+            }
+
+            if (sizes[i] == true)
+            {
+                dietIconList[i].SetActive(true);
+            }
+            else
+            {
+                dietIconList[i].SetActive(false);
+            }
+        }
+        
+        
         botanicalCodexCanvasGroup.gameObject.SetActive(true);
     }
 

@@ -24,11 +24,13 @@ public class HerbalistGuidePages : MonoBehaviour
     
     // public Button guideToggle;
     // public CanvasGroup herbalistGuideCanvasGroup;
-    private Button herbalistGuideShowBookToggle;
+    
     // private CanvasGroup herbalistGuideBookCanvasGroup;
+    [SerializeField] private Button herbalistGuideShowBookToggle;
+    [SerializeField] private GameObject herbalistGuideBookObject;
+    
     private bool herbalistGuideBookIsOpen;
-
-    private GameObject herbalistGuideBookObject;
+    
     private Vector2 herbalistGuideBookInitialPosition;
 
     public List<HerbalistGuideSinglePage> pagesList { get; private set; }
@@ -37,6 +39,7 @@ public class HerbalistGuidePages : MonoBehaviour
     int totalPages = 0;
 
     private HerbalistGuideNavigation herbalistGuideNavigationReference;
+    private bool testingMockup;
 
     private static HerbalistGuidePages _instance;
     public static HerbalistGuidePages Instance
@@ -50,45 +53,67 @@ public class HerbalistGuidePages : MonoBehaviour
     void Awake()
     {
         _instance = this;
+        testingMockup = true;
     }
     
     public void InitialiseHerbalistGuide()
     {
-        herbalistGuideNavigationReference = GetComponent<HerbalistGuideNavigation>();
-        
-        herbalistGuideBookObject = GameObject.Find("Panel - Expanded Herbalist's Guide");
-        herbalistGuideBookInitialPosition = herbalistGuideBookObject.transform.position;
-        
-        if (GameObject.Find("Button - Herbalist's Guide").TryGetComponent<Button>(out Button herbalistGuideShowBookToggle))
-        {
-            herbalistGuideShowBookToggle.onClick.AddListener(delegate { ToggleGuide(); });
-            // Debug.Log("Checking for the button like this works");
-        }
-        
+        // herbalistGuideBookObject = GameObject.Find("Panel - Expanded Herbalist's Guide");
+        // herbalistGuideBookObject = GetComponentInChildren<MouseHover>().gameObject;
         SetPageData();
+        
+        if (testingMockup)
+        {
+            Debug.Log("Testing new herb wall mockup. Deleting old objects...");
+            // herbalistGuideBookObject = null;
+            herbalistGuideNavigationReference = null;
+            // herbalistGuideBookInitialPosition = null;
+            Destroy(herbalistGuideBookObject);
+            Destroy(herbalistGuideShowBookToggle.gameObject);
+        }
+        else
+        {
+            herbalistGuideNavigationReference = GetComponent<HerbalistGuideNavigation>();
+            herbalistGuideNavigationReference.InitialiseHerbalistGuideNavigation();
+                
+            herbalistGuideBookInitialPosition = herbalistGuideBookObject.transform.position;
+            
+            if (GameObject.Find("Button - Herbalist's Guide").TryGetComponent<Button>(out Button herbalistGuideShowBookToggle))
+            {
+                herbalistGuideShowBookToggle.onClick.AddListener(delegate { ToggleGuide(); });
+                // Debug.Log("Checking for the button like this works");
+            }
+        }
     }
 
     public void ResetHerbalistGuide()
     {
-        herbalistGuideBookObject.transform.position = herbalistGuideBookInitialPosition;
-        herbalistGuideBookObject.SetActive(false);      // UIManager.Instance.DisableUI(herbalistGuideBookCanvasGroup);
-        herbalistGuideBookIsOpen = false;
+        if (!testingMockup)
+        {
+            herbalistGuideBookObject.transform.position = herbalistGuideBookInitialPosition;
+            herbalistGuideBookObject.SetActive(false);      // UIManager.Instance.DisableUI(herbalistGuideBookCanvasGroup);
+            herbalistGuideBookIsOpen = false;
 
-        // Resets the navigation script
-        herbalistGuideNavigationReference.ResetHerbalistGuideNavigation();
+            // Resets the navigation script
+            herbalistGuideNavigationReference.ResetHerbalistGuideNavigation();
+        }
     }
 
     void ToggleGuide()
     {
-        if (herbalistGuideBookIsOpen)
+        if (!testingMockup)
         {
-            herbalistGuideBookObject.SetActive(false);  // UIManager.Instance.DisableUI(herbalistGuideBookCanvasGroup);
+            if (herbalistGuideBookIsOpen)
+            {
+                herbalistGuideBookObject.SetActive(false);  // UIManager.Instance.DisableUI(herbalistGuideBookCanvasGroup);
+            }
+            else
+            {
+                herbalistGuideBookObject.SetActive(true);   // UIManager.Instance.EnableUI(herbalistGuideBookCanvasGroup);
+            }
+            herbalistGuideBookIsOpen = !herbalistGuideBookIsOpen;
         }
-        else
-        {
-            herbalistGuideBookObject.SetActive(true);   // UIManager.Instance.EnableUI(herbalistGuideBookCanvasGroup);
-        }
-        herbalistGuideBookIsOpen = !herbalistGuideBookIsOpen;
+        
     }
 
     void SetPageData()
@@ -98,12 +123,12 @@ public class HerbalistGuidePages : MonoBehaviour
         // The astute botanist will recognise that herbs capable of affecting the mind will always physically reflect the complexity of the brain. physically reflect their target
         //Plants capable of affecting the mind will always reflect the complexity of the brain. 
         
-        
+        /*
         HerbalistGuideSinglePage intro = new HerbalistGuideSinglePage();
         intro.SetTreatmentCategoryName("A Reminder");
         intro.SetTreatmentCategoryDescription("Remember that the plant must meet the requirements of the guide. if it meets both requirements when it only asks for one of the two, it is not a valid choice");
             pagesList.Add(intro);
-            
+            */
 
         HerbalistGuideSinglePage fortify = new HerbalistGuideSinglePage();
         fortify.SetTreatmentCategoryName("Fortify");
@@ -141,13 +166,15 @@ public class HerbalistGuidePages : MonoBehaviour
         body.SetTreatmentCategoryDescription("TEMPORARY TEXT \n\nPlants capable of affecting the body will always physically reflect the solidity of the flesh. \n\n<HARDY: SHORT AND WIDE/THICK, RIGID, STOCKY, ETC.>");
         // ,
         pagesList.Add(body);
-
+        
+        /*
         HerbalistGuideSinglePage spirit = new HerbalistGuideSinglePage();
         spirit.SetTreatmentCategoryName("OLD: USED ONLY ON DAY 2 \n\nSpirit/Enhance");
         // spirit.SetTreatmentCategoryDescription("How to identify plants that can be used for this property:\n\n plant has white growths\n\nOR\n\nplant's main body is purple");
         spirit.SetTreatmentCategoryDescription("TEMPORARY TEXT \n\nIf you're seeing this and you need to use an enhancer in day 2: \n\n1. may god help you\n2. look for white growths OR purple/blue -- never both\n3. click the answer sheet when you get sick of scouring>");
         // ,
             pagesList.Add(spirit);
+            */
 
         foreach (HerbalistGuideSinglePage g in pagesList)
         {

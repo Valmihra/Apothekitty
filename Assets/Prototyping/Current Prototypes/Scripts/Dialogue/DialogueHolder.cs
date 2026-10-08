@@ -39,8 +39,8 @@ public class DialogueHolder : MonoBehaviour
     public DialogueSnippet cd_JimothyEnter;
     public DialogueSnippet cd_JimothyFinish;
 
-    public DialogueSnippet cd_TEMP_PATIENT01Enter;
-    public DialogueSnippet cd_TEMP_PATIENT01Finish;
+    public DialogueSnippet cd_FergusonEnter;
+    public DialogueSnippet cd_FergusonFinish;
 
     public DialogueSnippet cd_TEMP_PATIENT02Enter;
     public DialogueSnippet cd_TEMP_PATIENT02Finish;
@@ -163,13 +163,13 @@ public class DialogueHolder : MonoBehaviour
             cd_JimothyFinish._dialogue.Add("PLACEHOLDER TEXT: sayounara you later");
             
 
-        cd_TEMP_PATIENT01Enter = new DialogueSnippet();
-            cd_TEMP_PATIENT01Enter._dialogue = new List<string>();
-            cd_TEMP_PATIENT01Enter._dialogue.Add("PLACEHOLDER TEXT: i don't exist yet!");
+        cd_FergusonEnter = new DialogueSnippet();
+            cd_FergusonEnter._dialogue = new List<string>();
+            cd_FergusonEnter._dialogue.Add("PLACEHOLDER TEXT: i don't exist yet!");
 
-        cd_TEMP_PATIENT01Finish = new DialogueSnippet();
-            cd_TEMP_PATIENT01Finish._dialogue = new List<string>();
-            cd_TEMP_PATIENT01Finish._dialogue.Add("PLACEHOLDER TEXT: ariga-thank you for your treatment");
+        cd_FergusonFinish = new DialogueSnippet();
+            cd_FergusonFinish._dialogue = new List<string>();
+            cd_FergusonFinish._dialogue.Add("PLACEHOLDER TEXT: ariga-thank you for your treatment");
 
 
         cd_TEMP_PATIENT02Enter = new DialogueSnippet();

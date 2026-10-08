@@ -20,7 +20,7 @@ public class _PrototypeHerbGuideMockupController : MonoBehaviour
     // *TAG* - For use on slider: Maybe if roller is open, interaction blocker prevents touching the drawers? idk.
     
     
-    void Awake()
+    public void InitialiseMockup()
     {
         rect = CalculateRect();
         InitialiseHGMockupController();
@@ -55,6 +55,7 @@ public class _PrototypeHerbGuideMockupController : MonoBehaviour
             
             leafletsOnHoverReferenceList.Add(leafletTitlesList[i].GetComponentInParent<_PrototypeLeafletsOnHover>());
             leafletsOnHoverReferenceList[i].InitialisePrototypeLeaflet();
+			leafletsOnHoverReferenceList[i].UpdateLeafletText(i);
             leafletsOnHoverReferenceList[i].AssignRect(rect);
         }
     }

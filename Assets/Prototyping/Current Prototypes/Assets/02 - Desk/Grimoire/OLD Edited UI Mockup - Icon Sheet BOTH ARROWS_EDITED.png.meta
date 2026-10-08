@@ -1,0 +1,353 @@
+fileFormatVersion: 2
+guid: 04fc21952f7dade428c9deda0d31d40d
+TextureImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 12
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMasterTextureLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Server
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: OLD Edited UI Mockup - Icon Sheet BOTH ARROWS_EDITED_4
+      rect:
+        serializedVersion: 2
+        x: 1476
+        y: 1321
+        width: 366
+        height: 358
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 54.63962, y: -71.23974}
+        - {x: 90.6572, y: -76.576546}
+        - {x: 116.00291, y: -76.576546}
+        - {x: 129.34274, y: -71.23974}
+        - {x: 144.01657, y: -57.89772}
+        - {x: 152.02048, y: -41.887295}
+        - {x: 156.02243, y: -25.876873}
+        - {x: 156.02243, y: 0.8071661}
+        - {x: 153.35446, y: 16.817589}
+        - {x: 144.01657, y: 38.16482}
+        - {x: 134.67868, y: 54.175243}
+        - {x: 124.00681, y: 67.517265}
+        - {x: 110.66697, y: 80.85928}
+        - {x: 97.327126, y: 90.1987}
+        - {x: 70.64744, y: 102.20651}
+        - {x: 51.971653, y: 104.874916}
+        - {x: 6.6161847, y: 104.874916}
+        - {x: -17.395535, y: 100.872314}
+        - {x: -29.401394, y: 98.20391}
+        - {x: -56.08108, y: 82.19349}
+        - {x: -68.08694, y: 71.51987}
+        - {x: -90.76467, y: 47.504234}
+        - {x: -100.10256, y: 27.491205}
+        - {x: -105.4385, y: 12.814983}
+        - {x: -109.44045, y: -3.1954398}
+        - {x: -110.77444, y: -16.537458}
+        - {x: -110.77444, y: -53.895115}
+        - {x: -106.772484, y: -73.90814}
+        - {x: -88.0967, y: -103.26059}
+        - {x: -73.422874, y: -112.6}
+        - {x: -57.415066, y: -117.936806}
+        - {x: -22.731472, y: -117.936806}
+        - {x: -9.391627, y: -107.26319}
+        - {x: 14.6200905, y: -83.24756}
+        - {x: 34.629856, y: -72.573944}
+      - - {x: -112.10842, y: 2.1413682}
+        - {x: -113.442406, y: 23.4886}
+        - {x: -104.104515, y: 30.159609}
+        - {x: -90.76467, y: 52.84104}
+        - {x: -54.747097, y: 79.52508}
+        - {x: -45.409206, y: 94.2013}
+        - {x: -33.403347, y: 96.869705}
+        - {x: 2.6142316, y: 106.20912}
+        - {x: 47.9697, y: 104.874916}
+        - {x: 63.977512, y: 114.21433}
+        - {x: 65.3115, y: 119.55114}
+        - {x: 65.3115, y: 142.23257}
+        - {x: 53.305637, y: 160.9114}
+        - {x: 41.299778, y: 170.25081}
+        - {x: 26.62595, y: 178.25603}
+        - {x: -5.3896747, y: 178.25603}
+        - {x: -32.069363, y: 166.24821}
+        - {x: -45.409206, y: 150.23778}
+        - {x: -53.413113, y: 128.89055}
+        - {x: -60.083035, y: 124.88795}
+        - {x: -74.75686, y: 132.89316}
+        - {x: -98.76858, y: 134.22736}
+        - {x: -112.10842, y: 130.22476}
+        - {x: -129.45023, y: 116.88274}
+        - {x: -136.12015, y: 108.877525}
+        - {x: -149.45999, y: 78.19088}
+        - {x: -146.79202, y: 44.83583}
+        - {x: -142.79007, y: 27.491205}
+        - {x: -150.79398, y: 24.822802}
+        - {x: -161.46585, y: 20.820196}
+        - {x: -177.47366, y: 2.1413682}
+        - {x: -178.80765, y: -0.52703583}
+        - {x: -178.80765, y: -24.542671}
+        - {x: -176.13968, y: -39.21889}
+        - {x: -158.79788, y: -55.229317}
+        - {x: -141.45609, y: -63.234528}
+        - {x: -136.12015, y: -65.90293}
+        - {x: -117.44436, y: -65.90293}
+        - {x: -110.77444, y: -56.56352}
+        - {x: -112.10842, y: -47.224106}
+        - {x: -114.77639, y: -11.200651}
+      - - {x: 178.70016, y: 102.20651}
+        - {x: 172.03024, y: 115.54853}
+        - {x: 156.02243, y: 132.89316}
+        - {x: 146.68454, y: 140.89838}
+        - {x: 129.34274, y: 148.90358}
+        - {x: 94.65916, y: 148.90358}
+        - {x: 78.651344, y: 143.56677}
+        - {x: 65.3115, y: 131.55896}
+        - {x: 65.3115, y: 104.874916}
+        - {x: 112.00095, y: 79.52508}
+        - {x: 144.01657, y: 48.838436}
+        - {x: 164.02634, y: 48.838436}
+        - {x: 174.69821, y: 58.17785}
+        - {x: 180.03415, y: 71.51987}
+        - {x: 180.03415, y: 87.5303}
+      physicsShape:
+      - - {x: 34.629856, y: -71.23974}
+        - {x: 93.32517, y: -76.576546}
+        - {x: 120.00486, y: -75.24235}
+        - {x: 132.01071, y: -67.23714}
+        - {x: 142.68259, y: -56.56352}
+        - {x: 150.6865, y: -39.21889}
+        - {x: 153.35446, y: -28.545277}
+        - {x: 154.68845, y: -12.534853}
+        - {x: 153.35446, y: 2.1413682}
+        - {x: 150.6865, y: 15.483388}
+        - {x: 145.35056, y: 32.828014}
+        - {x: 128.00876, y: 62.180454}
+        - {x: 97.327126, y: 88.864494}
+        - {x: 70.64744, y: 100.872314}
+        - {x: 46.635715, y: 103.54072}
+        - {x: 13.286106, y: 103.54072}
+        - {x: -8.057643, y: 102.20651}
+        - {x: -28.06741, y: 96.869705}
+        - {x: -62.751003, y: 74.18827}
+        - {x: -80.0928, y: 58.17785}
+        - {x: -86.76272, y: 48.838436}
+        - {x: -89.43069, y: 46.170033}
+        - {x: -102.77053, y: 19.485994}
+        - {x: -108.10647, y: -5.8638434}
+        - {x: -109.44045, y: -16.537458}
+        - {x: -109.44045, y: -49.89251}
+        - {x: -102.77053, y: -76.576546}
+        - {x: -96.10061, y: -88.584366}
+        - {x: -82.760765, y: -103.26059}
+        - {x: -65.41897, y: -112.6}
+        - {x: -50.745144, y: -116.60261}
+        - {x: -37.4053, y: -116.60261}
+        - {x: -30.735378, y: -115.2684}
+        - {x: -16.06155, y: -109.931595}
+        - {x: 13.286106, y: -81.91335}
+      - - {x: -113.442406, y: 6.143974}
+        - {x: -113.442406, y: 18.15179}
+        - {x: -124.11428, y: 26.157003}
+        - {x: -146.79202, y: 26.157003}
+        - {x: -158.79788, y: 19.485994}
+        - {x: -176.13968, y: 2.1413682}
+        - {x: -177.47366, y: -3.1954398}
+        - {x: -177.47366, y: -21.874268}
+        - {x: -174.8057, y: -36.550488}
+        - {x: -160.13187, y: -52.560913}
+        - {x: -136.12015, y: -64.56873}
+        - {x: -117.44436, y: -64.56873}
+        - {x: -113.442406, y: -55.229317}
+        - {x: -113.442406, y: -17.871662}
+        - {x: -114.77639, y: -7.1980457}
+      - - {x: -49.41116, y: 111.54593}
+        - {x: -53.413113, y: 123.55375}
+        - {x: -76.09084, y: 131.55896}
+        - {x: -98.76858, y: 131.55896}
+        - {x: -110.77444, y: 128.89055}
+        - {x: -128.11624, y: 116.88274}
+        - {x: -144.12405, y: 88.864494}
+        - {x: -145.45804, y: 82.19349}
+        - {x: -145.45804, y: 60.846252}
+        - {x: -144.12405, y: 48.838436}
+        - {x: -140.1221, y: 34.162216}
+        - {x: -129.45023, y: 24.822802}
+        - {x: -116.110374, y: 24.822802}
+        - {x: -108.10647, y: 26.157003}
+        - {x: -84.09475, y: 62.180454}
+        - {x: -58.74905, y: 79.52508}
+        - {x: -49.41116, y: 91.5329}
+      - - {x: 177.36618, y: 100.872314}
+        - {x: 173.36423, y: 115.54853}
+        - {x: 146.68454, y: 142.23257}
+        - {x: 129.34274, y: 147.56938}
+        - {x: 93.32517, y: 147.56938}
+        - {x: 77.31736, y: 139.56416}
+        - {x: 66.645485, y: 131.55896}
+        - {x: 66.645485, y: 104.874916}
+        - {x: 114.66892, y: 80.85928}
+        - {x: 142.68259, y: 50.172638}
+        - {x: 161.35837, y: 50.172638}
+        - {x: 169.36227, y: 51.50684}
+        - {x: 176.0322, y: 63.51466}
+        - {x: 177.36618, y: 68.85146}
+      - - {x: 63.977512, y: 120.885345}
+        - {x: 63.977512, y: 143.56677}
+        - {x: 46.635715, y: 167.58241}
+        - {x: 23.957981, y: 176.92183}
+        - {x: -12.059596, y: 176.92183}
+        - {x: -44.075222, y: 152.90619}
+        - {x: -52.07913, y: 139.56416}
+        - {x: -52.07913, y: 107.54332}
+        - {x: -49.41116, y: 98.20391}
+        - {x: -33.403347, y: 98.20391}
+        - {x: -13.39358, y: 103.54072}
+        - {x: 30.627903, y: 107.54332}
+        - {x: 46.635715, y: 103.54072}
+        - {x: 53.305637, y: 108.877525}
+      tessellationDetail: 0.28
+      bones: []
+      spriteID: 05d6710a879e72a45b06f8d516110627
+      internalID: -1391235016
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    nameFileIdTable:
+      OLD Edited UI Mockup - Icon Sheet BOTH ARROWS_EDITED_7: -995038394
+      OLD Edited UI Mockup - Icon Sheet BOTH ARROWS_EDITED_0: 274801122
+      OLD Edited UI Mockup - Icon Sheet BOTH ARROWS_EDITED_12: 1380431552
+      OLD Edited UI Mockup - Icon Sheet BOTH ARROWS_EDITED_14: 605573249
+      OLD Edited UI Mockup - Icon Sheet BOTH ARROWS_EDITED_10: -2111326943
+      OLD Edited UI Mockup - Icon Sheet BOTH ARROWS_EDITED_5: 1834669867
+      OLD Edited UI Mockup - Icon Sheet BOTH ARROWS_EDITED_17: -127228079
+      OLD Edited UI Mockup - Icon Sheet BOTH ARROWS_EDITED_4: -1391235016
+      OLD Edited UI Mockup - Icon Sheet BOTH ARROWS_EDITED_20: 1803359317
+      OLD Edited UI Mockup - Icon Sheet BOTH ARROWS_EDITED_11: 1812984828
+      OLD Edited UI Mockup - Icon Sheet BOTH ARROWS_EDITED_21: -1500363564
+      OLD Edited UI Mockup - Icon Sheet BOTH ARROWS_EDITED_18: 974276131
+      OLD Edited UI Mockup - Icon Sheet BOTH ARROWS_EDITED_13: 812595372
+      OLD Edited UI Mockup - Icon Sheet BOTH ARROWS_EDITED_19: -961801601
+      OLD Edited UI Mockup - Icon Sheet BOTH ARROWS_EDITED_2: -1180831533
+      OLD Edited UI Mockup - Icon Sheet BOTH ARROWS_EDITED_1: -18877354
+      OLD Edited UI Mockup - Icon Sheet BOTH ARROWS_EDITED_6: -64504566
+      OLD Edited UI Mockup - Icon Sheet BOTH ARROWS_EDITED_8: -477126318
+      OLD Edited UI Mockup - Icon Sheet BOTH ARROWS_EDITED_9: 1668599652
+      OLD Edited UI Mockup - Icon Sheet BOTH ARROWS_EDITED_3: -346481172
+      OLD Edited UI Mockup - Icon Sheet BOTH ARROWS_EDITED_16: -970673095
+      OLD Edited UI Mockup - Icon Sheet BOTH ARROWS_EDITED_15: 1215214829
+  spritePackingTag: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

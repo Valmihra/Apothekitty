@@ -126,11 +126,13 @@ public class GameManager : MonoBehaviour
 
     void InitialiseAllGameData()
     {
+		_PrototypeHerbGuideMockupController mockupController = FindObjectOfType<_PrototypeHerbGuideMockupController>();
         // Creates all data required to run the game
         PatientData.Instance.InitialisePatientLetter();
         AilmentData.Instance.InitialiseAilmentData();
         AllHerbsData.Instance.InitialiseAllHerbsData();
         HerbalistGuidePages.Instance.InitialiseHerbalistGuide();
+			mockupController.InitialiseMockup();
         DayManager.Instance.InitialiseDayManager();
         resultsCalculator.InitialiseResultsCalculator();
         treatmentPlanInteractables.InitialiseDiagnosisSheet();

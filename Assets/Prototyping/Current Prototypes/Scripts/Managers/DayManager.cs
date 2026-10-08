@@ -52,7 +52,7 @@ public class DayManager : MonoBehaviour
         day00.AssignDayNumber(0);
             allGameDays.Add(day00);
         
-        // DAY 01 - 			TEMP_PATIENT01, TEMP_PATIENT02
+        // DAY 01 - 			Ferguson, TEMP_PATIENT02
         Day day01 = new Day();
         day01.AssignDayNumber(1);
             allGameDays.Add(day01);

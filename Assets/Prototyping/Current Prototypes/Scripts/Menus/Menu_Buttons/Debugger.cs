@@ -8,14 +8,15 @@ public class Debugger : MonoBehaviour
     // in case we need to test other things too,,
     public Button skipTutorialButton;
     public Button jumpDayTwoButton;
-
+    public Button toggleCursorButton;
+    
     // Start is called before the first frame update
     void Start()
     {
         //skipTutorialButton = GetComponent<Button>();
         skipTutorialButton.onClick.AddListener(delegate {SkipTutorial(); });
-        
         jumpDayTwoButton.onClick.AddListener(delegate {JumpDayTwo(); });
+        toggleCursorButton.onClick.AddListener(delegate { ToggleCursor(); });
     }
 
     void SkipTutorial()
@@ -28,6 +29,10 @@ public class Debugger : MonoBehaviour
     void JumpDayTwo()
     {
         GameManager.Instance.DebugJumpToDayNumber(2);
+    }
 
+    void ToggleCursor()
+    {
+        _PrototypeCursor.Instance.ToggleCursorType();
     }
 }

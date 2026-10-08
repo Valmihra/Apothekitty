@@ -13,6 +13,9 @@ public class DialogueSensor : MonoBehaviour, IPointerClickHandler
     }
     public void OnPointerClick(PointerEventData eventData)
     {
+        // *TAG* - PROTOTYPE CURSOR EVENT
+        // _PrototypeCursor.Instance.QuickClick();
+        
         if (!textEffectDialogueBox.currentlyAnimating)
         {
             DialogueRunner.Instance.RunDialogue();

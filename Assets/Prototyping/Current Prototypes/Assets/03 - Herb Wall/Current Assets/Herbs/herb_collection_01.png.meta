@@ -1,0 +1,409 @@
+fileFormatVersion: 2
+guid: 870886c556e47114fa7d701ee380afe6
+TextureImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 12
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMasterTextureLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Server
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: herb_collection_01_0
+      rect:
+        serializedVersion: 2
+        x: 119
+        y: 1670
+        width: 883
+        height: 369
+      alignment: 1
+      pivot: {x: 0, y: 1}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 39ed18c33a90a1247a9d4a2b0ad7c70a
+      internalID: -119217497
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: herb_collection_01_1
+      rect:
+        serializedVersion: 2
+        x: 1060
+        y: 1767
+        width: 712
+        height: 186
+      alignment: 1
+      pivot: {x: 0, y: 1}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: aa4dd3ecd3af3bb4a88be32e525e6c21
+      internalID: -1474719520
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: herb_collection_01_3
+      rect:
+        serializedVersion: 2
+        x: 1938
+        y: 1765
+        width: 706
+        height: 388
+      alignment: 1
+      pivot: {x: 0, y: 1}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 424a428566bdf74408ad29cf9d6e061a
+      internalID: 1051613915
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: herb_collection_01_6
+      rect:
+        serializedVersion: 2
+        x: 2652
+        y: 1760
+        width: 947
+        height: 281
+      alignment: 1
+      pivot: {x: 0, y: 1}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5b52bbb2ce6ec8344bd1339602e36e88
+      internalID: 1512455817
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: herb_collection_01_9
+      rect:
+        serializedVersion: 2
+        x: 263
+        y: 1109
+        width: 670
+        height: 156
+      alignment: 1
+      pivot: {x: 0, y: 1}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 510caebb45601fd4eb93f515f9fee8da
+      internalID: -2038177748
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: herb_collection_01_12
+      rect:
+        serializedVersion: 2
+        x: 1135
+        y: 1131
+        width: 610
+        height: 287
+      alignment: 1
+      pivot: {x: 0, y: 1}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 89ba045450c67664d8650161612a2ffe
+      internalID: -1352534894
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: herb_collection_01_15
+      rect:
+        serializedVersion: 2
+        x: 1904
+        y: 1143
+        width: 713
+        height: 302
+      alignment: 1
+      pivot: {x: 0, y: 1}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 863647959ccaa6b48a2abd78865b90ed
+      internalID: -120393591
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: herb_collection_01_16
+      rect:
+        serializedVersion: 2
+        x: 2667
+        y: 890
+        width: 964
+        height: 414
+      alignment: 1
+      pivot: {x: 0, y: 1}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 09dc769b649446f45aa39869434e3f52
+      internalID: 1941591755
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: herb_collection_01_20
+      rect:
+        serializedVersion: 2
+        x: 180
+        y: 522
+        width: 901
+        height: 250
+      alignment: 1
+      pivot: {x: 0, y: 1}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9ebdeacdb89a16e4681ca98e33102424
+      internalID: -1678893837
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: herb_collection_01_21
+      rect:
+        serializedVersion: 2
+        x: 1128
+        y: 528
+        width: 638
+        height: 262
+      alignment: 1
+      pivot: {x: 0, y: 1}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b246632c3c2b0704a8350805fd62470e
+      internalID: 1733944225
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: herb_collection_01_23
+      rect:
+        serializedVersion: 2
+        x: 1902
+        y: 520
+        width: 739
+        height: 229
+      alignment: 1
+      pivot: {x: 0, y: 1}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 22e6e47e989d7ba41a5ace190f0f2366
+      internalID: -1772334642
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: herb_collection_01_28
+      rect:
+        serializedVersion: 2
+        x: 2756
+        y: 520
+        width: 793
+        height: 270
+      alignment: 1
+      pivot: {x: 0, y: 1}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9ce5b76a3b0a3314cb6298cc9fea2993
+      internalID: -992926285
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    nameFileIdTable:
+      herb_collection_01_25: -277864588
+      herb_collection_01_5: 656884388
+      herb_collection_01_13: 110036899
+      herb_collection_01_31: 1585741170
+      herb_collection_01_19: -1189594380
+      herb_collection_01_16: 1941591755
+      herb_collection_01_0: -119217497
+      herb_collection_01_26: -1131026827
+      herb_collection_01_30: 145558296
+      herb_collection_01_21: 1733944225
+      herb_collection_01_6: 1512455817
+      herb_collection_01_8: 1184142964
+      herb_collection_01_32: -799961587
+      herb_collection_01_18: -248607016
+      herb_collection_01_17: -1532966745
+      herb_collection_01_9: -2038177748
+      herb_collection_01_29: -862356323
+      herb_collection_01_7: -742352677
+      herb_collection_01_15: -120393591
+      herb_collection_01_23: -1772334642
+      herb_collection_01_22: -350313544
+      herb_collection_01_4: 2045724707
+      herb_collection_01_1: -1474719520
+      herb_collection_01_20: -1678893837
+      herb_collection_01_3: 1051613915
+      herb_collection_01_11: 608959793
+      herb_collection_01_28: -992926285
+      herb_collection_01_24: -931904445
+      herb_collection_01_10: 620896397
+      herb_collection_01_2: 315419982
+      herb_collection_01_12: -1352534894
+      herb_collection_01_27: 1843985900
+      herb_collection_01_14: 970980437
+  spritePackingTag: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

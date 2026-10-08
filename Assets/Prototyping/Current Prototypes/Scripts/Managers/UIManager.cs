@@ -13,7 +13,7 @@ public class UIManager : MonoBehaviour
     public CanvasGroup ailmentIcon;
     public CanvasGroup modifiers; 
     public CanvasGroup grimoire;
-    public CanvasGroup herbGuide;
+    // public CanvasGroup herbGuide;
     public CanvasGroup effect;
     public CanvasGroup target;
 
@@ -98,10 +98,10 @@ public class UIManager : MonoBehaviour
         {
             canvasToHighlight = grimoire; 
         }
-        else if (targetObjectName == "herbGuide")
+        /*else if (targetObjectName == "herbGuide")
         {
             canvasToHighlight = herbGuide; 
-        }
+        }*/
         else if (targetObjectName == "effect")
         {
             canvasToHighlight = effect; 

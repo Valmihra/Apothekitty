@@ -10,12 +10,16 @@ public class PatientData : MonoBehaviour
     {
         public string _patientName;
         public string _patientSpecies;
-        public string _patientExtras;
-        public string _patientLetterText;
-
-        public int _patientDayNumber;
-
+        
+        public string _patientDiet;
+        public string _patientSize;
+        
         public Image _patientIcon;
+        public int _patientDayNumber;
+        public string _patientLetterText;
+        
+        
+        public string _patientExtras;
                 // private Image _patientIconStandard
                 // private Image _patientIconHappy / sad / cured ??
 
@@ -70,6 +74,7 @@ public class PatientData : MonoBehaviour
 	public List<SinglePatientData> currentDayPatientsList;
     private Dictionary<int, List<SinglePatientData>> dailyPatientsDictionary;
 
+    
     // private Vector2 patientLetterStartingPosition;
     private ResultsCalculator resultsCalculatorReference;
     private PatientLetter patientLetter;
@@ -102,7 +107,6 @@ public class PatientData : MonoBehaviour
 
     void SetupPatientDictionary()
     {
-        //
         day00PatientsList = new List<SinglePatientData>();
         day01PatientsList = new List<SinglePatientData>();
         day02PatientsList = new List<SinglePatientData>();
@@ -114,13 +118,12 @@ public class PatientData : MonoBehaviour
         dailyPatientsDictionary[2] = day02PatientsList;
 
         return;
-        //if (!dailyPatientsDictionary.TryGetValue(key, out))
     }
 
     public void SetCurrentDayPatientsList()
     {
+        // Uses the current day number to access the correct entry in dailyPatientsDictionary
         currentDayPatientsList = dailyPatientsDictionary[DayManager.Instance.currentDayNumber];
-        // Debug.Log("Current day is " + DayManager.Instance.currentDayNumber + " and the current day patients are...");
     }
 
     public void AssignPatientsToGameDays()
@@ -204,12 +207,12 @@ public class PatientData : MonoBehaviour
         jimothy.SetPatientIcon();//(patientIcon04);
             allPatientsList.Add(jimothy);
 
-        SinglePatientData TEMP_PATIENT01 = new SinglePatientData();
-        TEMP_PATIENT01.SetPatientInformation("TEMP_PATIENT01", "PLACEHOLDER", "PLACEHOLDER, PLACEHOLDER");
-        TEMP_PATIENT01.SetPatientLetterText("PLACEHOLDER LETTER TEXT - TEMP_PATIENT01");
-        TEMP_PATIENT01.AttachPatientToDay(1);
-        TEMP_PATIENT01.SetPatientIcon();//(patientIcon05);
-            allPatientsList.Add(TEMP_PATIENT01);
+        SinglePatientData ferguson = new SinglePatientData();
+        ferguson.SetPatientInformation("Ferguson", "PLACEHOLDER", "PLACEHOLDER, PLACEHOLDER");
+        ferguson.SetPatientLetterText("PLACEHOLDER LETTER TEXT - Ferguson");
+        ferguson.AttachPatientToDay(1);
+        ferguson.SetPatientIcon();//(patientIcon05);
+            allPatientsList.Add(ferguson);
 
         SinglePatientData TEMP_PATIENT02 = new SinglePatientData();
         TEMP_PATIENT02.SetPatientInformation("TEMP_PATIENT02", "PLACEHOLDER", "PLACEHOLDER, PLACEHOLDER");
