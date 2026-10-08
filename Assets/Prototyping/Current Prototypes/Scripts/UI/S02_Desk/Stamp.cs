@@ -51,6 +51,10 @@ public class Stamp : MonoBehaviour, IPointerClickHandler
         stampIsActive = false;
         currentlyHoldingStamp = false;
         // Returns stamp to dock
+        if (stampImage.sprite != stampDown)
+        {
+            stampImage.sprite = stampDown;
+        }
         UpdateStampPosition(initialStampPosition);
     }
 
@@ -75,6 +79,17 @@ public class Stamp : MonoBehaviour, IPointerClickHandler
             Debug.Log("Destroying the hover script.");
             Destroy(mouseHover);
         }
+    }
+
+    // void PressStampAtLocation(Vector3 position)
+    private void MakeStampSelection()
+    {
+        stampIsActive = false;
+        UIManager.Instance.SpriteShift(stampImage, stampDown);
+        GrimoirePagesData.Instance.TempSelectionCheck();
+        RemoveHoverScript();
+
+        Invoke(nameof(ReturnStampToDock), 1.0f);
     }
     
     void UpdateStampPosition(Vector3 position)
@@ -123,9 +138,9 @@ public class Stamp : MonoBehaviour, IPointerClickHandler
                 {
                     if (GrimoirePagesData.Instance.SelectedPageIsNotTheCover())
                     {
-                        stampIsActive = false;
-                        UIManager.Instance.SpriteShift(stampImage, stampDown);
-                        // Debug.Log("Selecting ailment before returning stamp to dock.");
+                        MakeStampSelection();
+                        /*stampIsActive = false;
+                        // UIManager.Instance.SpriteShift(stampImage, stampDown);
                         GrimoirePagesData.Instance.TempSelectionCheck();
 
                         if (this.gameObject.TryGetComponent<MouseHover>(out MouseHover mouseHover))
@@ -134,7 +149,7 @@ public class Stamp : MonoBehaviour, IPointerClickHandler
                             Destroy(mouseHover);
                         }
                         
-                        ReturnStampToDock();
+                        ReturnStampToDock();*/
                         return;
                     }
                     else
