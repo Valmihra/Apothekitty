@@ -29,8 +29,9 @@ public class AllHerbsData : MonoBehaviour
             public List<bool> _sizes {get; private set;}
 
 		public bool _forCarnivores {get; private set;}
-		public bool _forHerbivores {get; private set;}
 		public bool _forOmnivores {get; private set;}
+        public bool _forHerbivores {get; private set;}
+		
         
             public List<bool> _diets {get; private set;}
 
@@ -82,13 +83,14 @@ public class AllHerbsData : MonoBehaviour
 		public void SetSingleHerbDiets(bool carnivore, bool herbivore, bool omnivore)
         {
          	_forCarnivores = carnivore;
-			_forHerbivores = herbivore;
 			_forOmnivores = omnivore;
-            
+            _forHerbivores = herbivore;
+
             _diets = new List<bool>();
             _diets.Add(carnivore);
-            _diets.Add(herbivore);
             _diets.Add(omnivore);
+            _diets.Add(herbivore);
+            
         }
 
         public void SetSingleHerbEffects(bool fortify, bool heal, bool ease)
@@ -112,6 +114,12 @@ public class AllHerbsData : MonoBehaviour
         }
     }
 
+    // [SerializeField] private Color red;
+    // #FF0000
+    // [SerializeField] private Color green;
+    // #076600
+    // [SerializeField] private Color blue;
+    // #002DFF
     
     private int herbCount = 12;
     public List<SingleHerb> herbDrawerContents;
@@ -149,41 +157,41 @@ public class AllHerbsData : MonoBehaviour
         
         SingleHerb morningMint = new SingleHerb();
         morningMint.SetSingleHerbName("morningMint");
-        morningMint.SetSingleHerbDescription("UPDATE ME!!");
+        morningMint.SetSingleHerbDescription("UPDATE ME!! <#076600>greem</color> <i>mind</i>");
         morningMint.SetSingleHerbEffects(n, y, n);
         morningMint.SetSingleHerbTargets(y, n, n);
-        morningMint.SetSingleHerbSizes(y, n, y);
-        morningMint.SetSingleHerbDiets(y, y, y);
+        morningMint.SetSingleHerbSizes(n, n, y);        // large
+        morningMint.SetSingleHerbDiets(y, y, y);        // all 3
         morningMint.SetSingleHerbModifiers(n, n);
         herbDrawerContents.Add(morningMint);
         
         SingleHerb heavensHollyhock = new SingleHerb();
         heavensHollyhock.SetSingleHerbName("heavensHollyhock");
-        heavensHollyhock.SetSingleHerbDescription("UPDATE ME!!");
+        heavensHollyhock.SetSingleHerbDescription("UPDATE ME!! <i>mind</i>");
         heavensHollyhock.SetSingleHerbEffects(n, n, n);
         heavensHollyhock.SetSingleHerbTargets(y, n, y);
-        heavensHollyhock.SetSingleHerbSizes(y, n, n);
-        heavensHollyhock.SetSingleHerbDiets(y, y, y);
+        heavensHollyhock.SetSingleHerbSizes(y, n, n);   // small
+        heavensHollyhock.SetSingleHerbDiets(y, y, y);   // all 3
         heavensHollyhock.SetSingleHerbModifiers(y, n);
         herbDrawerContents.Add(heavensHollyhock);
         
         SingleHerb crystalVine = new SingleHerb();
         crystalVine.SetSingleHerbName("crystalVine");
-        crystalVine.SetSingleHerbDescription("UPDATE ME!!");
+        crystalVine.SetSingleHerbDescription("UPDATE ME!! <#076600>green</color> <#002DFF>blue</color> <i>mind</i>");
         crystalVine.SetSingleHerbEffects(n, y, y);
         crystalVine.SetSingleHerbTargets(y, n, n);
-        crystalVine.SetSingleHerbSizes(n, y, n);
-        crystalVine.SetSingleHerbDiets(n, y, n);
+        crystalVine.SetSingleHerbSizes(n, y, n);        // med
+        crystalVine.SetSingleHerbDiets(n, y, n);        // omnivore
         crystalVine.SetSingleHerbModifiers(n, n);
         herbDrawerContents.Add(crystalVine);
         
         SingleHerb lavendear = new SingleHerb();
         lavendear.SetSingleHerbName("lavendear");
-        lavendear.SetSingleHerbDescription("UPDATE ME!!");
+        lavendear.SetSingleHerbDescription("UPDATE ME!! <#002DFF>blue</color> <b>body</b>");
         lavendear.SetSingleHerbEffects(n, n, y);
         lavendear.SetSingleHerbTargets(n, y, n);
-        lavendear.SetSingleHerbSizes(y, y, y);
-        lavendear.SetSingleHerbDiets(n, y, n);
+        lavendear.SetSingleHerbSizes(y, y, y);          // all 3
+        lavendear.SetSingleHerbDiets(n, y, n);          // omnivore
         lavendear.SetSingleHerbModifiers(n, n);
         herbDrawerContents.Add(lavendear);
         
@@ -191,82 +199,82 @@ public class AllHerbsData : MonoBehaviour
         
         SingleHerb wingroot = new SingleHerb();
         wingroot.SetSingleHerbName("wingroot");
-        wingroot.SetSingleHerbDescription("UPDATE ME!!");
+        wingroot.SetSingleHerbDescription("UPDATE ME!! <i>mind</i>");
         wingroot.SetSingleHerbEffects(n, n, n);
         wingroot.SetSingleHerbTargets(y, n, n);
-        wingroot.SetSingleHerbSizes(n, y, n);
-        wingroot.SetSingleHerbDiets(n, y, n);
+        wingroot.SetSingleHerbSizes(n, y, n);           // med
+        wingroot.SetSingleHerbDiets(n, y, n);           // omnivore
         wingroot.SetSingleHerbModifiers(n, n);
         herbDrawerContents.Add(wingroot);
         
         SingleHerb spiceLeaf = new SingleHerb();
         spiceLeaf.SetSingleHerbName("spiceLeaf");
-        spiceLeaf.SetSingleHerbDescription("UPDATE ME!!");
+        spiceLeaf.SetSingleHerbDescription("UPDATE ME!! <#FF0000>red</color> <b>body</b>");
         spiceLeaf.SetSingleHerbEffects(y, n, n);
         spiceLeaf.SetSingleHerbTargets(n, y, n);
-        spiceLeaf.SetSingleHerbSizes(y, n, y);
-        spiceLeaf.SetSingleHerbDiets(n, y, n);
+        spiceLeaf.SetSingleHerbSizes(y, n, n);          // small
+        spiceLeaf.SetSingleHerbDiets(n, y, n);          // omnivore
         spiceLeaf.SetSingleHerbModifiers(n, n);
         herbDrawerContents.Add(spiceLeaf);
         
         SingleHerb pupilPetal = new SingleHerb();
         pupilPetal.SetSingleHerbName("pupilPetal");
-        pupilPetal.SetSingleHerbDescription("UPDATE ME!!");
+        pupilPetal.SetSingleHerbDescription("UPDATE ME!! <#FF0000>red</color>");
         pupilPetal.SetSingleHerbEffects(y, n, n);
         pupilPetal.SetSingleHerbTargets(n, n, n);
-        pupilPetal.SetSingleHerbSizes(y, y, y);
-        pupilPetal.SetSingleHerbDiets(n, n, y);
+        pupilPetal.SetSingleHerbSizes(n, y, y);         // med, lar
+        pupilPetal.SetSingleHerbDiets(n, y, y);         // omnivore, herbivore
         pupilPetal.SetSingleHerbModifiers(n, n);
         herbDrawerContents.Add(pupilPetal);
         
         SingleHerb bellBloom = new SingleHerb();
         bellBloom.SetSingleHerbName("bellBloom");
-        bellBloom.SetSingleHerbDescription("UPDATE ME!!");
+        bellBloom.SetSingleHerbDescription("UPDATE ME!! <b>body</b>");
         bellBloom.SetSingleHerbEffects(n, n, n);
         bellBloom.SetSingleHerbTargets(n, y, n);
-        bellBloom.SetSingleHerbSizes(y, n, n);
-        bellBloom.SetSingleHerbDiets(y, y, y);
+        bellBloom.SetSingleHerbSizes(y, n, n);          // small
+        bellBloom.SetSingleHerbDiets(y, y, y);          // all 3
         bellBloom.SetSingleHerbModifiers(n, n);
         herbDrawerContents.Add(bellBloom);
 
 
         SingleHerb featherFern = new SingleHerb();
         featherFern.SetSingleHerbName("featherFern");
-        featherFern.SetSingleHerbDescription("UPDATE ME!!");
+        featherFern.SetSingleHerbDescription("UPDATE ME!! <#002DFF>blue</color>");
         featherFern.SetSingleHerbEffects(n, n, y);
         featherFern.SetSingleHerbTargets(n, n, n);
-        featherFern.SetSingleHerbSizes(y, y, y);
-        featherFern.SetSingleHerbDiets(n, n, y);
+        featherFern.SetSingleHerbSizes(y, y, y);        // all 3
+        featherFern.SetSingleHerbDiets(n, n, y);        // herbivore
         featherFern.SetSingleHerbModifiers(n, n);
         herbDrawerContents.Add(featherFern);
         
         SingleHerb bumbleBlooms = new SingleHerb();
         bumbleBlooms.SetSingleHerbName("bumbleBlooms");
-        bumbleBlooms.SetSingleHerbDescription("UPDATE ME!!");
+        bumbleBlooms.SetSingleHerbDescription("UPDATE ME!! <#076600>green</color>");
         bumbleBlooms.SetSingleHerbEffects(n, y, n);
         bumbleBlooms.SetSingleHerbTargets(n, n, n);
-        bumbleBlooms.SetSingleHerbSizes(y, n, n);
-        bumbleBlooms.SetSingleHerbDiets(y, y, y);
+        bumbleBlooms.SetSingleHerbSizes(y, n, n);       // small
+        bumbleBlooms.SetSingleHerbDiets(y, y, y);       // all 3
         bumbleBlooms.SetSingleHerbModifiers(n, n);
         herbDrawerContents.Add(bumbleBlooms);
         
         SingleHerb sweetRotCap = new SingleHerb();
         sweetRotCap.SetSingleHerbName("sweetRotCap");
-        sweetRotCap.SetSingleHerbDescription("UPDATE ME!!");
+        sweetRotCap.SetSingleHerbDescription("UPDATE ME!! <#002DFF>blue</color> <b>body</b>");
         sweetRotCap.SetSingleHerbEffects(n, n, y);
         sweetRotCap.SetSingleHerbTargets(n, y, n);
-        sweetRotCap.SetSingleHerbSizes(n, y, n);
-        sweetRotCap.SetSingleHerbDiets(n, n, y);
+        sweetRotCap.SetSingleHerbSizes(n, y, n);        // medium
+        sweetRotCap.SetSingleHerbDiets(n, y, y);        // ommnivore, herbivore
         sweetRotCap.SetSingleHerbModifiers(y, n);
         herbDrawerContents.Add(sweetRotCap);
         
         SingleHerb watchersWeed = new SingleHerb();
         watchersWeed.SetSingleHerbName("watchersWeed");
-        watchersWeed.SetSingleHerbDescription("UPDATE ME!!");
+        watchersWeed.SetSingleHerbDescription("UPDATE ME!! <#FF0000>red</color>");
         watchersWeed.SetSingleHerbEffects(y, n, n);
         watchersWeed.SetSingleHerbTargets(n, n, n);
-        watchersWeed.SetSingleHerbSizes(y, n, y);
-        watchersWeed.SetSingleHerbDiets(y, n, n);
+        watchersWeed.SetSingleHerbSizes(y, n, y);       // small, large
+        watchersWeed.SetSingleHerbDiets(y, n, n);       // carnivore
         watchersWeed.SetSingleHerbModifiers(y, n);
         herbDrawerContents.Add(watchersWeed);
         
@@ -280,16 +288,6 @@ public class AllHerbsData : MonoBehaviour
             meltingRoot.SetSingleHerbModifiers(n, n);
                 herbDrawerContents.Add(meltingRoot);
 
-        SingleHerb spiceLeaf = new SingleHerb();
-            spiceLeaf.SetSingleHerbName("spiceLeaf");
-            spiceLeaf.SetSingleHerbDescription("Speckled with yellow spots, Spiceleaf is a small collection of red fruit that rests close to the ground. No flowers are present in bearing the fruit of this herb.", "Treatment Rules:\n1. Only works when Pupil Petal, Bumble Blooms, or Hexacore is present in the recipe");
-            spiceLeaf.SetSingleHerbEffects(y, n, n);
-            spiceLeaf.SetSingleHerbTargets(n, y, n);
-				spiceLeaf.SetSingleHerbSizes(y, n, y);
-				spiceLeaf.SetSingleHerbDiets(n, y, n);
-            spiceLeaf.SetSingleHerbModifiers(n, n);
-                herbDrawerContents.Add(spiceLeaf);
-
         SingleHerb warmWhisper = new SingleHerb();
             warmWhisper.SetSingleHerbName("warmWhisper");
             warmWhisper.SetSingleHerbDescription("A luscious red herb, standing tall with its long stems.", "Treatment Rules:\n1. Recipe needs both a primary and secondary effect\n2. If using this herb to ease while a heal effect is also present in the recipe, the treatment will be nullified. However, the treatment is fine if used to heal while an ease effect is present");
@@ -299,16 +297,6 @@ public class AllHerbsData : MonoBehaviour
 				warmWhisper.SetSingleHerbDiets(n, n, y);
             warmWhisper.SetSingleHerbModifiers(n, n);
                 herbDrawerContents.Add(warmWhisper);
-
-        SingleHerb heavensHollyhock = new SingleHerb();
-            heavensHollyhock.SetSingleHerbName("heavensHollyhock");
-            heavensHollyhock.SetSingleHerbDescription("Delicate clusters of blooming white flowers that overlap amongst each other.", "Treatment Rules:\n1. Having a secondary effect / using another herb as an enhancer will nullify the treatment");
-            heavensHollyhock.SetSingleHerbEffects(n, n, n);
-            heavensHollyhock.SetSingleHerbTargets(y, n, y);
-				heavensHollyhock.SetSingleHerbSizes(y, n, n);
-				heavensHollyhock.SetSingleHerbDiets(y, y, y);
-            heavensHollyhock.SetSingleHerbModifiers(y, n);
-                herbDrawerContents.Add(heavensHollyhock);
 
         SingleHerb crystalMoss = new SingleHerb();
             crystalMoss.SetSingleHerbName("crystalMoss");
@@ -320,16 +308,6 @@ public class AllHerbsData : MonoBehaviour
             crystalMoss.SetSingleHerbModifiers(y, n);
                 herbDrawerContents.Add(crystalMoss);
 
-        SingleHerb sweetRotCap = new SingleHerb();
-            sweetRotCap.SetSingleHerbName("sweetRotCap");
-            sweetRotCap.SetSingleHerbDescription("A short but wide purple fungi with light blue specks on its caps.", "Treatment Rules:\n1. Only safe for large animals to consume");
-            sweetRotCap.SetSingleHerbEffects(n, n, y);
-            sweetRotCap.SetSingleHerbTargets(n, y, n);
-				sweetRotCap.SetSingleHerbSizes(n, y, n);
-				sweetRotCap.SetSingleHerbDiets(n, n, y);
-            sweetRotCap.SetSingleHerbModifiers(y, n);
-                herbDrawerContents.Add(sweetRotCap);
-
         SingleHerb hexacore = new SingleHerb();
             hexacore.SetSingleHerbName("hexacore");
             hexacore.SetSingleHerbDescription("Named after the distinct hexagonal shape of their seed pods, the Hexacore is a primarily vibrant yellow plant with long stems.", "Treatment Rules:\n1. Only works in a treatment if the creature is a bird\n2. Only works when Meltingroot is also present in the recipe");
@@ -339,36 +317,6 @@ public class AllHerbsData : MonoBehaviour
 				hexacore.SetSingleHerbDiets(y, n, y);
             hexacore.SetSingleHerbModifiers(n, n);
                 herbDrawerContents.Add(hexacore);
-
-        SingleHerb crystalVine = new SingleHerb();
-            crystalVine.SetSingleHerbName("crystalVine");
-            crystalVine.SetSingleHerbDescription("A green herb with white growths. These growths are neither fruit nor flower.", "Treatment Rules:\n1. Having a secondary effect will nullify the treatment");
-            crystalVine.SetSingleHerbEffects(n, y, y);
-            crystalVine.SetSingleHerbTargets(y, n, n);
-				crystalVine.SetSingleHerbSizes(n, y, n);
-				crystalVine.SetSingleHerbDiets(n, y, n);
-            crystalVine.SetSingleHerbModifiers(n, n);
-                herbDrawerContents.Add(crystalVine);
-
-        SingleHerb watchersWeed = new SingleHerb();
-            watchersWeed.SetSingleHerbName("watchersWeed");
-            watchersWeed.SetSingleHerbDescription("Most recognisable for its 'eye-like' white growths.", "Treatment Rules:\n1. Only enhances when a recipe targets the mind");
-            watchersWeed.SetSingleHerbEffects(y, n, n);
-            watchersWeed.SetSingleHerbTargets(n, n, n);
-				watchersWeed.SetSingleHerbSizes(y, n, y);
-				watchersWeed.SetSingleHerbDiets(y, n, n);
-            watchersWeed.SetSingleHerbModifiers(y, n);
-                herbDrawerContents.Add(watchersWeed);
-
-        SingleHerb pupilPetal = new SingleHerb();
-            pupilPetal.SetSingleHerbName("pupilPetal");
-            pupilPetal.SetSingleHerbDescription("Its red flowers stand on long spindly stems.", "Treatment Rules:\n1. Can only target the mind\n2. Won't work without an enhancer");
-            pupilPetal.SetSingleHerbEffects(y, n, n);
-            pupilPetal.SetSingleHerbTargets(n, n, n);
-				pupilPetal.SetSingleHerbSizes(y, y, y);
-				pupilPetal.SetSingleHerbDiets(n, n, y);
-            pupilPetal.SetSingleHerbModifiers(n, n);
-                herbDrawerContents.Add(pupilPetal);
 
         SingleHerb queensReed = new SingleHerb();
             queensReed.SetSingleHerbName("queensReed");
@@ -380,17 +328,6 @@ public class AllHerbsData : MonoBehaviour
             queensReed.SetSingleHerbModifiers(y, n);
                 herbDrawerContents.Add(queensReed);
 
-        SingleHerb bumbleBlooms = new SingleHerb();
-            bumbleBlooms.SetSingleHerbName("bumbleBlooms");
-            bumbleBlooms.SetSingleHerbDescription("Small yellow fruit with long green stems.", "Treatment Rules:\n1. Only works when effect is 'ease'\n2. needs two effects, won't work with an enhancer");
-            bumbleBlooms.SetSingleHerbEffects(n, y, n);
-            bumbleBlooms.SetSingleHerbTargets(n, n, n);
-				bumbleBlooms.SetSingleHerbSizes(y, n, n);
-				bumbleBlooms.SetSingleHerbDiets(y, y, y);
-            bumbleBlooms.SetSingleHerbModifiers(n, n);
-                herbDrawerContents.Add(bumbleBlooms);
-		
-		/*
 		SingleHerb moonlightFern = new SingleHerb();
             moonlightFern.SetSingleHerbName("moonlightFern");
             moonlightFern.SetSingleHerbDescription("UPDATE ME!!");
@@ -420,57 +357,7 @@ public class AllHerbsData : MonoBehaviour
 				gildedClover.SetSingleHerbDiets(n, n, y);
             gildedClover.SetSingleHerbModifiers(n, n);
                 herbDrawerContents.Add(gildedClover);
-
-		SingleHerb lavendear = new SingleHerb();
-            lavendear.SetSingleHerbName("lavendear");
-            lavendear.SetSingleHerbDescription("UPDATE ME!!");
-            lavendear.SetSingleHerbEffects(n, n, y);
-            lavendear.SetSingleHerbTargets(n, y, n);
-				lavendear.SetSingleHerbSizes(y, y, y);
-				lavendear.SetSingleHerbDiets(n, y, n);
-            lavendear.SetSingleHerbModifiers(n, n);
-                herbDrawerContents.Add(lavendear);
-
-		SingleHerb morningMint = new SingleHerb();
-            morningMint.SetSingleHerbName("morningMint");
-            morningMint.SetSingleHerbDescription("UPDATE ME!!");
-            morningMint.SetSingleHerbEffects(n, y, n);
-            morningMint.SetSingleHerbTargets(y, n, n);
-				morningMint.SetSingleHerbSizes(y, n, y);
-				morningMint.SetSingleHerbDiets(y, y, y);
-            morningMint.SetSingleHerbModifiers(n, n);
-                herbDrawerContents.Add(morningMint);
-
-		SingleHerb wingroot = new SingleHerb();
-            wingroot.SetSingleHerbName("wingroot");
-            wingroot.SetSingleHerbDescription("UPDATE ME!!");
-            wingroot.SetSingleHerbEffects(n, n, n);
-            wingroot.SetSingleHerbTargets(y, n, n);
-				wingroot.SetSingleHerbSizes(n, y, n);
-				wingroot.SetSingleHerbDiets(n, y, n);
-            wingroot.SetSingleHerbModifiers(n, n);
-                herbDrawerContents.Add(wingroot);
-
-		SingleHerb featherFern = new SingleHerb();
-            featherFern.SetSingleHerbName("featherFern");
-            featherFern.SetSingleHerbDescription("UPDATE ME!!");
-            featherFern.SetSingleHerbEffects(n, n, y);
-            featherFern.SetSingleHerbTargets(n, n, n);
-				featherFern.SetSingleHerbSizes(y, y, y);
-				featherFern.SetSingleHerbDiets(n, n, y);
-            featherFern.SetSingleHerbModifiers(n, n);
-                herbDrawerContents.Add(featherFern);
-
-		SingleHerb bellBloom = new SingleHerb();
-            bellBloom.SetSingleHerbName("bellBloom");
-            bellBloom.SetSingleHerbDescription("UPDATE ME!!");
-            bellBloom.SetSingleHerbEffects(n, n, n);
-            bellBloom.SetSingleHerbTargets(n, y, n);
-				bellBloom.SetSingleHerbSizes(y, n, n);
-				bellBloom.SetSingleHerbDiets(y, y, y);
-            bellBloom.SetSingleHerbModifiers(n, n);
-                herbDrawerContents.Add(bellBloom);*/
-		
+                */
     }
 
     void AssignHerbsToDrawerScripts()
@@ -485,16 +372,13 @@ public class AllHerbsData : MonoBehaviour
         {
             searchName = prefix + i.ToString();
             temporaryObject = GameObject.Find(searchName);
-            temporaryReference = temporaryObject.GetComponent<DrawerSensor>();
 
-            if (temporaryReference != null)
+            if (temporaryObject.TryGetComponent<DrawerSensor>(out temporaryReference))
             {
                 drawerSensorScripts.Add(temporaryReference);
             }
         }
 
-        // foreach (DrawerSensor d in drawerSensorScripts)
-        // int herbNumber
         for (int i = 0; i < herbCount; i++)
         {
             drawerSensorScripts[i].FillDrawer(herbDrawerContents[i]._herbName);
@@ -511,14 +395,7 @@ public class AllHerbsData : MonoBehaviour
         {
             if (s._herbName == herbNameToSearch)
             {
-                Debug.Log("Working");
-                Debug.Log(s._sizes[0]);
-                // botanicalCodexOnHoverReference.ReceiveInformation(s._herbName, s._herbDescription, s._herbExtras);
-                    //List<bool> sizes = new List<bool> { s._forSmallPatients, s._forMediumPatients, s._forLargePatients };
-                // sizes.Add(s._forSmallPatients, s._forMediumPatients, s._forLargePatients);
-                    //List<bool> diets = new List<bool> { s._forCarnivores, s._forHerbivores, s._forOmnivores };
-                //diets.Add(s._forCarnivores, s._forHerbivores, s._forOmnivores);
-                botanicalCodexOnHoverReference.PrototypeReceiveInformation(s._herbName, s._herbDescription, s._sizes, s._diets);
+                botanicalCodexOnHoverReference.PrototypeReceiveInformation(s);
             }
         }
     }

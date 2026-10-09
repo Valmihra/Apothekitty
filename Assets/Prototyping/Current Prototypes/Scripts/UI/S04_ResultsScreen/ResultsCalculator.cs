@@ -155,6 +155,10 @@ public class ResultsCalculator : MonoBehaviour
 
         if (correct)
         {
+            Debug.Log("Correct Recipe!!");
+        }
+        /*if (correct)
+        {
             if (AilmentData.Instance.currentAilment._modifierTypeByNumber == 0)
             {
                 if (!treatmentPlanInteractables.enhancerToggle.isOn && !treatmentPlanInteractables.inverterToggle.isOn)
@@ -181,7 +185,7 @@ public class ResultsCalculator : MonoBehaviour
         else
         {
             Debug.Log("Incorrect diagnosis sheet choices for ailment");
-        }
+        }*/
     }
 
     void CheckCorrectHerbs()

@@ -81,6 +81,7 @@ public class DialogueHolder : MonoBehaviour
             td_Introduction._dialogue = new List<string>();
             td_Introduction._dialogue.Add("Back to work...");
             td_Introduction._dialogue.Add("Sounds busy out there. I'd better open up the shop!");
+        td_Introduction._dialogue.Add("UPDATE ME!! <#076600>greem</color> <i>mind</i>");
             
         td_Desk01 = new DialogueSnippet();
             td_Desk01._dialogue = new List<string>();

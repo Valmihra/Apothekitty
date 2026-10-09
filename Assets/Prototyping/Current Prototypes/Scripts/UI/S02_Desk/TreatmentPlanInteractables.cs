@@ -36,8 +36,6 @@ public class TreatmentPlanInteractables : MonoBehaviour
 
         private bool updatedForMVP;
         private bool usingSimpleConfiguration;
-        // private bool usingIntermediateConfiguration;
-        // private bool usingComplicatedConfiguration;
             
     [Header("Treatment Submission Button")]
     public Button submitDiagnosisButton;
@@ -102,11 +100,9 @@ public class TreatmentPlanInteractables : MonoBehaviour
         }
         else
         {
-            // Debug.Log("Setting up the full diagnosis sheet.");
-            // would/could also include check for intermediateConfig too
             secondaryEffectDropdown.gameObject.SetActive(true);
             secondaryTargetDropdown.gameObject.SetActive(true);
-            diagnosisSheetToggleBoxes.gameObject.SetActive(true);
+            // diagnosisSheetToggleBoxes.gameObject.SetActive(true);
         }
 
         primaryEffectDropdown.options[0].text = defaultEffectDropdownText;
@@ -135,14 +131,15 @@ public class TreatmentPlanInteractables : MonoBehaviour
 
     public void SetDiagnosisSheetConfiguration()
     {
-        if ((DayManager.Instance.currentDayNumber == 0) || (DayManager.Instance.currentDayNumber == 1))
+        usingSimpleConfiguration = DayManager.Instance.currentDayNumber == 0 ? true : false;
+        /*if (DayManager.Instance.currentDayNumber == 0)// || (DayManager.Instance.currentDayNumber == 1))
         {
             usingSimpleConfiguration = true;
         }
-        else if (DayManager.Instance.currentDayNumber >= 2)
+        else
         {
             usingSimpleConfiguration = false;
-        }
+        }*/
     }
 
     // Uses data from player's previous interactions to fill the diagnosis sheet accurately
@@ -316,7 +313,7 @@ public class TreatmentPlanInteractables : MonoBehaviour
     void UpdateProposedRecipeDisplay()
     {
         // Debug.Log("Updating proposed recipe display...");
-        if (enhancerToggle.isOn)
+        /*if (enhancerToggle.isOn)
         {
             if (GameManager.Instance.isMVP)
             {
@@ -328,17 +325,17 @@ public class TreatmentPlanInteractables : MonoBehaviour
             }
         }
         else
-        {
-            if (GameManager.Instance.isMVP)
+        {*/
+            /*if (GameManager.Instance.isMVP)
             {
                 proposedRecipeDisplayText.text = ((slot01) + (" ") + (slot02)).ToString();
             }
             else
-            {
+            {*/
                 proposedRecipeDisplayText.text = ((slot01) + (" ") + (slot02) + (" ") + (slot03) + (" ") + (slot04)).ToString();
-            }
+            //}
             
-        }
+        //}
         // Debug.Log(proposedRecipeDisplayText.text);
         // Debug.Log("Recipe updated.");
     }
@@ -358,7 +355,6 @@ public class TreatmentPlanInteractables : MonoBehaviour
 
     void OnSubmissionButtonPressed()
     {
-        // Debug.Log("Button Pressed!");
         // shouldn't have to update these bools, since hidden dropdown values should always be 0.
         bool validPrimaryRecipeCombination = (primaryEffectDropdown.value <= 0) || (primaryTargetDropdown.value <= 0) ? false : true;
         bool validSecondaryRecipeCombination = (secondaryEffectDropdown.value <= 0) && (secondaryTargetDropdown.value <= 0) ? true : (secondaryEffectDropdown.value > 0) && (secondaryTargetDropdown.value > 0) ? true : false;
