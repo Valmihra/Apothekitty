@@ -18,10 +18,16 @@ public class QuitButton : MonoBehaviour
     {
         if (GameManager.Instance.onMainMenu)
         {
+            SoundManager.Instance.PlayAudio(SoundManager.Instance.menuSelect);
+            
             MenuManager.Instance.ExitGamePopup();
         }
         else
         {
+            SoundManager.Instance.PlayAudio(SoundManager.Instance.menuReturn);
+            
+            // Save progress here!!!
+            
             MenuManager.Instance.ExitMenu(MenuManager.Instance.pauseMenuCanvasGroup);
             GameManager.Instance.GoMainMenu();
         }

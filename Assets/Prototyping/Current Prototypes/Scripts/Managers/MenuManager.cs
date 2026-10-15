@@ -175,7 +175,7 @@ public class MenuManager : MonoBehaviour
         else if (popupType == "grimoire")
         {
             // popupMenuCanvasGroup.transform.position = movedDownPosition;
-			List <string> infoToSend = new List <string> {"Your Grimoire acts as your reference point for ailments.",  " Pay close attention to each ailment's description and compare it to your client's symptoms.", "Once you think you've found the correct diagnosis, click on the <#8A1E1E>ailment's picture</color> to select it!"};
+			List <string> infoToSend = new List <string> {"Your Grimoire acts as your reference point for ailments.",  " Pay close attention to each ailment's description and compare it to your client's symptoms.", "Once you think you've found the correct diagnosis, use the <#8A1E1E>stamp</color> on the page you want to choose."};
             
 			popupSensor.SetupLongPopupText(infoToSend);
 			// UIManager.Instance.HighlightCanvasElement("ailmentIcon");   // could be better to set this as a small script attached to the actual object?

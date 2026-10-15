@@ -17,6 +17,14 @@ public class PlayButton : MonoBehaviour
     
     void PlayGame()
     {
+        // SoundManager.Instance.PlayAudio(SoundManager.Instance.menuReturn);
+        
+        SoundManager.Instance.PlayAudio(SoundManager.Instance.menuSelect);
+
+        SoundManager.Instance.GetAudioToReturnTo();
+        // SwitchInstrumental(SoundManager.Instance.musicInstrumentalMoonGuitar);
+        // if (SceneManager.)
+        
         MenuManager.Instance.ExitMenu(MenuManager.Instance.pauseMenuCanvasGroup);
     }
 }

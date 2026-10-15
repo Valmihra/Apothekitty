@@ -106,6 +106,12 @@ public class ResultsScreen : MonoBehaviour
 
     void StartShowResults()
     {
+        //if (SoundManager.Instance.)
+        //{
+            SoundManager.Instance.GetResultsScreen();
+        //}
+        
+        
         UIManager.Instance.EnableUI(resultsScreen);
         Invoke(nameof(ShowAilmentResult), 1f);
     }

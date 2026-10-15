@@ -94,6 +94,7 @@ public class DrawerSensor : MonoBehaviour
     {
         UIManager.Instance.DisableUI(this.openDrawer);
         UIManager.Instance.EnableUI(this.closedDrawer);
+        buttonClosed.enabled = true;
         //isActive = false;
 
         //drawerClosedActive = true;
@@ -149,5 +150,10 @@ public class DrawerSensor : MonoBehaviour
         {
             Debug.Log("Issue when trying to send information to the DraggableHerbs component.");
         }
+    }
+
+    public void DisableDrawer()
+    {
+        buttonClosed.enabled = false;
     }
 }

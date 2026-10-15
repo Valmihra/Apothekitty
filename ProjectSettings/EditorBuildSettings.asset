@@ -5,7 +5,13 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 1
+  - enabled: 0
     path: Assets/Prototyping/Current Prototypes/Scenes/ApothekittyTestBuild_v005.unity
     guid: 48993c7b04c01a94bb0d1d4e91b9204c
+  - enabled: 0
+    path: Assets/Prototyping/Current Prototypes/Scenes/ApothekittyTestBuild_v018.unity
+    guid: 6eb7a2e1512ecb44383d112249b3e553
+  - enabled: 1
+    path: Assets/Prototyping/Current Prototypes/Scenes/ApothekittyTestBuild_v019.unity
+    guid: 4942c17f873a4f643985af48a7f25827
   m_configObjects: {}

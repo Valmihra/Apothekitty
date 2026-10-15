@@ -10,39 +10,97 @@ public class PatientData : MonoBehaviour
     {
         public string _patientName;
         public string _patientSpecies;
-        
-        public string _patientDiet;
-        public string _patientSize;
+
+        public string _patientDiet;// {get; private set;}
+        public string _patientSize;// {get; private set;}
         
         public Image _patientIcon;
+        public Image _patientAltIcon;
+        
         public int _patientDayNumber;
+        
         public string _patientLetterText;
+        public string _patientCuredText;
+        public string _patientFailedText;
         
         
-        public string _patientExtras;
-                // private Image _patientIconStandard
-                // private Image _patientIconHappy / sad / cured ??
+        public string _patientExtras = "x"; // *TAG* - (FOR NOW)
 
-            //public AilmentData patientAilment_;
+        public void ReadAllPatientInformation()
+        {
+            Debug.Log("Reading all patient information." + _patientName + " is a " + _patientSize + " " + _patientSpecies + ". Their diet is: " + _patientDiet);
+        }
 
-        public void SetPatientInformation(string newName, string newSpecies, string newExtras)
+        public void SetPatientInformation(string newName, string newSpecies)//, string newExtras)
         {
             _patientName = newName;
             _patientSpecies = newSpecies;
-            _patientExtras = newExtras;
+            // _patientExtras = newExtras;
         }
 
-        public void SetPatientLetterText(string letterText)
+        public void SetPatientExtras(string extraToUpdate, string newExtras)
         {
-            _patientLetterText = letterText;
+            /*extraToUpdate = newExtras;
+
+            string size = "Size";
+            string diet = "Diet";
+            string debugExtra = newExtras == PatientData.Instance.sizeS ? size : newExtras ==  PatientData.Instance.sizeM ? size : newExtras == PatientData.Instance.sizeL ? size : diet;
+            
+            Debug.Log("Updated " + _patientName + "'s " + debugExtra + " with: " + extraToUpdate);*/
+            // Debug.Log(extraToUpdate);
+            
+            if (extraToUpdate == "size")
+            {
+                _patientSize = newExtras;
+            }
+            else
+            {
+                _patientDiet = newExtras;
+            }
         }
         
-        public void SetPatientIcon()//(Image icon)
+        /*public void SetPatientDiet(string newExtras)
         {
-            // _patientIcon = icon;
+            _patientDiet = newExtras;
+            // Debug.Log(extraToUpdate);
+        }*/
+
+        public void SetPatientText(string textToUpdate, string newText)
+        {
+            if (textToUpdate == "letter")
+            {
+                _patientLetterText = newText;
+            }
+
+            if (textToUpdate == "cured")
+            {
+                _patientCuredText = newText;
+            }
+
+            if (textToUpdate == "failed")
+            {
+                _patientFailedText = newText;
+            }
+        }
+        
+        public void SetPatientIcon()
+        {
+            // Sets default patient icon
             string nameToSearch = (_patientName + " Icon").ToString();
             GameObject iconObject = GameObject.Find(nameToSearch);
             _patientIcon = iconObject.GetComponent<Image>();
+            
+            // Sets alt icon for when receiving treatment from the player
+            Transform childTransform = iconObject.transform.Find(_patientName + " Alt");
+            
+            if (childTransform.TryGetComponent<Image>(out Image foundImage))
+            {
+                _patientAltIcon = foundImage;
+            }
+            else
+            {
+                Debug.Log("Could not find an alt image, does the patient name match the icon name?");
+            }
         }
         
         public void AttachPatientToDay(int dayNum)
@@ -53,29 +111,25 @@ public class PatientData : MonoBehaviour
 
     [HideInInspector] public List<SinglePatientData> allPatientsList {get; private set;}
     [HideInInspector] public SinglePatientData activePatientData {get; private set;}
+
+    private List<SinglePatientData> day00PatientsList;
+    private List<SinglePatientData> day01PatientsList;
+    private List<SinglePatientData> day02PatientsList;
+    private Dictionary<int, List<SinglePatientData>> dailyPatientsDictionary;
+    public List<SinglePatientData> currentDayPatientsList;
     
     
-
-    // all patient images here
-		// *TAG* - Might be able to instead work out another nameToSearch function and update it like that? not a priority rn,,
-    /*public Image patientIcon01;
-    public Image patientIcon02;
-    public Image patientIcon03;
-
-    public Image patientIcon04;
-    public Image patientIcon05;
-    public Image patientIcon06;*/
     public Image displayedPatientIcon;
     
-    public List<SinglePatientData> day00PatientsList;
-    public List<SinglePatientData> day01PatientsList;
-    public List<SinglePatientData> day02PatientsList;
-
-	public List<SinglePatientData> currentDayPatientsList;
-    private Dictionary<int, List<SinglePatientData>> dailyPatientsDictionary;
-
+    [HideInInspector] public string sizeS = "Small";
+    [HideInInspector] public string sizeM = "Medium";
+    [HideInInspector] public string sizeL = "Large";
     
-    // private Vector2 patientLetterStartingPosition;
+    [HideInInspector] public string dietC = "Carnivore";
+    [HideInInspector] public string dietO = "Omnivore";
+    [HideInInspector] public string dietH = "Herbivore";
+    
+    
     private ResultsCalculator resultsCalculatorReference;
     private PatientLetter patientLetter;
 
@@ -145,10 +199,6 @@ public class PatientData : MonoBehaviour
         // determines the day with the most clients and feeds that number into the results calculator
         // results calculator uses this to set up its dailyTreatedClientsList!!
         GetmostPatientsInAnyGameDay();
-        
-        
-        
-        // Debug.Log("Number of patients present for day 1 is: " + dailyPatientsDictionary[1].Count);
     }
 
     void GetmostPatientsInAnyGameDay()
@@ -176,50 +226,87 @@ public class PatientData : MonoBehaviour
         // Creates the individual SinglePatientData objects and fills them out with information related to each specific patient.
         allPatientsList = new List<SinglePatientData>();
 
+        string s = "size";
+        string d = "diet";
+
+        string l = "letter";
+        string c = "cured";
+        string f = "failed";
+
         SinglePatientData barry = new SinglePatientData();
-        barry.SetPatientInformation("Barry Buff", "Bear", "Large, Omnivore");
-        barry.SetPatientLetterText("These crystals formed after eating some homemade hot honey for dinner last night. My eyes are constantly pulsating, and I'm starting to lose my vision.\n\nPlease help me! I'm not sure what will happen if I leave it alone.");
-        barry.AttachPatientToDay(2);
-        barry.SetPatientIcon();//(patientIcon01);
+        barry.SetPatientInformation("Barry Buff", "Bear");
+        barry.SetPatientExtras(s, sizeL);
+        barry.SetPatientExtras(d, dietO);
+        //barry._patientSize = sizeL;
+        //barry._patientDiet = dietO;
+        barry.SetPatientText(l, "These crystals formed after eating some homemade hot honey for dinner last night. My eyes are constantly pulsating, and I'm starting to lose my vision.\n\nPlease help me! I'm not sure what will happen if I leave it alone.");
+        barry.SetPatientText(c, "UPDATE ME!");
+        barry.SetPatientText(f, "<i>You recognise the writing as Barry's, though the penmanship is wobbly and lopsided. Letters fuse into each other as if he had no idea where the previous one began./n/nYou don't need to read the first sentence to know that you have failed him.</i>");
+        barry.AttachPatientToDay(1);
+        barry.SetPatientIcon();
             allPatientsList.Add(barry);
+            barry.ReadAllPatientInformation();
 
         SinglePatientData arabella = new SinglePatientData();
-        arabella.SetPatientInformation("Arabella Bunny", "Rabbit", "Small, Herbivore");
-        arabella.SetPatientLetterText("My family have been starving recently... One of my sons passed from this mysterious illness... I had no choice but to cook him up for supper as we had nothing to eat... I'm starting to have an urge for flesh, and I'm afraid of what I might do to my other children. Please help me, Apothekitty!");
+        arabella.SetPatientInformation("Arabella Bunny", "Rabbit");
+        arabella.SetPatientExtras(s, sizeS);
+        arabella.SetPatientExtras(d, dietH);
+        arabella.SetPatientText(l, "My family have been starving recently... One of my sons passed from this mysterious illness... I had no choice but to cook him up for supper as we had nothing to eat... I'm starting to have an urge for flesh, and I'm afraid of what I might do to my other children. Please help me, Apothekitty!");
+        arabella.SetPatientText(c, "UPDATE ME!");
+        arabella.SetPatientText(f, "UPDATE ME! What have I done? UPDATE ME!");
         arabella.AttachPatientToDay(2); 
-        arabella.SetPatientIcon();//(patientIcon02);
+        arabella.SetPatientIcon();
             allPatientsList.Add(arabella);
 
         SinglePatientData lawrence = new SinglePatientData();
-        lawrence.SetPatientInformation("Lawrence Lark", "Bird", "Small, Herbivore");
-        lawrence.SetPatientLetterText("I love going for nightly glides amongst the treetops! However, a week ago, I noticed I developed this weird bite after one of my adventures... And now I've started growing teeth and bat wings! I don't know what's going on, but I don't like it! Please fix me, Apothekitty!");
+        lawrence.SetPatientInformation("Lawrence Lark", "Bird");
+        lawrence.SetPatientExtras(s, sizeS);
+        lawrence.SetPatientExtras(d, dietO);    // *TAG* - CURRENTLY SET AS OMNIVORE
+        lawrence.SetPatientText(l, "I love going for nightly glides amongst the treetops! However, a week ago, I noticed I developed this weird bite after one of my adventures... And now I've started growing teeth and bat wings! I don't know what's going on, but I don't like it! Please fix me, Apothekitty!");
+        lawrence.SetPatientText(c, "UPDATE ME!");
+        lawrence.SetPatientText(f, "UPDATE ME!");
         lawrence.AttachPatientToDay(2);
-        lawrence.SetPatientIcon();//(patientIcon03);
+        lawrence.SetPatientIcon();
             allPatientsList.Add(lawrence);
-
-
-
+            
 
         SinglePatientData jimothy = new SinglePatientData();
-        jimothy.SetPatientInformation("Jimothy", "Jerboa", "Small, Omnivore");
-        jimothy.SetPatientLetterText("PLACEHOLDER LETTER TEXT - JIMOTHY");
+        jimothy.SetPatientInformation("Jimothy", "Jerboa");
+        jimothy.SetPatientExtras(s, sizeS);
+        jimothy.SetPatientExtras(d, dietO);
+        jimothy.SetPatientText(l, "UPDATE ME!");
+        jimothy.SetPatientText(c, "UPDATE ME!");
+        jimothy.SetPatientText(f, "UPDATE ME!");
         jimothy.AttachPatientToDay(0);
-        jimothy.SetPatientIcon();//(patientIcon04);
+        jimothy.SetPatientIcon();
             allPatientsList.Add(jimothy);
+            
+            // Debug.Log(barry._patientSize + " " + barry._patientDiet);
 
+            
         SinglePatientData ferguson = new SinglePatientData();
-        ferguson.SetPatientInformation("Ferguson", "PLACEHOLDER", "PLACEHOLDER, PLACEHOLDER");
-        ferguson.SetPatientLetterText("PLACEHOLDER LETTER TEXT - Ferguson");
-        ferguson.AttachPatientToDay(1);
-        ferguson.SetPatientIcon();//(patientIcon05);
+        ferguson.SetPatientInformation("Ferguson", "Fox");//, "Medium, Omnivore");
+        ferguson.SetPatientExtras(ferguson._patientSize, sizeM);
+        ferguson.SetPatientExtras(ferguson._patientDiet, dietO);
+        ferguson.SetPatientText(ferguson._patientLetterText, "PLACEHOLDER LETTER TEXT - Ferguson");
+        ferguson.SetPatientText(ferguson._patientCuredText, "UPDATE ME!");
+        ferguson.SetPatientText(ferguson._patientFailedText, "UPDATE ME!");
+        ferguson.AttachPatientToDay(2);
+        ferguson.SetPatientIcon();
             allPatientsList.Add(ferguson);
 
-        SinglePatientData TEMP_PATIENT02 = new SinglePatientData();
-        TEMP_PATIENT02.SetPatientInformation("TEMP_PATIENT02", "PLACEHOLDER", "PLACEHOLDER, PLACEHOLDER");
-        TEMP_PATIENT02.SetPatientLetterText("PLACEHOLDER LETTER TEXT - TEMP_PATIENT02");
-        TEMP_PATIENT02.AttachPatientToDay(1);
-        TEMP_PATIENT02.SetPatientIcon();//(patientIcon06);
-            allPatientsList.Add(TEMP_PATIENT02);
+        SinglePatientData peridot = new SinglePatientData();
+        peridot.SetPatientInformation("Peridot", "Pangolin");//, "Medium, Omnivore");
+        peridot.SetPatientExtras(peridot._patientSize, sizeM);
+        peridot.SetPatientExtras(peridot._patientDiet, dietO);
+        peridot.SetPatientText(peridot._patientLetterText, "PLACEHOLDER LETTER TEXT - Peridot");
+        peridot.SetPatientText(peridot._patientCuredText, "UPDATE ME!");
+        peridot.SetPatientText(peridot._patientFailedText, "UPDATE ME!");
+        peridot.AttachPatientToDay(1);
+        peridot.SetPatientIcon();
+            allPatientsList.Add(peridot);
+            
+        // Debug.Log(jimothy._patientName + " is a: " + jimothy._patientSize + " " + jimothy._patientDiet);
     }
     
     public void RandomiseIncomingPatientData()
@@ -235,7 +322,9 @@ public class PatientData : MonoBehaviour
 			int randomisedNumber = Random.Range(0, currentDayPatientsList.Count);
             activePatientData = currentDayPatientsList[randomisedNumber];
         }
-        
+
+        Debug.Log("Active patient = " + activePatientData._patientName);
+        Debug.Log(activePatientData._patientName + " is a: " + activePatientData._patientSize + " " + activePatientData._patientDiet);
         SendPatientData(activePatientData);
     }
 
@@ -244,8 +333,16 @@ public class PatientData : MonoBehaviour
         SetPatientAilment(data);
         patientLetter.UpdateLetterDisplay(data);
         displayedPatientIcon = data._patientIcon;
+
+        SoundManager.Instance.PlayAudio(SoundManager.Instance.sfxFootsteps);
         
         Invoke(nameof(SpawnPatient), 1.0f);
+    }
+    
+    public void ChangePatientSprite()
+    {
+        Debug.Log("Should be changing patient sprite now...");
+        UIManager.Instance.SpriteShift(displayedPatientIcon, activePatientData._patientAltIcon.sprite);
     }
     
     void SpawnPatient()
@@ -262,6 +359,8 @@ public class PatientData : MonoBehaviour
         AilmentData.Instance.SetCurrentAilmentByPatient(currentData);
         currentData = AilmentData.Instance.ConvertPatientNameToAilmentName(currentData);
         resultsCalculatorReference.SetPatientData(currentData);
+
+        Debug.Log("Current ailment is affecting: " + AilmentData.Instance.currentAilment._affectedClientName);
         // Debug.Log("Linking ailment with randomised patient.");
     }
 

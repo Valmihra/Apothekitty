@@ -39,6 +39,8 @@ public class GrimoireNavigation : MonoBehaviour
         //public Image ailmentIcon11;
         //public Image ailmentIcon12;*/
         private List<Image> grimoireAilmentIconsList;
+
+        private bool resettingGrimoire;
         
         
 
@@ -64,6 +66,7 @@ public class GrimoireNavigation : MonoBehaviour
         // grimoireAilmentSelectionButton.onClick.AddListener(delegate {GetSelectedAilment (currentGrimoirePageNumber); });
         
         notOpenedGrimoire = true;
+        resettingGrimoire = false;
         InitialiseGrimoireAilmentIconList();
         ResetGrimoireNavigation();
         // SetTabNumbers();
@@ -74,6 +77,8 @@ public class GrimoireNavigation : MonoBehaviour
     // Basic scene setup
     public void ResetGrimoireNavigation()
     {
+        resettingGrimoire = true;
+        
         // grimoireAilmentSelectionButton.interactable = true;
         grimoireInkFromStampObject.SetActive(false);
 
@@ -87,6 +92,11 @@ public class GrimoireNavigation : MonoBehaviour
     // Determines which directions you can turn pages, and alters the UI's information to imitate a page turn 
     void GoToPage(int target)
     {
+        if (!resettingGrimoire)
+        {
+            SoundManager.Instance.PlayAudio(SoundManager.Instance.sfxGrimoirePageTurn);
+        }
+        
         if (target != 0 && notOpenedGrimoire)
         {
             notOpenedGrimoire = false;
@@ -136,6 +146,11 @@ public class GrimoireNavigation : MonoBehaviour
         }
         
         currentGrimoirePageNumber = target;
+        
+        if (resettingGrimoire)
+        {
+            resettingGrimoire = false;
+        }
     }
 
     public void TempSelectionCheck()

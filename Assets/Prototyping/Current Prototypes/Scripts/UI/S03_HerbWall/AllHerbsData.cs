@@ -167,7 +167,7 @@ public class AllHerbsData : MonoBehaviour
         
         SingleHerb heavensHollyhock = new SingleHerb();
         heavensHollyhock.SetSingleHerbName("heavensHollyhock");
-        heavensHollyhock.SetSingleHerbDescription("UPDATE ME!! <i>mind</i>");
+        heavensHollyhock.SetSingleHerbDescription("Heaven's Hollyhock is a <i>delicate</i> cluster of white flowers that tightly overlap each other.");
         heavensHollyhock.SetSingleHerbEffects(n, n, n);
         heavensHollyhock.SetSingleHerbTargets(y, n, y);
         heavensHollyhock.SetSingleHerbSizes(y, n, n);   // small
@@ -177,7 +177,7 @@ public class AllHerbsData : MonoBehaviour
         
         SingleHerb crystalVine = new SingleHerb();
         crystalVine.SetSingleHerbName("crystalVine");
-        crystalVine.SetSingleHerbDescription("UPDATE ME!! <#076600>green</color> <#002DFF>blue</color> <i>mind</i>");
+        crystalVine.SetSingleHerbDescription("Crystal Vine is a <i>fragile</i> <#076600>green</color> herb with <#002DFF>blue</color> crystal growths, their stems coil onto anything nearby.");
         crystalVine.SetSingleHerbEffects(n, y, y);
         crystalVine.SetSingleHerbTargets(y, n, n);
         crystalVine.SetSingleHerbSizes(n, y, n);        // med
@@ -209,7 +209,7 @@ public class AllHerbsData : MonoBehaviour
         
         SingleHerb spiceLeaf = new SingleHerb();
         spiceLeaf.SetSingleHerbName("spiceLeaf");
-        spiceLeaf.SetSingleHerbDescription("UPDATE ME!! <#FF0000>red</color> <b>body</b>");
+        spiceLeaf.SetSingleHerbDescription("SpiceLeaf is a <b>robust</b> collection of <#FF0000>red</color> fruit with speckled yellow spots. These fruits are considered quite spicy and tough to chew for the average consumer.");
         spiceLeaf.SetSingleHerbEffects(y, n, n);
         spiceLeaf.SetSingleHerbTargets(n, y, n);
         spiceLeaf.SetSingleHerbSizes(y, n, n);          // small
@@ -250,7 +250,7 @@ public class AllHerbsData : MonoBehaviour
         
         SingleHerb bumbleBlooms = new SingleHerb();
         bumbleBlooms.SetSingleHerbName("bumbleBlooms");
-        bumbleBlooms.SetSingleHerbDescription("UPDATE ME!! <#076600>green</color>");
+        bumbleBlooms.SetSingleHerbDescription("Bumble Blooms is a collection of small yellow fruit with <#076600>green</color> stems and bulbous blooms."); // not body, only heal
         bumbleBlooms.SetSingleHerbEffects(n, y, n);
         bumbleBlooms.SetSingleHerbTargets(n, n, n);
         bumbleBlooms.SetSingleHerbSizes(y, n, n);       // small
@@ -260,7 +260,7 @@ public class AllHerbsData : MonoBehaviour
         
         SingleHerb sweetRotCap = new SingleHerb();
         sweetRotCap.SetSingleHerbName("sweetRotCap");
-        sweetRotCap.SetSingleHerbDescription("UPDATE ME!! <#002DFF>blue</color> <b>body</b>");
+        sweetRotCap.SetSingleHerbDescription("Sweet-Rot Cap is a short but wide fungi with <#002DFF>blue</color> specks on its <b>sturdy</b> caps.");
         sweetRotCap.SetSingleHerbEffects(n, n, y);
         sweetRotCap.SetSingleHerbTargets(n, y, n);
         sweetRotCap.SetSingleHerbSizes(n, y, n);        // medium
@@ -270,7 +270,7 @@ public class AllHerbsData : MonoBehaviour
         
         SingleHerb watchersWeed = new SingleHerb();
         watchersWeed.SetSingleHerbName("watchersWeed");
-        watchersWeed.SetSingleHerbDescription("UPDATE ME!! <#FF0000>red</color>");
+        watchersWeed.SetSingleHerbDescription("Watcher's Weed is most recognisable for its eye-like appearance. This herb is noted to be primarily white and <#FF0000>red</color>.");
         watchersWeed.SetSingleHerbEffects(y, n, n);
         watchersWeed.SetSingleHerbTargets(n, n, n);
         watchersWeed.SetSingleHerbSizes(y, n, y);       // small, large

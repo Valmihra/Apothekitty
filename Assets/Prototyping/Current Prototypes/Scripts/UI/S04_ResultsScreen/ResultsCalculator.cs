@@ -147,6 +147,7 @@ public class ResultsCalculator : MonoBehaviour
         bool correct = false;
         if ((treatmentPlanInteractables.primaryEffectDropdown.value == AilmentData.Instance.currentAilment._primaryEffectDropdownNumber) && (treatmentPlanInteractables.primaryTargetDropdown.value == AilmentData.Instance.currentAilment._primaryTargetDropdownNumber))
         {
+            Debug.Log("Primary dropdown values match");
             if ((treatmentPlanInteractables.secondaryEffectDropdown.value == AilmentData.Instance.currentAilment._secondaryEffectDropdownNumber) && (treatmentPlanInteractables.secondaryTargetDropdown.value == AilmentData.Instance.currentAilment._secondaryTargetDropdownNumber))
             {
                 correct = true;

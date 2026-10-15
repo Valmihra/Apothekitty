@@ -17,6 +17,10 @@ public class PauseButton : MonoBehaviour
     
     void PauseGame()
     {
+        SoundManager.Instance.PlayAudio(SoundManager.Instance.menuReturn);
+
+        SoundManager.Instance.SwitchInstrumental(SoundManager.Instance.musicPauseMenu);
+        
         MenuManager.Instance.OpenMenu(MenuManager.Instance.pauseMenuCanvasGroup);
     }
 }

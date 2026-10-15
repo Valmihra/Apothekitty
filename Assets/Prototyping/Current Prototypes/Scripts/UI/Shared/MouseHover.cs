@@ -9,7 +9,7 @@ public class MouseHover : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
     public Image image;
     public Color defaultColour;
     public Color hoverColour;
-    
+    private bool menuObject;
     void Awake()
     {
         image = GetComponent<Image>();
@@ -17,11 +17,26 @@ public class MouseHover : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
         defaultColour = new Color (.8f, .8f, .8f);              // image.color;
         hoverColour = image.color;                              //new Color (defaultColour.x, defaultColour.y, defaultColour.z, 0.5f);
         image.color = defaultColour;                            //defaultColour = new Color (1f,1f,1f,0f);
+        
+        menuObject = false;
+        CheckIfMenu();
+    }
+
+    private void CheckIfMenu()
+    {
+        if (this.gameObject.CompareTag("MenuButton"))
+        {
+            menuObject = true;
+        }
     }
     
     public virtual void OnPointerEnter(PointerEventData eventData)
     {
         //Debug.Log("Mouse registered - hovering over UI");
+        if (menuObject)
+        {
+            SoundManager.Instance.PlayAudio(SoundManager.Instance.menuNavigation);
+        }
         image.color = hoverColour;
     }
 

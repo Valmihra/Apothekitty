@@ -72,6 +72,19 @@ public class BotanicalCodexOnHover : MonoBehaviour
         botanicalCodexCanvasGroup.gameObject.SetActive(true);
     }
 
+    void HideIconObjects()
+    {
+        foreach (GameObject s in sizeIconList)
+        {
+            s.SetActive(false);
+        }
+        
+        foreach (GameObject d in dietIconList)
+        {
+            d.SetActive(false);
+        }
+    }
+    
     public void PrototypeReceiveInformation(AllHerbsData.SingleHerb herb)//(string displayName, string displayDescription, List<bool> sizes, List<bool> diets)
     {
         Debug.Log("Information received");
@@ -80,19 +93,8 @@ public class BotanicalCodexOnHover : MonoBehaviour
         
         botanicalCodexDisplayedHerbExtras.text = "test";
 
-        foreach (GameObject s in sizeIconList)
-        {
-            s.SetActive(false);
-
-            // int i = sizeIconList[s];
-
-        }
+        HideIconObjects();
         
-        foreach (GameObject d in dietIconList)
-        {
-            d.SetActive(false);
-        }
-
         for (int i = 0; i < herb._sizes.Count; i++)
         {
             if (herb._sizes[i] == true)
@@ -105,32 +107,6 @@ public class BotanicalCodexOnHover : MonoBehaviour
                 dietIconList[i].SetActive(true);
             }
         }
-        
-        // sizeIconList[0].s
-        
-        /*for (int i = 0; i < sizes.Count; i++)
-        {
-            if (sizes[i] == true)
-            {
-                Debug.Log("Showing");
-                sizeIconList[i].SetActive(true);
-            }
-            else
-            {
-                Debug.Log("Hiding");
-                sizeIconList[i].SetActive(false);
-            }
-
-            if (sizes[i] == true)
-            {
-                dietIconList[i].SetActive(true);
-            }
-            else
-            {
-                dietIconList[i].SetActive(false);
-            }
-        }*/
-
 
         botanicalCodexCanvasGroup.gameObject.SetActive(true);
     }

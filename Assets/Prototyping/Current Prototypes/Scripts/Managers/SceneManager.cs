@@ -263,6 +263,9 @@ public class SceneManager : MonoBehaviour
     // Enables the UI associated with the correct scene
     public void SwitchSceneDeskHerb()
     {
+        SoundManager.Instance.PlayAudio(SoundManager.Instance.sfxSceneNavigation);
+        
+        
         if (onDesk)
         {
             if (GameManager.Instance.runningTutorial)
@@ -290,10 +293,14 @@ public class SceneManager : MonoBehaviour
             SetupUI(allCanvasesDesk);
         }
         onDesk = !onDesk;
+        
+        SoundManager.Instance.GetAudioToReturnTo();
     }
 
     public void SwitchSceneDeskClient()
     {
+        SoundManager.Instance.PlayAudio(SoundManager.Instance.sfxSceneNavigation);
+        
         if (onDesk)
         {
             UIManager.Instance.DisableUI(switchDeskHerbButton.GetComponent<CanvasGroup>());
@@ -325,6 +332,8 @@ public class SceneManager : MonoBehaviour
                 }
         }
         onDesk = !onDesk;
+        
+        SoundManager.Instance.GetAudioToReturnTo();
     }
     
     public void SetupInitialGameScene()

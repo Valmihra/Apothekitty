@@ -13,6 +13,8 @@ public class DialogueSensor : MonoBehaviour, IPointerClickHandler
     }
     public void OnPointerClick(PointerEventData eventData)
     {
+        SoundManager.Instance.PlayAudio(SoundManager.Instance.sfxNextDialogue);
+        
         // *TAG* - PROTOTYPE CURSOR EVENT
         // _PrototypeCursor.Instance.QuickClick();
         

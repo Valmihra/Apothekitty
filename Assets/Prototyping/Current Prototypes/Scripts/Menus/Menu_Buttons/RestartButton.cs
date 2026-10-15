@@ -15,6 +15,8 @@ public class RestartButton : MonoBehaviour
     
     void OnRestartButtonPushed()
     {
+        SoundManager.Instance.PlayAudio(SoundManager.Instance.menuSelect);
+        
         MenuManager.Instance.ExitMenu(MenuManager.Instance.pauseMenuCanvasGroup);
         GameManager.Instance.RestartLevel();
     }

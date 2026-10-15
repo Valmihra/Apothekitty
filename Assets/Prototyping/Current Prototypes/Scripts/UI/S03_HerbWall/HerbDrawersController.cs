@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class HerbDrawersController : MonoBehaviour
 {
+    // this script could be an email
+    // *TAG* - girl what do i do about this.
     private List<DrawerSensor> allHerbDrawers;
 
     private static HerbDrawersController _instance;
@@ -26,21 +28,41 @@ public class HerbDrawersController : MonoBehaviour
         // Debug.Log("Herb Drawers are resetting, list currently contains " + allHerbDrawers.Count + " drawers.");
         foreach (Transform child in transform)
         {
-            DrawerSensor temp = child.GetComponent<DrawerSensor>();       // switch to trygetcomponent?
-            if (temp != null)
+            if (child.TryGetComponent<DrawerSensor>(out DrawerSensor temp))
             {
                 allHerbDrawers.Add(temp);
             }
+            
+            /*DrawerSensor temp = child.GetComponent<DrawerSensor>();       // switch to trygetcomponent?
+            if (temp != null)
+            {
+                allHerbDrawers.Add(temp);
+            }*/
         }
-        // Debug.Log("Reset complete. There are " + allHerbDrawers.Count + " drawers to close.");
     }
 
     public void ResetHerbDrawerIcons()
     {
         SetupList();
-        foreach (DrawerSensor d in allHerbDrawers)
+        // int drawerNumber = DayManager.Instance.currentDayNumber == 0 ? 3 : DayManager.Instance.currentDayNumber == 1 ? 7 : DayManager.Instance.currentDayNumber == 2 ? 
+        /*foreach (DrawerSensor d in allHerbDrawers)
         {
             d.SetupHerbWall();
+        }*/
+        for (int i = 0; i < allHerbDrawers.Count; i++)
+        {
+            DrawerSensor d = allHerbDrawers[i];
+            d.SetupHerbWall();
+
+            if (DayManager.Instance.currentDayNumber == 0 || DayManager.Instance.currentDayNumber == 1)
+            {
+                int drawerNumber = DayManager.Instance.currentDayNumber == 0 ? 3 : 7;
+
+                if (i > drawerNumber)
+                {
+                    allHerbDrawers[i].DisableDrawer();
+                }
+            }
         }
     }
 }

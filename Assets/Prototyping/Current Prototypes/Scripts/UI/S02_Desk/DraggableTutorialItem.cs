@@ -10,6 +10,8 @@ public class DraggableTutorialItem : Draggable
 
     public override void OnBeginDrag(PointerEventData eventData)
     {
+        SoundManager.Instance.PlayAudio(SoundManager.Instance.sfxTutorialPageGrab);
+        
         // *TAG* - PROTOTYPE CURSOR EVENT
         // _PrototypeCursor.Instance.BeginLongClick();
         

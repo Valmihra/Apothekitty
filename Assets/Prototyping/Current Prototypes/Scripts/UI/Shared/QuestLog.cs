@@ -9,9 +9,8 @@ public class QuestLog : MonoBehaviour
 {
     public CanvasGroup questLog;
 
-    public Button toggleQuestLog;
-
-    //public TMP_Text currentObjective;
+    // public Button toggleQuestLog;
+    
     public TMP_Text diagnoseAilment;
     public TMP_Text createRecipe;
     public TMP_Text submitHerbs;
@@ -22,19 +21,34 @@ public class QuestLog : MonoBehaviour
     public Color currentQuestItem;
     public Color futureQuestItem;
 
-    public Image displayArrow;
-    public Sprite arrowUp;
-    public Sprite arrowDown;
+    /*
+    [Header("Slider Values")]
+    public float defaultSliderValue;
+    public float openedSliderValue;
+    // public float sliderMoveSpeed;
+    private float previousSliderValue;
+    */
+    
+    //private bool active;
 
-    private bool active;
+    //[SerializeField] 
+    public GameObject questLogExpandedDisplay;
+    private QuestLogSlider questLogSliderReference;
+    
+    
     // Start is called before the first frame update
     void Start()
     {
-        toggleQuestLog.onClick.AddListener(delegate { ToggleQuestLog(); });
+        // toggleQuestLog.onClick.AddListener(delegate { ToggleQuestLog(); });
+        questLogSliderReference = GetComponent<QuestLogSlider>();
+        questLogSliderReference.InitialiseSlider();
+        questLogSliderReference.SetLog(this);
+        
+        questLogExpandedDisplay.SetActive(false);
         //UIManager.
         //ResetQuestLog
         //ResetQuestLog();
-        
+
     }
 
     // Called once on desk?
@@ -48,14 +62,15 @@ public class QuestLog : MonoBehaviour
         diagnoseAilment.fontStyle = FontStyles.Normal;
         createRecipe.fontStyle = FontStyles.Normal;
         submitHerbs.fontStyle = FontStyles.Normal;
-
+        
         StartLevelQuestLog();
     }
 
     void StartLevelQuestLog()
     {
-        active = true;
-        ToggleQuestLog();
+        //active = true;
+        questLogSliderReference.ResetSliderValue();
+        // ToggleQuestLog();
     }
 
     void SetColour(Color colour, TMP_Text text)
@@ -63,22 +78,29 @@ public class QuestLog : MonoBehaviour
         text.color = colour;
     }
 
-    void ToggleQuestLog()
+    /*void ToggleQuestLog()
     {
         if (active)
         {
-            UIManager.Instance.SpriteShift(displayArrow, arrowDown);
+            //UIManager.Instance.SpriteShift(displayArrow, arrowDown);
             UIManager.Instance.DisableUI(questLog);
         }
         else
         {
-            UIManager.Instance.SpriteShift(displayArrow, arrowUp);
+            //UIManager.Instance.SpriteShift(displayArrow, arrowUp);
             //UpdateQuestLog();
             UIManager.Instance.EnableUI(questLog);
         }
         active = !active;
         
-    }
+    }*/
+
+    //public override void OnDrag(PointerEventData eventData)
+    //{
+        // questLogSlider.value 
+    //}
+
+    
 
     public void UpdateQuestLog()
     {
@@ -113,4 +135,5 @@ public class QuestLog : MonoBehaviour
         SetColour(currentQuestItem, nextObjective);
         currentObjective = nextObjective;
     }
+    
 }

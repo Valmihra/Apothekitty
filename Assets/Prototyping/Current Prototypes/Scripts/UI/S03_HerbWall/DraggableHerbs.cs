@@ -33,6 +33,7 @@ public class DraggableHerbs : Draggable
     // Sets the initial position of the UI prior to movement and brings the selected panel to the front on the screen
     public override void OnBeginDrag(PointerEventData eventData)
     {
+        SoundManager.Instance.GetRandomSFX(SoundManager.Instance.dirtSounds);
         // *TAG* - PROTOTYPE CURSOR EVENT
         // _PrototypeCursor.Instance.BeginLongClick();
         

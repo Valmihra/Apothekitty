@@ -13,12 +13,12 @@ public class AilmentData : MonoBehaviour
         public int _secondaryEffectDropdownNumber;
         public int _secondaryTargetDropdownNumber;
 
-        // public int _modifierTypeByNumber;
         public List<string> _acceptableHerbsForTreatment;
 
-        // Sets the affected client name                for the results screen to check
+        
         public void AttachAilmentToSpecificClient(string targetClient)
         {
+            // Sets the affected client name for the results screen to check
             _affectedClientName = targetClient;
         }
 
@@ -31,7 +31,6 @@ public class AilmentData : MonoBehaviour
             _secondaryEffectDropdownNumber = secEffect == "fortify" ? 1 : secEffect == "heal" ? 2 : secEffect == "ease" ? 3 : 0;
             _secondaryTargetDropdownNumber = secTarget == "mind" ? 1 : secTarget == "body" ? 2 : secTarget == "spirit" ? 3 : 0;
             
-            // _modifierTypeByNumber = mod;
         }
 
         public void SpecifyAcceptableHerbsForTreatment(List<string> herbs)

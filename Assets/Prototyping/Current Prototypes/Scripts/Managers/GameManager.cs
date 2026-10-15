@@ -28,7 +28,6 @@ public class GameManager : MonoBehaviour
     private TreatmentPlanInteractables treatmentPlanInteractables;
     private ResultsCalculator resultsCalculator;
 
-    [SerializeField] private ToggleIcon testingDay2AnswerSheet;
 
 	private GameData _gameData;
 
@@ -74,9 +73,6 @@ public class GameManager : MonoBehaviour
         // links the manager to the diagnosis sheet script
         treatmentPlanInteractables = FindObjectOfType<TreatmentPlanInteractables>();      // should only ever be one in the game, but might be better way to do this. maybe search for all components in scene instead and delete any not on Constant UI?
         resultsCalculator = FindObjectOfType<ResultsCalculator>();
-        
-        // DEBUG TAG - FOR DEBUGGING
-        testingDay2AnswerSheet = FindObjectOfType<ToggleIcon>();
 
         ResetGameStatusBools();
     }
@@ -89,29 +85,7 @@ public class GameManager : MonoBehaviour
         FirstOpenGame();
         GoMainMenu();
         
-
     }
-
-    // void Update()
-    // {
-        /*if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            Debug.Log("Pausing");
-            if (isPaused)
-            {
-                MenuManager.Instance.ExitMenu(MenuManager.Instance.pauseMenuCanvasGroup);
-            }
-            else
-            {
-                MenuManager.Instance.OpenMenu(MenuManager.Instance.pauseMenuCanvasGroup);
-            }
-            isPaused = !isPaused;
-        }*/
-        /*if (quitting)
-        {
-            Application.Quit();
-        }*/
-    // }
 
     // ---------------------------------
     //      GAME MANAGEMENT
@@ -127,6 +101,7 @@ public class GameManager : MonoBehaviour
     void InitialiseAllGameData()
     {
 		_PrototypeHerbGuideMockupController mockupController = FindObjectOfType<_PrototypeHerbGuideMockupController>();
+        
         // Creates all data required to run the game
         PatientData.Instance.InitialisePatientLetter();
         AilmentData.Instance.InitialiseAilmentData();
@@ -153,9 +128,6 @@ public class GameManager : MonoBehaviour
             TutorialItemController.Instance.DebugDestroyTutorialItems();
         }
         
-        // Controls showing/hiding the answers for day 2
-        // DEBUG TAG - FOR DEBUGGING
-        testingDay2AnswerSheet.gameObject.SetActive(false);
 
     }
 
@@ -170,11 +142,6 @@ public class GameManager : MonoBehaviour
 		treatmentPlanInteractables.SetDiagnosisSheetConfiguration();
         ResultsScreen.Instance.HideResultsScreen();
         
-        // DEBUG TAG - FOR DEBUGGING
-        if (DayManager.Instance.currentDayNumber == 2)
-        {
-            testingDay2AnswerSheet.gameObject.SetActive(true);
-        }
     }
 
     void ResetInteractablesBetweenClients()
@@ -337,6 +304,7 @@ public class GameManager : MonoBehaviour
     public void GoMainMenu()
     {
         onMainMenu = true;
+        SoundManager.Instance.PlayAudio(SoundManager.Instance.musicMainMenu);
         SceneManager.Instance.SetupMainMenu();
     }
 

@@ -128,7 +128,8 @@ public class DialogueRunner : MonoBehaviour
                 else
                 {
 					if (clientIsAnswering)
-					{
+                    {
+                        PatientData.Instance.ChangePatientSprite();
 						GetDialogue("client responds to cat");
 						clientIsSpeaking = false;
 					}
@@ -379,6 +380,12 @@ public class DialogueRunner : MonoBehaviour
         UIManager.Instance.EnableUI(dialogueBox);
     }
 
+    /*private string GetSpeakerName(DialogueHolder.DialogueSnippet snippet)
+    {
+        string speaker = snippet._speakerName;
+        return speaker;
+    }*/
+
     void GetDialogueByClient(string dialogueType)
     {
         nameOfNPC = PatientData.Instance.activePatientData._patientName;
@@ -408,9 +415,9 @@ public class DialogueRunner : MonoBehaviour
             {
                 currentDialogue = DialogueHolder.Instance.cd_FergusonEnter._dialogue;
             }
-            else if (nameOfNPC == "TEMP_PATIENT02")
+            else if (nameOfNPC == "Peridot")
             {
-                currentDialogue = DialogueHolder.Instance.cd_TEMP_PATIENT02Enter._dialogue;
+                currentDialogue = DialogueHolder.Instance.cd_PeridotEnter._dialogue;
             }
             else
             {
@@ -443,9 +450,9 @@ public class DialogueRunner : MonoBehaviour
                 {
                     currentDialogue = DialogueHolder.Instance.cd_FergusonFinish._dialogue;
                 }
-                else if (nameOfNPC == "TEMP_PATIENT02")
+                else if (nameOfNPC == "Peridot")
                 {
-                    currentDialogue = DialogueHolder.Instance.cd_TEMP_PATIENT02Finish._dialogue;
+                    currentDialogue = DialogueHolder.Instance.cd_PeridotFinish._dialogue;
                 }
                 else
                 {

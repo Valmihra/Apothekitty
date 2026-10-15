@@ -18,6 +18,8 @@ public class Stamp : MonoBehaviour, IPointerClickHandler
     private Sprite stampDown;
     private Vector2 initialStampPosition;
 
+    private float timeToStamp = 0.5f;
+
     public void InitialiseStamp()
     {
         initialStampPosition = transform.position;
@@ -86,10 +88,13 @@ public class Stamp : MonoBehaviour, IPointerClickHandler
     {
         stampIsActive = false;
         UIManager.Instance.SpriteShift(stampImage, stampDown);
+        
+        SoundManager.Instance.PlayAudio(SoundManager.Instance.sfxStampingPage);
+        
         GrimoirePagesData.Instance.TempSelectionCheck();
         RemoveHoverScript();
 
-        Invoke(nameof(ReturnStampToDock), 1.0f);
+        Invoke(nameof(ReturnStampToDock), timeToStamp);
     }
     
     void UpdateStampPosition(Vector3 position)

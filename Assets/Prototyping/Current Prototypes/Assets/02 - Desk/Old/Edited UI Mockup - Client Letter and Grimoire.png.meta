@@ -45,7 +45,7 @@ TextureImporter:
   compressionQuality: 50
   spriteMode: 2
   spriteExtrude: 1
-  spriteMeshType: 1
+  spriteMeshType: 0
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
   spritePixelsToUnits: 100
@@ -110,13 +110,13 @@ TextureImporter:
       name: Edited UI Mockup - Client Letter and Grimoire_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 210
-        width: 1267
-        height: 1608
+        x: 104
+        y: 260
+        width: 1163
+        height: 1535
       alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 78, y: 61, z: 45, w: 46}
       outline: []
       physicsShape: []
       tessellationDetail: 0
@@ -136,7 +136,7 @@ TextureImporter:
         width: 1424
         height: 1619
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []

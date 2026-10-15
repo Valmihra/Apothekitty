@@ -225,7 +225,7 @@ public class _PrototypeLeafletsOnHover : MouseHover, IBeginDragHandler, IDragHan
         // If leaflet is small or coroutine is still running when mouse lifts
         if ((currentlyResizing || currentSize == smallestSize) || (currentSize == smallestSize && !isDocked && goingBackToDock))
         {
-            Debug.Log("Check from: " + caller + " was called before the resize coroutine could finish completely. Setting values and returning to dock.");
+            // Debug.Log("Check from: " + caller + " was called before the resize coroutine could finish completely. Setting values and returning to dock.");
             currentLeafletPosition = GetPositionFromTransform();
             goingBackToDock = true;
             ReturnToDock();
@@ -329,7 +329,7 @@ public class _PrototypeLeafletsOnHover : MouseHover, IBeginDragHandler, IDragHan
         // In case shrink coroutine was not completed before mouse up
         if (currentSize != smallestSize || titleText.text != leafletTitleText || !titleText.gameObject.activeInHierarchy)
         {
-            Debug.Log("Previous coroutine incomplete. Setting values before continuing.");
+            // Debug.Log("Previous coroutine incomplete. Setting values before continuing.");
             rectTransform.sizeDelta = smallestSize;
             currentSize = smallestSize;
             titleText.text = leafletTitleText;

@@ -131,9 +131,9 @@ TextureImporter:
       name: Logo_0
       rect:
         serializedVersion: 2
-        x: 779
+        x: 793
         y: 1730
-        width: 429
+        width: 404
         height: 182
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
@@ -211,6 +211,27 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
+    - serializedVersion: 2
+      name: Logo_4
+      rect:
+        serializedVersion: 2
+        x: 511
+        y: 1923
+        width: 950
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bfd303871ebbe4642ba048cbb29555b9
+      internalID: 949564373
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []
@@ -222,7 +243,7 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Logo_12: 222409309
+      Logo_7: -2090170041
       Logo_14: 334220763
       Logo_8: 1456787320
       Logo_15: -79052536
@@ -240,7 +261,7 @@ TextureImporter:
       Logo_2: -1124013470
       Logo_17: -440092674
       Logo_4: 949564373
-      Logo_7: -2090170041
+      Logo_12: 222409309
   spritePackingTag: 
   pSDRemoveMatte: 0
   userData: 
