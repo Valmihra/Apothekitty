@@ -130,7 +130,7 @@ public class PatientData : MonoBehaviour
     [HideInInspector] public string dietH = "Herbivore";
     
     
-    private ResultsCalculator resultsCalculatorReference;
+    // private ResultsCalculator resultsCalculatorReference;
     private PatientLetter patientLetter;
 
     private static PatientData _instance;
@@ -148,7 +148,7 @@ public class PatientData : MonoBehaviour
     {
         // not full singleton because i'm still scared from last semester's Horrors lmao
         _instance = this;
-        resultsCalculatorReference = FindObjectOfType<ResultsCalculator>();
+        // resultsCalculatorReference = FindObjectOfType<ResultsCalculator>();
         patientLetter = FindObjectOfType<PatientLetter>(); //GetComponent<PatientLetter>();
     }
 
@@ -218,7 +218,7 @@ public class PatientData : MonoBehaviour
         }
         
         Debug.Log(mostPatientsInAnyGameDay);
-        resultsCalculatorReference.SetMaxPatientsNumber(mostPatientsInAnyGameDay);
+        ResultsCalculator.Instance.SetMaxPatientsNumber(mostPatientsInAnyGameDay);
     }
     
     void CreatePatientInformation()              // *TAG* - Would be good to reorder, but then I'll have to fix a bunch,,, HHHHHHHHbruhhhhhh
@@ -286,8 +286,8 @@ public class PatientData : MonoBehaviour
             
         SinglePatientData ferguson = new SinglePatientData();
         ferguson.SetPatientInformation("Ferguson", "Fox");//, "Medium, Omnivore");
-        ferguson.SetPatientExtras(ferguson._patientSize, sizeM);
-        ferguson.SetPatientExtras(ferguson._patientDiet, dietO);
+        ferguson.SetPatientExtras(s, sizeM);
+        ferguson.SetPatientExtras(d, dietO);
         ferguson.SetPatientText(ferguson._patientLetterText, "PLACEHOLDER LETTER TEXT - Ferguson");
         ferguson.SetPatientText(ferguson._patientCuredText, "UPDATE ME!");
         ferguson.SetPatientText(ferguson._patientFailedText, "UPDATE ME!");
@@ -297,8 +297,8 @@ public class PatientData : MonoBehaviour
 
         SinglePatientData peridot = new SinglePatientData();
         peridot.SetPatientInformation("Peridot", "Pangolin");//, "Medium, Omnivore");
-        peridot.SetPatientExtras(peridot._patientSize, sizeM);
-        peridot.SetPatientExtras(peridot._patientDiet, dietO);
+        peridot.SetPatientExtras(s, sizeM);
+        peridot.SetPatientExtras(d, dietO);
         peridot.SetPatientText(peridot._patientLetterText, "PLACEHOLDER LETTER TEXT - Peridot");
         peridot.SetPatientText(peridot._patientCuredText, "UPDATE ME!");
         peridot.SetPatientText(peridot._patientFailedText, "UPDATE ME!");
@@ -328,6 +328,12 @@ public class PatientData : MonoBehaviour
         SendPatientData(activePatientData);
     }
 
+    public void SetSpecificPatientData(SinglePatientData data)
+    {
+        activePatientData = data;
+        SendPatientData(activePatientData);
+    }
+
     void SendPatientData(SinglePatientData data)
     {
         SetPatientAilment(data);
@@ -335,6 +341,8 @@ public class PatientData : MonoBehaviour
         displayedPatientIcon = data._patientIcon;
 
         SoundManager.Instance.PlayAudio(SoundManager.Instance.sfxFootsteps);
+
+        GameManager.Instance.SetClientData();
         
         Invoke(nameof(SpawnPatient), 1.0f);
     }
@@ -358,12 +366,16 @@ public class PatientData : MonoBehaviour
         string currentData = patient._patientName;
         AilmentData.Instance.SetCurrentAilmentByPatient(currentData);
         currentData = AilmentData.Instance.ConvertPatientNameToAilmentName(currentData);
-        resultsCalculatorReference.SetPatientData(currentData);
+        ResultsCalculator.Instance.SetPatientData(currentData);
 
         Debug.Log("Current ailment is affecting: " + AilmentData.Instance.currentAilment._affectedClientName);
         // Debug.Log("Linking ailment with randomised patient.");
     }
 
+    public void SetActivePatient(SinglePatientData patient)
+    {
+        activePatientData = patient;
+    }
 
     public void UpdateCurrentDayPatientsList()
     {

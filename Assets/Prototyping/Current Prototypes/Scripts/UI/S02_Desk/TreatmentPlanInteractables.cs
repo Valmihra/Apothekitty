@@ -12,6 +12,9 @@ public class TreatmentPlanInteractables : MonoBehaviour
     public TMP_Dropdown secondaryEffectDropdown;
     public TMP_Dropdown secondaryTargetDropdown;
     private List<TMP_Dropdown> diagnosisSheetPropertyDropdownsList;
+    
+    private List<string> treatmentPlanSimplifiedTargetOptionsList;
+    // private List<string> treatmentPlanExtendedTargetOptionsList; // incl spirit
         
     [Header("Modifier Toggles")]
     public Toggle enhancerToggle;
@@ -65,10 +68,37 @@ public class TreatmentPlanInteractables : MonoBehaviour
         slot04 = emptySlotText;
 
         updatedForMVP = false;
-        
         usingSimpleConfiguration = false;
+
+        UpdateTargetOptions();
+
         // usingIntermediateConfiguration = false;
         // usingComplicatedConfiguration = false;
+    }
+
+    private void UpdateTargetOptions()
+    {
+        // Removes spirit from the target dropdowns if running current MVP version
+        if (GameManager.Instance.isMVP)
+        {
+            if (!updatedForMVP)
+            {
+                treatmentPlanSimplifiedTargetOptionsList = new List<string> { "Please select a target", "Mind", "Body" };
+
+                primaryTargetDropdown.ClearOptions();
+                primaryTargetDropdown.AddOptions(treatmentPlanSimplifiedTargetOptionsList);
+                
+                secondaryTargetDropdown.ClearOptions();
+                secondaryTargetDropdown.AddOptions(treatmentPlanSimplifiedTargetOptionsList);
+                
+                // primaryTargetDropdown.options.RemoveAt(3);
+                // primaryTargetDropdown.RefreshShownValue();
+                // secondaryTargetDropdown.options.RemoveAt(3);
+                // secondaryTargetDropdown.RefreshShownValue();
+                
+                updatedForMVP = true;
+            }
+        }
     }
     
     // Resets the position of the UI in the scene, and then checks which elements to display and resets all values.
@@ -76,7 +106,7 @@ public class TreatmentPlanInteractables : MonoBehaviour
     {
         transform.position = diagnosisSheetStartingPosition;
         
-        // Removes spirit from the target dropdowns if running current MVP version
+        /*// Removes spirit from the target dropdowns if running current MVP version
         if (GameManager.Instance.isMVP)
         {
             if (!updatedForMVP)
@@ -88,7 +118,7 @@ public class TreatmentPlanInteractables : MonoBehaviour
                 
                 updatedForMVP = true;
             }
-        }
+        }*/
 
         // checks to see which configuration to display
         if (usingSimpleConfiguration)

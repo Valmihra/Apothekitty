@@ -2,12 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
 public class GameData
 {
-    public int numberPatientsSeen;
-    public int numberPatientsCured;
+    public int savedDayNumber;
+    public List<ResultsCalculator.FinishedPatient> seenPatientsInCurrentDay;
+    public PatientData.SinglePatientData savedActivePatient;
     // public string currentPatientName;
     
-    // other good information would go here.
-    // source: trust me.
-}
+    public int numberPatientsSeen;
+    public int numberPatientsCured;
+    
+    
+    }

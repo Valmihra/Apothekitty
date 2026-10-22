@@ -23,13 +23,17 @@ public class GameManager : MonoBehaviour
     public bool herbsSubmitted;
     //public bool onLastClientOfDay;
     
+    [SerializeField] private GameObject tutorialItemsPrefab;
+    [SerializeField] private Canvas tutorialItemControllerParentCanvas;
+    
     
     public DayTrigger curtainAccess;
     private TreatmentPlanInteractables treatmentPlanInteractables;
-    private ResultsCalculator resultsCalculator;
+    // private ResultsCalculator resultsCalculator;
 
 
 	private GameData _gameData;
+    private GameData _tempDataStorage;
 
     private static GameManager _instance;
     public static GameManager Instance
@@ -72,7 +76,7 @@ public class GameManager : MonoBehaviour
 
         // links the manager to the diagnosis sheet script
         treatmentPlanInteractables = FindObjectOfType<TreatmentPlanInteractables>();      // should only ever be one in the game, but might be better way to do this. maybe search for all components in scene instead and delete any not on Constant UI?
-        resultsCalculator = FindObjectOfType<ResultsCalculator>();
+        // resultsCalculator = FindObjectOfType<ResultsCalculator>();
 
         ResetGameStatusBools();
     }
@@ -100,16 +104,16 @@ public class GameManager : MonoBehaviour
 
     void InitialiseAllGameData()
     {
-		_PrototypeHerbGuideMockupController mockupController = FindObjectOfType<_PrototypeHerbGuideMockupController>();
+		// HerbCompendiumController mockupController = FindObjectOfType<HerbCompendiumController>();
         
         // Creates all data required to run the game
         PatientData.Instance.InitialisePatientLetter();
         AilmentData.Instance.InitialiseAilmentData();
         AllHerbsData.Instance.InitialiseAllHerbsData();
-        HerbalistGuidePages.Instance.InitialiseHerbalistGuide();
-			mockupController.InitialiseMockup();
+        HerbCompendiumData.Instance.InitialiseHerbalistGuide();
+            HerbCompendiumController.Instance.InitialiseCompendium();
         DayManager.Instance.InitialiseDayManager();
-        resultsCalculator.InitialiseResultsCalculator();
+        ResultsCalculator.Instance.InitialiseResultsCalculator();
         treatmentPlanInteractables.InitialiseDiagnosisSheet();
         GrimoirePagesData.Instance.InitialiseGrimoirePagesData();
         PatientData.Instance.AssignPatientsToGameDays();
@@ -121,12 +125,14 @@ public class GameManager : MonoBehaviour
         
 		if (runningTutorial)
 		{
+            GameObject tutorialSpecificUI = Instantiate(tutorialItemsPrefab, tutorialItemControllerParentCanvas.transform);
+            tutorialSpecificUI.GetComponent<RectTransform>().SetAsLastSibling();
 			TutorialItemController.Instance.InitialiseTutorialItemsDesk();
 		}
-        else
+        /*else
         {
             TutorialItemController.Instance.DebugDestroyTutorialItems();
-        }
+        }*/
         
 
     }
@@ -138,10 +144,12 @@ public class GameManager : MonoBehaviour
         curtainAccess.ResetCurtain();
         
         PatientData.Instance.SetCurrentDayPatientsList();
-        resultsCalculator.ResetDailyTreatedClientData();
+        ResultsCalculator.Instance.ResetDailyTreatedClientData();
 		treatmentPlanInteractables.SetDiagnosisSheetConfiguration();
         ResultsScreen.Instance.HideResultsScreen();
-        
+
+
+        _gameData.seenPatientsInCurrentDay = new List<ResultsCalculator.FinishedPatient>();
     }
 
     void ResetInteractablesBetweenClients()
@@ -159,8 +167,9 @@ public class GameManager : MonoBehaviour
         treatmentPlanInteractables.ResetDiagnosisSheet();
             
         // Resets Herb Wall UI
-        HerbalistGuidePages.Instance.ResetHerbalistGuide();
-        HerbDrawersController.Instance.ResetHerbDrawerIcons();
+        // HerbCompendiumData.Instance.ResetHerbalistGuide();           *** RESET LEAFLETS NOW!!!
+        HerbCompendiumController.Instance.ResetCompendiumLeaflets();
+        DrawerController.Instance.ResetHerbDrawerIcons();
         Inventory.Instance.ResetInventory();
 
 
@@ -198,6 +207,8 @@ public class GameManager : MonoBehaviour
     public void GoNextDay()
 	{
 		Debug.Log("Should be setting up for day " + (DayManager.Instance.currentDayNumber + 1).ToString());
+
+        _gameData.savedDayNumber++;
         
         DayManager.Instance.GoNextGameDay();
         OnNewDay();
@@ -231,6 +242,11 @@ public class GameManager : MonoBehaviour
     private void CreateNewGameData()
     {
         _gameData = new GameData();
+        _gameData.numberPatientsSeen = 0;
+        _gameData.numberPatientsCured = 0;
+
+        _gameData.savedDayNumber = 0;
+        _gameData.seenPatientsInCurrentDay = new List<ResultsCalculator.FinishedPatient>();
     }
     
 	public void RecordCuredPatient()
@@ -244,6 +260,16 @@ public class GameManager : MonoBehaviour
 		Debug.Log("Number of cured patients is currently: " + numberCuredPatients);
 		return numberCuredPatients;
 	}
+
+    public void AddFinishedPatientToData(ResultsCalculator.FinishedPatient treatedPatient)
+    {
+        /*if (_gameData.seenPatientsInCurrentDay.Count == 0)
+        {
+            _gameData.seenPatientsInCurrentDay = new List<ResultsCalculator.FinishedPatient>();
+        }*/
+        
+        _gameData.seenPatientsInCurrentDay.Add(treatedPatient);
+    }
     
     // ---------------------------------
     //      ,,,
@@ -252,13 +278,21 @@ public class GameManager : MonoBehaviour
     public void SummonClient()
     {
         // Set separately because is also triggered by the curtain interaction at start of each day. Randomises client.
-		_gameData.numberPatientsSeen++;
+		// _gameData.numberPatientsSeen++;
         PatientData.Instance.RandomiseIncomingPatientData();
         // DialogueRunner.Instance.GetDialogue("patientArrive");    // *TAG* - MOVED FROM CLIENT LETTER
+    }
+
+    public void SetClientData()
+    {
+        _gameData.savedActivePatient = PatientData.Instance.activePatientData;
+        Debug.Log("The current active patient is saved to game data as: " + _gameData.savedActivePatient._patientName);
     }
     
     public void GoNextClient()
     {
+        _gameData.numberPatientsSeen++;
+        
         // updates the number of clients left to treat in the day
         PatientData.Instance.UpdateCurrentDayPatientsList();
         
@@ -288,7 +322,7 @@ public class GameManager : MonoBehaviour
 	public void GoResultsScreen()
 	{
         // preparing for game data implementation. would pass more data here.
-		resultsCalculator.UpdateAndShowResultsScreen();
+        ResultsCalculator.Instance.UpdateAndShowResultsScreen();
 	}
 
     
@@ -345,5 +379,109 @@ public class GameManager : MonoBehaviour
             BeginTutorial();
         }
         
+    }
+
+    public void SaveGame()
+    {
+        Debug.Log("Saving game...");
+        
+        _tempDataStorage = _gameData;
+        
+        Debug.Log("Should record day number: " + _gameData.savedDayNumber + ". # patients seen total: " + _gameData.numberPatientsSeen + ". # patients seen today: " + _gameData.seenPatientsInCurrentDay.Count + ".");
+        
+        
+        // string savedData = JsonUtility.ToJson(_gd);     // _gd.ToJson();
+        // string filePathSuffix = "/sav.json";
+        
+        // File.WriteAllText(Application.streamingAssetsPath + filePathSuffix, savedData);
+        
+        
+        
+    }
+
+    public void LoadGame()
+    {
+        
+        if (_tempDataStorage != null)
+        {
+            SoundManager.Instance.PlayAudio(SoundManager.Instance.menuSelect);
+            
+            
+            _gameData = _tempDataStorage;
+
+            DayManager.Instance.JumpToDayNumber(_gameData.savedDayNumber);
+            
+            if (_gameData.seenPatientsInCurrentDay.Count > 0)
+            {
+                shopIsClosed = true;
+                canOpenShop = false;
+                curtainAccess.ResetCurtain();
+        
+                PatientData.Instance.SetCurrentDayPatientsList();
+                ResultsCalculator.Instance.ResetDailyTreatedClientData();
+                treatmentPlanInteractables.SetDiagnosisSheetConfiguration();
+                ResultsScreen.Instance.HideResultsScreen();
+
+                
+                foreach (ResultsCalculator.FinishedPatient patient in _gameData.seenPatientsInCurrentDay)
+                {
+                    for (int i = 0; i < PatientData.Instance.currentDayPatientsList.Count; i++)
+                    {
+                        if (patient._treatedPatientName == PatientData.Instance.currentDayPatientsList[i]._patientName)
+                        {
+                            ResultsCalculator.Instance.dailyTreatedPatientsList.Add(patient);
+
+                            PatientData.Instance.SetActivePatient(PatientData.Instance.currentDayPatientsList[i]);
+                            PatientData.Instance.UpdateCurrentDayPatientsList();
+                        }
+                        else
+                        {
+                            continue;
+                        }
+                    }
+                }
+
+                PatientData.Instance.SetSpecificPatientData(_gameData.savedActivePatient);
+                
+                // Reset game elements for a new client
+                ResetInteractablesBetweenClients();
+                
+                
+                SoundManager.Instance.SwitchInstrumental(SoundManager.Instance.musicPatientWindow);
+                MenuManager.Instance.ExitMenu(MenuManager.Instance.mainMenuCanvasGroup);
+                
+                
+                // Reset the game scene
+                SceneManager.Instance.ResetScene();
+                MenuManager.Instance.NewDayMenu("open");
+            }
+            else
+            {
+                SoundManager.Instance.SwitchInstrumental(SoundManager.Instance.musicPatientWindow);
+                MenuManager.Instance.ExitMenu(MenuManager.Instance.mainMenuCanvasGroup);
+                
+                
+                OnNewDay();
+            }
+        }
+        else
+        {
+            SoundManager.Instance.PlayAudio(SoundManager.Instance.menuReturn);
+            MenuManager.Instance.OpenTutorialPopup("No data");
+            return;
+        }
+        // string filePath = //Path
+        
+        // string jsonString = //""
+    
+        // GameData _gameData = //JsonUtility.FromJson<GameData>()
+        // Debug.Log("Loaded for day: " + _gameData.currentDayNumber + ". Has seen: " + _gameData.numberPatientsSeen + " total patients, and: " + _gameData.seenPatientsInCurrentDay + " patients in the current game day.");
+
+        
+        
+        //
+        // string fileData = 
+        
+        // GameData currentGameData = _gameData;
     }
 }

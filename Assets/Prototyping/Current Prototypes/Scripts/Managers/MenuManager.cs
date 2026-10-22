@@ -215,6 +215,10 @@ public class MenuManager : MonoBehaviour
 				UIManager.Instance.HighlightCanvasElement("ailmentIcon");
 			}
 		}
+        else if (popupType == "No data")
+        {
+	        popupText = "No game file exists that can be loaded.";
+        }
         else
         {
             popupText = "If you forget your chosen treatment plan, you can click the arrow in the bottom right to navigate to the desk.\n\nOnce you're done, click <b>'submit treatment'</b> to hand your recipe to the client.\n\nMake sure you're 100% certain before submitting, as there's no going back!";// how to submit and view results

@@ -123,7 +123,7 @@ public class AllHerbsData : MonoBehaviour
     
     private int herbCount = 12;
     public List<SingleHerb> herbDrawerContents;
-    [SerializeField] private BotanicalCodexOnHover botanicalCodexOnHoverReference;  // was public
+    [SerializeField] private BotanicalCodexDisplay botanicalCodexOnHoverReference;  // was public
 
     private static AllHerbsData _instance;
     public static AllHerbsData Instance
@@ -143,7 +143,7 @@ public class AllHerbsData : MonoBehaviour
     {
         GenerateAllHerbs();
         AssignHerbsToDrawerScripts();
-        botanicalCodexOnHoverReference = GetComponent<BotanicalCodexOnHover>();
+        botanicalCodexOnHoverReference = GetComponent<BotanicalCodexDisplay>();
         
         botanicalCodexOnHoverReference.InitialiseBotanicalCodex();
     }

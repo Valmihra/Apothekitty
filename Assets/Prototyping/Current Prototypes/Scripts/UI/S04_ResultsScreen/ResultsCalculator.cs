@@ -59,6 +59,21 @@ public class ResultsCalculator : MonoBehaviour
 
     private Inventory inventory;
     private TreatmentPlanInteractables treatmentPlanInteractables;
+    
+    private static ResultsCalculator _instance;
+
+    public static ResultsCalculator Instance
+    {
+        get
+        {
+            return _instance;
+        }
+    }
+
+    void Awake()
+    {
+        _instance = this;
+    }
 
 
     public void InitialiseResultsCalculator()
@@ -157,6 +172,11 @@ public class ResultsCalculator : MonoBehaviour
         if (correct)
         {
             Debug.Log("Correct Recipe!!");
+            correctRecipe = true;
+        }
+        else
+        {
+            Debug.Log("Incorrect diagnosis sheet choices for ailment");
         }
         /*if (correct)
         {
@@ -375,6 +395,8 @@ public class ResultsCalculator : MonoBehaviour
                 
 				totalClientResults++;
                 f.FinishTreatingPatient();
+
+                GameManager.Instance.AddFinishedPatientToData(f);
                 break;
             }
         }

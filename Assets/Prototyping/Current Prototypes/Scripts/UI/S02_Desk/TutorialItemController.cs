@@ -5,15 +5,13 @@ using UnityEngine.UI;
 
 public class TutorialItemController : MonoBehaviour
 {
-    [SerializeField] 
-	private DraggableTutorialItem draggableTutorialItem01;
-    [SerializeField] 
-	private DraggableTutorialItem draggableTutorialItem02;
-    [SerializeField] 
-	private DraggableTutorialItem draggableTutorialItem03;
+    [SerializeField] private DraggableTutorialItem draggableTutorialItem01;
+    [SerializeField] private DraggableTutorialItem draggableTutorialItem02;
+    [SerializeField] private DraggableTutorialItem draggableTutorialItem03;
 
-    [SerializeField] 
-	private TutorialBin tutorialBin;
+    [SerializeField] private TutorialBin tutorialBin;
+    
+    // [SerializeField] private Canvas tutorialItemControllerParentCanvas;
     
     private static TutorialItemController _instance;
     public static TutorialItemController Instance
@@ -31,11 +29,12 @@ public class TutorialItemController : MonoBehaviour
 
     public void InitialiseTutorialItemsDesk()
     {
-        draggableTutorialItem01.gameObject.SetActive(false);
-        draggableTutorialItem02.gameObject.SetActive(false);
-        draggableTutorialItem03.gameObject.SetActive(false);
         tutorialBin.gameObject.SetActive(false);
-        // foreach ()
+        Rect tempRect = tutorialBin.CreateRectBounds();
+        
+        draggableTutorialItem01.InitialiseTutorialItem(tempRect);
+        draggableTutorialItem02.InitialiseTutorialItem(tempRect);
+        draggableTutorialItem03.InitialiseTutorialItem(tempRect);
     }
 
     public void ResetTutorialItemsDesk()
@@ -64,5 +63,11 @@ public class TutorialItemController : MonoBehaviour
         
         this.gameObject.GetComponent<Image>().raycastTarget = false;
         //Destroy();
+    }
+
+    public void DestroyTutorialItem(DraggableTutorialItem draggableTutorialItem)
+    {
+        Debug.Log("Calling failsafe destruction method...");
+        tutorialBin.TutorialBinTossItem(draggableTutorialItem);
     }
 }
