@@ -41,22 +41,21 @@ public class Stamp : MonoBehaviour, IPointerClickHandler
     
     public void ResetStamp()
     {
-        Debug.Log("Returning stamp to dock and resetting the hover script.");
+        // Debug.Log("Returning stamp to dock and resetting the hover script.");
         ReturnStampToDock();
-        UIManager.Instance.SpriteShift(stampImage, stampDown);
         AddHoverScript();
     }
 
     void ReturnStampToDock()
     {
-        Debug.Log("Returning stamp to dock.");
         stampIsActive = false;
         currentlyHoldingStamp = false;
-        // Returns stamp to dock
+        
         if (stampImage.sprite != stampDown)
         {
-            stampImage.sprite = stampDown;
+            UIManager.Instance.SpriteShift(stampImage, stampDown);
         }
+        
         UpdateStampPosition(initialStampPosition);
     }
 
@@ -64,13 +63,14 @@ public class Stamp : MonoBehaviour, IPointerClickHandler
     {
         if (gameObject.TryGetComponent<MouseHover>(out MouseHover mouseHover))
         {
-            Debug.Log("Hover script already attached.");
+            // Debug.Log("Hover script already attached.");
+            return;
         }
         else
         {
             this.gameObject.AddComponent(typeof(MouseHover));
             mouseHover = gameObject.GetComponent<MouseHover>();
-            Debug.Log("Hover script attached.");
+            // Debug.Log("Hover script attached.");
         }
     }
 
@@ -78,22 +78,23 @@ public class Stamp : MonoBehaviour, IPointerClickHandler
     {
         if (this.gameObject.TryGetComponent<MouseHover>(out MouseHover mouseHover))
         {
-            Debug.Log("Destroying the hover script.");
+            // Debug.Log("Destroying the hover script.");
             Destroy(mouseHover);
         }
     }
-
-    // void PressStampAtLocation(Vector3 position)
+    
     private void MakeStampSelection()
     {
-        stampIsActive = false;
-        UIManager.Instance.SpriteShift(stampImage, stampDown);
-        
+        // *TAG* - AUDIO
         SoundManager.Instance.PlayAudio(SoundManager.Instance.sfxStampingPage);
         
+        // Switches stamp icon and checks what ailment has been selected
+        stampIsActive = false;
+        UIManager.Instance.SpriteShift(stampImage, stampDown);
         GrimoirePagesData.Instance.TempSelectionCheck();
         RemoveHoverScript();
-
+        
+        // Returns stamp to dock after a set amount of time
         Invoke(nameof(ReturnStampToDock), timeToStamp);
     }
     
@@ -121,7 +122,9 @@ public class Stamp : MonoBehaviour, IPointerClickHandler
                 // Brings the parent object of the stamp to the front of the screen
                 if (GameObject.Find("Panel - Stamp Dock").TryGetComponent<RectTransform>(out RectTransform rectTransform))
                 {
-                    // *TAG* - this sets the entire game object as the last sibling though, which does mean that the stamp dock rests above the other elements. might not be ideal.
+                    // *TAG* - this sets the entire game object as the last sibling though,
+                    // which does mean that the stamp dock rests above the other elements.
+                    // Might not be ideal.
                     rectTransform.SetAsLastSibling();
                 }
                 else
@@ -143,18 +146,8 @@ public class Stamp : MonoBehaviour, IPointerClickHandler
                 {
                     if (GrimoirePagesData.Instance.SelectedPageIsNotTheCover())
                     {
+                        // If stamped page is not the cover
                         MakeStampSelection();
-                        /*stampIsActive = false;
-                        // UIManager.Instance.SpriteShift(stampImage, stampDown);
-                        GrimoirePagesData.Instance.TempSelectionCheck();
-
-                        if (this.gameObject.TryGetComponent<MouseHover>(out MouseHover mouseHover))
-                        {
-                            Debug.Log("Destroying the hover script.");
-                            Destroy(mouseHover);
-                        }
-                        
-                        ReturnStampToDock();*/
                         return;
                     }
                     else
@@ -167,6 +160,7 @@ public class Stamp : MonoBehaviour, IPointerClickHandler
                 
                 if (stampRect.Overlaps(stampDockRect))
                 {
+                    // If stamp is clicked while over dock
                     ReturnStampToDock();
                     return;
                 }
@@ -182,8 +176,6 @@ public class Stamp : MonoBehaviour, IPointerClickHandler
 
     IEnumerator FollowCursor()
     {
-        Debug.Log("Inside Enumerator");
-
         while (stampIsActive)
         {
             Vector3 mousePosition = Input.mousePosition;

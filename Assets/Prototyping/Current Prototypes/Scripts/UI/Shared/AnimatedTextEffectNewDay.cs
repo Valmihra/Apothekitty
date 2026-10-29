@@ -78,7 +78,7 @@ public class AnimatedTextEffectNewDay : MonoBehaviour
 
     public void NewDayAnimation()
     {
-        Debug.Log("Working to here");
+        // Debug.Log("Working to here");
         textToDisplay = ("Day: " + DayManager.Instance.currentDayNumber.ToString());
 
         BeginAnimatingNewDayText(textToDisplay);

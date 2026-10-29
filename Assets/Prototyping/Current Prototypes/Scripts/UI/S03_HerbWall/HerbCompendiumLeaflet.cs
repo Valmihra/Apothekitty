@@ -67,15 +67,15 @@ public class HerbCompendiumLeaflet : MouseHover, IBeginDragHandler, IDragHandler
         
         titleText = GetComponentInChildren<TMP_Text>();
         // could remove these two here?
-        leafletTitleText = titleText.text;
-        leafletDetailText = (tempLeafletPrefaceText + "<b>" + leafletTitleText + "</b>").ToString();
+        // leafletTitleText = titleText.text;
+        // leafletDetailText = (tempLeafletPrefaceText + "<b>" + leafletTitleText + "</b>").ToString();
         
         // Sets defaults
         ResetDefaultValues();
         defaultPositionsSet = false;
         
         currentSize = smallestSize;
-        Debug.Log("Setup at " + transform.position);
+        // Debug.Log("Setup at " + transform.position);
         
         
         // Sets default positions if they do not exist

@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.EventSystems;
 
-public class GrimoireNavigation : MonoBehaviour
+public class GrimoireNavigation : MonoBehaviour, IPointerClickHandler
 {
     [Header("Image Display")]
         public Image grimoireFrontCoverImage;
@@ -21,26 +22,11 @@ public class GrimoireNavigation : MonoBehaviour
         public TMP_Text grimoireAilmentDescriptionDisplay;
         public Image grimoireAilmentIconDisplay;
         
-        // public Button grimoireAilmentSelectionButton;
         public GameObject grimoireInkFromStampObject;
-
-    /*[Header("Ailment Icons")]
-        public Image tempIcon00;
-        public Image ailmentIcon01;
-        public Image ailmentIcon02;
-        public Image ailmentIcon03;
-        public Image ailmentIcon04;
-        public Image ailmentIcon05;
-        public Image ailmentIcon06;
-        public Image ailmentIcon07;
-        public Image ailmentIcon08;
-        public Image ailmentIcon09;
-        public Image ailmentIcon10;
-        //public Image ailmentIcon11;
-        //public Image ailmentIcon12;*/
         private List<Image> grimoireAilmentIconsList;
 
         private bool resettingGrimoire;
+        private bool grimoireIsClosed;
         
         
 
@@ -63,15 +49,11 @@ public class GrimoireNavigation : MonoBehaviour
         
         grimoireNavigationLeft.onClick.AddListener(delegate { GoToPage(currentGrimoirePageNumber -1); });
         grimoireNavigationRight.onClick.AddListener(delegate { GoToPage(currentGrimoirePageNumber +1); });
-        // grimoireAilmentSelectionButton.onClick.AddListener(delegate {GetSelectedAilment (currentGrimoirePageNumber); });
         
         notOpenedGrimoire = true;
         resettingGrimoire = false;
         InitialiseGrimoireAilmentIconList();
         ResetGrimoireNavigation();
-        // SetTabNumbers();
-
-        
     }
 
     // Basic scene setup
@@ -84,8 +66,57 @@ public class GrimoireNavigation : MonoBehaviour
 
         // reset position on screen
         transform.position = grimoireInitialPosition;
+        
+        currentGrimoirePageNumber = 0;
+        GoToPage(currentGrimoirePageNumber);
+    }
 
-        GoToPage(0);
+    void CloseGrimoire()
+    {
+        // Hides text components
+        grimoireAilmentNameDisplay.enabled = false;
+        grimoireAilmentDescriptionDisplay.enabled = false;
+        
+        // Hides icons, stamp ink, and navigation arrows
+        grimoireInkFromStampObject.SetActive(false);
+        grimoireAilmentIconDisplay.gameObject.SetActive(false);
+        navigationButtonsObject.SetActive(false);
+        // grimoireNavigationLeft.gameObject.SetActive(false);
+
+        UIManager.Instance.SpriteShift(grimoireDisplayedImage, grimoireFrontCoverImage.sprite);
+        // Moves navigation object. instead hide it and turn on open button object?
+        // navigationButtonsObject.transform.position = buttonsPositionCover;
+        
+        grimoireIsClosed = true;
+    }
+    
+    void OpenGrimoire()
+    {
+        grimoireIsClosed = false;
+        
+        // Shows text components
+        grimoireAilmentNameDisplay.enabled = true;
+        grimoireAilmentDescriptionDisplay.enabled = true;
+        
+        // Shows icon and navigation arrows
+        grimoireAilmentIconDisplay.gameObject.SetActive(true);
+        navigationButtonsObject.SetActive(true);
+        
+        UIManager.Instance.SpriteShift(grimoireDisplayedImage, grimoireStandardPageImage.sprite);
+        
+        if (notOpenedGrimoire)
+        {
+            RunGrimoireTutorial();
+        }
+    }
+
+    void RunGrimoireTutorial()
+    {
+        notOpenedGrimoire = false;
+        if (GameManager.Instance.runningTutorial)
+        {
+            MenuManager.Instance.OpenTutorialPopup("grimoire");
+        }
     }
 
 
@@ -94,21 +125,13 @@ public class GrimoireNavigation : MonoBehaviour
     {
         if (!resettingGrimoire)
         {
+            // Plays audio if not resetting          could probably remove check by calling differently on reset?
             SoundManager.Instance.PlayAudio(SoundManager.Instance.sfxGrimoirePageTurn);
-        }
-        
-        if (target != 0 && notOpenedGrimoire)
-        {
-            notOpenedGrimoire = false;
-            if (GameManager.Instance.runningTutorial)
-            {
-                MenuManager.Instance.OpenTutorialPopup("grimoire");
-            }
         }
         
         grimoireNavigationLeft.gameObject.SetActive(true);
 		grimoireNavigationRight.gameObject.SetActive(true);
-
+        
         // disables L/R buttons when target int leads outside of array's bounds
         if (target == GrimoirePagesData.Instance.grimoirePagesArray.Length - 1)
         {
@@ -117,32 +140,16 @@ public class GrimoireNavigation : MonoBehaviour
 
         if (target == 0)
         {
-            grimoireAilmentNameDisplay.enabled = false;
-            grimoireAilmentDescriptionDisplay.enabled = false;
-            
-            grimoireInkFromStampObject.SetActive(false);
-			grimoireAilmentIconDisplay.gameObject.SetActive(false);
-            grimoireNavigationLeft.gameObject.SetActive(false);
-
-            UIManager.Instance.SpriteShift(grimoireDisplayedImage, grimoireFrontCoverImage.sprite);
-            navigationButtonsObject.transform.position = buttonsPositionCover;
+            CloseGrimoire();
         }
         else
         {
-            if (target == 1)
+            if (currentGrimoirePageNumber == 0 && target == 1)
             {
-                grimoireAilmentNameDisplay.enabled = true;
-                grimoireAilmentDescriptionDisplay.enabled = true;
-                grimoireAilmentIconDisplay.gameObject.SetActive(true);
-                
-                navigationButtonsObject.transform.position = buttonsPositionPage;
-                UIManager.Instance.SpriteShift(grimoireDisplayedImage, grimoireStandardPageImage.sprite);
+                OpenGrimoire();
             }
             
-            grimoireAilmentNameDisplay.text = GrimoirePagesData.Instance.grimoirePagesArray[target]._ailmentName;
-            grimoireAilmentDescriptionDisplay.text = GrimoirePagesData.Instance.grimoirePagesArray[target]._ailmentDescription;
-            
-            UIManager.Instance.SpriteShift(grimoireAilmentIconDisplay, grimoireAilmentIconsList[target].sprite);
+            UpdateGrimoireDisplay(target);
         }
         
         currentGrimoirePageNumber = target;
@@ -151,6 +158,14 @@ public class GrimoireNavigation : MonoBehaviour
         {
             resettingGrimoire = false;
         }
+    }
+
+    void UpdateGrimoireDisplay(int target)
+    {
+        grimoireAilmentNameDisplay.text = GrimoirePagesData.Instance.grimoirePagesArray[target]._ailmentName;
+        grimoireAilmentDescriptionDisplay.text = GrimoirePagesData.Instance.grimoirePagesArray[target]._ailmentDescription;
+            
+        UIManager.Instance.SpriteShift(grimoireAilmentIconDisplay, grimoireAilmentIconsList[target].sprite);
     }
 
     public void TempSelectionCheck()
@@ -162,7 +177,6 @@ public class GrimoireNavigation : MonoBehaviour
     void GetSelectedAilment(int pageNum)
     {
         grimoireInkFromStampObject.SetActive(true);
-        // grimoireAilmentSelectionButton.interactable = false;
         GameManager.Instance.ailmentSubmitted = true;
         
         string selectedAilmentName = GrimoirePagesData.Instance.grimoirePagesArray[pageNum]._ailmentName;
@@ -174,32 +188,20 @@ public class GrimoireNavigation : MonoBehaviour
 
     void InitialiseGrimoireAilmentIconList()
     {
-        //List<Image> icons = new List<Image>();
         grimoireAilmentIconsList = new List<Image>();
-		
 		Transform ailmentIconHolder = GameObject.Find("[Ailment Icon Storage]").transform;
 
 		foreach (Transform child in ailmentIconHolder)
 		{
 			grimoireAilmentIconsList.Add(child.GetComponent<Image>());
 		}
+    }
 
-        /*grimoireAilmentIconsList.Add(tempIcon00);
-        grimoireAilmentIconsList.Add(ailmentIcon01);
-        grimoireAilmentIconsList.Add(ailmentIcon02);
-        grimoireAilmentIconsList.Add(ailmentIcon03);
-        grimoireAilmentIconsList.Add(ailmentIcon04);
-        grimoireAilmentIconsList.Add(ailmentIcon05);
-        grimoireAilmentIconsList.Add(ailmentIcon06);
-        grimoireAilmentIconsList.Add(ailmentIcon07);
-        grimoireAilmentIconsList.Add(ailmentIcon08);
-        grimoireAilmentIconsList.Add(ailmentIcon09);
-        grimoireAilmentIconsList.Add(ailmentIcon10);*/
-
-        //grimoireAilmentIconsList.Add(ailmentIcon11);
-        //grimoireAilmentIconsList.Add(ailmentIcon12);
-
-        //grimoireAilmentIconsList = icons.ToArray();
-        //Debug.Log(grimoireAilmentIconsList.Length + " icons registered.");
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        if (grimoireIsClosed)
+        {
+            GoToPage(currentGrimoirePageNumber +1);
+        }
     }
 }

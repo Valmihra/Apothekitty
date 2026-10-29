@@ -13,7 +13,8 @@ public class HerbCompendiumController : MonoBehaviour
     private Rect compendiumPanelRect;
     private float compendiumPanelBoundingBoxOffset = 100f;
     
-    private int closedSlidingDoorValue = 1;
+    private float closedSlidingDoorValue = 1.0f;	// was prev. int 1.
+	private float openSlidingDoorValue = 0.0f;
     [SerializeField] private Slider slidingDoor;
     // [SerializeField] private GameObject interactionBlocker;
     // *TAG* - For use on slider: Maybe if roller is open, interaction blocker prevents touching the drawers? idk.
@@ -82,11 +83,37 @@ public class HerbCompendiumController : MonoBehaviour
 
     public void ResetCompendiumLeaflets()
     {
-        Debug.Log("Resetting leaflets!!!!!!!!!!!!");
-        foreach (HerbCompendiumLeaflet leaflet in compendiumLeafletsList)
+		foreach (HerbCompendiumLeaflet leaflet in compendiumLeafletsList)
         {
             leaflet.ResetLeaflet();
         }
     }
+
+
+	public void TutorialOpenCompendium()
+	{
+		StopAllCoroutines();
+		StartCoroutine(OpenCompendium());
+	}
+
+	IEnumerator OpenCompendium()
+	{
+		// float targetValue = 0.0f;
+		float timeToLerp = 0.5f;
+		float elapsedTime = 0.0f;
+		
+		float currentValue = slidingDoor.value == closedSlidingDoorValue ? closedSlidingDoorValue : openSlidingDoorValue;
+		float targetValue = currentValue == closedSlidingDoorValue ? openSlidingDoorValue : closedSlidingDoorValue;
+
+		while (elapsedTime < timeToLerp)
+		{
+			elapsedTime += Time.deltaTime;
+			float t = Mathf.Clamp01(elapsedTime/timeToLerp);
+
+			slidingDoor.value = Mathf.Lerp(currentValue, targetValue, elapsedTime / timeToLerp);
+
+			yield return null;
+		}
+	}
 
 }

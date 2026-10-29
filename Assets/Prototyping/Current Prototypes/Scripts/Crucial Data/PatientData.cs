@@ -26,10 +26,10 @@ public class PatientData : MonoBehaviour
         
         public string _patientExtras = "x"; // *TAG* - (FOR NOW)
 
-        public void ReadAllPatientInformation()
+        /*public void ReadAllPatientInformation()
         {
             Debug.Log("Reading all patient information." + _patientName + " is a " + _patientSize + " " + _patientSpecies + ". Their diet is: " + _patientDiet);
-        }
+        }*/
 
         public void SetPatientInformation(string newName, string newSpecies)//, string newExtras)
         {
@@ -217,7 +217,7 @@ public class PatientData : MonoBehaviour
             }
         }
         
-        Debug.Log(mostPatientsInAnyGameDay);
+        // Debug.Log(mostPatientsInAnyGameDay);
         ResultsCalculator.Instance.SetMaxPatientsNumber(mostPatientsInAnyGameDay);
     }
     
@@ -245,7 +245,7 @@ public class PatientData : MonoBehaviour
         barry.AttachPatientToDay(1);
         barry.SetPatientIcon();
             allPatientsList.Add(barry);
-            barry.ReadAllPatientInformation();
+            // barry.ReadAllPatientInformation();
 
         SinglePatientData arabella = new SinglePatientData();
         arabella.SetPatientInformation("Arabella Bunny", "Rabbit");
@@ -274,7 +274,7 @@ public class PatientData : MonoBehaviour
         jimothy.SetPatientInformation("Jimothy", "Jerboa");
         jimothy.SetPatientExtras(s, sizeS);
         jimothy.SetPatientExtras(d, dietO);
-        jimothy.SetPatientText(l, "UPDATE ME!");
+        jimothy.SetPatientText(l, "When I was appointed to be the king's private jester, I was thrilled beyond belief. Every morning I would jump with joy as I got dressed for my shift. /n/nNow, however, it's so hard to even get out of bed. The thought of the king's eyes watching my every move as I juggle and dance for him. /n/nIt's even worse when I am to perform in front of his guests from neighbouring kingdoms. My legs tremble and my mouth quivers at the mere thought of it.");
         jimothy.SetPatientText(c, "UPDATE ME!");
         jimothy.SetPatientText(f, "UPDATE ME!");
         jimothy.AttachPatientToDay(0);
@@ -288,7 +288,7 @@ public class PatientData : MonoBehaviour
         ferguson.SetPatientInformation("Ferguson", "Fox");//, "Medium, Omnivore");
         ferguson.SetPatientExtras(s, sizeM);
         ferguson.SetPatientExtras(d, dietO);
-        ferguson.SetPatientText(ferguson._patientLetterText, "PLACEHOLDER LETTER TEXT - Ferguson");
+        ferguson.SetPatientText(ferguson._patientLetterText, "Ya know I do love my family, but I think maybe their comments are getting to me. I don't want to be a failure. /n/nIt's been hard to eat anything lately, everything's too tough and chewy. I'm starting to not even like the taste of the dinners ma prepares. I should be grateful, I'm not a good enough son.");
         ferguson.SetPatientText(ferguson._patientCuredText, "UPDATE ME!");
         ferguson.SetPatientText(ferguson._patientFailedText, "UPDATE ME!");
         ferguson.AttachPatientToDay(2);
@@ -299,7 +299,7 @@ public class PatientData : MonoBehaviour
         peridot.SetPatientInformation("Peridot", "Pangolin");//, "Medium, Omnivore");
         peridot.SetPatientExtras(s, sizeM);
         peridot.SetPatientExtras(d, dietO);
-        peridot.SetPatientText(peridot._patientLetterText, "PLACEHOLDER LETTER TEXT - Peridot");
+        peridot.SetPatientText(peridot._patientLetterText, "It's been a few days since I've properly eaten. I don't trust what's in my pantry, I have no way to measure the grams of fat that I may ingest. And if I were to eat something unhealthy, what if I got sick? My body is too precious for me to consume anything unhealthy or clean enough.");
         peridot.SetPatientText(peridot._patientCuredText, "UPDATE ME!");
         peridot.SetPatientText(peridot._patientFailedText, "UPDATE ME!");
         peridot.AttachPatientToDay(1);
@@ -323,8 +323,7 @@ public class PatientData : MonoBehaviour
             activePatientData = currentDayPatientsList[randomisedNumber];
         }
 
-        Debug.Log("Active patient = " + activePatientData._patientName);
-        Debug.Log(activePatientData._patientName + " is a: " + activePatientData._patientSize + " " + activePatientData._patientDiet);
+        Debug.Log("Active patient = " + activePatientData._patientName + ". " + activePatientData._patientName + " is a: " + activePatientData._patientSize + " " + activePatientData._patientDiet);
         SendPatientData(activePatientData);
     }
 
@@ -367,9 +366,6 @@ public class PatientData : MonoBehaviour
         AilmentData.Instance.SetCurrentAilmentByPatient(currentData);
         currentData = AilmentData.Instance.ConvertPatientNameToAilmentName(currentData);
         ResultsCalculator.Instance.SetPatientData(currentData);
-
-        Debug.Log("Current ailment is affecting: " + AilmentData.Instance.currentAilment._affectedClientName);
-        // Debug.Log("Linking ailment with randomised patient.");
     }
 
     public void SetActivePatient(SinglePatientData patient)

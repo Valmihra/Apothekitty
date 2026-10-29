@@ -11,7 +11,7 @@ public class BotanicalCodexDisplay : MonoBehaviour
     
     [SerializeField] private TMP_Text botanicalCodexDisplayedHerbName;
     [SerializeField] private TMP_Text botanicalCodexDisplayedHerbDescription;
-    [SerializeField] private TMP_Text botanicalCodexDisplayedHerbExtras;
+    [SerializeField] private TMP_Text botanicalCodexDisplayedHerbExtras;	// *TAG* - DELETE ME!
 
     [SerializeField] private GameObject sizeIconSmall;
     [SerializeField] private GameObject sizeIconMedium;
@@ -21,23 +21,18 @@ public class BotanicalCodexDisplay : MonoBehaviour
     [SerializeField] private GameObject dietIconHerbivore;
     [SerializeField] private GameObject dietIconOmnivore;
 
+	[SerializeField] private Image sizeIconDeactivated;
+	[SerializeField] private Image sizeIconActivated;
 
     private List<GameObject> sizeIconList;
     private List<GameObject> dietIconList;
     
     private int botanicalCodexPotencyReferenceNumber;
     private int botanicalCodexDietaryReferenceNumber;
-    
-    /*private static BotanicalCodexDisplay _instance;
-    public static BotanicalCodexDisplay Instance
-    {
-        get
-        {
-            return _instance;
-        }
-    }*/
-
-	// public void Update
+	
+	[Header("Shader References")]
+	public Shader standardIconShader;
+	public Shader desaturatedIconShader;
 
     public void InitialiseBotanicalCodex()
     {
@@ -56,24 +51,49 @@ public class BotanicalCodexDisplay : MonoBehaviour
             dietIconList.Add(dietIconCarnivore);
             dietIconList.Add(dietIconHerbivore);
             dietIconList.Add(dietIconOmnivore);
+
+		ResetCodexIconDisplay();
     }
 
-    // Updates the text displayed on the note popup
-    public void ReceiveInformation(string displayName, string displayDescription, string displayExtras)
-    {
-        Debug.Log("Information received");
-        botanicalCodexDisplayedHerbName.text = displayName;
-        botanicalCodexDisplayedHerbDescription.text = displayDescription;
-        // botanicalCodexDisplayedHerbExtras.text = displayExtras;
-        botanicalCodexDisplayedHerbExtras.text = "test";
-        
+	void ResetCodexIconDisplay()
+	{
+		foreach (GameObject s in sizeIconList)
+		{
+			Image tempImage = s.GetComponent<Image>();
+			// UIManager.Instance.SpriteShift(sizeIconDeactivated, tempImage.sprite);// s.GetComponent<Image>().sprite);
+			UIManager.Instance.SpriteShift(tempImage, sizeIconDeactivated.sprite);
+		}
 
-        // PlaceUI();
-        botanicalCodexCanvasGroup.gameObject.SetActive(true);
-    }
+		foreach (GameObject d in dietIconList)
+		{
+			// For now, just deactivating, but in future, set all to black and white via shader?
+			// d.SetActive(false);
+			UpdateShader(d); //, desaturatedIconShader);
+		}
+	}
+
+	void UpdateCodexIconDisplay(AllHerbsData.SingleHerb herb)
+	{
+		for (int i = 0; i < herb._sizes.Count; i++)
+        {
+            if (herb._sizes[i] == true)
+            {
+                // sizeIconList[i].SetActive(true);
+				UIManager.Instance.SpriteShift(sizeIconList[i].GetComponent<Image>(), sizeIconActivated.sprite);
+            }
+
+            if (herb._diets[i] == true)
+            {
+				// For now, just reactivating, but in future, set to colour via shader?
+                // dietIconList[i].SetActive(true);
+				UpdateShader(dietIconList[i]);// , standardIconShader);
+            }
+        }
+	}
 
     void HideIconObjects()
     {
+		// *TAG* - TRY INSTEAD: Setup secondary icon for sizes. Display all three at all times, but reset = set to black. when activated, set to active sprite icon. to 
         foreach (GameObject s in sizeIconList)
         {
             s.SetActive(false);
@@ -84,18 +104,10 @@ public class BotanicalCodexDisplay : MonoBehaviour
             d.SetActive(false);
         }
     }
-    
-    public void PrototypeReceiveInformation(AllHerbsData.SingleHerb herb)//(string displayName, string displayDescription, List<bool> sizes, List<bool> diets)
-    {
-        Debug.Log("Information received");
-        botanicalCodexDisplayedHerbName.text = herb._herbName;// displayName;
-        botanicalCodexDisplayedHerbDescription.text = herb._herbDescription;// displayDescription;
-        
-        botanicalCodexDisplayedHerbExtras.text = "test";
 
-        HideIconObjects();
-        
-        for (int i = 0; i < herb._sizes.Count; i++)
+	void ShowCorrectIconObjects(AllHerbsData.SingleHerb herb)
+	{
+		for (int i = 0; i < herb._sizes.Count; i++)
         {
             if (herb._sizes[i] == true)
             {
@@ -107,19 +119,38 @@ public class BotanicalCodexDisplay : MonoBehaviour
                 dietIconList[i].SetActive(true);
             }
         }
+    }
+
+    public void CodexReceiveInformation(AllHerbsData.SingleHerb herb)
+    {
+        // Uses SingleHerb data to set the herb's name and description
+        botanicalCodexDisplayedHerbName.text = herb._herbName;
+        botanicalCodexDisplayedHerbDescription.text = herb._herbDescription;
+        
+        botanicalCodexDisplayedHerbExtras.text = "test";	// *TAG* - DELETE ME!
+
+        // HideIconObjects();
+		// ShowCorrectIconObjects(herb);
+		ResetCodexIconDisplay();
+		UpdateCodexIconDisplay(herb);
 
         botanicalCodexCanvasGroup.gameObject.SetActive(true);
     }
 
-    // determines where best to place the UI before enabling it again
-    /*public void PlaceUI()
-    {
-        //Vector3 mousePosition = Input.mousePosition;
-        //botanicalCodexCanvasGroup.anchoredPosition =
-        
-        botanicalCodexCanvasGroup.gameObject.SetActive(true);
-        //UIManager.Instance.EnableUI(botanicalCodexCanvasGroup);
-    }*/
+	void UpdateShader(GameObject objectToUpdate)//, Shader shader)
+	{
+		// Updates the shader of the passed GameObject
+		if (objectToUpdate.TryGetComponent<Renderer>(out Renderer renderer))
+		{
+			Debug.Log("Would change shader here.");
+			// Material materialToEdit = renderer.material;
+			// renderer.material.shader = shader;
+		}
+		else
+		{
+			Debug.Log("Error when trying to get the renderer for this object: " + objectToUpdate);
+		}
+	}
 
     /*
                 FOR NEW VERSION::

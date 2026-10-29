@@ -95,10 +95,9 @@ public class SoundManager : MonoBehaviour
     void Awake()
     {
         _instance = this;
-        // sfxAudioSource = GetComponent<AudioSource>();
         
-        SetVolume(musicAudioSource, musicVolume);
-        SetVolume(sfxAudioSource, sfxVolume);
+        musicAudioSource.volume = musicVolume;
+        sfxAudioSource.volume = sfxVolume;
         musicAudioSource.loop = true;
 
         GenerateSFXLists();
@@ -116,23 +115,22 @@ public class SoundManager : MonoBehaviour
         dirtSounds.Add(sfxDirt07);
     }
 
-    void SetVolume(AudioSource audioSource, float volume)
+    /*void SetVolume(AudioSource audioSource, float volume)
     {
         audioSource.volume = volume;
-    }
+    }*/
     
     public void PlayAudio(AudioClip audioToPlay)
     {
+        // Determines whether to play a sound effect or a music track, and chooses the correct audio source
         if (audioToPlay == musicMainMenu)
         {
             musicAudioSource.clip = audioToPlay;
-            musicAudioSource.Play();//OneShot(audioToPlay);
-            //SetVolume(musicVolume);
+            musicAudioSource.Play();
         }
         else
         {
             sfxAudioSource.PlayOneShot(audioToPlay);
-            //SetVolume(sfxVolume);
         }
         
         
@@ -147,33 +145,23 @@ public class SoundManager : MonoBehaviour
     }
     public void GetAudioToReturnTo()
     {
+        // Used when returning to the game from the pause screen
+        // Uses the current active canvas in SceneManager to determine which audio to play
         AudioClip audioToUse = SceneManager.Instance.currentCanvasGroup == SceneManager.Instance.mainCanvasGroupDesk ? musicDesk : SceneManager.Instance.currentCanvasGroup == SceneManager.Instance.mainCanvasGroupHerbWall ? musicHerbWall : musicPatientWindow;
         SwitchInstrumental(audioToUse);
-        Debug.Log("Currently playing: " + audioToUse);
     }
 
     public void SwitchInstrumental(AudioClip audioToPlay)
-    // public void AddInstrumental(AudioClip audioToPlay)
     {
+        // Used to switch between different tracks depending on the current active screen in-game 
         float currentTime = musicAudioSource.time;
         
         AudioClip currentAudio = musicAudioSource.clip;
-        
-        // musicAudioSource.clip = audioToPlay;
-        
-        //musicAudioSource.time = currentTime;
         musicAudioSource.time = currentTime;
-        //Mathf.Clamp(currentTime, 0f, currentAudio.length);
+        
         musicAudioSource.clip = audioToPlay;
         musicAudioSource.Play();
         
-
-
-        // PlayAudio(audioToPlay);
-        // PlayAudio(currentAudio);
-
-
-        //
     }
 
     public void GetRandomSFX(List<AudioClip> audioList)
@@ -181,14 +169,4 @@ public class SoundManager : MonoBehaviour
         int randomisedNumber = Random.Range(0, audioList.Count);
         PlayAudio(audioList[randomisedNumber]);
     }
-
-    /*void SetAudioSourceTimestamp(float startingTime)
-    {
-        musicAudioSource.time
-    }*/
-
-    /*void PlayFromTime(float time)
-    {
-        //
-    }*/
 }

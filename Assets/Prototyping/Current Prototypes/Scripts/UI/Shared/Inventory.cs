@@ -81,7 +81,8 @@ public class Inventory : MonoBehaviour, IDropHandler
             if (i.inventorySlotImage.sprite == spriteToCheck)
             {
                 duplicateFound = true;
-                MenuManager.Instance.HerbWallDuplicatePopup();
+                // MenuManager.Instance.HerbWallDuplicatePopup();
+                MenuManager.Instance.AlertMessage("herbWallDuplicateChosen");
                 break;
             }
             else
@@ -110,7 +111,8 @@ public class Inventory : MonoBehaviour, IDropHandler
             {
                 if (i.inventorySlotImage.sprite == spriteToUpdate)
                 {
-                    MenuManager.Instance.HerbWallDuplicatePopup();
+                    // MenuManager.Instance.HerbWallDuplicatePopup();
+                    MenuManager.Instance.AlertMessage("herbWallDuplicateChosen");
                 }
                 else
                 {

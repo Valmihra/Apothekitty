@@ -217,7 +217,7 @@ public class DialogueRunner : MonoBehaviour
                 // if the player has submitted the ailment and hasn't seen the next set of hints
                 else if (GameManager.Instance.ailmentSubmitted && notSeenDiagnosisSheetHint)
                 {
-                    SceneManager.Instance.GetDiagnosisSheet();
+                    SceneManager.Instance.GetTreatmentPlan();
                     notSeenDiagnosisSheetHint = false;
                     JumpNextDialogue(DialogueHolder.Instance.td_DiagnosisSheetIntroduction._dialogue);//GetDialogue()
                     
@@ -238,8 +238,9 @@ public class DialogueRunner : MonoBehaviour
                 {
                     CloseDialogueWindow();
                     justVisitedHerbWall = false;
-
-                    MenuManager.Instance.OpenTutorialPopup("finalPopup");
+					
+					// *TAG* - SEE IF WORKS HERE??
+                    MenuManager.Instance.OpenTutorialPopup("finalHerbWall");
                 }
             }
             else if (!GameManager.Instance.runningTutorial)
@@ -494,7 +495,38 @@ public class DialogueRunner : MonoBehaviour
 			}
 			else
 			{
-				return;
+				//(currentString.text.Contains("I haven't visited the herb wall in a while,")	// or 	// "Ah, this herb is"
+				if (currentDialogue == DialogueHolder.Instance.td_HerbWall._dialogue)
+				{
+					switch (currentString.text)
+					{
+						case "Let's see... I haven't visited the herb wall in a while, I wonder what's in here.":
+							// OPEN HERB WALL DRAWER 1
+							Debug.Log("--- OPENS DRAWER HERE, OR LETS PLAYER OPEN ONE (WOULD REQUIRE INTERACTION BLOCKERS ON THE REST OF THE OBJECTS IN THE SCENE FOR CLEANLINESS) ---");
+							break;
+						case "Ah, this herb is [insert chosen herb]! Each herb has a corresponding page in my botanical codex, which I can look at by hovering over the plant.":
+							// 
+							Debug.Log("--- SHOULD PROBABLY DEMONSTRATE THE HOVER FUNCTION HERE? ---");
+							break;
+						case "Hmm. I can't remember how this herb may affect my patient though. Let me just drag this down and check the herb compendium to be sure.":
+							// OPEN COMPENDIUM SLIDER
+							// HerbCompendiumController.Instance.TutorialOpenCompendium();
+							Debug.Log("--- SLIDES THE COMPENDIUM OPEN HERE ---");
+							break;
+						
+
+						default:
+							// 
+							Debug.Log("CONGRATS FOOL, YOU FUCKED IT <3");
+							break;
+					}
+
+					// OPEN HERB WALL DRAWER
+				}
+				else
+				{
+					return;
+				}
 			}
         }
     }

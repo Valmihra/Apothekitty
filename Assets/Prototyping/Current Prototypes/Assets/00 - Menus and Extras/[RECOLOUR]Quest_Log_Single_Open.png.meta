@@ -115,7 +115,7 @@ TextureImporter:
         width: 1409
         height: 2130
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -123,6 +123,48 @@ TextureImporter:
       bones: []
       spriteID: b89ac751eb074ea4a9015d7dba59c12d
       internalID: -985493744
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: '[RECOLOUR]Quest_Log_Single_Open_0'
+      rect:
+        serializedVersion: 2
+        x: 1186
+        y: 481
+        width: 582
+        height: 1789
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 73038bc30c81ef24ab63614eec241bd4
+      internalID: -853310721
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: '[RECOLOUR]Quest_Log_Single_Open_1'
+      rect:
+        serializedVersion: 2
+        x: 535
+        y: 540
+        width: 674
+        height: 589
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9f6997e60615c48499742075e21805e1
+      internalID: -534311018
       vertices: []
       indices: 
       edges: []
@@ -139,6 +181,8 @@ TextureImporter:
     secondaryTextures: []
     nameFileIdTable:
       Quest_Log_Single_Open_0: -985493744
+      '[RECOLOUR]Quest_Log_Single_Open_1': -534311018
+      '[RECOLOUR]Quest_Log_Single_Open_0': -853310721
   spritePackingTag: 
   pSDRemoveMatte: 0
   userData: 

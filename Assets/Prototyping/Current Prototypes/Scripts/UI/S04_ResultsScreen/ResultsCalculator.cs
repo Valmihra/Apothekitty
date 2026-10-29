@@ -128,11 +128,13 @@ public class ResultsCalculator : MonoBehaviour
         
         if (inventoryContentsOnSubmission.Count == 0)
         {
-            MenuManager.Instance.HerbWallNothingChosenToSubmitPopup();
+            // MenuManager.Instance.HerbWallNothingChosenToSubmitPopup();
+            MenuManager.Instance.AlertMessage("herbWallNothingChosen");
         }
         else if(inventoryContentsOnSubmission.Count == 1)
         {
-            MenuManager.Instance.HerbWallOneHerbChosenToSubmitPopup();
+            // MenuManager.Instance.HerbWallOneHerbChosenToSubmitPopup();
+            MenuManager.Instance.AlertMessage("herbWallOneHerbChosen");
         }
         else
         {
@@ -326,7 +328,7 @@ public class ResultsCalculator : MonoBehaviour
     {
         // Remove one from the number to adjust for the initial 0 value of a list
         maxNumberOfDailyClientResults = maxPatientsNumber;
-        Debug.Log("Max number of patients to see will be: " + maxNumberOfDailyClientResults);
+        // Debug.Log("Max number of patients to see will be: " + maxNumberOfDailyClientResults);
     }
 
     void CreateDailyTreatedPatientsList()
@@ -364,7 +366,7 @@ public class ResultsCalculator : MonoBehaviour
             dailyTreatedPatientsList.Add(f);
         }
         
-        Debug.Log("dailyTreatedPatientsList is " + dailyTreatedPatientsList.Count + " entries long.");
+        // Debug.Log("dailyTreatedPatientsList is " + dailyTreatedPatientsList.Count + " entries long.");
             
             return;
     }

@@ -144,6 +144,7 @@ public class SceneManager : MonoBehaviour
             firstVisitDesk = true;
             firstVisitHerbWall = true;
         }
+		
         // else
         // {
         //     Debug.Log("Debug- bools set.");
@@ -173,21 +174,36 @@ public class SceneManager : MonoBehaviour
 
         if (!GameManager.Instance.runningTutorial)
         {
-            GetDiagnosisSheet();
+            GetTreatmentPlan();
         }
 
 
     }
 
     // Enables the diagnosis sheet, fills it with the relevant information, and sends it to the front of the screen.
-    public void GetDiagnosisSheet()
+    public void GetTreatmentPlan()
     {
         UIManager.Instance.EnableUI(canvasGroupTreatmentPlan);
 
         canvasGroupTreatmentPlan.GetComponent<TreatmentPlanInteractables>().FillDiagnosisSheet();
         canvasGroupTreatmentPlan.GetComponent<RectTransform>().SetAsLastSibling();
-
-        // MenuManager.Instance.OpenTutorialPopup("diagnosisSheet");
+		
+		// Checks to see if needs to explain the more detailed treatment plan
+		if (DayManager.Instance.currentDayNumber == 1)
+		{
+			bool firstClientDay1 = GameManager.Instance.GetCuredPatients() < 1;
+			if (firstClientDay1)
+			{
+				// MenuManager.Instance.OpenTutorialPopup("diagnosisSheet");
+				Debug.Log("Should open expanded popup here");
+				MenuManager.Instance.OpenTutorialPopup("treatmentPlanExpanded");
+			}
+			else
+			{
+				Debug.Log("Bool firstClientDay1 is returning false. Expanded popup will not display.");
+			}
+		}
+        
     }
 
     public void SubmitDiagnosis()
@@ -325,11 +341,12 @@ public class SceneManager : MonoBehaviour
             UIManager.Instance.SpriteShift(switchDeskClientButton.GetComponent<Image>(), iconArrowUp.sprite);
             SetupUI(allCanvasesDesk);
 
-                if (firstVisitDesk)
+                if (GameManager.Instance.runningTutorial && firstVisitDesk)
                 {
                     DialogueRunner.Instance.GetDialogue("desk");
                     firstVisitDesk = false;
                 }
+
         }
         onDesk = !onDesk;
         

@@ -10,58 +10,31 @@ public class PatientLetter : MonoBehaviour
     public TMP_Text displayedPatientName;
     public TMP_Text displayedPatientSpecies;
     public TMP_Text displayedPatientLetterText;
-    // public TMP_Text displayedPatientExtras;
 
-
-    private Image sizeSelectionSmall;
+    /*private Image sizeSelectionSmall;
     private Image sizeSelectionMedium;
     private Image sizeSelectionLarge;
     
     private Image dietSelectionCarnivore;
     private Image dietSelectionOmnivore;
-    private Image dietSelectionHerbivore;
+    private Image dietSelectionHerbivore;*/
 
-    
+    // Reference to the parent objects for the size and diet icons on the patient form
     [SerializeField] private GameObject sizeSelectionIcons;
     [SerializeField] private GameObject dietSelectionIcons;
     
-    // public Image displayedPatientIcon;
-    
     private Vector2 patientLetterStartingPosition;
-    
-    /*private static PatientLetter _instance;
 
-    public static PatientLetter Instance
-    {
-        get
-        {
-            return _instance;
-        }
-    }
-
-    void Awake()
-    {
-        _instance = this;
-    }*/
     
     public void GetPatientLetterPosition()
     {
-        patientLetterStartingPosition = gameObject.transform.position;//new Vector2(transform.position.x, transform.position.y);
-        //Debug.Log(patientLetterStartingPosition); //gameObject.transform.position;
+        patientLetterStartingPosition = gameObject.transform.position;
     }
     
     public void ResetPatientLetterPosition()
     {
+		// *TAG* - Not resetting the whole letter here. Updated on Spawn patient?
         transform.position = patientLetterStartingPosition;
-        
-        
-        /*foreach (Transform child in sizeSelectionIcons)
-        {
-            if (child.GameObject.name.Contains("STATIC TXT - Size Options - "))
-            {
-                
-            }
-        }*/
     }
 
     void HideSelectionIcons()
@@ -80,6 +53,10 @@ public class PatientLetter : MonoBehaviour
                 GameObject dietIconToHide = GameObject.Find((nameToSearch + " - Selected").ToString());
                 dietIconToHide.GetComponent<Image>().enabled = false;
             }
+			else
+			{
+				Debug.Log("Error when trying to reset the selection icons on the Patient Form");
+			}
         }
     }
     
@@ -87,30 +64,21 @@ public class PatientLetter : MonoBehaviour
     {
         // Updates the text on the letter UI with the information from the specified SinglePatientData
         
-        // OLD VERSION
-        /*
-        displayedPatientName.text = data._patientName;
-        displayedPatientSpecies.text = data._patientSpecies;
-        displayedPatientExtras.text = data._patientExtras;
-        displayedPatientLetterText.text = data._patientLetterText;
-        */
-        
         // NEW VERSION
         HideSelectionIcons();
         
         displayedPatientName.text = data._patientName;
-        Debug.Log("Data in UpdateLetterDisplay received. Patient name is: " + displayedPatientName.text);
+        // Debug.Log("Data in UpdateLetterDisplay received. Patient name is: " + displayedPatientName.text);
         
         displayedPatientSpecies.text = data._patientSpecies;
         UpdatePatientSizeAndDiet(data._patientSize, data._patientDiet);
-        // displayedPatientExtras.text = data._patientExtras;
         displayedPatientLetterText.text = data._patientLetterText;
 
     }
 
     void UpdatePatientSizeAndDiet(string size, string diet)
     {
-        Debug.Log(size + ", " + diet);
+        // Debug.Log(size + ", " + diet);
         if (size == PatientData.Instance.sizeS || size == PatientData.Instance.sizeM || size == PatientData.Instance.sizeL)
         {
             //string nameToSearch = ("STATIC TXT - Size Options - " + size).ToString();
@@ -136,12 +104,4 @@ public class PatientLetter : MonoBehaviour
         // == PatientData.Instance.sizeS ? Small : PatientData.Instance.sizeM ? y : PatientData.Instance.sizeL ? y : "Failed";
         // if (size == PatientData.Instance.sizeS || )
     }
-    
-    /*void SpawnPatient()
-    {
-        // "spawns" the randomised patient, and updates the relevant scripts with their information.
-        
-        SceneManager.Instance.ShowPatient(displayedPatientIcon);
-        DialogueRunner.Instance.GetDialogue("patientArrive");
-    }*/
 }

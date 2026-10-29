@@ -230,7 +230,8 @@ public class TreatmentPlanInteractables : MonoBehaviour
                 
                 // (for now)
                 chosenDropdown.value = 0;
-                MenuManager.Instance.DiagnosisSheetCategoryDoubleUpPopup();
+                // MenuManager.Instance.DiagnosisSheetCategoryDoubleUpPopup();
+				MenuManager.Instance.AlertMessage("treatmentPlanCategoryDoubleUp");
                 
                 return;
             }
@@ -408,12 +409,14 @@ public class TreatmentPlanInteractables : MonoBehaviour
             }
             else
             {
-                MenuManager.Instance.DiagnosisSheetInvalidCombinationPopup();
+                // MenuManager.Instance.DiagnosisSheetInvalidCombinationPopup();
+				MenuManager.Instance.AlertMessage("treatmentPlanInvalidCombo");
             }
         }
         else
         {
-            MenuManager.Instance.DiagnosisSheetInvalidCombinationPopup();
+            // MenuManager.Instance.DiagnosisSheetInvalidCombinationPopup();
+				MenuManager.Instance.AlertMessage("treatmentPlanInvalidCombo");
         }
     }
 }
