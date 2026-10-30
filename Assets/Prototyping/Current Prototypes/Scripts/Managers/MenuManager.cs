@@ -159,38 +159,38 @@ public class MenuManager : MonoBehaviour
         OpenMenu(popupMenuCanvasGroup);
 
         if (GameManager.Instance.runningTutorial)
-		{
-			if (popupType == "initialTutorial")
-        	{
-				// FOR DEBUGGING EOMVP MENU EARLY: EndOfMVPMenu();
-            	// popupText = "Welcome to Apothekitty!\n\nAs the town healer, it's your job to carefully diagnose and treat your clients. \n\nClick on the <#8A1E1E>curtain</color> to receive your first client!";
-				List <string> infoToSend = new List <string> {"Welcome to Apothekitty!", "As the town healer, your task is to diagnose and treat all clients you face. Click the <#8A1E1E>curtain</color> to receive your first client!"};
-				popupSensor.SetupLongPopupText(infoToSend);
-        	}
-        	else if (popupType == "startPrompts")
-        	{
-         	   
-            	// popupText = "You'll find the patient form on your desk. Click the <#8A1E1E>arrows</color> in the bottom right to navigate between screens.\n\nIf you feel lost at any point, click the arrow by the quest log to see what you still need to do.";
-				// UIManager.Instance.HighlightCanvasElement("arrows");
-				// popupText = "A patient information sheet and treatment plan are provided on your workdesk below. To navigate around the shop, click the <#8A1E1E>arrows</color> on the bottom right.";
-				
-				List <string> infoToSend = new List <string> {"A patient information sheet and treatment plan are provided on your workdesk below. To navigate around the shop, click the <#8A1E1E>arrows</color> on the bottom right.", "To keep track of your tasks as a shopkeeper, a quest log is available in the pause menu."};
-				popupSensor.SetupLongPopupText(infoToSend);
-        	}
-        	else if (popupType == "initDeskPrompts")
-        	{
-            	// popupText = "Papers pile up quickly, but you can always click and drag things on your desk to keep it organised. \n\nTry moving those old notes to the bin.";
-				popupText = "Click and drag objects to keep your space organised. Try placing the paper into the bin.";
-        	}
-        	else if (popupType == "grimoire")
-        	{
-				// List <string> infoToSend = new List <string> {"Your Grimoire acts as your reference point for ailments.",  " Pay close attention to each ailment's description and compare it to your client's symptoms.", "Once you think you've found the correct diagnosis, use the <#8A1E1E>stamp</color> on the page you want to choose."};
-            	// *TAG* - WHAT IF ADD A NEW POPUP TYPE WITH IMAGES?
-				List <string> infoToSend = new List <string> {"Your Grimoire acts as your library of various ailments. It is your duty to analyse your client’s symptoms to confirm a diagnosis.", "To diagnose your patient correctly, pay close attention to each ailment's description and compare it to the symptoms your patient is describing on the Patient Sheet.", "Once you believe you've found the correct diagnosis, use the stamp to select the current page."};
-				popupSensor.SetupLongPopupText(infoToSend);
-			
-				}
-        	/*else if (popupType == "diagnosisSheet")
+        {
+            if (popupType == "initialTutorial")
+            {
+                // FOR DEBUGGING EOMVP MENU EARLY: EndOfMVPMenu();
+                // popupText = "Welcome to Apothekitty!\n\nAs the town healer, it's your job to carefully diagnose and treat your clients. \n\nClick on the <#8A1E1E>curtain</color> to receive your first client!";
+                List<string> infoToSend = new List<string> { "Welcome to Apothekitty!", "As the town healer, your task is to diagnose and treat all clients you face. Click the <#8A1E1E>curtain</color> to receive your first client!" };
+                popupSensor.SetupLongPopupText(infoToSend);
+            }
+            else if (popupType == "startPrompts")
+            {
+
+                // popupText = "You'll find the patient form on your desk. Click the <#8A1E1E>arrows</color> in the bottom right to navigate between screens.\n\nIf you feel lost at any point, click the arrow by the quest log to see what you still need to do.";
+                // UIManager.Instance.HighlightCanvasElement("arrows");
+                // popupText = "A patient information sheet and treatment plan are provided on your workdesk below. To navigate around the shop, click the <#8A1E1E>arrows</color> on the bottom right.";
+
+                List<string> infoToSend = new List<string> { "A patient information sheet and treatment plan are provided on your workdesk below. To navigate around the shop, click the <#8A1E1E>arrows</color> on the bottom right.", "To keep track of your tasks as a shopkeeper, a quest log is available in the pause menu." };
+                popupSensor.SetupLongPopupText(infoToSend);
+            }
+            else if (popupType == "initDeskPrompts")
+            {
+                // popupText = "Papers pile up quickly, but you can always click and drag things on your desk to keep it organised. \n\nTry moving those old notes to the bin.";
+                popupText = "Click and drag objects to keep your space organised. Try placing the paper into the bin.";
+            }
+            else if (popupType == "grimoire")
+            {
+                // List <string> infoToSend = new List <string> {"Your Grimoire acts as your reference point for ailments.",  " Pay close attention to each ailment's description and compare it to your client's symptoms.", "Once you think you've found the correct diagnosis, use the <#8A1E1E>stamp</color> on the page you want to choose."};
+                // *TAG* - WHAT IF ADD A NEW POPUP TYPE WITH IMAGES?
+                List<string> infoToSend = new List<string> { "Your Grimoire acts as your library of various ailments. It is your duty to analyse your client’s symptoms to confirm a diagnosis.", "To diagnose your patient correctly, pay close attention to each ailment's description and compare it to the symptoms your patient is describing on the Patient Sheet.", "Once you believe you've found the correct diagnosis, use the stamp to select the current page." };
+                popupSensor.SetupLongPopupText(infoToSend);
+
+            }
+            /*else if (popupType == "diagnosisSheet")
         	{
             	// popupMenuCanvasGroup.transform.position = movedUpPosition;
             	UIManager.Instance.HighlightCanvasElement("modifiers");
@@ -205,47 +205,49 @@ public class MenuManager : MonoBehaviour
             	diagnosisSheetPopupActive = false;
             	popupText = "For extreme cases or large clients, you can strengthen the treatment with the <b>enhancer</b>. You can also choose the <b>inverter</b> to achieve the opposite effect, if the description calls for it.\n\nClick <b>submit treatment plan</b> when you're ready.";
         	}*/
-        	else if (popupType == "toHerbWall")
-        	{
-            	// popupText = "Now that you've chosen a treatment plan, you can access your herb stores to create your treatment.\n\nClick the new arrow in the bottom right to navigate to the <#8A1E1E>herb wall</color>.";
-				List <string> infoToSend = new List <string> {"You have completed your first treatment plan! Now, you need to collect herbs that best fit both the personal needs and ailment of your client.", "The new arrow on the bottom right will navigate you to the herb wall."};
-				popupSensor.SetupLongPopupText(infoToSend);
-        	}
-			else if (popupType == "finalHerbWall")
-			{
-				List <string> infoToSend = new List <string> {"Select herbs by dragging and dropping them onto your inventory tray. To remove a selected herb, simply drag it to the bin", "Once you're done, click 'submit treatment' to hand your recipe to the patient.", "Make sure you’ve made the correct choice, as there's no going back once you hand it in!", "If you're feeling overwhelmed, and need a refresher, there are tutorials in available in the pause menu."};
-				popupSensor.SetupLongPopupText(infoToSend);
-			}
-			else if (popupType == "endOfMVP")
-			{
-				// popupMenuCanvasGroup.transform.position = movedDownPosition;
-				List <string> infoToSend = new List <string> {"And that's all we've got right now!", "Thank you for taking the time to play the current version of our game. \n\nAs a reward for playing to the end, here's a review of your results!", "Click the exit button to go back to the main menu at any time"};
-				
-				popupSensor.SetupLongPopupText(infoToSend);
-			}
-			else if (popupSensor.readingLongPopup)
-			{
-				popupText = popupSensor.longPopupText;
-				if (popupText.Contains("<#8A1E1E>"))
-				{
-					UIManager.Instance.HighlightCanvasElement("ailmentIcon");
-				}
-			}
-        	else if (popupType == "No data")
-        	{
-	    	    popupText = "No game file exists that can be loaded.";
-        	}
-        	else
-        	{
-				// *TAG* - THIS IS A DOUBLE-UP NOW
-            	popupText = "If you forget your chosen treatment plan, you can click the arrow in the bottom right to navigate to the desk.\n\nOnce you're done, click <b>'submit treatment'</b> to hand your recipe to the client.\n\nMake sure you're 100% certain before submitting, as there's no going back!";// how to submit and view results
-        	}
-		}
+            else if (popupType == "toHerbWall")
+            {
+                // popupText = "Now that you've chosen a treatment plan, you can access your herb stores to create your treatment.\n\nClick the new arrow in the bottom right to navigate to the <#8A1E1E>herb wall</color>.";
+                List<string> infoToSend = new List<string> { "You have completed your first treatment plan! Now, you need to collect herbs that best fit both the personal needs and ailment of your client.", "The new arrow on the bottom right will navigate you to the herb wall." };
+                popupSensor.SetupLongPopupText(infoToSend);
+            }
+            else if (popupType == "finalHerbWall")
+            {
+                List<string> infoToSend = new List<string> { "Select herbs by dragging and dropping them onto your inventory tray. To remove a selected herb, simply drag it to the bin", "Once you're done, click 'submit treatment' to hand your recipe to the patient.", "Make sure you’ve made the correct choice, as there's no going back once you hand it in!", "If you're feeling overwhelmed, and need a refresher, there are tutorials in available in the pause menu." };
+                popupSensor.SetupLongPopupText(infoToSend);
+            }
+            else if (popupType == "endOfMVP")
+            {
+                // popupMenuCanvasGroup.transform.position = movedDownPosition;
+                List<string> infoToSend = new List<string> { "And that's all we've got right now!", "Thank you for taking the time to play the current version of our game. \n\nAs a reward for playing to the end, here's a review of your results!", "Click the exit button to go back to the main menu at any time" };
+
+                popupSensor.SetupLongPopupText(infoToSend);
+            }
+            else if (popupSensor.readingLongPopup)
+            {
+                popupText = popupSensor.longPopupText;
+                if (popupText.Contains("<#8A1E1E>"))
+                {
+                    UIManager.Instance.HighlightCanvasElement("ailmentIcon");
+                }
+            }
+            else if (popupType == "No data")
+            {
+                popupText = "No game file exists that can be loaded.";
+            }
+            else
+            {
+                // *TAG* - THIS IS A DOUBLE-UP NOW
+                popupText = "If you forget your chosen treatment plan, you can click the arrow in the bottom right to navigate to the desk.\n\nOnce you're done, click <b>'submit treatment'</b> to hand your recipe to the client.\n\nMake sure you're 100% certain before submitting, as there's no going back!";// how to submit and view results
+            }
+        }
         else
-		{
-			// So far, only other text to popup like this is for treatment plan - extended, so:
-			List <string> infoToSend = new List <string> {"As you've likely noticed, sometimes ailments can affect both the mind <i>and</i> the body. \n\nIn cases where the grimoire recommends treating for two things, you can choose a primary <i>and</i> secondary treatment.", "The secondary treatment works exactly the same as the primary one -- choose the desired effect and the area to target -- just keep in mind that you can only use each category once. \n\nFor example, if your primary treatment is <i>'ease mind'</i>, you cannot use <i>'ease'</i> or <i>'mind'</i> in your secondary treatment.", "From now on, there is a possibility that you may need to treat both areas for each patient, so stay vigilant!"};
-			popupSensor.SetupLongPopupText(infoToSend);
+        {
+            // So far, only other text to popup like this is for treatment plan - extended, so:
+            // List <string> infoToSend = new List <string> {"As you've likely noticed, sometimes ailments can affect both the mind <i>and</i> the body. \n\nIn cases where the grimoire recommends treating for two things, you can choose a primary <i>and</i> secondary treatment.", "The secondary treatment works exactly the same as the primary one -- choose the desired effect and the area to target -- just keep in mind that you can only use each category once. \n\nFor example, if your primary treatment is <i>'ease mind'</i>, you cannot use <i>'ease'</i> or <i>'mind'</i> in your secondary treatment.", "From now on, there is a possibility that you may need to treat both areas for each patient, so stay vigilant!"};
+            // popupSensor.SetupLongPopupText(infoToSend);
+
+            popupText = "POPUP HERE.";
 		}
         popupTextBox.text = popupText;
 

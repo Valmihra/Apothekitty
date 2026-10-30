@@ -17,12 +17,19 @@ public class BotanicalCodexDisplay : MonoBehaviour
     [SerializeField] private GameObject sizeIconMedium;
     [SerializeField] private GameObject sizeIconLarge;
     
-    [SerializeField] private GameObject dietIconCarnivore;
-    [SerializeField] private GameObject dietIconHerbivore;
-    [SerializeField] private GameObject dietIconOmnivore;
+    [SerializeField] private GameObject dietIconCarnivore;  // 0
+    [SerializeField] private GameObject dietIconHerbivore;  // 1
+    [SerializeField] private GameObject dietIconOmnivore;   // 2
 
-	[SerializeField] private Image sizeIconDeactivated;
-	[SerializeField] private Image sizeIconActivated;
+	[SerializeField] private Sprite sizeIconDeactivated;
+	[SerializeField] private Sprite sizeIconActivated;
+
+    private Dictionary<int, BotanicalCodexIconUpdater> iconUpdaterDictionary;
+
+    // [SerializeField] private Sprite dietIconActivated;
+    // [SerializeField] private Sprite dietIconDeactivated;
+
+
 
     private List<GameObject> sizeIconList;
     private List<GameObject> dietIconList;
@@ -52,6 +59,16 @@ public class BotanicalCodexDisplay : MonoBehaviour
             dietIconList.Add(dietIconHerbivore);
             dietIconList.Add(dietIconOmnivore);
 
+        iconUpdaterDictionary = new Dictionary<int, BotanicalCodexIconUpdater>();
+            iconUpdaterDictionary[0] = dietIconCarnivore.GetComponent<BotanicalCodexIconUpdater>();
+            iconUpdaterDictionary[0].InitialiseBotanicalCodexIconUpdater();
+
+            iconUpdaterDictionary[1] = dietIconHerbivore.GetComponent<BotanicalCodexIconUpdater>();
+            iconUpdaterDictionary[1].InitialiseBotanicalCodexIconUpdater();
+
+            iconUpdaterDictionary[2] = dietIconOmnivore.GetComponent<BotanicalCodexIconUpdater>();
+            iconUpdaterDictionary[2].InitialiseBotanicalCodexIconUpdater();
+
 		ResetCodexIconDisplay();
     }
 
@@ -59,17 +76,22 @@ public class BotanicalCodexDisplay : MonoBehaviour
 	{
 		foreach (GameObject s in sizeIconList)
 		{
-			Image tempImage = s.GetComponent<Image>();
-			// UIManager.Instance.SpriteShift(sizeIconDeactivated, tempImage.sprite);// s.GetComponent<Image>().sprite);
-			UIManager.Instance.SpriteShift(tempImage, sizeIconDeactivated.sprite);
+            if (s.TryGetComponent<Image>(out Image tempImage))
+			{
+                UIManager.Instance.SpriteShift(tempImage, sizeIconDeactivated);
+            }
 		}
 
-		foreach (GameObject d in dietIconList)
-		{
-			// For now, just deactivating, but in future, set all to black and white via shader?
-			// d.SetActive(false);
-			UpdateShader(d); //, desaturatedIconShader);
-		}
+        for (int i = 0; i < dietIconList.Count; i++)
+        // foreach (GameObject d in dietIconList)
+        {
+            // int index = 
+            // if (d.TryGetComponent<BotanicalCodexIconUpdater>())
+            // {
+            // UIManager.Instance.SpriteShift(tempImage, dietIconDeactivated);
+            iconUpdaterDictionary[i].ResetBotanicalCodexIcon();
+            // }
+        }
 	}
 
 	void UpdateCodexIconDisplay(AllHerbsData.SingleHerb herb)
@@ -78,15 +100,14 @@ public class BotanicalCodexDisplay : MonoBehaviour
         {
             if (herb._sizes[i] == true)
             {
-                // sizeIconList[i].SetActive(true);
-				UIManager.Instance.SpriteShift(sizeIconList[i].GetComponent<Image>(), sizeIconActivated.sprite);
+				UIManager.Instance.SpriteShift(sizeIconList[i].GetComponent<Image>(), sizeIconActivated);
             }
 
             if (herb._diets[i] == true)
             {
-				// For now, just reactivating, but in future, set to colour via shader?
-                // dietIconList[i].SetActive(true);
-				UpdateShader(dietIconList[i]);// , standardIconShader);
+                int index = sizeIconList.IndexOf(sizeIconList[i]);
+                // UIManager.Instance.SpriteShift(sizeIconList[i].GetComponent<Image>(), dietIconActivated);
+                iconUpdaterDictionary[index].ToggleBotanicalCodexIcon();
             }
         }
 	}

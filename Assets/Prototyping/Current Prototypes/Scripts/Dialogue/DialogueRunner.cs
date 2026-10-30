@@ -496,7 +496,7 @@ public class DialogueRunner : MonoBehaviour
 			else
 			{
 				//(currentString.text.Contains("I haven't visited the herb wall in a while,")	// or 	// "Ah, this herb is"
-				if (currentDialogue == DialogueHolder.Instance.td_HerbWall._dialogue)
+				/*if (currentDialogue == DialogueHolder.Instance.td_HerbWall._dialogue)
 				{
 					switch (currentString.text)
 					{
@@ -522,11 +522,11 @@ public class DialogueRunner : MonoBehaviour
 					}
 
 					// OPEN HERB WALL DRAWER
-				}
-				else
-				{
+				}*/
+				//else
+				//{
 					return;
-				}
+				//}
 			}
         }
     }

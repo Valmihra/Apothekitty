@@ -216,19 +216,12 @@ public class GameManager : MonoBehaviour
 
     public void DebugJumpToDayNumber(int dayNumber)
     {
+        runningTutorial = false;
+
         CreateNewGameData();
         InitialiseAllGameData();
         DayManager.Instance.JumpToDayNumber(dayNumber);
         OnNewDay();
-        
-        if (runningTutorial)
-        {
-            BeginTutorial();
-        }
-        else
-        {
-            Debug.Log("Skipping tutorial for debug purposes.");
-        }
     }
     
     

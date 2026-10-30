@@ -295,6 +295,7 @@ public class PatientData : MonoBehaviour
         ferguson.SetPatientIcon();
             allPatientsList.Add(ferguson);
 
+        // letter text not updating. check reset?
         SinglePatientData peridot = new SinglePatientData();
         peridot.SetPatientInformation("Peridot", "Pangolin");//, "Medium, Omnivore");
         peridot.SetPatientExtras(s, sizeM);

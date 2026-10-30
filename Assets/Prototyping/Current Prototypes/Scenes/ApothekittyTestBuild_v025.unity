@@ -8065,8 +8065,8 @@ MonoBehaviour:
   dietIconCarnivore: {fileID: 1402424921}
   dietIconHerbivore: {fileID: 1268988813}
   dietIconOmnivore: {fileID: 1110130912}
-  sizeIconDeactivated: {fileID: 0}
-  sizeIconActivated: {fileID: 0}
+  sizeIconDeactivated: {fileID: -1336358278, guid: 5723d14c36610fe42a2faaee2236132b, type: 3}
+  sizeIconActivated: {fileID: -628496297, guid: 5723d14c36610fe42a2faaee2236132b, type: 3}
   standardIconShader: {fileID: 0}
   desaturatedIconShader: {fileID: 0}
 --- !u!114 &302037358
@@ -27716,6 +27716,7 @@ GameObject:
   - component: {fileID: 1110130915}
   - component: {fileID: 1110130914}
   - component: {fileID: 1110130913}
+  - component: {fileID: 1110130916}
   m_Layer: 5
   m_Name: o
   m_TagString: Untagged
@@ -27781,6 +27782,20 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1110130916
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1110130912}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4f39da01c89f6374e9e6e09f78c6ac26, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  botanicalCodexIconDesaturated: {fileID: -1054257331, guid: 579b111f4d6506e4e9c6c679982b4a8a, type: 3}
+  botanicalCodexIconColoured: {fileID: 2074807209, guid: e8ea56d895d8fc646bd7c6aa82ace855, type: 3}
 --- !u!1 &1128831703
 GameObject:
   m_ObjectHideFlags: 0
@@ -31074,6 +31089,7 @@ GameObject:
   - component: {fileID: 1268988814}
   - component: {fileID: 1268988816}
   - component: {fileID: 1268988815}
+  - component: {fileID: 1268988817}
   m_Layer: 5
   m_Name: h
   m_TagString: Untagged
@@ -31139,6 +31155,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1268988813}
   m_CullTransparentMesh: 1
+--- !u!114 &1268988817
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1268988813}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4f39da01c89f6374e9e6e09f78c6ac26, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  botanicalCodexIconDesaturated: {fileID: -454183317, guid: 579b111f4d6506e4e9c6c679982b4a8a, type: 3}
+  botanicalCodexIconColoured: {fileID: 1730959158, guid: e8ea56d895d8fc646bd7c6aa82ace855, type: 3}
 --- !u!1 &1273329748
 GameObject:
   m_ObjectHideFlags: 0
@@ -34628,6 +34658,7 @@ GameObject:
   - component: {fileID: 1402424922}
   - component: {fileID: 1402424924}
   - component: {fileID: 1402424923}
+  - component: {fileID: 1402424925}
   m_Layer: 5
   m_Name: c
   m_TagString: Untagged
@@ -34693,6 +34724,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1402424921}
   m_CullTransparentMesh: 1
+--- !u!114 &1402424925
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1402424921}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4f39da01c89f6374e9e6e09f78c6ac26, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  botanicalCodexIconDesaturated: {fileID: -1985092694, guid: 579b111f4d6506e4e9c6c679982b4a8a, type: 3}
+  botanicalCodexIconColoured: {fileID: 1996559242, guid: e8ea56d895d8fc646bd7c6aa82ace855, type: 3}
 --- !u!1 &1412081973
 GameObject:
   m_ObjectHideFlags: 0
