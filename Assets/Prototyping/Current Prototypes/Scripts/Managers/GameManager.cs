@@ -6,7 +6,6 @@ using UnityEngine.UI;
 public class GameManager : MonoBehaviour
 {
     // game states
-    //private bool isPaused;
     public bool quitting {get; private set;}
 	public bool isMVP {get; private set;}
     public bool onMainMenu;
@@ -21,7 +20,6 @@ public class GameManager : MonoBehaviour
     public bool ailmentSubmitted;
     public bool diagnosisSubmitted;
     public bool herbsSubmitted;
-    //public bool onLastClientOfDay;
     
     [SerializeField] private GameObject tutorialItemsPrefab;
     [SerializeField] private Canvas tutorialItemControllerParentCanvas;
@@ -29,7 +27,6 @@ public class GameManager : MonoBehaviour
     
     public DayTrigger curtainAccess;
     private TreatmentPlanInteractables treatmentPlanInteractables;
-    // private ResultsCalculator resultsCalculator;
 
 
 	private GameData _gameData;
@@ -44,46 +41,23 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    /*  GAME MANAGER NEEDS
-        ------------------
-        
-        PLAY GAME:
-        ----------
-            NEW GAME 
-                STARTS WITH TUTORIAL
-            LOAD GAME / CONTINUE
-                READS FROM JSON (NOWHERE NEAR IMPLEMENTED YET OOF)
-                (on load, start at beginning of that day? or by client??)
-        
-        PAUSE GAME
-        ----------
-            PAUSE MENU
-
-        SAVE GAME
-        ----------
-            (at end of days? (thinking on result screen? what does everyone else think?))
-
-        QUIT GAME
-        ----------
-            ,, quits
-        
-     */
+    // ---------------------------------
+    //      ON RUNTIME
+    // ---------------------------------
 
     void Awake()
     {
         _instance = this;
-        
 
-        // links the manager to the diagnosis sheet script
-        treatmentPlanInteractables = FindObjectOfType<TreatmentPlanInteractables>();      // should only ever be one in the game, but might be better way to do this. maybe search for all components in scene instead and delete any not on Constant UI?
-        // resultsCalculator = FindObjectOfType<ResultsCalculator>();
+        treatmentPlanInteractables = FindObjectOfType<TreatmentPlanInteractables>();
 
         ResetGameStatusBools();
     }
 
-    // GameManager should be first script to run
+    
     void Start()
     {
+        // GameManager should be first script to run
         Debug.Log("Starting game at Main Menu.");
 
         FirstOpenGame();
@@ -104,8 +78,6 @@ public class GameManager : MonoBehaviour
 
     void InitialiseAllGameData()
     {
-		// HerbCompendiumController mockupController = FindObjectOfType<HerbCompendiumController>();
-        
         // Creates all data required to run the game
         PatientData.Instance.InitialisePatientLetter();
         AilmentData.Instance.InitialiseAilmentData();
@@ -129,12 +101,7 @@ public class GameManager : MonoBehaviour
             tutorialSpecificUI.GetComponent<RectTransform>().SetAsLastSibling();
 			TutorialItemController.Instance.InitialiseTutorialItemsDesk();
 		}
-        /*else
-        {
-            TutorialItemController.Instance.DebugDestroyTutorialItems();
-        }*/
-        
-
+        // else check and delete?
     }
 
     void ResetGameElementsOnNewDay()
@@ -167,14 +134,12 @@ public class GameManager : MonoBehaviour
         treatmentPlanInteractables.ResetDiagnosisSheet();
             
         // Resets Herb Wall UI
-        // HerbCompendiumData.Instance.ResetHerbalistGuide();           *** RESET LEAFLETS NOW!!!
         HerbCompendiumController.Instance.ResetCompendiumLeaflets();
         DrawerController.Instance.ResetHerbDrawerIcons();
         Inventory.Instance.ResetInventory();
 
 
         DialogueRunner.Instance.ResetDialogueRunner();
-        // DialogueRunner.Instance.FixDialogueBools();         //UIManager / ScreenNav - .ResetCanvasLocations         ? maybe ?
     }
     
     // Resets the scene entirely.
@@ -194,7 +159,7 @@ public class GameManager : MonoBehaviour
     // ---------------------------------
     //      SWITCHING BETWEEN DAYS
     // ---------------------------------
-	public void StartDay()
+	public void StartDay()      // WHERE IS THIS CALLED FROM?
 	{
 		SceneManager.Instance.ResetScene();
 		if (runningTutorial)
@@ -362,16 +327,42 @@ public class GameManager : MonoBehaviour
     
     public void RestartLevel()
     {
+        // Maybe void GetInformationForDay(DayManager.Instance.currentDayNumber) ?
+
+
         // Reset the level so that the player can start the current day again
         Debug.Log("Resetting the current level...");
-        OnNewDay();
+            // doesn't currently account for all elements, since dialogue and popups aren't aligning on reset!!
 
         if (runningTutorial)
         {
-            TutorialItemController.Instance.ResetTutorialItemsDesk();
-            BeginTutorial();
+            // shopIsClosed = true;
+            // canOpenShop = false;
+            DialogueRunner.Instance.InitialiseDialogueRunner();
+            DialogueRunner.Instance.ResetDialogueRunner();
+            // MenuManager.Instance
+
+            GameObject targetController = GameObject.Find("Panel - Tutorial Objects(Clone)");
+            
+            if (targetController != null)
+            {
+                Debug.Log("Controller found when trying to reset. Deleting now.");
+                Destroy(targetController);
+            }
+            else
+            {
+                Debug.Log("No controller found on reset.");
+            }
+
+            // Maybe void InstantiateTutorialItems()        ?
+            GameObject tutorialSpecificUI = Instantiate(tutorialItemsPrefab, tutorialItemControllerParentCanvas.transform);
+            tutorialSpecificUI.GetComponent<RectTransform>().SetAsLastSibling();
+            TutorialItemController.Instance.InitialiseTutorialItemsDesk();
+
+            // BeginTutorial();
+            
         }
-        
+        OnNewDay(); 
     }
 
     public void SaveGame()

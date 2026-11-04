@@ -33,21 +33,17 @@ public class QuestLog : MonoBehaviour
 
     //[SerializeField] 
     public GameObject questLogExpandedDisplay;
-    private QuestLogSlider questLogSliderReference;
+    // private QuestLogSlider questLogSliderReference;
     
     
     // Start is called before the first frame update
     void Start()
     {
-        // toggleQuestLog.onClick.AddListener(delegate { ToggleQuestLog(); });
-        questLogSliderReference = GetComponent<QuestLogSlider>();
-        questLogSliderReference.InitialiseSlider();
-        questLogSliderReference.SetLog(this);
+        //questLogSliderReference = GetComponent<QuestLogSlider>();
+        //questLogSliderReference.InitialiseSlider();
+        //questLogSliderReference.SetLog(this);
         
         questLogExpandedDisplay.SetActive(false);
-        //UIManager.
-        //ResetQuestLog
-        //ResetQuestLog();
 
     }
 
@@ -68,9 +64,7 @@ public class QuestLog : MonoBehaviour
 
     void StartLevelQuestLog()
     {
-        //active = true;
-        questLogSliderReference.ResetSliderValue();
-        // ToggleQuestLog();
+        // questLogSliderReference.ResetSliderValue();
     }
 
     void SetColour(Color colour, TMP_Text text)

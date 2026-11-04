@@ -8,6 +8,15 @@ public class _PrototypeCursor : MonoBehaviour// , IPointerDownHandler, IPointerU
 {
     private Color defaultColour;
     private Color clickColour;
+
+    //public Sprite defaultSprite;
+    //public Sprite clickSprite;
+
+    public Texture2D defaultCursor;
+    public Texture2D clickCursor;
+
+    public Vector2 cursorPosition = Vector2.zero;
+    public CursorMode cursorMode = CursorMode.Auto;
     
     private GameObject mouseObject;
     private Image mouseImage;
@@ -30,17 +39,18 @@ public class _PrototypeCursor : MonoBehaviour// , IPointerDownHandler, IPointerU
     void Awake()
     {
         _instance = this;
-        InitialiseCursor();
+        // InitialiseCursor();
     }
     
-    public void InitialiseCursor()
+    /*public void InitialiseCursor()
     {
         mouseObject = this.gameObject;
         mouseImage = GetComponent<Image>();
 
-        clickColour = new Color(1f, 1f, 1f);
-        if (ColorUtility.TryParseHtmlString(colourCode, out defaultColour))
+        defaultColour = new Color(1f, 1f, 1f);
+        if (ColorUtility.TryParseHtmlString(colourCode, out Color newColour))
         {
+            clickColour = newColour;
             mouseImage.color = defaultColour;
         }
 
@@ -66,7 +76,7 @@ public class _PrototypeCursor : MonoBehaviour// , IPointerDownHandler, IPointerU
 
     public void ToggleCursorType()
     {
-        Debug.Log("is cursor visible?" + IsCursorVisible());
+        Debug.Log("is cursor visible? " + IsCursorVisible());
         
         if (IsCursorVisible())
         {
@@ -82,12 +92,14 @@ public class _PrototypeCursor : MonoBehaviour// , IPointerDownHandler, IPointerU
     
     void HideUniqueCursor()
     {
+        Debug.Log("Hiding unique cursor...");
         mouseObject.SetActive(false);
         uniqueCursorActive = false;
     }
 
     void ShowUniqueCursor()
     {
+        Debug.Log("Showing unique cursor...");
         mouseObject.SetActive(true);
         uniqueCursorActive = true;
     }
@@ -109,7 +121,7 @@ public class _PrototypeCursor : MonoBehaviour// , IPointerDownHandler, IPointerU
             mouseImage.color = defaultColour;
         }
     }
-    */
+    *
     
     // *TAG* - PROTOTYPE CURSOR EVENT
     public void QuickClick()
@@ -134,5 +146,27 @@ public class _PrototypeCursor : MonoBehaviour// , IPointerDownHandler, IPointerU
     {
         bool cursorCheck = Cursor.visible == true ? true : false; //Cursor.lockState == CursorLockMode.None ? true : false;
         return cursorCheck;
+    }*/
+
+
+    void Start()
+    {
+        //defaultCursor = defaultSprite.texture;
+        //clickCursor = clickSprite.texture;
+
+        Cursor.SetCursor(defaultCursor, cursorPosition, cursorMode);
+    }
+
+    void Update()
+    {
+        if (Input.GetMouseButtonDown(0))
+        {
+            Cursor.SetCursor(clickCursor, cursorPosition, cursorMode);
+        }
+
+        if (Input.GetMouseButtonUp(0))
+        {
+            Cursor.SetCursor(defaultCursor, cursorPosition, cursorMode);
+        }
     }
 }

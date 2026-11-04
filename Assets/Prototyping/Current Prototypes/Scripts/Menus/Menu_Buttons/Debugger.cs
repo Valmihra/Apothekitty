@@ -32,6 +32,6 @@ public class Debugger : MonoBehaviour
 
     void ToggleCursor()
     {
-        _PrototypeCursor.Instance.ToggleCursorType();
+        // _PrototypeCursor.Instance.ToggleCursorType();
     }
 }

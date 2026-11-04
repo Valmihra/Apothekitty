@@ -66,10 +66,10 @@ public class DialogueRunner : MonoBehaviour
     public void InitialiseDialogueRunner()
     {
         // Debug.Log("Resetting DialogueRunner...");
-        FixDialogueBools();
+        // FixDialogueBools();
         
-        introductionComplete = false;
-        firstDialogueComplete = false;
+        // introductionComplete = false;
+        // firstDialogueComplete = false;
 
         notSeenDeskHint = true;
         firstVisitDesk = false;
@@ -89,7 +89,9 @@ public class DialogueRunner : MonoBehaviour
 
     public void FixDialogueBools()
     {
-        UIManager.Instance.DisableUI(dialogueBox);
+        Debug.Log("Should be hiding now...");
+        // UIManager.Instance.DisableUI(dialogueBox);
+        dialogueBox.gameObject.SetActive(false);
         currentLineNumber = 0;
         
 		clientIsSpeaking = false;
@@ -261,7 +263,8 @@ public class DialogueRunner : MonoBehaviour
     void CloseDialogueWindow()
     {
         // Debug.Log("Closing dialogue window.");
-        UIManager.Instance.DisableUI(dialogueBox);
+        // UIManager.Instance.DisableUI(dialogueBox);
+        dialogueBox.gameObject.SetActive(false);
         dialogueSet = false;
         currentLineNumber = 0;
 
@@ -378,7 +381,8 @@ public class DialogueRunner : MonoBehaviour
         dialogueSet = true;
         currentLineNumber = 0;
 
-        UIManager.Instance.EnableUI(dialogueBox);
+        // UIManager.Instance.EnableUI(dialogueBox);
+        dialogueBox.gameObject.SetActive(true);
     }
 
     /*private string GetSpeakerName(DialogueHolder.DialogueSnippet snippet)
@@ -463,7 +467,8 @@ public class DialogueRunner : MonoBehaviour
         }
         
         dialogueSet = true;
-        UIManager.Instance.EnableUI(dialogueBox);
+        // UIManager.Instance.EnableUI(dialogueBox);
+        dialogueBox.gameObject.SetActive(true);
         RunDialogue();
     }
 

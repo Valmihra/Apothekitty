@@ -164,9 +164,9 @@ TextureImporter:
       name: '[RECOLOUR]Quest_Log_Single_Closed_0'
       rect:
         serializedVersion: 2
-        x: 997
+        x: 1097
         y: 1671
-        width: 288
+        width: 80
         height: 333
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
