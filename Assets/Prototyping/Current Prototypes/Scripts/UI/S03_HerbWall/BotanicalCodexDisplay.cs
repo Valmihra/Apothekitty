@@ -7,11 +7,9 @@ using TMPro;
 public class BotanicalCodexDisplay : MonoBehaviour
 {
     public CanvasGroup botanicalCodexCanvasGroup;
-    private Vector2 botanicalCodexStoredPosition;
     
     [SerializeField] private TMP_Text botanicalCodexDisplayedHerbName;
     [SerializeField] private TMP_Text botanicalCodexDisplayedHerbDescription;
-    [SerializeField] private TMP_Text botanicalCodexDisplayedHerbExtras;	// *TAG* - DELETE ME!
 
     [SerializeField] private GameObject sizeIconSmall;
     [SerializeField] private GameObject sizeIconMedium;
@@ -45,8 +43,6 @@ public class BotanicalCodexDisplay : MonoBehaviour
     {
         botanicalCodexCanvasGroup.gameObject.SetActive(false);
         //UIManager.Instance.DisableUI(botanicalCodexCanvasGroup);
-        RectTransform rectTransform = botanicalCodexCanvasGroup.GetComponent<RectTransform>();
-        botanicalCodexStoredPosition = rectTransform.anchoredPosition;
 
 
         sizeIconList = new List<GameObject>();
@@ -82,8 +78,7 @@ public class BotanicalCodexDisplay : MonoBehaviour
             }
 		}
 
-        for (int i = 0; i < dietIconList.Count; i++)
-        // foreach (GameObject d in dietIconList)
+        for (int i = 0; i < dietIconList.Count; i++)    // foreach (GameObject d in dietIconList)
         {
             // int index = 
             // if (d.TryGetComponent<BotanicalCodexIconUpdater>())
@@ -96,17 +91,20 @@ public class BotanicalCodexDisplay : MonoBehaviour
 
 	void UpdateCodexIconDisplay(AllHerbsData.SingleHerb herb)
 	{
+        // *TAG* - Implement diet code for sizes, too!
+
 		for (int i = 0; i < herb._sizes.Count; i++)
         {
             if (herb._sizes[i] == true)
             {
+                // Finds the correct size icon and toggles it
 				UIManager.Instance.SpriteShift(sizeIconList[i].GetComponent<Image>(), sizeIconActivated);
             }
 
             if (herb._diets[i] == true)
             {
+                // Finds the correct diet icon and toggles it in its updater
                 int index = sizeIconList.IndexOf(sizeIconList[i]);
-                // UIManager.Instance.SpriteShift(sizeIconList[i].GetComponent<Image>(), dietIconActivated);
                 iconUpdaterDictionary[index].ToggleBotanicalCodexIcon();
             }
         }
@@ -147,93 +145,11 @@ public class BotanicalCodexDisplay : MonoBehaviour
         // Uses SingleHerb data to set the herb's name and description
         botanicalCodexDisplayedHerbName.text = herb._herbName;
         botanicalCodexDisplayedHerbDescription.text = herb._herbDescription;
-        
-        botanicalCodexDisplayedHerbExtras.text = "test";	// *TAG* - DELETE ME!
 
-        // HideIconObjects();
-		// ShowCorrectIconObjects(herb);
 		ResetCodexIconDisplay();
 		UpdateCodexIconDisplay(herb);
 
         botanicalCodexCanvasGroup.gameObject.SetActive(true);
     }
 
-	void UpdateShader(GameObject objectToUpdate)//, Shader shader)
-	{
-		// Updates the shader of the passed GameObject
-		if (objectToUpdate.TryGetComponent<Renderer>(out Renderer renderer))
-		{
-			Debug.Log("Would change shader here.");
-			// Material materialToEdit = renderer.material;
-			// renderer.material.shader = shader;
-		}
-		else
-		{
-			Debug.Log("Error when trying to get the renderer for this object: " + objectToUpdate);
-		}
-	}
-
-    /*
-                FOR NEW VERSION::
-                -----------------
-     
-     
-    void AssignSingleHerbExtrasToCodexDisplayedHerb()
-    {
-        foreach (AllHerbsData.SingleHerb herb in AllHerbsData.herbDrawerContents)
-        {
-            if (herb._herbName == botanicalCodexDisplayedHerbName.text)
-            {
-                botanicalCodexPotencyReferenceNumber = herb._herbPotency;
-                botanicalCodexDietaryReferenceNumber = herb._herbDietaryReference;
-                break;
-            }
-        }
-        
-        ClearIconLists();
-        UpdatePotencyForDisplayedHerb(botanicalCodexPotencyReferenceNumber);
-        UpdateDietaryReferenceForDisplayedHerb(botanicalCodexDietaryReferenceNumber);
-    }
-
-    void ClearIconLists(List<GameObject> iconsToHide)
-    {
-        foreach (GameObject icon in iconsToHide)
-        {
-            icon.SetActive(false);
-        }
-    }
-    
-    void UpdatePotencyForDisplayedHerb(int potencyReferenceNumber)
-    {
-        for (int i = 0; i < potencyReferenceNumber - 1; i++)
-        {
-            potencyIconList[i].SetActive(true);
-        }
-    }
-
-    void UpdateDietaryReferenceForDisplayedHerb(int dietaryReferenceNumber)
-    {
-        // could do dictionary and set up configuration like that? or could do just iconToDisplay dep. on specific ints?
-        // 1 = herbivore
-        // 2 = carnivore
-        // 3 = omnivore
-        if (dietaryReferenceNumber == 1)
-        {
-            // only display plant
-        }
-
-        if (dietaryReferenceNumber == 2)
-        {
-            // only display meat
-        }
-
-        if (dietaryReferenceNumber == 3)
-        {
-            // display both plant and meat
-        }
-    }*/
-
-    // botanicalCodexStoredPosition is where the note will spawn at on hover
-    
-    
 }

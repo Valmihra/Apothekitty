@@ -6464,7 +6464,6 @@ MonoBehaviour:
   botanicalCodexCanvasGroup: {fileID: 1520005122}
   botanicalCodexDisplayedHerbName: {fileID: 1849452293}
   botanicalCodexDisplayedHerbDescription: {fileID: 1082305408}
-  botanicalCodexDisplayedHerbExtras: {fileID: 509532090}
   sizeIconSmall: {fileID: 1426857207}
   sizeIconMedium: {fileID: 128000221}
   sizeIconLarge: {fileID: 1976927913}
@@ -7464,8 +7463,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isActive: 0
-  drawerClosedActive: 0
-  drawerOpenActive: 0
   openDrawer: {fileID: 0}
   closedDrawer: {fileID: 0}
   buttonOpen: {fileID: 0}
@@ -10500,7 +10497,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &509532090
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12294,8 +12291,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isActive: 0
-  drawerClosedActive: 0
-  drawerOpenActive: 0
   openDrawer: {fileID: 0}
   closedDrawer: {fileID: 0}
   buttonOpen: {fileID: 0}
@@ -12491,7 +12486,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skipTutorialButton: {fileID: 107058560}
   jumpDayTwoButton: {fileID: 627101801}
-  toggleCursorButton: {fileID: 642504045}
 --- !u!114 &597012537
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14037,8 +14031,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isActive: 0
-  drawerClosedActive: 0
-  drawerOpenActive: 0
   openDrawer: {fileID: 0}
   closedDrawer: {fileID: 0}
   buttonOpen: {fileID: 0}
@@ -16709,8 +16701,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isActive: 0
-  drawerClosedActive: 0
-  drawerOpenActive: 0
   openDrawer: {fileID: 0}
   closedDrawer: {fileID: 0}
   buttonOpen: {fileID: 0}
@@ -16835,8 +16825,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isActive: 0
-  drawerClosedActive: 0
-  drawerOpenActive: 0
   openDrawer: {fileID: 0}
   closedDrawer: {fileID: 0}
   buttonOpen: {fileID: 0}
@@ -23273,8 +23261,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isActive: 0
-  drawerClosedActive: 0
-  drawerOpenActive: 0
   openDrawer: {fileID: 0}
   closedDrawer: {fileID: 0}
   buttonOpen: {fileID: 0}
@@ -23882,8 +23868,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isActive: 0
-  drawerClosedActive: 0
-  drawerOpenActive: 0
   openDrawer: {fileID: 0}
   closedDrawer: {fileID: 0}
   buttonOpen: {fileID: 0}
@@ -26472,8 +26456,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isActive: 0
-  drawerClosedActive: 0
-  drawerOpenActive: 0
   openDrawer: {fileID: 0}
   closedDrawer: {fileID: 0}
   buttonOpen: {fileID: 0}
@@ -34408,8 +34390,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isActive: 0
-  drawerClosedActive: 0
-  drawerOpenActive: 0
   openDrawer: {fileID: 0}
   closedDrawer: {fileID: 0}
   buttonOpen: {fileID: 0}
@@ -36584,8 +36564,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isActive: 0
-  drawerClosedActive: 0
-  drawerOpenActive: 0
   openDrawer: {fileID: 0}
   closedDrawer: {fileID: 0}
   buttonOpen: {fileID: 0}
@@ -38940,8 +38918,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isActive: 0
-  drawerClosedActive: 0
-  drawerOpenActive: 0
   openDrawer: {fileID: 0}
   closedDrawer: {fileID: 0}
   buttonOpen: {fileID: 0}
@@ -39555,8 +39531,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isActive: 0
-  drawerClosedActive: 0
-  drawerOpenActive: 0
   openDrawer: {fileID: 0}
   closedDrawer: {fileID: 0}
   buttonOpen: {fileID: 0}
@@ -42473,7 +42447,6 @@ MonoBehaviour:
   clickCursor: {fileID: 2800000, guid: 69344583e91e7da47bf399df02526e43, type: 3}
   cursorPosition: {x: 0, y: 0}
   cursorMode: 0
-  holdingSomething: 0
 --- !u!1 &2118714759
 GameObject:
   m_ObjectHideFlags: 0

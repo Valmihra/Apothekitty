@@ -44,11 +44,7 @@ public class DrawerController : MonoBehaviour
     public void ResetHerbDrawerIcons()
     {
         SetupList();
-        // int drawerNumber = DayManager.Instance.currentDayNumber == 0 ? 3 : DayManager.Instance.currentDayNumber == 1 ? 7 : DayManager.Instance.currentDayNumber == 2 ? 
-        /*foreach (DrawerSensor d in allHerbDrawers)
-        {
-            d.SetupHerbWall();
-        }*/
+        
         for (int i = 0; i < allHerbDrawers.Count; i++)
         {
             DrawerSensor d = allHerbDrawers[i];

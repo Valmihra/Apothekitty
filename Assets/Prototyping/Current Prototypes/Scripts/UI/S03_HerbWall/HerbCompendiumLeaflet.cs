@@ -162,25 +162,12 @@ public class HerbCompendiumLeaflet : MouseHover, IBeginDragHandler, IDragHandler
         
         if (isDocked)
         {
-            /*// Sets default positions if they do not exist
-            if (!defaultPositionsSet)
-            {
-                CreateSelfRect();
-                defaultLeafletPosition = GetPositionFromTransform();
-                hoverLeafletPosition = new Vector3(defaultLeafletPosition.x, defaultLeafletPosition.y + hoverLeafletOffset,  defaultLeafletPosition.z);
-                defaultPositionsSet = true;
-            }*/
-            
-            // Lifts up to hoverLeafletPosition inside the dock
             StartHoverAnimation(hoverLeafletPosition);
         }
     }
     
     public void OnPointerDown(PointerEventData eventData)
     {
-		// *TAG* - PROTOTYPE CURSOR EVENT
-        // _PrototypeCursor.Instance.BeginLongClick();
-
         // Enlarges the leaflet if it is docked
         if (isDocked)
         {
@@ -236,9 +223,6 @@ public class HerbCompendiumLeaflet : MouseHover, IBeginDragHandler, IDragHandler
     
     public void OnPointerUp(PointerEventData eventData)
     {
-		// *TAG* - PROTOTYPE CURSOR EVENT
-        // _PrototypeCursor.Instance.EndLongClick();
-
         CheckForCoroutineCompletion("OnPointerUp");
 
         if (currentSize == largestSize && leafletRectBounds.Overlaps(hiddenPanelRectBounds))

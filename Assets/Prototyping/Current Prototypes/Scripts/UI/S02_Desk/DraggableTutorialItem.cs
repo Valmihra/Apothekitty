@@ -52,9 +52,6 @@ public class DraggableTutorialItem : Draggable
     {
         SoundManager.Instance.PlayAudio(SoundManager.Instance.sfxTutorialPageGrab);
         
-        // *TAG* - PROTOTYPE CURSOR EVENT
-        // _PrototypeCursor.Instance.BeginLongClick();
-        
         editedDelta = eventData.pressPosition - (Vector2)transform.position;
         itemRectTransform.SetAsLastSibling();
         
@@ -78,9 +75,6 @@ public class DraggableTutorialItem : Draggable
 
     public override void OnEndDrag(PointerEventData eventData)
     {
-        // *TAG* - PROTOTYPE CURSOR EVENT
-        // _PrototypeCursor.Instance.EndLongClick();
-        
         CheckTutorialItemPosition();
         
         if (overBin)

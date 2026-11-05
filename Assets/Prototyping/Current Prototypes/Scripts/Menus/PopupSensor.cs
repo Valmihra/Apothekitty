@@ -6,17 +6,13 @@ using UnityEngine.EventSystems;
 public class PopupSensor : MonoBehaviour, IPointerClickHandler
 {
     public bool readingLongPopup = false;
-    // private int timesClicked = 0;
     private int timesUntilClosePopup = 0;
     private int numberOfTextToAddInList = 0;
     public string longPopupText;
     private List<string> currentLongPopupStrings;
     
     public void OnPointerClick(PointerEventData eventData)
-    {
-        // *TAG* - PROTOTYPE CURSOR EVENT
-        // _PrototypeCursor.Instance.QuickClick();
-        
+    {        
         if (!readingLongPopup)
         {
             MenuManager.Instance.ClosePopup();

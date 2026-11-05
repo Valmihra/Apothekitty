@@ -6,7 +6,6 @@ using UnityEngine.EventSystems;
 
 public class Stamp : MonoBehaviour, IPointerClickHandler
 {
-    // private bool canUseStamp;
     private bool stampIsActive;
     private bool currentlyHoldingStamp;
     
@@ -105,10 +104,7 @@ public class Stamp : MonoBehaviour, IPointerClickHandler
     }
     
     public void OnPointerClick(PointerEventData eventData)
-    {
-        // *TAG* - PROTOTYPE CURSOR EVENT
-        // _PrototypeCursor.Instance.QuickClick();
-        
+    {        
         // Ensures interaction only works if ailment isn't already submitted
         if (!GameManager.Instance.ailmentSubmitted)
         {

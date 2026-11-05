@@ -57,9 +57,6 @@ public class DayTrigger : MonoBehaviour, IPointerClickHandler
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        // *TAG* - PROTOTYPE CURSOR EVENT
-        // _PrototypeCursor.Instance.QuickClick();
-        
         if (GameManager.Instance.runningTutorial && GameManager.Instance.canOpenShop)
         {
             ToggleCurtainState();

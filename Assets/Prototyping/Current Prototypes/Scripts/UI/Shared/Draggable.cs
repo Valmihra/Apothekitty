@@ -13,9 +13,6 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
 
         public virtual void OnBeginDrag(PointerEventData eventData)
         {
-			// *TAG* - PROTOTYPE CURSOR EVENT
-        	// _PrototypeCursor.Instance.BeginLongClick();
-
             delta = eventData.pressPosition - (Vector2)transform.position;
 
             rectTransform.SetAsLastSibling();
@@ -33,7 +30,6 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
 
         public virtual void OnEndDrag(PointerEventData eventData)
         {
-        	// *TAG* - PROTOTYPE CURSOR EVENT
-        	// _PrototypeCursor.Instance.EndLongClick();
+        	// Drag event
         }
     }

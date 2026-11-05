@@ -11,12 +11,10 @@ public class DialogueSensor : MonoBehaviour, IPointerClickHandler
     {
         textEffectDialogueBox = GetComponent<AnimatedTextEffect>();
     }
+    
     public void OnPointerClick(PointerEventData eventData)
     {
         SoundManager.Instance.PlayAudio(SoundManager.Instance.sfxNextDialogue);
-        
-        // *TAG* - PROTOTYPE CURSOR EVENT
-        // _PrototypeCursor.Instance.QuickClick();
         
         if (!textEffectDialogueBox.currentlyAnimating)
         {

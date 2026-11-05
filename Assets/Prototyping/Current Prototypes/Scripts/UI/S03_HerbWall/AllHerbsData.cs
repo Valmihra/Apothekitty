@@ -338,11 +338,9 @@ public class AllHerbsData : MonoBehaviour
     void AssignHerbsToDrawerScripts()
     {
         string prefix = "Drawer ";
-        // string searchName;
 
         List<DrawerSensor> drawerSensorScripts = new List<DrawerSensor>();
-        // DrawerSensor temporaryReference;
-        // GameObject temporaryObject;
+        
         for (int i = 1; i < herbCount + 1; i++)
         {
             string searchName = prefix + i.ToString();
@@ -358,10 +356,6 @@ public class AllHerbsData : MonoBehaviour
         {
             drawerSensorScripts[i].FillDrawer(herbDrawerContents[i]._herbName);
         }
-
-        // FOR DEBUGGING
-        // int randomDraw = Random.Range(0, herbCount); //+1
-        // Debug.Log("The herb in slot " + randomDraw + " is: " + herbDrawerContents[randomDraw]._herbName + ". The drawerSensor for the same slot has updated its contents as: " + drawerSensorScripts[randomDraw].drawerContents + ".");
     }
 
     public void UpdateAndShowNote(string herbNameToSearch)
@@ -381,28 +375,4 @@ public class AllHerbsData : MonoBehaviour
         //UIManager.Instance.DisableUI(botanicalCodexOnHoverReference.botanicalCodexCanvasGroup);
     }
 
-    /*public void UpdateNoteLocation(GameObject activeHerb)
-    {
-        Vector2 
-    }
-    public void SetNoteLocation(Vector2 initialPosition, )
-    {
-        //RectTransform rectTransform = botanicalCodexCanvasGroup.GetComponent<RectTransform>();
-        //noteWidth = rectTransform.width;
-
-        //calculate distance
-
-        float distance = Screen.width - (eventData.position.x/Screen.width);
-        if (distance <= noteWidth)
-        {
-            
-        }
-        ;
-        var x = eventData.position.x / Screen.width;
-        var y = eventData.position.y / Screen.height;
-            //try to prevent dragging the element offscreen
-            if(x is < 0.02f or > 0.98f || y is < 0.02f or > 0.98f) return;
-        
-            transform.position = eventData.position - delta;
-    }*/
 }

@@ -34,8 +34,6 @@ public class DraggableHerbs : Draggable
     public override void OnBeginDrag(PointerEventData eventData)
     {
         SoundManager.Instance.GetRandomSFX(SoundManager.Instance.dirtSounds);
-        // *TAG* - PROTOTYPE CURSOR EVENT
-        // _PrototypeCursor.Instance.BeginLongClick();
         
         cuttingObject.transform.position = eventData.pressPosition;
         UIManager.Instance.EnableUI(movableCutting);
