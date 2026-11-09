@@ -7,9 +7,11 @@ public class AnimatedTextEffectNewDay : MonoBehaviour
 {
     [SerializeField] private TMP_Text displayedTextComponentNewDay;
     private float slowTimeBetweenCharacters = 1.0f;
-    private float fastTimeBetweenCharacters = 0.05f;
+    private float fastTimeBetweenCharacters = 0.18f;
     private int allCharactersInStringNewDay;
+    private int finalCharacterNumber;
     public bool currentlyAnimatingNewDay = false;
+    private bool onFinalCharacter;
 
     private string textToDisplay;
     /*
@@ -28,6 +30,7 @@ public class AnimatedTextEffectNewDay : MonoBehaviour
         currentlyAnimatingNewDay = true;
         displayedTextComponentNewDay.ForceMeshUpdate();
         allCharactersInStringNewDay = displayedTextComponentNewDay.textInfo.characterCount;
+        finalCharacterNumber = allCharactersInStringNewDay - 1;
 
         displayedTextComponentNewDay.maxVisibleCharacters = 0;
         AnimateNewDayText();
@@ -35,33 +38,52 @@ public class AnimatedTextEffectNewDay : MonoBehaviour
 
     void AnimateNewDayText()
     {
-        // Debug.Log("gets to here");
-        if (displayedTextComponentNewDay.maxVisibleCharacters > 4)
+        if (displayedTextComponentNewDay.maxVisibleCharacters == finalCharacterNumber)
         {
-            Invoke(nameof(ShowNextCharacterInNewDayString), slowTimeBetweenCharacters);
+            onFinalCharacter = true;
+        }
+        
+        float timeToInvoke = onFinalCharacter ? slowTimeBetweenCharacters : fastTimeBetweenCharacters;
+        Invoke(nameof(ShowNextCharacterInNewDayString), timeToInvoke);
+
+        //displayedTextComponentNewDay.maxVisibleCharacters++;
+        /*// Debug.Log("gets to here");
+        if (displayedTextComponentNewDay.maxVisibleCharacters < finalCharacterNumber)// > 5)
+        {
+            SoundManager.Instance.PlayAudio(SoundManager.Instance.sfxTypewriterSingle);
+            displayedTextComponentNewDay.maxVisibleCharacters++;
+            Invoke(nameof(ShowNextCharacterInNewDayString), fastTimeBetweenCharacters);
+
         }
         else
         {
-            Invoke(nameof(ShowNextCharacterInNewDayString), fastTimeBetweenCharacters);
+            // SoundManager.Instance.PlayAudio(SoundManager.Instance.sfxTypewriterEnd);
+            Invoke(nameof(ShowNextCharacterInNewDayString), slowTimeBetweenCharacters);
         }
-
+        */
     }
 
     void ShowNextCharacterInNewDayString()
     {
         //  Debug.Log("Begins the invoke");
+        displayedTextComponentNewDay.maxVisibleCharacters++;
         displayedTextComponentNewDay.ForceMeshUpdate();
-        if (displayedTextComponentNewDay.maxVisibleCharacters != allCharactersInStringNewDay)
+        if (onFinalCharacter)
         {
-            // Debug.Log("reads numbers correctly");
-            displayedTextComponentNewDay.maxVisibleCharacters++;
-            AnimateNewDayText();
+            SoundManager.Instance.PlayAudio(SoundManager.Instance.sfxTypewriterEnd);
+            currentlyAnimatingNewDay = false;
+            onFinalCharacter = false;
+            Invoke(nameof(CanMoveScreens), slowTimeBetweenCharacters);
+            return;
+            //
         }
         else
         {
-            currentlyAnimatingNewDay = false;
-            Invoke(nameof(CanMoveScreens), 0.1f);
-            return;
+            if (displayedTextComponentNewDay.maxVisibleCharacters < finalCharacterNumber)
+            {
+                SoundManager.Instance.PlayAudio(SoundManager.Instance.sfxTypewriterSingle);
+            }
+            AnimateNewDayText();
         }
     }
 
@@ -80,6 +102,7 @@ public class AnimatedTextEffectNewDay : MonoBehaviour
     {
         // Debug.Log("Working to here");
         textToDisplay = ("Day: " + DayManager.Instance.currentDayNumber.ToString());
+        onFinalCharacter = false;
 
         BeginAnimatingNewDayText(textToDisplay);
         // if number > 5 , then change speed

@@ -26,6 +26,9 @@ public class SoundManager : MonoBehaviour
     [Header("SFX - General")]
     public AudioClip sfxNextDialogue;
     public AudioClip sfxSceneNavigation;
+    [Space]
+    public AudioClip sfxTypewriterSingle;
+    public AudioClip sfxTypewriterEnd;
     // public AudioClip sfxQuestLogOpen;
     // public AudioClip sfxQuestLogClose;
     
@@ -41,8 +44,13 @@ public class SoundManager : MonoBehaviour
     public AudioClip sfxGrimoirePageTurn;
     public AudioClip sfxWritingOnPage;
     public AudioClip sfxStampingPage;
-    // public AudioClip sfxDraggingGrimoire;
-    // public AudioClip sfxDraggingForms;
+    
+    public AudioClip sfxDraggingGrimoire;
+    public AudioClip sfxDroppingGrimoire;
+
+    public AudioClip sfxDraggingForms;
+    public AudioClip sfxDroppingForms;
+
     // public AudioClip sfxLiftingStamp;
     
     

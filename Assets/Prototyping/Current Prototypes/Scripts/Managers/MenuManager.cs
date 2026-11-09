@@ -122,11 +122,26 @@ public class MenuManager : MonoBehaviour
     public void OpenMenu(CanvasGroup menuCanvasGroup)
     {
         // game is paused?
-        UIManager.Instance.DisableInteraction(SceneManager.Instance.currentCanvasGroup);
-        SceneManager.Instance.OnGameplaySuspended();
+        // Debug.Log("Opening Menu Canvas");
+	    UIManager.Instance.DisableInteraction(SceneManager.Instance.currentCanvasGroup);
+	    SceneManager.Instance.OnGameplaySuspended();
 
-        UIManager.Instance.EnableUI(menuCanvasGroup);
-        menuCanvasGroup.GetComponent<RectTransform>().SetAsLastSibling();
+	    /*if (menuCanvasGroup == popupMenuCanvasGroup)
+	    {
+		    if (menuCanvasGroup.interactable)
+		    {
+			    SoundManager.Instance.PlayAudio(SoundManager.Instance.menuNavigation);
+		    }
+		    else
+		    {
+			    Debug.Log("opening!");
+			    SoundManager.Instance.PlayAudio(SoundManager.Instance.menuReturn);
+		    }
+	    }*/
+	    
+	    UIManager.Instance.EnableUI(menuCanvasGroup);
+	    menuCanvasGroup.GetComponent<RectTransform>().SetAsLastSibling();
+        
     }
 
     public void ExitMenu(CanvasGroup menuCanvasGroup)
@@ -134,7 +149,14 @@ public class MenuManager : MonoBehaviour
         UIManager.Instance.DisableUI(menuCanvasGroup);
         UIManager.Instance.EnableInteraction(SceneManager.Instance.currentCanvasGroup);
         SceneManager.Instance.OnReturnToGame();
-
+		
+        /*if (menuCanvasGroup == popupMenuCanvasGroup)
+        {
+	        
+	        SoundManager.Instance.PlayAudio(SoundManager.Instance.menuNavigation);
+	        
+        }*/ 
+        
         if (menuCanvasGroup == mainMenuCanvasGroup)
         {
             GameManager.Instance.onMainMenu = false;
@@ -156,6 +178,7 @@ public class MenuManager : MonoBehaviour
 
     public void OpenTutorialPopup(string popupType)
     {
+	    // SoundManager.Instance.PlayAudio(SoundManager.Instance.menuReturn);
         OpenMenu(popupMenuCanvasGroup);
 
         if (GameManager.Instance.runningTutorial)

@@ -37,9 +37,6 @@ public class InventoryBin : MonoBehaviour, IDropHandler
 
     public void OnDrop(PointerEventData eventData)
     {
-        // *TAG* - PROTOTYPE CURSOR EVENT
-        // _PrototypeCursor.Instance.EndLongClick();
-        
         if(eventData.pointerDrag != null)
         {
             // Debug.Log("drop is working");

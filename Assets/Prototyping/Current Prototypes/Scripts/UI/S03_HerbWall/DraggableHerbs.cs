@@ -55,9 +55,6 @@ public class DraggableHerbs : Draggable
     // Hides the cutting and moves it back to the drawer
     public override void OnEndDrag(PointerEventData eventData)
     {
-        // *TAG* - PROTOTYPE CURSOR EVENT
-        // _PrototypeCursor.Instance.EndLongClick();
-        
         UIManager.Instance.DisableUI(movableCutting);
         cuttingObject.transform.position = initialPositionOnDrag;
         UIManager.Instance.EnableInteraction(SceneManager.Instance.canvasGroupHerbDrawers);        

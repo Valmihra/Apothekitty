@@ -5,6 +5,10 @@ TagManager:
   serializedVersion: 2
   tags:
   - Herb
+  - MenuButton
+  - DebugButton
+  - Grimoire
+  - DeskObject
   layers:
   - Default
   - TransparentFX
