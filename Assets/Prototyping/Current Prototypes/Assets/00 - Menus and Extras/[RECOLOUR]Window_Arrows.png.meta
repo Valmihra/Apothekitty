@@ -107,34 +107,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: '[RECOLOUR]Window_Arrows_0'
-      rect:
-        serializedVersion: 2
-        x: 102
-        y: 1020
-        width: 659
-        height: 512
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 04f9a7953af3faf438663218c4ac6a72
-      internalID: 416868856
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
       name: '[RECOLOUR]Window_Arrows_2'
       rect:
         serializedVersion: 2
-        x: 755
+        x: 754
         y: 1327
-        width: 511
-        height: 672
+        width: 513
+        height: 673
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -153,9 +132,9 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 1287
-        y: 1021
+        y: 1020
         width: 636
-        height: 512
+        height: 513
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -176,7 +155,7 @@ TextureImporter:
         x: 768
         y: 589
         width: 513
-        height: 438
+        height: 600
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -194,10 +173,10 @@ TextureImporter:
       name: '[RECOLOUR]Window_Arrows_6'
       rect:
         serializedVersion: 2
-        x: 155
-        y: 13
-        width: 312
-        height: 406
+        x: 140
+        y: 71
+        width: 358
+        height: 381
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -215,9 +194,9 @@ TextureImporter:
       name: '[RECOLOUR]Window_Arrows_7'
       rect:
         serializedVersion: 2
-        x: 639
-        y: 42
-        width: 331
+        x: 581
+        y: 66
+        width: 333
         height: 376
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -236,10 +215,10 @@ TextureImporter:
       name: '[RECOLOUR]Window_Arrows_8'
       rect:
         serializedVersion: 2
-        x: 1083
-        y: 49
+        x: 997
+        y: 65
         width: 380
-        height: 376
+        height: 377
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -257,10 +236,10 @@ TextureImporter:
       name: '[RECOLOUR]Window_Arrows_9'
       rect:
         serializedVersion: 2
-        x: 1547
-        y: 69
+        x: 1464
+        y: 71
         width: 366
-        height: 365
+        height: 366
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -270,6 +249,27 @@ TextureImporter:
       bones: []
       spriteID: 6431582825cf40445bd16cc91bdc3f65
       internalID: 1904514036
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: '[RECOLOUR]Window_Arrows_1'
+      rect:
+        serializedVersion: 2
+        x: 101
+        y: 1022
+        width: 660
+        height: 509
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 951c075dc9f4908448434436594b6a2d
+      internalID: -830598339
       vertices: []
       indices: 
       edges: []

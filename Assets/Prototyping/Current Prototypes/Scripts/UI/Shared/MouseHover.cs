@@ -34,10 +34,20 @@ public class MouseHover : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
         {
             debugObject = true;
         }
+
+        if (debugObject || menuObject)
+        {
+            image.color = hoverColour;
+        }
     }
     
     public virtual void OnPointerEnter(PointerEventData eventData)
     {
+        if (!menuObject && !debugObject)
+        {
+            image.color = hoverColour;
+        }
+        
         if (menuObject)
         {
             SoundManager.Instance.PlayAudio(SoundManager.Instance.menuNavigation);
@@ -47,11 +57,14 @@ public class MouseHover : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
         {
             SoundManager.Instance.PlayAudio(SoundManager.Instance.sfxTypewriterSingle);
         }
-        image.color = hoverColour;
+        
     }
 
     public virtual void OnPointerExit(PointerEventData eventData)
     {
-        image.color = defaultColour;
+        if (!menuObject && !debugObject)
+        {
+            image.color = defaultColour;
+        }
     }
 }

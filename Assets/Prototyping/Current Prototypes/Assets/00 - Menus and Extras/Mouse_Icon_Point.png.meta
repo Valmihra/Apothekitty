@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 428ace8c461448d409f78791fc9bcbc0
+guid: 19112c3aea26c1f428f406ddb0853764
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -21,7 +21,7 @@ TextureImporter:
     heightScale: 0.25
     normalMapFilter: 0
     flipGreenChannel: 0
-  isReadable: 0
+  isReadable: 1
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
   vTOnly: 0
@@ -43,9 +43,9 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 2
+  spriteMode: 1
   spriteExtrude: 1
-  spriteMeshType: 0
+  spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
   spritePixelsToUnits: 100
@@ -54,7 +54,7 @@ TextureImporter:
   alphaUsage: 1
   alphaIsTransparency: 1
   spriteTessellationDetail: -1
-  textureType: 8
+  textureType: 7
   textureShape: 1
   singleChannelComponent: 0
   flipbookRows: 1
@@ -69,10 +69,10 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 2048
+    maxTextureSize: 1024
     resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 0
+    textureFormat: 4
+    textureCompression: 1
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -105,91 +105,7 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
-    sprites:
-    - serializedVersion: 2
-      name: Herb_Wall_Cabinet_Sliding_Door_0
-      rect:
-        serializedVersion: 2
-        x: 1262
-        y: 292
-        width: 725
-        height: 1976
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 71, y: 55, z: 74, w: 86}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: c8c4dceceb28fbd4b8db8c559effc827
-      internalID: 1734389396
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Herb_Wall_Cabinet_Sliding_Door_1
-      rect:
-        serializedVersion: 2
-        x: 1015
-        y: 112
-        width: 1217
-        height: 2735
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 17923219111afc541add3c4e25b2f403
-      internalID: -704028629
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Herb_Wall_Cabinet_Sliding_Door_2
-      rect:
-        serializedVersion: 2
-        x: 2244
-        y: 2177
-        width: 762
-        height: 181
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 616758fc09bab364ba6ea716188f17b4
-      internalID: -1582471944
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Herb_Wall_Cabinet_Sliding_Door_5
-      rect:
-        serializedVersion: 2
-        x: 2250
-        y: 1644
-        width: 756
-        height: 348
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 73683c77e1e13184eb36080f728daf44
-      internalID: -1532606716
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
+    sprites: []
     outline: []
     physicsShape: []
     bones: []
@@ -200,17 +116,9 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable:
-      Herb_Wall_Cabinet_Sliding_Door_1: -704028629
-      Herb_Wall_Cabinet_Sliding_Door_6: -1693641971
-      Herb_Wall_Cabinet_Sliding_Door_5: -1532606716
-      Herb_Wall_Cabinet_Sliding_Door_0: 1734389396
-      Herb_Wall_Cabinet_Sliding_Door_3: -609557761
-      Herb_Wall_Cabinet_Sliding_Door_2: -1582471944
-      Herb_Wall_Cabinet_Sliding_Door_4: -465364623
+    nameFileIdTable: {}
   spritePackingTag: 
   pSDRemoveMatte: 0
   userData: 
   assetBundleName: 
   assetBundleVariant: 
-

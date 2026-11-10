@@ -33,8 +33,9 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
         {
             if (isGrimoire || isdeskObject)
             {
-                AudioClip audioToPlay = isGrimoire ? SoundManager.Instance.sfxDraggingGrimoire : SoundManager.Instance.sfxDraggingForms;
-                SoundManager.Instance.PlayAudio(audioToPlay);
+                Debug.Log("Desk object drag noise here");
+                // AudioClip audioToPlay = isGrimoire ? SoundManager.Instance.sfxDraggingGrimoire : SoundManager.Instance.sfxDraggingForms;
+                // SoundManager.Instance.PlayAudio(audioToPlay);
             }
             
             delta = eventData.pressPosition - (Vector2)transform.position;
@@ -55,8 +56,9 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
         {
             if (isGrimoire || isdeskObject)
             {
-                AudioClip audioToPlay = isGrimoire ? SoundManager.Instance.sfxDroppingGrimoire : SoundManager.Instance.sfxDroppingForms;
-                SoundManager.Instance.PlayAudio(audioToPlay);
+                Debug.Log("Desk object drop noise here");
+                // AudioClip audioToPlay = isGrimoire ? SoundManager.Instance.sfxDroppingGrimoire : SoundManager.Instance.sfxDroppingForms;
+                // SoundManager.Instance.PlayAudio(audioToPlay);
             }
         }
 

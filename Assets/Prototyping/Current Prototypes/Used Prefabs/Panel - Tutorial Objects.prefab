@@ -922,7 +922,6 @@ MonoBehaviour:
   draggableTutorialItem02: {fileID: 9181289705794843278}
   draggableTutorialItem03: {fileID: 9181289705080860872}
   tutorialBin: {fileID: 9181289706488165697}
-  tutorialItemControllerParentCanvas: {fileID: 0}
 --- !u!1 &9181289706137829081
 GameObject:
   m_ObjectHideFlags: 0
@@ -1413,7 +1412,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 851908709, guid: bf07cedb87538c6499460f0efc178595, type: 3}
+  m_Sprite: {fileID: 2112111806, guid: 4f392b8ee88f29d4f8a406c7341bf9ac, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1

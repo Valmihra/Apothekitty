@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: bf07cedb87538c6499460f0efc178595
+guid: b8112204b392eb741a494852d197ea97
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -107,148 +107,169 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Assets_Sheet_0
+      name: UI_Cards_0
       rect:
         serializedVersion: 2
-        x: 154
-        y: 1705
-        width: 783
-        height: 901
+        x: 133
+        y: 1513
+        width: 1384
+        height: 484
       alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 49, y: 62, z: 52, w: 194}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c61259c426ee59f4ea76a92a1e04df86
-      internalID: 554310121
+      spriteID: ab3ff8766c9ffb443b541f630cc8b59e
+      internalID: 1366580971
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Assets_Sheet_2
+      name: UI_Cards_1
       rect:
         serializedVersion: 2
-        x: 1103
-        y: 1651
-        width: 3302
-        height: 1038
+        x: 1613
+        y: 1167
+        width: 1378
+        height: 848
       alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 73, y: 76, z: 72, w: 73}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 26ff881e9c9c00841bb17ebded5ab0ab
-      internalID: -2081034320
+      spriteID: 39af891e69e00fd44b7ea64891391447
+      internalID: 1128966556
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Assets_Sheet_3
+      name: UI_Cards_2
       rect:
         serializedVersion: 2
-        x: 242
+        x: 3086
+        y: 535
+        width: 899
+        height: 1468
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0e4988855b5ff7248925965322c8fe45
+      internalID: -2100244073
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_Cards_3
+      rect:
+        serializedVersion: 2
+        x: 107
+        y: 1013
+        width: 1424
+        height: 484
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 168, y: 84, z: 59, w: 58}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: aafc961f9bc6e1a40895e1329ac86ec5
+      internalID: -1134967302
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_Cards_4
+      rect:
+        serializedVersion: 2
+        x: 1623
+        y: 251
+        width: 1380
+        height: 848
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 791c7dd8ce6cb844bb98b66f35a3056a
+      internalID: -1602259981
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_Cards_5
+      rect:
+        serializedVersion: 2
+        x: 83
+        y: 553
+        width: 1460
+        height: 440
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 167, y: 56, z: 49, w: 46}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 616573a66121f284ea5a90f8d1530eab
+      internalID: -2062262509
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_Cards_6
+      rect:
+        serializedVersion: 2
+        x: 93
+        y: 51
+        width: 1470
+        height: 458
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 178, y: 55, z: 58, w: 61}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 194593775299da64980eef6a664b75f3
+      internalID: -15267013
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_Cards_9
+      rect:
+        serializedVersion: 2
+        x: 3299
         y: 233
-        width: 752
-        height: 803
+        width: 507
+        height: 134
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 802e43f538e08f64bb07090b8ec62fbc
-      internalID: 1789227052
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Assets_Sheet_4
-      rect:
-        serializedVersion: 2
-        x: 1096
-        y: 224
-        width: 651
-        height: 641
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 45c03d0dbb1d07c40bd5c00a624f5d7f
-      internalID: 1576374593
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Assets_Sheet_6
-      rect:
-        serializedVersion: 2
-        x: 1989
-        y: 583
-        width: 670
-        height: 678
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 11e1c088b1e565d449e985c073c95506
-      internalID: 851908709
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Assets_Sheet_7
-      rect:
-        serializedVersion: 2
-        x: 2776
-        y: 265
-        width: 665
-        height: 1067
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: e4b2b7cc90d845940a73c4605fa7f4c5
-      internalID: -594025534
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Assets_Sheet_8
-      rect:
-        serializedVersion: 2
-        x: 3634
-        y: 265
-        width: 666
-        height: 1067
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: fb4bcbfcd8bd7c4498228a58d5a4ab73
-      internalID: -1853958722
+      spriteID: f7bfc1fbc8abaf94c98c95333349dc78
+      internalID: 386960656
       vertices: []
       indices: 
       edges: []
@@ -264,15 +285,24 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Assets_Sheet_4: 1576374593
-      Assets_Sheet_3: 1789227052
-      Assets_Sheet_0: 554310121
-      Assets_Sheet_5: -659895930
-      Assets_Sheet_2: -2081034320
-      Assets_Sheet_8: -1853958722
-      Assets_Sheet_6: 851908709
-      Assets_Sheet_7: -594025534
-      Assets_Sheet_1: -303306482
+      UI_Cards_7: 660873271
+      UI_Cards_1: 1128966556
+      UI_Cards_5: -2062262509
+      UI_Cards_17: -910046991
+      UI_Cards_0: 1366580971
+      UI_Cards_15: 1229513362
+      UI_Cards_12: 1019471093
+      UI_Cards_8: -1199934640
+      UI_Cards_9: 386960656
+      UI_Cards_3: -1134967302
+      UI_Cards_13: 1061600772
+      UI_Cards_10: -1298408588
+      UI_Cards_14: -1232501258
+      UI_Cards_11: -1504790881
+      UI_Cards_16: 1791398892
+      UI_Cards_6: -15267013
+      UI_Cards_2: -2100244073
+      UI_Cards_4: -1602259981
   spritePackingTag: 
   pSDRemoveMatte: 0
   userData: 
