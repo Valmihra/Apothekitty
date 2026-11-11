@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using Microsoft.Unity.VisualStudio.Editor;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -15,7 +14,7 @@ public class BotanicalCodexIconUpdater : MonoBehaviour
     public void InitialiseBotanicalCodexIconUpdater()
     {
         botanicalCodexIcon = gameObject.GetComponent<UnityEngine.UI.Image>();
-        botanicalCodexIconIsDesaturated = false;
+        botanicalCodexIconIsDesaturated = true;
     }
 
     public void ToggleBotanicalCodexIcon()
@@ -29,6 +28,6 @@ public class BotanicalCodexIconUpdater : MonoBehaviour
     public void ResetBotanicalCodexIcon()
     {
         UIManager.Instance.SpriteShift(botanicalCodexIcon, botanicalCodexIconDesaturated);
-        botanicalCodexIconIsDesaturated = false;
+        botanicalCodexIconIsDesaturated = true;
     }
 }

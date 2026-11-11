@@ -21,8 +21,6 @@ public class SceneManager : MonoBehaviour
     [SerializeField] private CanvasGroup canvasGroupSubmitHerbCombinationButton;
 
     public CanvasGroup canvasGroupHerbDrawers;
-    // public CanvasGroup clientWindowClientIcon;
-    // public CanvasGroup canvasGroupHerbDrawers;          // MIGHT NEED TO SORT OUT A CHECK SOON FOR DAY + NUMBER DRAWERS TO DISPLAY TO PLAYER
     
         // Lists for canvasGroups when more detailed scene switches.
         private List<CanvasGroup> allCanvasesClientWindow;      //clientWindow;
@@ -37,6 +35,7 @@ public class SceneManager : MonoBehaviour
     [Header("Navigation Button References")]
     public Button switchDeskHerbButton;
     public Button switchDeskClientButton;
+    [Space]
     public Image iconArrowLeft;
     public Image iconArrowRight;
     public Image iconArrowUp;
