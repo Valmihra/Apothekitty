@@ -86,6 +86,7 @@ public class GameManager : MonoBehaviour
         
         // ResultsScreen.Instance.InitialiseResultsScreen();
         DialogueRunner.Instance.InitialiseDialogueRunner();
+        // DialogueRunner.Instance.ResetDialogueRunner();
         
 		if (runningTutorial)
         {
@@ -214,6 +215,7 @@ public class GameManager : MonoBehaviour
     private void CreateNewGameData()
     {
         _gameData = new GameData();
+        
         _gameData.numberPatientsSeen = 0;
         _gameData.numberPatientsCured = 0;
 
@@ -273,6 +275,11 @@ public class GameManager : MonoBehaviour
 
     void BeginTutorial()
     {
+        /*if (!runningTutorial)
+        {
+            runningTutorial = true;
+        }*/
+        
         DialogueRunner.Instance.GetDialogue("tutorial");
     }
 
@@ -303,8 +310,6 @@ public class GameManager : MonoBehaviour
         // Generate the clients and ailments and reset the scene for a new day
         InitialiseAllGameData();
         OnNewDay();
-
-        Debug.Log("CURRENT DAY IS " + DayManager.Instance.currentDayNumber);
     }
     
     public void ExitGame()
@@ -314,12 +319,8 @@ public class GameManager : MonoBehaviour
     
     public void RestartLevel()
     {
-        // Maybe void GetInformationForDay(DayManager.Instance.currentDayNumber) ?
-        
         // Reset the level so that the player can start the current day again
         Debug.Log("Resetting the current level...");
-        // *TAG* - doesn't currently account for all elements,
-        // since dialogue and popups aren't aligning on reset!!
 
         if (runningTutorial)
         {
@@ -353,7 +354,6 @@ public class GameManager : MonoBehaviour
 
     public void LoadGame()
     {
-        
         if (_tempDataStorage != null)
         {
             SoundManager.Instance.PlayAudio(SoundManager.Instance.menuSelect);

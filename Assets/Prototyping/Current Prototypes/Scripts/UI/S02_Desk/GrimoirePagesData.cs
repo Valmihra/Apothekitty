@@ -22,8 +22,8 @@ public class GrimoirePagesData : MonoBehaviour
         }
     }
 
-    private List<SinglePage> grimoirePagesList;
-    public SinglePage[] grimoirePagesArray;
+    public List<SinglePage> grimoirePagesList { get; private set; }
+    // public SinglePage[] grimoirePagesArray;
 
     int totalPages = 0;
 
@@ -49,7 +49,6 @@ public class GrimoirePagesData : MonoBehaviour
         public Rect GetAndReturnGrimoireRect()
         {
             // *TAG* - For grimoire's stamp.
-            // Currently using the whole page, but could set to ailment icon specifically if that's preferred!!
             grimoireRect.center = transform.position;
             return grimoireRect;
         }
@@ -81,8 +80,6 @@ public class GrimoirePagesData : MonoBehaviour
     public void InitialiseGrimoirePagesData()
     {
         InitialiseGrimoirePagesList();
-        SetPageData();
-        SetGrimoirePagesArray();
         
         grimoireNavigation.InitialiseGrimoireNavigation();
         
@@ -91,20 +88,23 @@ public class GrimoirePagesData : MonoBehaviour
         GetGrimoireRect();
         
     }
-    
-    // *TAG* - Should probably just use list instead of array lmao, why do i need both??
-    void InitialiseGrimoirePagesList()
-    {
-        grimoirePagesList = new List<SinglePage>();
-    }
 
-    void SetGrimoirePagesArray()
+    /*void SetGrimoirePagesArray()
     {
         grimoirePagesArray = grimoirePagesList.ToArray();
-    }
+    }*/
 
-    void SetPageData()  // alphabetically set up for now
+    void InitialiseGrimoirePagesList()  // alphabetically set up for now
     {
+        grimoirePagesList = new List<SinglePage>();
+
+        /*if (grimoirePagesList.Count > 3)
+        {
+            Debug.Log("Already set up.");
+            return;
+        }*/
+        
+        
                 SinglePage cover = new SinglePage();
                 cover.UpdateName("cover");
                 cover.UpdateDescription("cover");
@@ -169,6 +169,8 @@ public class GrimoirePagesData : MonoBehaviour
         {
             totalPages++;
         }
+
+        // Debug.Log("There are: " + grimoirePagesList.Count + " total grimoire entries.");
     }
 
     public void ResetGrimoire()

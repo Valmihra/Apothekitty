@@ -8,10 +8,18 @@ public class GameData
     public int savedDayNumber;
     public List<ResultsCalculator.FinishedPatient> seenPatientsInCurrentDay;
     public PatientData.SinglePatientData savedActivePatient;
-    // public string currentPatientName;
     
     public int numberPatientsSeen;
     public int numberPatientsCured;
     
     
-    }
+    /*public void ResetGameData()
+    {
+        numberPatientsSeen = 0;
+        numberPatientsCured = 0;
+        
+        public int savedDayNumber = 0;
+        seenPatientsInCurrentDay = new List<ResultsCalculator.FinishedPatient>();
+    }*/
+    
+}

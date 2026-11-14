@@ -352,20 +352,19 @@ public class MenuManager : MonoBehaviour
 	public void EndOfMVPMenu()
 	{
 		// *TAG* - This group should have the client results, qr code, etc.
-		int numberCuredPatients = GameManager.Instance.GetCuredPatients();//0;
-		Debug.Log(numberCuredPatients);
-		//GameManager.Instance.GetCuredPatients(numberCuredPatients);
-		//Debug.Log(numberCuredPatients);
+		int numberCuredPatients = GameManager.Instance.GetCuredPatients();
+		
 		endScreenClientsSeen.text = ("<b>Total patients seen:</b> " + PatientData.Instance.allPatientsList.Count).ToString();
 		endScreenClientsCured.text = ("<b>Total patients cured:</b> " + numberCuredPatients).ToString();
 		
 		if (numberCuredPatients == 0)
 		{
-			endScreenCallToAction.text = "You weren't able to cure any patients. \n\nHere, we'd say smth like 'This shows us we need to do something to help clarify how the mechanics of our game work. We'd really appreciate your feedback.'";
+			endScreenCallToAction.text = "You weren't able to cure any patients. \n\nThis shows us we need to do something to help clarify how the mechanics of our game work. We'd really appreciate your feedback.";
 		}
+
 		else
 		{
-			endScreenCallToAction.text = "You cured someone!! \n\nHere, we'd say smth to celebrate and then ask them to give feedback anyway lmao";
+			endScreenCallToAction.text = "You cured someone!! \n\nCongratulations, we hope the experience was fun! Any feedback or critique would be greatly appreciated.";
 		}
 		
 		OpenMenu(endOfMVPMenuCanvasGroup);

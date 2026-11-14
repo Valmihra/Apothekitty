@@ -6,7 +6,7 @@ using TMPro;
 
 public class HerbalistGuideNavigation : MonoBehaviour
 {
-    [Header("Navigation Buttons")]
+    /*[Header("Navigation Buttons")]
         public Button navigationLeft;
         public Button navigationRight;
         private CanvasGroup navigationLeftCanvasGroup;
@@ -60,5 +60,5 @@ public class HerbalistGuideNavigation : MonoBehaviour
     public void ResetHerbalistGuideNavigation()
     {
         GoToPage(0);
-    }
+    }*/
 }

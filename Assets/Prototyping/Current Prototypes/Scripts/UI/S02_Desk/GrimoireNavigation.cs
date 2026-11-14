@@ -133,7 +133,8 @@ public class GrimoireNavigation : MonoBehaviour, IPointerClickHandler
 		grimoireNavigationRight.gameObject.SetActive(true);
         
         // disables L/R buttons when target int leads outside of array's bounds
-        if (target == GrimoirePagesData.Instance.grimoirePagesArray.Length - 1)
+        // if (target == GrimoirePagesData.Instance.grimoirePagesArray.Length - 1)
+        if (target == GrimoirePagesData.Instance.grimoirePagesList.Count - 1)
         {
 			grimoireNavigationRight.gameObject.SetActive(false);
         }
@@ -156,14 +157,18 @@ public class GrimoireNavigation : MonoBehaviour, IPointerClickHandler
         
         if (resettingGrimoire)
         {
+            // *TAG* - Check here for null entries?
             resettingGrimoire = false;
         }
     }
 
     void UpdateGrimoireDisplay(int target)
     {
-        grimoireAilmentNameDisplay.text = GrimoirePagesData.Instance.grimoirePagesArray[target]._ailmentName;
-        grimoireAilmentDescriptionDisplay.text = GrimoirePagesData.Instance.grimoirePagesArray[target]._ailmentDescription;
+        // grimoireAilmentNameDisplay.text = GrimoirePagesData.Instance.grimoirePagesArray[target]._ailmentName;
+        // grimoireAilmentDescriptionDisplay.text = GrimoirePagesData.Instance.grimoirePagesArray[target]._ailmentDescription;
+        
+        grimoireAilmentNameDisplay.text = GrimoirePagesData.Instance.grimoirePagesList[target]._ailmentName;
+        grimoireAilmentDescriptionDisplay.text = GrimoirePagesData.Instance.grimoirePagesList[target]._ailmentDescription;
             
         UIManager.Instance.SpriteShift(grimoireAilmentIconDisplay, grimoireAilmentIconsList[target].sprite);
     }
@@ -179,7 +184,8 @@ public class GrimoireNavigation : MonoBehaviour, IPointerClickHandler
         grimoireInkFromStampObject.SetActive(true);
         GameManager.Instance.ailmentSubmitted = true;
         
-        string selectedAilmentName = GrimoirePagesData.Instance.grimoirePagesArray[pageNum]._ailmentName;
+        // string selectedAilmentName = GrimoirePagesData.Instance.grimoirePagesArray[pageNum]._ailmentName;
+        string selectedAilmentName = GrimoirePagesData.Instance.grimoirePagesList[pageNum]._ailmentName;
         SceneManager.Instance.UpdateAilment(selectedAilmentName);
         SceneManager.Instance.SubmitAilment();
 

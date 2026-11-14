@@ -205,7 +205,8 @@ public class AilmentData : MonoBehaviour
             if (allAilmentsList[i]._affectedClientName == name)
             {
 				// +1 to account for the empty page at the beginning of the pages array
-                ailmentName = GrimoirePagesData.Instance.grimoirePagesArray[i+1]._ailmentName;
+                // ailmentName = GrimoirePagesData.Instance.grimoirePagesArray[i+1]._ailmentName;
+                ailmentName = GrimoirePagesData.Instance.grimoirePagesList[i+1]._ailmentName;
             }
             else
             {
