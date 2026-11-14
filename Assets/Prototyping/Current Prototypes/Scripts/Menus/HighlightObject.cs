@@ -10,28 +10,12 @@ public class HighlightObject : MonoBehaviour
     private Color defaultColour;
     private float time = 0.5f;
 
-    //private bool pulsing;
-
-    // Start is called before the first frame update
     void Start()
     {
         image = GetComponent<Image>();
-        //string hex = "#8A1E1E";
-
-        /*if (ColorUtility.TryParseHTMLString(hex, out Color output))
-        {
-            Debug.Log("Colour found!");
-            pulseColour = output;
-        }*/
         pulseColour = new Color(138f/255f, 30f/255f, 30f/255f);
         defaultColour = image.color;
     }
-
-    /*// Update is called once per frame
-    void Update()
-    {
-        if (pulsing)
-    }*/
 
     void PulseColour()
     {

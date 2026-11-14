@@ -90,7 +90,7 @@ public class AnimatedTextEffectNewDay : MonoBehaviour
     void CanMoveScreens()
     {
         MenuManager.Instance.NewDayMenu("close");
-        GameManager.Instance.StartDay();
+        GameManager.Instance.StartNewDay();
     }
 
     public void SetTextSpeed(float speed)

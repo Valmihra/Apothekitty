@@ -4,13 +4,13 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
-public class _PrototypeCursor : MonoBehaviour// , IPointerDownHandler, IPointerUpHandler
+public class _PrototypeCursor : MonoBehaviour
 {
     public Texture2D defaultCursor;
-    // public Texture2D openCursor;
     public Texture2D clickCursor;
-
-    // private float halfTime = 0.1f;
+	// public Texture2D openCursor;
+    
+	// private float halfTime = 0.1f;
     // private float fullTime = 0.2f;
 
     public Vector2 cursorPosition = Vector2.zero;

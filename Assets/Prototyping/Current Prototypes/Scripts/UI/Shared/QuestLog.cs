@@ -20,32 +20,14 @@ public class QuestLog : MonoBehaviour
     public Color finishedQuestItem;
     public Color currentQuestItem;
     public Color futureQuestItem;
-
-    /*
-    [Header("Slider Values")]
-    public float defaultSliderValue;
-    public float openedSliderValue;
-    // public float sliderMoveSpeed;
-    private float previousSliderValue;
-    */
     
-    //private bool active;
-
-    //[SerializeField] 
-    public GameObject questLogExpandedDisplay;
-    // private QuestLogSlider questLogSliderReference;
+    // public GameObject questLogExpandedDisplay;
     
     
-    // Start is called before the first frame update
-    void Start()
+    /*void Start()
     {
-        //questLogSliderReference = GetComponent<QuestLogSlider>();
-        //questLogSliderReference.InitialiseSlider();
-        //questLogSliderReference.SetLog(this);
-        
         questLogExpandedDisplay.SetActive(false);
-
-    }
+    }*/
 
     // Called once on desk?
     public void ResetQuestLog()
@@ -59,42 +41,14 @@ public class QuestLog : MonoBehaviour
         createRecipe.fontStyle = FontStyles.Normal;
         submitHerbs.fontStyle = FontStyles.Normal;
         
-        StartLevelQuestLog();
+        // StartLevelQuestLog();
     }
 
-    void StartLevelQuestLog()
-    {
-        // questLogSliderReference.ResetSliderValue();
-    }
 
     void SetColour(Color colour, TMP_Text text)
     {
         text.color = colour;
     }
-
-    /*void ToggleQuestLog()
-    {
-        if (active)
-        {
-            //UIManager.Instance.SpriteShift(displayArrow, arrowDown);
-            UIManager.Instance.DisableUI(questLog);
-        }
-        else
-        {
-            //UIManager.Instance.SpriteShift(displayArrow, arrowUp);
-            //UpdateQuestLog();
-            UIManager.Instance.EnableUI(questLog);
-        }
-        active = !active;
-        
-    }*/
-
-    //public override void OnDrag(PointerEventData eventData)
-    //{
-        // questLogSlider.value 
-    //}
-
-    
 
     public void UpdateQuestLog()
     {

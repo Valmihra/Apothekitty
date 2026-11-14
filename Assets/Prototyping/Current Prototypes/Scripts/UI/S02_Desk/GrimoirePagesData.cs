@@ -117,7 +117,7 @@ public class GrimoirePagesData : MonoBehaviour
 
         SinglePage contaminationOCD = new SinglePage();
         contaminationOCD.UpdateName("Contamination-Specific OCD");
-        contaminationOCD.UpdateDescription("Clients present with extreme neuroticism of germs, diseases, and contaminants. Not to be confused with Illness Anxiety, the client develops ritualistic and repetitive self-implemented systems to help soothe and regulate stress responses, but they do not believe they have any specific condition. /nPractitioners should do what they can to enable clients to soothe themselves to reduce the frequency of these thoughts. Take note that resisting thoughts entirely can make their condition worse.");
+        contaminationOCD.UpdateDescription("Clients present with extreme neuroticism of germs, diseases, and contaminants. Not to be confused with Illness Anxiety, the client develops ritualistic and repetitive self-implemented systems to help soothe and regulate stress responses, but they do not believe they have any specific condition. \nPractitioners should do what they can to enable clients to soothe themselves to reduce the frequency of these thoughts. Take note that resisting thoughts entirely can make their condition worse.");
             grimoirePagesList.Add(contaminationOCD);
 
         SinglePage dietDrift = new SinglePage();

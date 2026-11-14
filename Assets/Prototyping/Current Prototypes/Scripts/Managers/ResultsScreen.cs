@@ -6,8 +6,6 @@ using TMPro;
 
 public class ResultsScreen : MonoBehaviour
 {
-
-    private CanvasGroup resultsScreen;
     public CanvasGroup resultsIconCanvas;
     public CanvasGroup cure;
     public CanvasGroup fail;
@@ -19,6 +17,7 @@ public class ResultsScreen : MonoBehaviour
     public TMP_Text ailmentResult;
     public TMP_Text recipeResult;
     public TMP_Text herbsResult;
+    public TMP_Text patientCheckupLetter;
     
     public Image resultsIcon;
 
@@ -38,15 +37,11 @@ public class ResultsScreen : MonoBehaviour
         _instance = this;
     }
 
-    public void InitialiseResultsScreen()
-    {
-        resultsScreen = GetComponent<CanvasGroup>();
-    }
-
 	public void HideResultsScreen()
 	{
-		UIManager.Instance.DisableUI(resultsScreen);
+		UIManager.Instance.DisableUI(SceneManager.Instance.mainCanvasGroupResultsScreen);
         PrepNextClientResultScreen();
+        SoundManager.Instance.GetAudioToReturnTo();
 	}
 
 	public void PrepNextClientResultScreen()
@@ -58,11 +53,12 @@ public class ResultsScreen : MonoBehaviour
         UIManager.Instance.HideTextComponent(ailmentResult);
         UIManager.Instance.HideTextComponent(recipeResult);
         UIManager.Instance.HideTextComponent(herbsResult);
+        UIManager.Instance.HideTextComponent(patientCheckupLetter);
+
 	}
 
     public void GenerateResultsScreen(string name, bool ailment, bool recipe, bool herbs)
     {
-        // displayedPatientName.text = PatientData.Instance.activePatientData._patientName;
 		displayedPatientName.text = name;
         
         ailmentResult.text = ailment ? positiveResult : negativeResult;
@@ -83,9 +79,12 @@ public class ResultsScreen : MonoBehaviour
 
     void UpdateResultsScreen(string name)
     {
+        patientCheckupLetter.text = PatientData.Instance.ReturnPatientCheckupLetter(name, clientCured);
+        
         GameObject iconToFind;
         Image icon;
         string nameToSearch;
+        
         if (clientCured)
         {
             nameToSearch = ("Result - " + name + " - Cured");
@@ -94,25 +93,22 @@ public class ResultsScreen : MonoBehaviour
         {
             nameToSearch = ("Result - " + name + " - Failed");
         }
-        Debug.Log(nameToSearch);
-
+        
         iconToFind = GameObject.Find(nameToSearch);
-        Debug.Log(iconToFind);
         icon = iconToFind.GetComponent<Image>();
         UIManager.Instance.SpriteShift(resultsIcon, icon.sprite);
+        
+        // had the checkup letter returning here, but have got it elsewhere instead now!
+            
         StartShowResults();
         
     }
 
     void StartShowResults()
     {
-        //if (SoundManager.Instance.)
-        //{
-            SoundManager.Instance.GetResultsScreen();
-        //}
+        SoundManager.Instance.GetResultsScreen();
         
-        
-        UIManager.Instance.EnableUI(resultsScreen);
+        UIManager.Instance.EnableUI(SceneManager.Instance.mainCanvasGroupResultsScreen);
         Invoke(nameof(ShowAilmentResult), 1f);
     }
 
@@ -131,6 +127,8 @@ public class ResultsScreen : MonoBehaviour
     void ShowFinalResult()
     {
         UIManager.Instance.ShowTextComponent(herbsResult);
+        UIManager.Instance.ShowTextComponent(patientCheckupLetter);
+
         UIManager.Instance.EnableUI(resultsIconCanvas);
         if (clientCured)
         {

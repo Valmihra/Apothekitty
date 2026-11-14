@@ -22,7 +22,7 @@ public class TreatmentPlanInteractables : MonoBehaviour
     public CanvasGroup diagnosisSheetToggleBoxes;
     private List<Toggle> diagnosisSheetTogglesList;
         
-    [Header("Displayed Text")]  // Text displayed at the top of the diagnosis sheet
+    [Header("Displayed Text")]
     public TMP_Text displayedPatientName;
     public TMP_Text displayedPatientSpecies;
     public TMP_Text displayedPatientExtras;
@@ -71,9 +71,6 @@ public class TreatmentPlanInteractables : MonoBehaviour
         usingSimpleConfiguration = false;
 
         UpdateTargetOptions();
-
-        // usingIntermediateConfiguration = false;
-        // usingComplicatedConfiguration = false;
     }
 
     private void UpdateTargetOptions()
@@ -91,11 +88,6 @@ public class TreatmentPlanInteractables : MonoBehaviour
                 secondaryTargetDropdown.ClearOptions();
                 secondaryTargetDropdown.AddOptions(treatmentPlanSimplifiedTargetOptionsList);
                 
-                // primaryTargetDropdown.options.RemoveAt(3);
-                // primaryTargetDropdown.RefreshShownValue();
-                // secondaryTargetDropdown.options.RemoveAt(3);
-                // secondaryTargetDropdown.RefreshShownValue();
-                
                 updatedForMVP = true;
             }
         }
@@ -105,25 +97,10 @@ public class TreatmentPlanInteractables : MonoBehaviour
     public void ResetDiagnosisSheet()
     {
         transform.position = diagnosisSheetStartingPosition;
-        
-        /*// Removes spirit from the target dropdowns if running current MVP version
-        if (GameManager.Instance.isMVP)
-        {
-            if (!updatedForMVP)
-            {
-                primaryTargetDropdown.options.RemoveAt(3);
-                primaryTargetDropdown.RefreshShownValue();
-                secondaryTargetDropdown.options.RemoveAt(3);
-                secondaryTargetDropdown.RefreshShownValue();
-                
-                updatedForMVP = true;
-            }
-        }*/
 
         // checks to see which configuration to display
         if (usingSimpleConfiguration)
         {
-            // Debug.Log("Setting up the simplified diagnosis sheet.");
             secondaryEffectDropdown.gameObject.SetActive(false);
             secondaryTargetDropdown.gameObject.SetActive(false);
             diagnosisSheetToggleBoxes.gameObject.SetActive(false);
@@ -132,7 +109,9 @@ public class TreatmentPlanInteractables : MonoBehaviour
         {
             secondaryEffectDropdown.gameObject.SetActive(true);
             secondaryTargetDropdown.gameObject.SetActive(true);
-            // diagnosisSheetToggleBoxes.gameObject.SetActive(true);
+            
+            // hiding modifiers since we aren't using them.
+            diagnosisSheetToggleBoxes.gameObject.SetActive(false);
         }
 
         primaryEffectDropdown.options[0].text = defaultEffectDropdownText;
@@ -141,18 +120,19 @@ public class TreatmentPlanInteractables : MonoBehaviour
         primaryTargetDropdown.options[0].text = defaultTargetDropdownText;
         secondaryTargetDropdown.options[0].text = defaultTargetDropdownText;
 
-        // allows interaction with the canvas elements          -- check to see if safe to use this here or if need to disable interaction for hidden objs separately!
+        // allows interaction with the canvas elements
         foreach (TMP_Dropdown dropdown in diagnosisSheetPropertyDropdownsList)
         {
             dropdown.value = 0;
             dropdown.interactable = true;
             dropdown.RefreshShownValue();
         }
-        foreach (Toggle toggle in diagnosisSheetTogglesList)
+        
+        /*foreach (Toggle toggle in diagnosisSheetTogglesList)
         {
             toggle.isOn = false;
             toggle.interactable = true;
-        }
+        }*/
         
         // allows the player to try to submit their combination
         submitDiagnosisButton.interactable = true;
@@ -161,25 +141,13 @@ public class TreatmentPlanInteractables : MonoBehaviour
 
     public void SetDiagnosisSheetConfiguration()
     {
+        // If it's the first day, we use the simple configuration.
         usingSimpleConfiguration = DayManager.Instance.currentDayNumber == 0 ? true : false;
-        /*if (DayManager.Instance.currentDayNumber == 0)// || (DayManager.Instance.currentDayNumber == 1))
-        {
-            usingSimpleConfiguration = true;
-        }
-        else
-        {
-            usingSimpleConfiguration = false;
-        }*/
     }
 
     // Uses data from player's previous interactions to fill the diagnosis sheet accurately
     public void FillDiagnosisSheet()
     {
-        /*displayedPatientName.text = PatientData.Instance.displayedPatientName.text;
-        displayedPatientSpecies.text = PatientData.Instance.displayedPatientSpecies.text;
-        displayedPatientExtras.text = PatientData.Instance.displayedPatientExtras.text;
-        displayedClientAilment.text = SceneManager.Instance.selectedAilment;*/
-        
         displayedPatientName.text = PatientData.Instance.activePatientData._patientName;
         displayedPatientSpecies.text = PatientData.Instance.activePatientData._patientSpecies;
         displayedPatientExtras.text = PatientData.Instance.activePatientData._patientExtras;
@@ -190,9 +158,6 @@ public class TreatmentPlanInteractables : MonoBehaviour
     {
         int propertyDropdownValue = chosenDropdown.value;
         string propertyDropdownName = chosenDropdown.options[propertyDropdownValue].text;
-
-        // Debug.Log("dropdown value stored as: " + propertyDropdownValue);
-        // Debug.Log("dropdown name stored as: " + propertyDropdownName);
 
         int numberInDropdownsList = 0;
         int companionValue = 0;
@@ -226,11 +191,10 @@ public class TreatmentPlanInteractables : MonoBehaviour
         {
             if (diagnosisSheetPropertyDropdownsList[companionValue].value == propertyDropdownValue)
             {
-                // *TAG* - maybe flash this and the companion dropdown to indicate that it's a double up?   (FOR SAUCE)
+                // *TAG* - maybe flash this and the companion dropdown to
+                // indicate that it's a double up?   (FOR SAUCE)
                 
-                // (for now)
                 chosenDropdown.value = 0;
-                // MenuManager.Instance.DiagnosisSheetCategoryDoubleUpPopup();
 				MenuManager.Instance.AlertMessage("treatmentPlanCategoryDoubleUp");
                 
                 return;
@@ -245,26 +209,26 @@ public class TreatmentPlanInteractables : MonoBehaviour
     }
 
 
-    void DiagnosisSheetToggleValueUpdate(Toggle chosenToggle)     // Can remove inverter elements for now
+    void DiagnosisSheetToggleValueUpdate(Toggle chosenToggle)
     {
-        Debug.Log("Adjusting recipe display for toggles...");
+        // Debug.Log("Adjusting recipe display for toggles...");
         if (chosenToggle == inverterToggle)
         {
             if (inverterToggle.isOn)
             {
-                string invertedEffectName = emptySlotText;  // int propertyDropdownValue = primaryEffectDropdown.value;
+                string invertedEffectName = emptySlotText;
                 
-                if (primaryEffectDropdown.value == 1) // (propertyDropdownValue == 1)
+                if (primaryEffectDropdown.value == 1)
                 {
                     invertedEffectName = "Weaken";
                     UpdateRecipeDisplay(diagnosisSheetPropertyDropdownsList[0], invertedEffectName);
                 }
-                else if (primaryEffectDropdown.value == 2) // (propertyDropdownValue == 2)
+                else if (primaryEffectDropdown.value == 2)
                 {
                     invertedEffectName = "Damage";
                     UpdateRecipeDisplay(diagnosisSheetPropertyDropdownsList[0], invertedEffectName);
                 }
-                else if (primaryEffectDropdown.value == 3) // (propertyDropdownValue == 3)
+                else if (primaryEffectDropdown.value == 3)
                 {
                     invertedEffectName = "Frenzy";
                     UpdateRecipeDisplay(diagnosisSheetPropertyDropdownsList[0], invertedEffectName);
@@ -343,32 +307,7 @@ public class TreatmentPlanInteractables : MonoBehaviour
     
     void UpdateProposedRecipeDisplay()
     {
-        // Debug.Log("Updating proposed recipe display...");
-        /*if (enhancerToggle.isOn)
-        {
-            if (GameManager.Instance.isMVP)
-            {
-                proposedRecipeDisplayText.text = (("Enhanced ") + (slot01) + (" ") + (slot02)).ToString();
-            }
-            else
-            {
-                proposedRecipeDisplayText.text = (("Enhanced ") + (slot01) + (" ") + (slot02) + (" ") + (slot03) + (" ") + (slot04)).ToString();
-            }
-        }
-        else
-        {*/
-            /*if (GameManager.Instance.isMVP)
-            {
-                proposedRecipeDisplayText.text = ((slot01) + (" ") + (slot02)).ToString();
-            }
-            else
-            {*/
-                proposedRecipeDisplayText.text = ((slot01) + (" ") + (slot02) + (" ") + (slot03) + (" ") + (slot04)).ToString();
-            //}
-            
-        //}
-        // Debug.Log(proposedRecipeDisplayText.text);
-        // Debug.Log("Recipe updated.");
+        proposedRecipeDisplayText.text = ((slot01) + (" ") + (slot02) + (" ") + (slot03) + (" ") + (slot04)).ToString();
     }
 
     void GenerateDiagnosisSheetInteractablesLists()
@@ -409,13 +348,11 @@ public class TreatmentPlanInteractables : MonoBehaviour
             }
             else
             {
-                // MenuManager.Instance.DiagnosisSheetInvalidCombinationPopup();
 				MenuManager.Instance.AlertMessage("treatmentPlanInvalidCombo");
             }
         }
         else
         {
-            // MenuManager.Instance.DiagnosisSheetInvalidCombinationPopup();
 				MenuManager.Instance.AlertMessage("treatmentPlanInvalidCombo");
         }
     }

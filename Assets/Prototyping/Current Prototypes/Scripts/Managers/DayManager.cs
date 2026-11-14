@@ -15,11 +15,13 @@ public class DayManager : MonoBehaviour
         }
     }
     
+    [Header("Current Day Information")]
     public Day currentDay;
     public int currentDayNumber;
-
+    
     public List<Day> allGameDays {get; private set;}
-    private int totalGameDays = 3;      // 0, 1, 2      (= 3)
+    
+    private int totalGameDays = 3;
 
     private static DayManager _instance;
     public static DayManager Instance
@@ -49,23 +51,18 @@ public class DayManager : MonoBehaviour
 
         // DAY 00 - 			JIMOTHY		(TUTORIAL)
         Day day00 = new Day();
-        day00.AssignDayNumber(0);
+        day00.AssignDayNumber(0);           // could do variable ++ instead of magic numbers
             allGameDays.Add(day00);
         
-        // DAY 01 - 			Ferguson, Peridot
+        // DAY 01 - 			BARRY, PERIDOT
         Day day01 = new Day();
         day01.AssignDayNumber(1);
             allGameDays.Add(day01);
 
-        // DAY 02 - 			BARRY, ARABELLA, LAWRENCE
+        // DAY 02 - 			FERGUSON, ARABELLA, LAWRENCE
         Day day02 = new Day();
         day02.AssignDayNumber(2);
             allGameDays.Add(day02);
-
-        /*if (allGameDays.Count == totalGameDays)
-        {
-            Debug.Log("All game days set up and accounted for.");
-        }*/
     }
 
     public void JumpToDayNumber(int dayNumSpecified)

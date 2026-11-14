@@ -15,9 +15,9 @@ public class MouseHover : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
     {
         image = GetComponent<Image>();
 
-        defaultColour = new Color (.8f, .8f, .8f);              // image.color;
-        hoverColour = image.color;                              //new Color (defaultColour.x, defaultColour.y, defaultColour.z, 0.5f);
-        image.color = defaultColour;                            //defaultColour = new Color (1f,1f,1f,0f);
+        defaultColour = new Color (.8f, .8f, .8f);
+        hoverColour = image.color;
+        image.color = defaultColour;
         
         menuObject = false;
         CheckIfMenu();

@@ -8,23 +8,23 @@ public class DraggableTutorialItem : Draggable
 {
      private Vector2 editedDelta;
      
-     private Vector2 largestItemSize;
-     private Vector2 smallestItemSize;
-     private Vector2 currentItemSize;
+     private Vector2 draggableTutorialItemLargestSize;
+     private Vector2 draggableTutorialItemSmallestSize;
+     private Vector2 draggableTutorialItemCurrentSize;
      
      private Rect tutorialBinRectBounds;
-     private Rect selfRectBounds;
-     private RectTransform itemRectTransform;
+     private Rect draggableTutorialItemRectBounds;
+     private RectTransform draggableTutorialItemRectTransform;
      
      private float itemTimer = 0.05f;
      
-     private bool resizing;
-     private bool overBin;
-     private bool itemIsRaycastTarget;
+     private bool resizingDraggableTutorialItem;
+     private bool tutorialItemOverBin;
+     private bool tutorialItemIsRaycastTarget;
 
      public void InitialiseTutorialItem(Rect rectToAssign)
      {
-         itemRectTransform = GetComponent<RectTransform>();
+         draggableTutorialItemRectTransform = GetComponent<RectTransform>();
          
          this.gameObject.SetActive(false);
          
@@ -36,16 +36,15 @@ public class DraggableTutorialItem : Draggable
      {
          float offset = 50f;
 
-         selfRectBounds = new Rect(transform.position.x, transform.position.y, (itemRectTransform.rect.width + offset), (itemRectTransform.rect.height + offset));
+         draggableTutorialItemRectBounds = new Rect(transform.position.x, transform.position.y, (draggableTutorialItemRectTransform.rect.width + offset), (draggableTutorialItemRectTransform.rect.height + offset));
          
-         float width = selfRectBounds.width;
-         float height = selfRectBounds.height;
-         //Debug.Log("Self rect bounds is: " + width + " wide, and " + height + " high.");
+         float width = draggableTutorialItemRectBounds.width;
+         float height = draggableTutorialItemRectBounds.height;
          
-         largestItemSize = new Vector2(width, height);
-         smallestItemSize = new Vector2((width / 2), (height / 2));
+         draggableTutorialItemLargestSize = new Vector2(width, height);
+         draggableTutorialItemSmallestSize = new Vector2((width / 2), (height / 2));
          
-         currentItemSize = largestItemSize;
+         draggableTutorialItemCurrentSize = draggableTutorialItemLargestSize;
      }
 
     public override void OnBeginDrag(PointerEventData eventData)
@@ -53,9 +52,9 @@ public class DraggableTutorialItem : Draggable
         SoundManager.Instance.PlayAudio(SoundManager.Instance.sfxTutorialPageGrab);
         
         editedDelta = eventData.pressPosition - (Vector2)transform.position;
-        itemRectTransform.SetAsLastSibling();
+        draggableTutorialItemRectTransform.SetAsLastSibling();
         
-        itemIsRaycastTarget = false;
+        tutorialItemIsRaycastTarget = false;
         SetTutorialItemRaycasts();
     }
 
@@ -68,7 +67,7 @@ public class DraggableTutorialItem : Draggable
         
         // Updates the position of the item and its associated rect
         transform.position = eventData.position - editedDelta;
-        selfRectBounds.center = transform.position;
+        draggableTutorialItemRectBounds.center = transform.position;
         
         CheckTutorialItemPosition();
     }
@@ -77,13 +76,13 @@ public class DraggableTutorialItem : Draggable
     {
         CheckTutorialItemPosition();
         
-        if (overBin)
+        if (tutorialItemOverBin)
         {
             Invoke(nameof(TutorialItemFailsafeDestroy), itemTimer);
         }
         else
         {
-            itemIsRaycastTarget = true;
+            tutorialItemIsRaycastTarget = true;
             Invoke(nameof(SetTutorialItemRaycasts), itemTimer);
         }
         
@@ -92,22 +91,22 @@ public class DraggableTutorialItem : Draggable
 
     void CheckTutorialItemPosition()
     {
-        overBin = selfRectBounds.Overlaps(tutorialBinRectBounds);
+        tutorialItemOverBin = draggableTutorialItemRectBounds.Overlaps(tutorialBinRectBounds);
         
         // If overlapping the bin, checks if ready to delete or not
-        if (overBin)
+        if (tutorialItemOverBin)
         {
-            if (currentItemSize != smallestItemSize && !resizing)
+            if (draggableTutorialItemCurrentSize != draggableTutorialItemSmallestSize && !resizingDraggableTutorialItem)
             {
-                resizing = true;
+                resizingDraggableTutorialItem = true;
                 ResizeTutorialItem();
             }
         }
         else
         {
-            if (currentItemSize != largestItemSize && !resizing)
+            if (draggableTutorialItemCurrentSize != draggableTutorialItemLargestSize && !resizingDraggableTutorialItem)
             {
-                resizing = true;
+                resizingDraggableTutorialItem = true;
                 ResizeTutorialItem();
             }
         }
@@ -121,7 +120,7 @@ public class DraggableTutorialItem : Draggable
     
     private void SetTutorialItemRaycasts()
     {
-        gameObject.GetComponent<Image>().raycastTarget = itemIsRaycastTarget;
+        gameObject.GetComponent<Image>().raycastTarget = tutorialItemIsRaycastTarget;
     }
 
 
@@ -134,21 +133,21 @@ public class DraggableTutorialItem : Draggable
     IEnumerator TutorialItemResizer()
     {
         float elapsedTime = 0.0f;
-        Vector2 targetItemSize = currentItemSize == largestItemSize ? smallestItemSize : largestItemSize;
+        Vector2 targetItemSize = draggableTutorialItemCurrentSize == draggableTutorialItemLargestSize ? draggableTutorialItemSmallestSize : draggableTutorialItemLargestSize;
 
         while (elapsedTime < itemTimer)
         {
             elapsedTime += Time.deltaTime;
             float t = Mathf.Clamp01(elapsedTime/itemTimer);
          
-            itemRectTransform.sizeDelta = Vector2.Lerp(currentItemSize, targetItemSize, t);
+            draggableTutorialItemRectTransform.sizeDelta = Vector2.Lerp(draggableTutorialItemCurrentSize, targetItemSize, t);
          
             yield return null;
         }
 
         // Ensures size is correct at end of coroutine and resets the resize bool
-        itemRectTransform.sizeDelta = targetItemSize;
-        currentItemSize = targetItemSize;
-        resizing = false;
+        draggableTutorialItemRectTransform.sizeDelta = targetItemSize;
+        draggableTutorialItemCurrentSize = targetItemSize;
+        resizingDraggableTutorialItem = false;
     }
 }

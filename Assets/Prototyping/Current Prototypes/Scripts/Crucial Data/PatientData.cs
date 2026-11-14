@@ -237,11 +237,9 @@ public class PatientData : MonoBehaviour
         barry.SetPatientInformation("Barry Buff", "Bear");
         barry.SetPatientExtras(s, sizeL);
         barry.SetPatientExtras(d, dietO);
-        //barry._patientSize = sizeL;
-        //barry._patientDiet = dietO;
         barry.SetPatientText(l, "These crystals formed after eating some homemade hot honey for dinner last night. My eyes are constantly pulsating, and I'm starting to lose my vision.\n\nPlease help me! I'm not sure what will happen if I leave it alone.");
-        barry.SetPatientText(c, "UPDATE ME!");
-        barry.SetPatientText(f, "<i>You recognise the writing as Barry's, though the penmanship is wobbly and lopsided. Letters fuse into each other as if he had no idea where the previous one began./n/nYou don't need to read the first sentence to know that you have failed him.</i>");
+        barry.SetPatientText(c, "The pulsating is gone and I can see again! I owe you my life! \n\nThank you, Apothekitty.");
+        barry.SetPatientText(f, "<i>You recognise the writing as Barry's, though the penmanship is wobbly and lopsided. Letters fuse into each other as if he had no idea where the previous one began.\n\nYou don't need to read the first sentence to know that you have failed him.</i>");
         barry.AttachPatientToDay(1);
         barry.SetPatientIcon();
             allPatientsList.Add(barry);
@@ -252,8 +250,8 @@ public class PatientData : MonoBehaviour
         arabella.SetPatientExtras(s, sizeS);
         arabella.SetPatientExtras(d, dietH);
         arabella.SetPatientText(l, "My family have been starving recently... One of my sons passed from this mysterious illness... I had no choice but to cook him up for supper as we had nothing to eat... I'm starting to have an urge for flesh, and I'm afraid of what I might do to my other children. Please help me, Apothekitty!");
-        arabella.SetPatientText(c, "UPDATE ME!");
-        arabella.SetPatientText(f, "UPDATE ME! What have I done? UPDATE ME!");
+        arabella.SetPatientText(c, "The cravings have passed thanks to you. I can watch my children grow up now without those unpleasant thoughts and feelings. \n\nYou saved my children's lives and my own, Thank you, Apothekitty.");
+        arabella.SetPatientText(f, "Do not blame yourself. This is my own doing. I just couldn't help it, dear. They all were so sweet. I am a terrible mother, and no medicine can help that.");
         arabella.AttachPatientToDay(2); 
         arabella.SetPatientIcon();
             allPatientsList.Add(arabella);
@@ -263,8 +261,8 @@ public class PatientData : MonoBehaviour
         lawrence.SetPatientExtras(s, sizeS);
         lawrence.SetPatientExtras(d, dietO);    // *TAG* - CURRENTLY SET AS OMNIVORE
         lawrence.SetPatientText(l, "I love going for nightly glides amongst the treetops! However, a week ago, I noticed I developed this weird bite after one of my adventures... And now I've started growing teeth and bat wings! I don't know what's going on, but I don't like it! Please fix me, Apothekitty!");
-        lawrence.SetPatientText(c, "UPDATE ME!");
-        lawrence.SetPatientText(f, "UPDATE ME!");
+        lawrence.SetPatientText(c, "Hello Kitty!! I am back to peak flying condition thanks to you! The sky and sunlight have never felt so good. Besides, feathers suit a fellow like me more than fur.");
+        lawrence.SetPatientText(f, "I don't understand. \n\nMy feathers are all falling out, and I can't meet with my friends in the sunshine anymore. You said you could help me, but I'm still hurting. Will I ever feel normal again?");
         lawrence.AttachPatientToDay(2);
         lawrence.SetPatientIcon();
             allPatientsList.Add(lawrence);
@@ -274,9 +272,9 @@ public class PatientData : MonoBehaviour
         jimothy.SetPatientInformation("Jimothy", "Jerboa");
         jimothy.SetPatientExtras(s, sizeS);
         jimothy.SetPatientExtras(d, dietO);
-        jimothy.SetPatientText(l, "When I was appointed to be the king's private jester, I was thrilled beyond belief. Every morning I would jump with joy as I got dressed for my shift. /n/nNow, however, it's so hard to even get out of bed. The thought of the king's eyes watching my every move as I juggle and dance for him. /n/nIt's even worse when I am to perform in front of his guests from neighbouring kingdoms. My legs tremble and my mouth quivers at the mere thought of it.");
-        jimothy.SetPatientText(c, "UPDATE ME!");
-        jimothy.SetPatientText(f, "UPDATE ME!");
+        jimothy.SetPatientText(l, "When I was appointed to be the king's private jester, I was thrilled beyond belief. Every morning I would jump with joy as I got dressed for my shift. \n\nNow, however, it's so hard to even get out of bed. The thought of the king's eyes watching my every move as I juggle and dance for him. \n\nIt's even worse when I am to perform in front of his guests from neighbouring kingdoms. My legs tremble and my mouth quivers at the mere thought of it.");
+        jimothy.SetPatientText(c, "Gramercy, cat doctor! Thanks to you, my job is safe, and I'm back to doing what I love! The king and I are eternally indebted to you.");
+        jimothy.SetPatientText(f, "I'm sorry, cat doctor... The cure didn't work... After losing my job, I cannot bare to put on my hood or ribbons...");
         jimothy.AttachPatientToDay(0);
         jimothy.SetPatientIcon();
             allPatientsList.Add(jimothy);
@@ -288,9 +286,9 @@ public class PatientData : MonoBehaviour
         ferguson.SetPatientInformation("Ferguson", "Fox");//, "Medium, Omnivore");
         ferguson.SetPatientExtras(s, sizeM);
         ferguson.SetPatientExtras(d, dietO);
-        ferguson.SetPatientText(ferguson._patientLetterText, "Ya know I do love my family, but I think maybe their comments are getting to me. I don't want to be a failure. /n/nIt's been hard to eat anything lately, everything's too tough and chewy. I'm starting to not even like the taste of the dinners ma prepares. I should be grateful, I'm not a good enough son.");
-        ferguson.SetPatientText(ferguson._patientCuredText, "UPDATE ME!");
-        ferguson.SetPatientText(ferguson._patientFailedText, "UPDATE ME!");
+        ferguson.SetPatientText(l, "Ya know I do love my family, but I think maybe their comments are getting to me. I don't want to be a failure. \n\nIt's been hard to eat anything lately, everything's too tough and chewy. I'm starting to not even like the taste of the dinners ma prepares. I should be grateful, I'm not a good enough son.");
+        ferguson.SetPatientText(c, "Thank ya, Apothekitty! My claws and teeth are back, the antlers are gone, and ma and pa want me in the family again! It's been a long time since I felt this confident.");
+        ferguson.SetPatientText(f, "What's happenin' to me... I've totally lost mahself and turned into a monster... Ma and pa won't even look me in the eyes anymore. Hell, I can't even look at mahself...");
         ferguson.AttachPatientToDay(2);
         ferguson.SetPatientIcon();
             allPatientsList.Add(ferguson);
@@ -300,9 +298,9 @@ public class PatientData : MonoBehaviour
         peridot.SetPatientInformation("Peridot", "Pangolin");//, "Medium, Omnivore");
         peridot.SetPatientExtras(s, sizeM);
         peridot.SetPatientExtras(d, dietO);
-        peridot.SetPatientText(peridot._patientLetterText, "It's been a few days since I've properly eaten. I don't trust what's in my pantry, I have no way to measure the grams of fat that I may ingest. And if I were to eat something unhealthy, what if I got sick? My body is too precious for me to consume anything unhealthy or clean enough.");
-        peridot.SetPatientText(peridot._patientCuredText, "UPDATE ME!");
-        peridot.SetPatientText(peridot._patientFailedText, "UPDATE ME!");
+        peridot.SetPatientText(l, "It's been a few days since I've properly eaten. I don't trust what's in my pantry, I have no way to measure the grams of fat that I may ingest. And if I were to eat something unhealthy, what if I got sick? My body is too precious for me to consume anything unhealthy or clean enough.");
+        peridot.SetPatientText(c, "My love! Thanks to your cure, I'm back to baking the best sweets in Faunbridge. Oh, you really are an angel! I'm forever grateful.");
+        peridot.SetPatientText(f, "I can't eat or touch anything anymore... Everything dirty... I can't move from this corner, too impure... I'm sorry, my love...");
         peridot.AttachPatientToDay(1);
         peridot.SetPatientIcon();
             allPatientsList.Add(peridot);
@@ -338,10 +336,16 @@ public class PatientData : MonoBehaviour
     {
         SetPatientAilment(data);
         patientLetter.UpdateLetterDisplay(data);
-        displayedPatientIcon = data._patientIcon;
-
+        
+        UIManager.Instance.SpriteShift(displayedPatientIcon, data._patientIcon.sprite);
+        
+        
+        // *TAG* - Get audio for footsteps here!
+        string audioToPlay = data._patientSize == sizeS ? "Fast steps" : data._patientSize == sizeM ? "Medium steps" : data._patientSize == sizeL ? "Slow steps" : "Error";
+        Debug.Log("Would play sound effect for: " + audioToPlay);
         SoundManager.Instance.PlayAudio(SoundManager.Instance.sfxFootsteps);
 
+        
         GameManager.Instance.SetClientData();
         
         Invoke(nameof(SpawnPatient), 1.0f);
@@ -349,7 +353,8 @@ public class PatientData : MonoBehaviour
     
     public void ChangePatientSprite()
     {
-        Debug.Log("Should be changing patient sprite now...");
+        // Changes the patient's displayed sprite when they receive their treatment.
+        Image imageToUpdate = displayedPatientIcon;
         UIManager.Instance.SpriteShift(displayedPatientIcon, activePatientData._patientAltIcon.sprite);
     }
     
@@ -376,7 +381,8 @@ public class PatientData : MonoBehaviour
 
     public void UpdateCurrentDayPatientsList()
     {
-        int index = allPatientsList.Count + 10;     // failsafe to ensure the index is correct
+        int failsafe = 10;
+        int index = allPatientsList.Count + failsafe;
 
         foreach (SinglePatientData c in currentDayPatientsList)
         {
@@ -390,7 +396,6 @@ public class PatientData : MonoBehaviour
             }
         }
         
-        // if (index < allPatientsList.Count + 10)
         currentDayPatientsList.RemoveAt(index);
         Debug.Log("Patients remaining today: " + currentDayPatientsList.Count);
     }
@@ -398,5 +403,26 @@ public class PatientData : MonoBehaviour
     public void ResetPatientLetter()
     {
         patientLetter.ResetPatientLetterPosition();
+    }
+
+    public string ReturnPatientCheckupLetter(string patientName, bool curedText)
+    {
+        string checkupLetterText = "default text. Issue with update on ReturnPatientCheckupLetter";
+        
+        foreach (SinglePatientData c in currentDayPatientsList)
+        {
+            if (c._patientName == patientName)
+            {
+                checkupLetterText = curedText ? c._patientCuredText : c._patientFailedText;
+                break;
+            }
+            else
+            {
+                continue;
+            }
+        }
+
+        Debug.Log("Patient checkup letter text saved.");
+        return checkupLetterText;
     }
 }

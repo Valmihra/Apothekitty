@@ -40,10 +40,10 @@ public class PatientLetter : MonoBehaviour
     void HideSelectionIcons()
     {
         // Disables the selection icons on the patient form
-        for (int i = 1; i < 3; i++)
+        for (int i = 1; i <= 3; i++)
         {
             string nameToSearch = i == 1 ? "Small" : i == 2 ? "Medium" : i == 3 ? "Large" : "Fail";
-
+            
             if (nameToSearch != "Fail")
             {
                 GameObject sizeIconToHide = GameObject.Find((nameToSearch + " - Selected").ToString());
@@ -68,17 +68,16 @@ public class PatientLetter : MonoBehaviour
         HideSelectionIcons();
         
         displayedPatientName.text = data._patientName;
-        // Debug.Log("Data in UpdateLetterDisplay received. Patient name is: " + displayedPatientName.text);
         
         displayedPatientSpecies.text = data._patientSpecies;
         UpdatePatientSizeAndDiet(data._patientSize, data._patientDiet);
+
         displayedPatientLetterText.text = data._patientLetterText;
 
     }
 
     void UpdatePatientSizeAndDiet(string size, string diet)
     {
-        // Debug.Log(size + ", " + diet);
         if (size == PatientData.Instance.sizeS || size == PatientData.Instance.sizeM || size == PatientData.Instance.sizeL)
         {
             //string nameToSearch = ("STATIC TXT - Size Options - " + size).ToString();
@@ -99,9 +98,5 @@ public class PatientLetter : MonoBehaviour
         {
             Debug.Log("Issue with naming conventions when checking for sizes at PatientLetter -> UpdatePatientSizeAndDiet");
         }
-        // string nameToSearch = size;
-        
-        // == PatientData.Instance.sizeS ? Small : PatientData.Instance.sizeM ? y : PatientData.Instance.sizeL ? y : "Failed";
-        // if (size == PatientData.Instance.sizeS || )
     }
 }

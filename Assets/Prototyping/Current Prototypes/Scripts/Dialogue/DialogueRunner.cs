@@ -43,8 +43,7 @@ public class DialogueRunner : MonoBehaviour
 
     // oh i can't wait for the overarching "if (!tutorialCompleted) else that will
     // RADICALLY influence how quickly I can navigate through all this,,
-    [SerializeField]
-	private AnimatedTextEffect dialogueAnimator;
+    [SerializeField] private AnimatedTextEffect dialogueAnimator;
 
     private List<string> currentDialogue;
     private string nameOfNPC;
@@ -65,12 +64,6 @@ public class DialogueRunner : MonoBehaviour
 
     public void InitialiseDialogueRunner()
     {
-        // Debug.Log("Resetting DialogueRunner...");
-        // FixDialogueBools();
-        
-        // introductionComplete = false;
-        // firstDialogueComplete = false;
-
         notSeenDeskHint = true;
         firstVisitDesk = false;
         deskIsClean = false;
@@ -89,7 +82,7 @@ public class DialogueRunner : MonoBehaviour
 
     public void FixDialogueBools()
     {
-        Debug.Log("Should be hiding now...");
+        // Debug.Log("Should be hiding now...");
         // UIManager.Instance.DisableUI(dialogueBox);
         dialogueBox.gameObject.SetActive(false);
         currentLineNumber = 0;
@@ -104,17 +97,14 @@ public class DialogueRunner : MonoBehaviour
     {
         if (dialogueSet)
         {
-            // Debug.Log("Right now, currentDialogue is holding " + currentDialogue.Count + " strings of dialogue.");
-            // Debug.Log("You are currently on line: " + currentLineNumber + ".");
-
+            // If the dialogue is set, it sets the correct prompt and then continues...
             SetCorrectDialogueBoxPrompt();
 
             if (currentLineNumber >= currentDialogue.Count)
             {
-                // at or over the limit of the lines of dialogue
-                // Debug.Log("currentLineNumber is larger than currentDialogue.Count. Checking whether this is intentional or not.");
                 if (clientIsSpeaking)
                 {
+                    // If you're at or over the limit of the lines of dialogue, but the client is speaking
                     if (!introductionComplete)
                     {
                         GetDialogue("cat responds to client");
@@ -122,8 +112,7 @@ public class DialogueRunner : MonoBehaviour
                     }
                     else
                     {
-                        // CheckDialogueForActions();
-						// clientIsSpeaking = false; // 
+                        // Should never get to here.
 						Debug.Log("Bro how'd you fuck it up like this?");
                     }
                 }
@@ -131,36 +120,29 @@ public class DialogueRunner : MonoBehaviour
                 {
 					if (clientIsAnswering)
                     {
+                        // If you're at or over the limit of the lines of dialogue, but the client is answering
                         PatientData.Instance.ChangePatientSprite();
 						GetDialogue("client responds to cat");
 						clientIsSpeaking = false;
 					}
 					else
 					{
-						// Debug.Log("You have reached the end of this DialogueSnippet.");
-                        /*if (!hasActionOnFinishDialogue)
-                        {
-                            FinishDialogueSnippet();
-                        }
-                        else
-                        {
-                            GetNextAction();
-                        }*/
+                        // If you're at or over the limit of the lines of dialogue, with nothing else to do
                         FinishDialogueSnippet();
 					}
                     
                 }
             }
+            
             else
             {
-                // within the limit of the lines of dialogue
                 if (currentLineNumber < currentDialogue.Count)
                 {
-                    // updates the text
-                    //CheckForSpeaker();
+                    // Updates and animates the text if it is within the range of the current dialogue.
                     currentString.text = currentDialogue[currentLineNumber];
-					// BEGINS ANIMATING THAT STRING HERE!!
-						dialogueAnimator.BeginAnimatingText(currentString.text);
+                    
+                    dialogueAnimator.BeginAnimatingText(currentString.text);
+                    
                     CheckDialogueForActions();
                     currentLineNumber++;
                 }
@@ -168,17 +150,18 @@ public class DialogueRunner : MonoBehaviour
         }
         else
         {
-            // Debug.Log("No set dialogue. Closing the dialogue window.");
+            // If no dialogue is set, it closes the dialogue box.
+            Debug.Log("Trying to access dialogue without it being set first. Check how you're calling it, dweeb.");
             FinishDialogueSnippet();
         }
 
         
     }
-
-    // Determines what action to take after finishing reading through the dialogue
-        // could probably put the client check here too instead of in RunDialogue if I wanted it cleaner!!
+    
     void FinishDialogueSnippet()
     {
+        // Determines what action to take after finishing reading through the dialogue
+        // could probably put the client check here too instead of in RunDialogue if I wanted it cleaner!!
         if (canFinishDialogue)
         {
             CloseDialogueWindow();
@@ -193,7 +176,8 @@ public class DialogueRunner : MonoBehaviour
                 {
                     CloseDialogueWindow();
                     firstDialogueComplete = true;
-                    // *TAG* - MIGHT BE BETTER TO HAVE A SEPARATE TUTORIAL SCRIPT INSTEAD
+                    
+                    // Opens initial tutorial popup
                     MenuManager.Instance.OpenTutorialPopup("initialTutorial");
                     GameManager.Instance.canOpenShop = true;
                 }
@@ -201,7 +185,8 @@ public class DialogueRunner : MonoBehaviour
                 {
                     CloseDialogueWindow();
                     MenuManager.Instance.OpenTutorialPopup("startPrompts");
-                    // Enables navigation after this point!
+                    
+                    // Enables navigation to desk
                     SceneManager.Instance.EnableGameplay();
                     notSeenDeskHint = false;
                 }
@@ -262,41 +247,25 @@ public class DialogueRunner : MonoBehaviour
 
     void CloseDialogueWindow()
     {
-        // Debug.Log("Closing dialogue window.");
-        // UIManager.Instance.DisableUI(dialogueBox);
         dialogueBox.gameObject.SetActive(false);
         dialogueSet = false;
         currentLineNumber = 0;
 
         speakerName.text = defaultSpeaker;
         currentString.text = defaultString;
-        //currentString.FontStyle.Normal;
-
-        
     }
 
     void JumpNextDialogue(List<string> target)//, string speaker)
     {
-        //if (target == )
         currentDialogue = target;
         SetupDialogueForCatSpeaker();
         RunDialogue();
-
-        /*if (speaker == "NA")
-        {
-            speakerName.text = defaultSpeaker;
-        }
-        else
-        {
-            speakerName.text = speaker;
-        }*/
     }
 
     public void GetDialogue(string target)
     {
         if (GameManager.Instance.runningTutorial)
         {
-            // Debug.Log("Tutorial toggled on. Checking for relevant dialogue.");
             if (target == "tutorial")
             {
                 currentDialogue = DialogueHolder.Instance.td_Introduction._dialogue;
@@ -305,7 +274,6 @@ public class DialogueRunner : MonoBehaviour
             }
             else if (target == "desk")
             {
-                // currentDialogue = DialogueHolder.Instance.deskIntroduction._dialogue;
                 currentDialogue = DialogueHolder.Instance.td_Desk01._dialogue;
                 SetupDialogueForCatSpeaker();
                 RunDialogue();
@@ -370,7 +338,6 @@ public class DialogueRunner : MonoBehaviour
 
         else
         {
-            //CloseDialogueWindow();
             return;
         }
     }
@@ -384,12 +351,6 @@ public class DialogueRunner : MonoBehaviour
         // UIManager.Instance.EnableUI(dialogueBox);
         dialogueBox.gameObject.SetActive(true);
     }
-
-    /*private string GetSpeakerName(DialogueHolder.DialogueSnippet snippet)
-    {
-        string speaker = snippet._speakerName;
-        return speaker;
-    }*/
 
     void GetDialogueByClient(string dialogueType)
     {
@@ -489,6 +450,7 @@ public class DialogueRunner : MonoBehaviour
     {
         if (currentString.text.Contains("</color>"))
         {
+            Debug.Log("Would perform highlight action here. Is this still necessary?");
             PerformAction(currentString.text);
         }
         else
@@ -497,41 +459,13 @@ public class DialogueRunner : MonoBehaviour
 			{
 				// Relies on submission dialogue only having one line!!
 				GetDialogueByClient("finish");
+                
+                // *TAG* - could instead directly reset the dialogue list in this
+                // script, but,,, idk.. messy. yuck.
 			}
 			else
 			{
-				//(currentString.text.Contains("I haven't visited the herb wall in a while,")	// or 	// "Ah, this herb is"
-				/*if (currentDialogue == DialogueHolder.Instance.td_HerbWall._dialogue)
-				{
-					switch (currentString.text)
-					{
-						case "Let's see... I haven't visited the herb wall in a while, I wonder what's in here.":
-							// OPEN HERB WALL DRAWER 1
-							Debug.Log("--- OPENS DRAWER HERE, OR LETS PLAYER OPEN ONE (WOULD REQUIRE INTERACTION BLOCKERS ON THE REST OF THE OBJECTS IN THE SCENE FOR CLEANLINESS) ---");
-							break;
-						case "Ah, this herb is [insert chosen herb]! Each herb has a corresponding page in my botanical codex, which I can look at by hovering over the plant.":
-							// 
-							Debug.Log("--- SHOULD PROBABLY DEMONSTRATE THE HOVER FUNCTION HERE? ---");
-							break;
-						case "Hmm. I can't remember how this herb may affect my patient though. Let me just drag this down and check the herb compendium to be sure.":
-							// OPEN COMPENDIUM SLIDER
-							// HerbCompendiumController.Instance.TutorialOpenCompendium();
-							Debug.Log("--- SLIDES THE COMPENDIUM OPEN HERE ---");
-							break;
-						
-
-						default:
-							// 
-							Debug.Log("CONGRATS FOOL, YOU FUCKED IT <3");
-							break;
-					}
-
-					// OPEN HERB WALL DRAWER
-				}*/
-				//else
-				//{
-					return;
-				//}
+				return;
 			}
         }
     }
@@ -552,16 +486,4 @@ public class DialogueRunner : MonoBehaviour
             return;
         }
     }
-
-    /*void CheckForSpeaker()
-    {
-        if (currentDialogue == DialogueHolder.Instance.td_Introduction)
-        {
-            if (currentLineNumber == 2)
-            {
-                speakerName = null;
-                currentString.FontStyle.Italic;
-            }
-        }
-    }*/
 }

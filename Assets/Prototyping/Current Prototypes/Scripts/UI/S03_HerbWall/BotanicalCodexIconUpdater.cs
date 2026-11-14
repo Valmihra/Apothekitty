@@ -5,10 +5,11 @@ using UnityEngine.UI;
 
 public class BotanicalCodexIconUpdater : MonoBehaviour
 {
-    // Only for diet currently
     private UnityEngine.UI.Image botanicalCodexIcon;
+
     [SerializeField] private Sprite botanicalCodexIconDesaturated;
     [SerializeField] private Sprite botanicalCodexIconColoured;
+
     private bool botanicalCodexIconIsDesaturated;
 
     public void InitialiseBotanicalCodexIconUpdater()

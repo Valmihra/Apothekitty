@@ -16,8 +16,10 @@ public class HerbCompendiumController : MonoBehaviour
     private float closedSlidingDoorValue = 1.0f;	// was prev. int 1.
 	private float openSlidingDoorValue = 0.0f;
     [SerializeField] private Slider slidingDoor;
-    // [SerializeField] private GameObject interactionBlocker;
+
     // *TAG* - For use on slider: Maybe if roller is open, interaction blocker prevents touching the drawers? idk.
+	// [SerializeField] private GameObject interactionBlocker;
+
     private static HerbCompendiumController _instance;
     public static HerbCompendiumController Instance
     {
@@ -36,8 +38,6 @@ public class HerbCompendiumController : MonoBehaviour
     public void InitialiseCompendium()
     {
         compendiumPanelRect = CalculateCompendiumRect();
-        
-        // Closes sliding door
         slidingDoor.value = closedSlidingDoorValue;
         
         InitialiseCompendiumLeaflets();
@@ -59,19 +59,13 @@ public class HerbCompendiumController : MonoBehaviour
 
     private void InitialiseCompendiumLeaflets()
     {
-        // *TAG* - COULD SIMPLIFY -- DON'T NECESSARILY NEED THE TITLES, SINCE CAN SET IN LEAFLET INDIVIDUALLY..!!!
-        
-        
-        // List<string> titles = new List<string> { "Fortify", "Heal", "Ease", "Mind", "Body" };
-            TMP_Text[] tmpArray = GetComponentsInChildren<TMP_Text>();
-            compendiumLeafletTitlesList = new List<TMP_Text>(tmpArray);
-            
+		TMP_Text[] tmpArray = GetComponentsInChildren<TMP_Text>();
+        compendiumLeafletTitlesList = new List<TMP_Text>(tmpArray);
         compendiumLeafletsList = new List<HerbCompendiumLeaflet>();
         
         for (int i = 0; i < HerbCompendiumData.Instance.pagesList.Count; i++)
         {
             // Assigns the title from the list to the TMPro element at the same position in the relevant list
-            // compendiumLeafletTitlesList[i].text = titles[i];
             compendiumLeafletTitlesList[i].raycastTarget = false;
             
             compendiumLeafletsList.Add(compendiumLeafletTitlesList[i].GetComponentInParent<HerbCompendiumLeaflet>());
@@ -98,7 +92,6 @@ public class HerbCompendiumController : MonoBehaviour
 
 	IEnumerator OpenCompendium()
 	{
-		// float targetValue = 0.0f;
 		float timeToLerp = 0.5f;
 		float elapsedTime = 0.0f;
 		

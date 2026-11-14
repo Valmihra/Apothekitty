@@ -13,8 +13,8 @@ public class GameManager : MonoBehaviour
     public bool shopIsClosed;
     public bool canOpenShop;
 
-        // tutorial marker
-        public bool runningTutorial;
+    // tutorial marker
+    public bool runningTutorial;
 
     // player progress markers
     public bool ailmentSubmitted;
@@ -44,32 +44,24 @@ public class GameManager : MonoBehaviour
     // ---------------------------------
     //      ON RUNTIME
     // ---------------------------------
-
     void Awake()
     {
         _instance = this;
 
         treatmentPlanInteractables = FindObjectOfType<TreatmentPlanInteractables>();
-
         ResetGameStatusBools();
     }
-
     
     void Start()
     {
-        // GameManager should be first script to run
-        Debug.Log("Starting game at Main Menu.");
-
         FirstOpenGame();
         GoMainMenu();
-        
     }
 
+    
     // ---------------------------------
     //      GAME MANAGEMENT
     // ---------------------------------
-
-
     void ResetGameStatusBools()
     {
         quitting = false;
@@ -92,15 +84,13 @@ public class GameManager : MonoBehaviour
         Inventory.Instance.InitialiseInventorySlots();
         curtainAccess.InitialiseDayTrigger();
         
-        ResultsScreen.Instance.InitialiseResultsScreen();
+        // ResultsScreen.Instance.InitialiseResultsScreen();
         DialogueRunner.Instance.InitialiseDialogueRunner();
         
 		if (runningTutorial)
-		{
-            GameObject tutorialSpecificUI = Instantiate(tutorialItemsPrefab, tutorialItemControllerParentCanvas.transform);
-            tutorialSpecificUI.GetComponent<RectTransform>().SetAsLastSibling();
-			TutorialItemController.Instance.InitialiseTutorialItemsDesk();
-		}
+        {
+            InstantiateTutorialObjects();
+        }
         // else check and delete?
     }
 
@@ -121,14 +111,11 @@ public class GameManager : MonoBehaviour
 
     void ResetInteractablesBetweenClients()
     {
-        // Resets all elements the player may have altered in-game. Used before any new client arrives
-        
         // Resets the markers used to check progress with a single client
         ailmentSubmitted = false;
         diagnosisSubmitted = false;
         
         // Resets Desk UI
-        //PatientData.Instance.ResetPatientLetterPosition();
         PatientData.Instance.ResetPatientLetter();
         GrimoirePagesData.Instance.ResetGrimoire();
         treatmentPlanInteractables.ResetDiagnosisSheet();
@@ -142,25 +129,14 @@ public class GameManager : MonoBehaviour
         DialogueRunner.Instance.ResetDialogueRunner();
     }
     
-    // Resets the scene entirely.
-    void OnNewDay()
-    {
-        // Reset the data for a new day
-        ResetGameElementsOnNewDay();
-        
-        // Reset game elements for a new client
-        ResetInteractablesBetweenClients();
-
-        // Reset the game scene
-        SceneManager.Instance.ResetScene();
-		MenuManager.Instance.NewDayMenu("open");
-    }
 
     // ---------------------------------
     //      SWITCHING BETWEEN DAYS
     // ---------------------------------
-	public void StartDay()      // WHERE IS THIS CALLED FROM?
+	public void StartNewDay()
 	{
+        // Called from the animated text component on the new day object.
+        // Is that messy? maybe.
 		SceneManager.Instance.ResetScene();
 		if (runningTutorial)
         {
@@ -171,8 +147,7 @@ public class GameManager : MonoBehaviour
     
     public void GoNextDay()
 	{
-		Debug.Log("Should be setting up for day " + (DayManager.Instance.currentDayNumber + 1).ToString());
-
+		// Debug.Log("Should be setting up for day " + (DayManager.Instance.currentDayNumber + 1).ToString());
         _gameData.savedDayNumber++;
         
         DayManager.Instance.GoNextGameDay();
@@ -189,11 +164,50 @@ public class GameManager : MonoBehaviour
         OnNewDay();
     }
     
-    
+    void OnNewDay() // Resets scene entirely
+    {
+        // Reset the data for a new day
+        ResetGameElementsOnNewDay();
+        
+        // Reset game elements for a new client
+        ResetInteractablesBetweenClients();
 
-    
+        // Reset the game scene
+        SceneManager.Instance.ResetScene();
+        MenuManager.Instance.NewDayMenu("open");
+    }
     
 	
+    // ---------------------------------
+    //      SWITCHING BETWEEN CLIENTS
+    // ---------------------------------
+    public void SummonClient()
+    {
+        // Called at the start of the day on the curtain, and whenever spawning the next patient.
+        PatientData.Instance.RandomiseIncomingPatientData();
+    }
+    
+    public void GoNextClient()
+    {
+        // Updates patient visit information
+        _gameData.numberPatientsSeen++;
+        PatientData.Instance.UpdateCurrentDayPatientsList();
+        
+        // Resets interactables and the scene
+        ResetInteractablesBetweenClients();
+        SceneManager.Instance.ResetScene();
+        
+        // Summons the client
+        SummonClient();
+    }
+
+    public void SubmitTreatmentToClient()
+    {
+        SceneManager.Instance.ReturnToClient();
+        DialogueRunner.Instance.GetDialogue("submit herbs to client");
+    }
+    
+    
     // ---------------------------------
     //      GAME DATA RETRIEVAL
     // ---------------------------------
@@ -205,6 +219,16 @@ public class GameManager : MonoBehaviour
 
         _gameData.savedDayNumber = 0;
         _gameData.seenPatientsInCurrentDay = new List<ResultsCalculator.FinishedPatient>();
+    }
+    
+    
+    // ---------------------------------
+    //      UPDATING GAME DATA
+    // ---------------------------------
+    public void SetClientData()
+    {
+        _gameData.savedActivePatient = PatientData.Instance.activePatientData;
+        Debug.Log("The current active patient is saved to game data as: " + _gameData.savedActivePatient._patientName);
     }
     
 	public void RecordCuredPatient()
@@ -221,77 +245,24 @@ public class GameManager : MonoBehaviour
 
     public void AddFinishedPatientToData(ResultsCalculator.FinishedPatient treatedPatient)
     {
-        /*if (_gameData.seenPatientsInCurrentDay.Count == 0)
-        {
-            _gameData.seenPatientsInCurrentDay = new List<ResultsCalculator.FinishedPatient>();
-        }*/
-        
         _gameData.seenPatientsInCurrentDay.Add(treatedPatient);
     }
     
-    // ---------------------------------
-    //      ,,,
-    // ---------------------------------
-    
-    public void SummonClient()
+    public void GoResultsScreen()
     {
-        // Set separately because is also triggered by the curtain interaction at start of each day. Randomises client.
-		// _gameData.numberPatientsSeen++;
-        PatientData.Instance.RandomiseIncomingPatientData();
-        // DialogueRunner.Instance.GetDialogue("patientArrive");    // *TAG* - MOVED FROM CLIENT LETTER
-    }
-
-    public void SetClientData()
-    {
-        _gameData.savedActivePatient = PatientData.Instance.activePatientData;
-        Debug.Log("The current active patient is saved to game data as: " + _gameData.savedActivePatient._patientName);
-    }
-    
-    public void GoNextClient()
-    {
-        _gameData.numberPatientsSeen++;
-        
-        // updates the number of clients left to treat in the day
-        PatientData.Instance.UpdateCurrentDayPatientsList();
-        
-        ResetInteractablesBetweenClients();
-        SceneManager.Instance.ResetScene();
-        
-        SummonClient();
-            // *TAG* - DO I NEED TO DO ANYTHING ELSE HERE??
-    }
-
-	public void SubmitTreatmentToClient()
-    {
-        SceneManager.Instance.ReturnToClient();
-		DialogueRunner.Instance.GetDialogue("submit herbs to client");
-    }
-    
-    void BeginTutorial()
-    {
-        // Initiates the series of dialogue, checks, and popups related to the tutorial
-        DialogueRunner.Instance.GetDialogue("tutorial");
-    }
-    
-    // ---------------------------------
-    //      GAME DATA RETRIEVAL
-    // ---------------------------------
-    
-	public void GoResultsScreen()
-	{
         // preparing for game data implementation. would pass more data here.
         ResultsCalculator.Instance.UpdateAndShowResultsScreen();
-	}
-
+    }
     
-
+    
+    // ---------------------------------
+    //      KEY GAME FUNCTIONS
+    // ---------------------------------
     void FirstOpenGame()
     {
-        // for now set to run automatically, but will only go on tutorial lv when Jimmy is implemented
-        // **   set separately so that you can toggle tutorial bool off in debug!!
+        // Set separately so that you can toggle tutorial bool off in debug!!
         runningTutorial = true;
     }
-
     
     public void GoMainMenu()
     {
@@ -300,14 +271,30 @@ public class GameManager : MonoBehaviour
         SceneManager.Instance.SetupMainMenu();
     }
 
+    void BeginTutorial()
+    {
+        DialogueRunner.Instance.GetDialogue("tutorial");
+    }
+
+    void InstantiateTutorialObjects()
+    {
+        GameObject targetController = GameObject.Find("Panel - Tutorial Objects(Clone)");
+            
+        if (targetController != null)
+        {
+            Debug.Log("Controller found when trying to reset. Deleting now.");
+            Destroy(targetController);
+        }
+        
+        GameObject tutorialSpecificUI = Instantiate(tutorialItemsPrefab, tutorialItemControllerParentCanvas.transform);
+        tutorialSpecificUI.GetComponent<RectTransform>().SetAsLastSibling();
+        TutorialItemController.Instance.InitialiseTutorialItemsDesk();
+    }
+
     
-
-	
-
     // ---------------------------------
     //      BASIC UTILITY FUNCTIONS
     // ---------------------------------
-    
     public void NewGame()
     {
         Debug.Log("Setting up a new game...");
@@ -328,40 +315,21 @@ public class GameManager : MonoBehaviour
     public void RestartLevel()
     {
         // Maybe void GetInformationForDay(DayManager.Instance.currentDayNumber) ?
-
-
+        
         // Reset the level so that the player can start the current day again
         Debug.Log("Resetting the current level...");
-            // doesn't currently account for all elements, since dialogue and popups aren't aligning on reset!!
+        // *TAG* - doesn't currently account for all elements,
+        // since dialogue and popups aren't aligning on reset!!
 
         if (runningTutorial)
         {
-            // shopIsClosed = true;
-            // canOpenShop = false;
             DialogueRunner.Instance.InitialiseDialogueRunner();
             DialogueRunner.Instance.ResetDialogueRunner();
-            // MenuManager.Instance
 
-            GameObject targetController = GameObject.Find("Panel - Tutorial Objects(Clone)");
-            
-            if (targetController != null)
-            {
-                Debug.Log("Controller found when trying to reset. Deleting now.");
-                Destroy(targetController);
-            }
-            else
-            {
-                Debug.Log("No controller found on reset.");
-            }
-
-            // Maybe void InstantiateTutorialItems()        ?
-            GameObject tutorialSpecificUI = Instantiate(tutorialItemsPrefab, tutorialItemControllerParentCanvas.transform);
-            tutorialSpecificUI.GetComponent<RectTransform>().SetAsLastSibling();
-            TutorialItemController.Instance.InitialiseTutorialItemsDesk();
-
-            // BeginTutorial();
-            
+            // Tries to find instances of instantiated tutorial objects
+            InstantiateTutorialObjects();
         }
+        
         OnNewDay(); 
     }
 
@@ -451,21 +419,8 @@ public class GameManager : MonoBehaviour
         else
         {
             SoundManager.Instance.PlayAudio(SoundManager.Instance.menuReturn);
-            MenuManager.Instance.OpenTutorialPopup("No data");
+            MenuManager.Instance.AlertMessage("noData");
             return;
         }
-        // string filePath = //Path
-        
-        // string jsonString = //""
-    
-        // GameData _gameData = //JsonUtility.FromJson<GameData>()
-        // Debug.Log("Loaded for day: " + _gameData.currentDayNumber + ". Has seen: " + _gameData.numberPatientsSeen + " total patients, and: " + _gameData.seenPatientsInCurrentDay + " patients in the current game day.");
-
-        
-        
-        //
-        // string fileData = 
-        
-        // GameData currentGameData = _gameData;
     }
 }

@@ -19,15 +19,8 @@ public class BotanicalCodexDisplay : MonoBehaviour
     [SerializeField] private GameObject dietIconHerbivore;  // 1
     [SerializeField] private GameObject dietIconOmnivore;   // 2
 
-	[SerializeField] private Sprite sizeIconDeactivated;
-	[SerializeField] private Sprite sizeIconActivated;
-
-    private Dictionary<int, BotanicalCodexIconUpdater> iconUpdaterDictionary;
-
-    // [SerializeField] private Sprite dietIconActivated;
-    // [SerializeField] private Sprite dietIconDeactivated;
-
-
+    private Dictionary<int, BotanicalCodexIconUpdater> dietIconUpdaterDictionary;
+	private Dictionary<int, BotanicalCodexIconUpdater> sizeIconUpdaterDictionary;
 
     private List<GameObject> sizeIconList;
     private List<GameObject> dietIconList;
@@ -35,110 +28,73 @@ public class BotanicalCodexDisplay : MonoBehaviour
     private int botanicalCodexPotencyReferenceNumber;
     private int botanicalCodexDietaryReferenceNumber;
 	
-	[Header("Shader References")]
-	public Shader standardIconShader;
-	public Shader desaturatedIconShader;
 
     public void InitialiseBotanicalCodex()
     {
+	    // Hides the codex object and creates all list and dictionary information.
         botanicalCodexCanvasGroup.gameObject.SetActive(false);
-        //UIManager.Instance.DisableUI(botanicalCodexCanvasGroup);
-
 
         sizeIconList = new List<GameObject>();
             sizeIconList.Add(sizeIconSmall);
             sizeIconList.Add(sizeIconMedium);
             sizeIconList.Add(sizeIconLarge);
+		
+		sizeIconUpdaterDictionary = new Dictionary<int, BotanicalCodexIconUpdater>();
+            sizeIconUpdaterDictionary[0] = sizeIconSmall.GetComponent<BotanicalCodexIconUpdater>();
+            sizeIconUpdaterDictionary[0].InitialiseBotanicalCodexIconUpdater();
+
+            sizeIconUpdaterDictionary[1] = sizeIconMedium.GetComponent<BotanicalCodexIconUpdater>();
+            sizeIconUpdaterDictionary[1].InitialiseBotanicalCodexIconUpdater();
+
+            sizeIconUpdaterDictionary[2] = sizeIconLarge.GetComponent<BotanicalCodexIconUpdater>();
+            sizeIconUpdaterDictionary[2].InitialiseBotanicalCodexIconUpdater();
+
+
 
         dietIconList = new List<GameObject>();
             dietIconList.Add(dietIconCarnivore);
             dietIconList.Add(dietIconHerbivore);
             dietIconList.Add(dietIconOmnivore);
 
-        iconUpdaterDictionary = new Dictionary<int, BotanicalCodexIconUpdater>();
-            iconUpdaterDictionary[0] = dietIconCarnivore.GetComponent<BotanicalCodexIconUpdater>();
-            iconUpdaterDictionary[0].InitialiseBotanicalCodexIconUpdater();
+        dietIconUpdaterDictionary = new Dictionary<int, BotanicalCodexIconUpdater>();
+            dietIconUpdaterDictionary[0] = dietIconCarnivore.GetComponent<BotanicalCodexIconUpdater>();
+            dietIconUpdaterDictionary[0].InitialiseBotanicalCodexIconUpdater();
 
-            iconUpdaterDictionary[1] = dietIconHerbivore.GetComponent<BotanicalCodexIconUpdater>();
-            iconUpdaterDictionary[1].InitialiseBotanicalCodexIconUpdater();
+            dietIconUpdaterDictionary[1] = dietIconHerbivore.GetComponent<BotanicalCodexIconUpdater>();
+            dietIconUpdaterDictionary[1].InitialiseBotanicalCodexIconUpdater();
 
-            iconUpdaterDictionary[2] = dietIconOmnivore.GetComponent<BotanicalCodexIconUpdater>();
-            iconUpdaterDictionary[2].InitialiseBotanicalCodexIconUpdater();
+            dietIconUpdaterDictionary[2] = dietIconOmnivore.GetComponent<BotanicalCodexIconUpdater>();
+            dietIconUpdaterDictionary[2].InitialiseBotanicalCodexIconUpdater();
 
 		ResetCodexIconDisplay();
     }
 
 	void ResetCodexIconDisplay()
 	{
-		foreach (GameObject s in sizeIconList)
-		{
-            if (s.TryGetComponent<Image>(out Image tempImage))
-			{
-                UIManager.Instance.SpriteShift(tempImage, sizeIconDeactivated);
-            }
-		}
-
-        for (int i = 0; i < dietIconList.Count; i++)    // foreach (GameObject d in dietIconList)
+		for (int i = 0; i < sizeIconList.Count; i++)
         {
-            // int index = 
-            // if (d.TryGetComponent<BotanicalCodexIconUpdater>())
-            // {
-            // UIManager.Instance.SpriteShift(tempImage, dietIconDeactivated);
-            iconUpdaterDictionary[i].ResetBotanicalCodexIcon();
-            // }
+            sizeIconUpdaterDictionary[i].ResetBotanicalCodexIcon();
+			dietIconUpdaterDictionary[i].ResetBotanicalCodexIcon();
         }
 	}
 
 	void UpdateCodexIconDisplay(AllHerbsData.SingleHerb herb)
 	{
-        // *TAG* - Implement diet code for sizes, too!
-
 		for (int i = 0; i < herb._sizes.Count; i++)
         {
             if (herb._sizes[i] == true)
             {
-                // Finds the correct size icon and toggles it
-				UIManager.Instance.SpriteShift(sizeIconList[i].GetComponent<Image>(), sizeIconActivated);
+				int index = sizeIconList.IndexOf(sizeIconList[i]);
+				sizeIconUpdaterDictionary[index].ToggleBotanicalCodexIcon();
             }
 
             if (herb._diets[i] == true)
             {
-                // Finds the correct diet icon and toggles it in its updater
                 int index = sizeIconList.IndexOf(sizeIconList[i]);
-                iconUpdaterDictionary[index].ToggleBotanicalCodexIcon();
+                dietIconUpdaterDictionary[index].ToggleBotanicalCodexIcon();
             }
         }
 	}
-
-    void HideIconObjects()
-    {
-		// *TAG* - TRY INSTEAD: Setup secondary icon for sizes. Display all three at all times, but reset = set to black. when activated, set to active sprite icon. to 
-        foreach (GameObject s in sizeIconList)
-        {
-            s.SetActive(false);
-        }
-        
-        foreach (GameObject d in dietIconList)
-        {
-            d.SetActive(false);
-        }
-    }
-
-	void ShowCorrectIconObjects(AllHerbsData.SingleHerb herb)
-	{
-		for (int i = 0; i < herb._sizes.Count; i++)
-        {
-            if (herb._sizes[i] == true)
-            {
-                sizeIconList[i].SetActive(true);
-            }
-
-            if (herb._diets[i] == true)
-            {
-                dietIconList[i].SetActive(true);
-            }
-        }
-    }
 
     public void CodexReceiveInformation(AllHerbsData.SingleHerb herb)
     {

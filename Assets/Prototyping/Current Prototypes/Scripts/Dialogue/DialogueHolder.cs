@@ -159,11 +159,12 @@ public class DialogueHolder : MonoBehaviour
             td_HerbWall._dialogue.Add("And if I think I've made the wrong choice, I can click the <#8A1E1E>remove herb</color> button to get rid of it!");
             */
             td_HerbWall._dialogue.Add("Let's see... I haven't visited the herb wall in a while, I wonder what's in here.");
-            td_HerbWall._dialogue.Add("Ah, this herb is [insert chosen herb]! Each herb has a corresponding page in my botanical codex, which I can look at by hovering over the plant.");
+            
+            /*td_HerbWall._dialogue.Add("Ah, this herb is [insert chosen herb]! Each herb has a corresponding page in my botanical codex, which I can look at by hovering over the plant.");
             td_HerbWall._dialogue.Add("Hmm. I can't remember how this herb may affect my patient though. Let me just drag this down and check the herb compendium to be sure.");
             td_HerbWall._dialogue.Add("The compendium gives me clues to figure out if a herb can heal, ease, or fortify something, as well as if it targets the body or mind.");
             td_HerbWall._dialogue.Add("But some clients have specific needs of their own which may conflict with some herbs, such as their <b>size</b> or <b>diet</b>.");
-            td_HerbWall._dialogue.Add("I can cross-reference information on the treatment plan, botanical codex, and herb compendium to ensure I provide my client the correct herbs!");
+            td_HerbWall._dialogue.Add("I can cross-reference information on the treatment plan, botanical codex, and herb compendium to ensure I provide my client the correct herbs!");*/
             
         /*td_HerbWall02 = new DialogueSnippet();
             td_HerbWall02._dialogue = new List<string>();
@@ -175,9 +176,9 @@ public class DialogueHolder : MonoBehaviour
         // UPDATED
         cd_BarryEnter = new DialogueSnippet();
             cd_BarryEnter._dialogue = new List<string>();
-            cd_BarryEnter._dialogue.Add("Good morrow, little kitten healer. I'm in need of some help.");
-            cd_BarryEnter._dialogue.Add("Well, the missus thinks I need help. I'm just here to humour her.");
-            cd_BarryEnter._dialogue.Add("No, really! Takes a lot to get me down.");
+            cd_BarryEnter._dialogue.Add("Good morrow, little kitten healer. I'm in need of some aid.");
+            cd_BarryEnter._dialogue.Add("My missus has been begging me to get my eye looked at for quite some time.");
+            // cd_BarryEnter._dialogue.Add("No, really! Takes a lot to get me down.");
         // UPDATED
         cd_BarryFinish = new DialogueSnippet();
             cd_BarryFinish._dialogue = new List<string>();
@@ -189,19 +190,20 @@ public class DialogueHolder : MonoBehaviour
             cd_ArabellaEnter._dialogue = new List<string>();
             cd_ArabellaEnter._dialogue.Add("Hello.");
             cd_ArabellaEnter._dialogue.Add("Um... I heard you were the one to go to for... discrete treatments?");
-            cd_ArabellaEnter._dialogue.Add("O-Oh! My name is Arabella.");
+            cd_ArabellaEnter._dialogue.Add("I'm in need of some medication or something... my appetite has been... rather strange lately.");
         // UPDATED
         cd_ArabellaFinish = new DialogueSnippet();
             cd_ArabellaFinish._dialogue = new List<string>();
-            cd_ArabellaFinish._dialogue.Add("Sorry to be a bother, but is  my order ready, Apothekitty?");
-            cd_ArabellaFinish._dialogue.Add("Oh! Thank you.");
-            cd_ArabellaFinish._dialogue.Add("I appreciate the help, and your non-judgemental nature. I will be sure to write a letter to update you of my p-progress soon.");
+            // cd_ArabellaFinish._dialogue.Add("Sorry to be a bother, but is  my order ready, Apothekitty?");
+            cd_ArabellaFinish._dialogue.Add("I appreciate the help... and your non-judgemental nature.");
+            cd_ArabellaFinish._dialogue.Add("I will be sure to write a letter to update you of my progress soon...");
         
         // UPDATED
         cd_LawrenceEnter = new DialogueSnippet();
             cd_LawrenceEnter._dialogue = new List<string>();
             cd_LawrenceEnter._dialogue.Add("Well hello there, pal ... I think I might be in need of some help.");
             cd_LawrenceEnter._dialogue.Add("I don't wish to alarm you, but I fear I was bitten by something, and have noticed some abnormalities since!");
+            cd_LawrenceEnter._dialogue.Add("Please help!");
         // UPDATED
         cd_LawrenceFinish = new DialogueSnippet();
             cd_LawrenceFinish._dialogue = new List<string>();
@@ -218,8 +220,8 @@ public class DialogueHolder : MonoBehaviour
         // UPDATED
         cd_JimothyFinish = new DialogueSnippet();
             cd_JimothyFinish._dialogue = new List<string>();
-            cd_JimothyFinish._dialogue.Add("And you’re s-sure this will help me p-perform better...?");
-            cd_JimothyFinish._dialogue.Add("Well, alright... you are the p-professional. Thank you for t-treating me, cat doctor.");
+            cd_JimothyFinish._dialogue.Add("I'm a l-little hesitant to try this t-treatment, but...");
+            cd_JimothyFinish._dialogue.Add("Thank you for t-treating me, cat doctor.");
             
             
             
@@ -254,36 +256,37 @@ public class DialogueHolder : MonoBehaviour
         // UPDATED
         cd_FergusonFinish = new DialogueSnippet();
             cd_FergusonFinish._dialogue = new List<string>();
-            cd_FergusonFinish._dialogue.Add("'Preciate ya. I'm more confident approachin' ma and pa now.");
-            cd_FergusonFinish._dialogue.Add("I really wanna make 'em proud, ya know?");
+            cd_FergusonFinish._dialogue.Add("'Preciate ya.");
+            cd_FergusonFinish._dialogue.Add("I'm more confident approachin' ma and pa now.");
+            // cd_FergusonFinish._dialogue.Add("I really wanna make 'em proud, ya know?");
             
             
         cd_PeridotEnter = new DialogueSnippet();
             cd_PeridotEnter._dialogue = new List<string>();
-            cd_PeridotEnter._dialogue.Add("Well hello there, love! Nice to see your face in the shop once again.");
-            cd_PeridotEnter._dialogue.Add(/*"You see... i*/ "It's a bit embarrassing, but I've been struggling to attend my shifts at the bakery lately.");
-            cd_PeridotEnter._dialogue.Add("Thinking about all the fat and sugar in every brioche bun and muffin makes my stomach go all topsy-turvy.");
-            cd_PeridotEnter._dialogue.Add("Oh, please help me. I can't even dare to touch anything the slightest bit unhealthy for me.");
+            cd_PeridotEnter._dialogue.Add("Well hello there, love!");   // Nice to see your face in the shop once again.");
+            cd_PeridotEnter._dialogue.Add("It's a bit embarrassing, but lately, I've noticed my stomach go all topsy-turvy at the sight of anything sugary!");
+            cd_PeridotEnter._dialogue.Add("As a baker, it's really quite troublesome to do even the most basic of tasks.");
+            // cd_PeridotEnter._dialogue.Add("Oh, please help me. I can't even dare to touch anything the slightest bit unhealthy for me.");
 
         cd_PeridotFinish = new DialogueSnippet();
             cd_PeridotFinish._dialogue = new List<string>();
-            cd_PeridotFinish._dialogue.Add("Thank you, love! You're an absolute angel.");
-            
+            cd_PeridotFinish._dialogue.Add("Thank you, love!");
+            cd_PeridotFinish._dialogue.Add("You're an absolute angel.");
             
             
             
             
         pd_TheCatResponse01 = new DialogueSnippet();
             pd_TheCatResponse01._dialogue = new List<string>();
-            pd_TheCatResponse01._dialogue.Add("You've come to the right place! Just pass me your patient form and take a seat. I'll take care of everything.");
+            pd_TheCatResponse01._dialogue.Add("You've come to the right place! Pass me your patient form and take a seat. I'll take care of the rest for you.");
             
         pd_TheCatResponse02 = new DialogueSnippet();
             pd_TheCatResponse02._dialogue = new List<string>();
-            pd_TheCatResponse02._dialogue.Add("Not a problem. If you've got your paperwork prepared, I'm happy to look at it right away.");
+            pd_TheCatResponse02._dialogue.Add("Never fret. If your paperwork is ready, I’ll happily look at it right away.");
         
         pd_TheCatResponse03 = new DialogueSnippet();
             pd_TheCatResponse03._dialogue = new List<string>();
-            pd_TheCatResponse03._dialogue.Add("You're in safe hands, my friend. Thank you for completing the paperwork, I'll get you feeling better in no time.");
+            pd_TheCatResponse03._dialogue.Add("You're in safe hands, my friend. Thank you kindly for completing the paperwork, I'll be sure to fix you up in no time.");
             
         pd_TheCatResponsesList = new List<DialogueSnippet>();
             pd_TheCatResponsesList.Add(pd_TheCatResponse01);
@@ -296,7 +299,7 @@ public class DialogueHolder : MonoBehaviour
             
         pd_TheCatSubmitHerbs = new DialogueSnippet();
             pd_TheCatSubmitHerbs._dialogue = new List<string>();
-            pd_TheCatSubmitHerbs._dialogue.Add("Thank you kindly for waiting, here's your treatment!");
+            pd_TheCatSubmitHerbs._dialogue.Add("Thank you kindly for waiting, here is your treatment!");
             //
     }
 

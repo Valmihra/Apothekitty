@@ -15,6 +15,8 @@ public class ResultsCalculator : MonoBehaviour
         
         public bool _patientDataStored;
 
+        // public string _patientCheckupLetter;
+
         public void SetupEmptyPatientSlot()
         {
             _patientDataStored = false;
@@ -22,10 +24,9 @@ public class ResultsCalculator : MonoBehaviour
 
         public void FinishTreatingPatient()
         {
+            // *TAG* - do smth else here? or no? // public string _treatedClientAilment;
             _patientDataStored = true;
             Debug.Log("Client treatment data stored.");
-            
-            // *TAG* - do smth else here? or no? // public string _treatedClientAilment;
         }
         
         public void StoreCurrentProgressForThisPatient(bool ailment, bool recipe, bool herbs)
@@ -41,7 +42,6 @@ public class ResultsCalculator : MonoBehaviour
     public List<FinishedPatient> dailyTreatedPatientsList;
 	private FinishedPatient currentPatientToDisplay;
     
-    // private string currentPatientResult;
     private string currentPatientAilmentFromClientData;
     private List<string> inventoryContentsOnSubmission;
 
@@ -61,7 +61,6 @@ public class ResultsCalculator : MonoBehaviour
     private TreatmentPlanInteractables treatmentPlanInteractables;
     
     private static ResultsCalculator _instance;
-
     public static ResultsCalculator Instance
     {
         get
@@ -122,20 +121,18 @@ public class ResultsCalculator : MonoBehaviour
     void CalculateResults()
     { 
         // Called when submit button is pressed
-        
-        // Checks the inventory contents and compares with the requirements for the patient.
         CheckInventoryContents();
         
         if (inventoryContentsOnSubmission.Count == 0)
         {
-            // MenuManager.Instance.HerbWallNothingChosenToSubmitPopup();
             MenuManager.Instance.AlertMessage("herbWallNothingChosen");
         }
+        
         else if(inventoryContentsOnSubmission.Count == 1)
         {
-            // MenuManager.Instance.HerbWallOneHerbChosenToSubmitPopup();
             MenuManager.Instance.AlertMessage("herbWallOneHerbChosen");
         }
+        
         else
         {
             // Resets the calculator and performs necessary checks
@@ -150,9 +147,10 @@ public class ResultsCalculator : MonoBehaviour
         }
     }
 
-    void CheckCorrectAilment()      // *TAG* - does this still work??
+    void CheckCorrectAilment()
     {
-        // *TAG* - should probably grab from gameData instead of scenemanager. not a good place to store info like that,,
+        // *TAG* - should probably grab from gameData instead of scenemanager.
+        // not a good place to store info like that,,
         if (SceneManager.Instance.selectedAilment == currentPatientAilmentFromClientData) 
         {
             correctAilment = true;
@@ -164,7 +162,7 @@ public class ResultsCalculator : MonoBehaviour
         bool correct = false;
         if ((treatmentPlanInteractables.primaryEffectDropdown.value == AilmentData.Instance.currentAilment._primaryEffectDropdownNumber) && (treatmentPlanInteractables.primaryTargetDropdown.value == AilmentData.Instance.currentAilment._primaryTargetDropdownNumber))
         {
-            Debug.Log("Primary dropdown values match");
+            // Debug.Log("Primary dropdown values match");
             if ((treatmentPlanInteractables.secondaryEffectDropdown.value == AilmentData.Instance.currentAilment._secondaryEffectDropdownNumber) && (treatmentPlanInteractables.secondaryTargetDropdown.value == AilmentData.Instance.currentAilment._secondaryTargetDropdownNumber))
             {
                 correct = true;
@@ -173,50 +171,22 @@ public class ResultsCalculator : MonoBehaviour
 
         if (correct)
         {
-            Debug.Log("Correct Recipe!!");
+            // Debug.Log("Correct Recipe!!");
             correctRecipe = true;
         }
+        
         else
         {
-            Debug.Log("Incorrect diagnosis sheet choices for ailment");
+            Debug.Log("Incorrect treatment plan choices for ailment");
         }
-        /*if (correct)
-        {
-            if (AilmentData.Instance.currentAilment._modifierTypeByNumber == 0)
-            {
-                if (!treatmentPlanInteractables.enhancerToggle.isOn && !treatmentPlanInteractables.inverterToggle.isOn)
-                {
-                    correctRecipe = true;
-                }
-            }
-            else if (AilmentData.Instance.currentAilment._modifierTypeByNumber == 1)
-            {
-                if (treatmentPlanInteractables.enhancerToggle.isOn && !treatmentPlanInteractables.inverterToggle.isOn)
-                {
-                    correctRecipe = true;
-                }
-            }
-            else if (AilmentData.Instance.currentAilment._modifierTypeByNumber == 2)
-            {
-                if (!treatmentPlanInteractables.enhancerToggle.isOn && treatmentPlanInteractables.inverterToggle.isOn)
-                {
-                    correctRecipe = true;
-                }
-            }
-            //mods
-        }
-        else
-        {
-            Debug.Log("Incorrect diagnosis sheet choices for ailment");
-        }*/
     }
 
     void CheckCorrectHerbs()
     {
         int numMatches = 0;
-		// *TAG* - no modifiers, so either 2 or 4
+		// figures out how many herbs should be used by checking the ailment's dropdown numbers.
+		// If no secondary effect, needs 2 herbs. If secondary effect, needs 4 herbs.
 		int targetIngredientCount = AilmentData.Instance.currentAilment._secondaryEffectDropdownNumber == 0 ? 2 : 4;
-        // int targetIngredientCount = AilmentData.Instance.currentAilment._acceptableHerbsForTreatment.Count;
         int ingredientsChosen = 0;
 
         foreach (string ingredient in inventoryContentsOnSubmission)
@@ -234,7 +204,6 @@ public class ResultsCalculator : MonoBehaviour
                 {
                     if (AilmentData.Instance.currentAilment._acceptableHerbsForTreatment[i] == ingredient)
                     {
-                        // Debug.Log("Match found: " + AilmentData.Instance.currentAilment._acceptableHerbsForTreatment[i] + " and " + ingredient);
                         numMatches++;
                     }
                     else
@@ -242,41 +211,6 @@ public class ResultsCalculator : MonoBehaviour
                         continue;
                     }
                 }
-
-				/* int ingredientsChosen = 0;
-
-        foreach (string ingredient in inventoryContentsOnSubmission)
-        {
-            ingredientsChosen++;
-        }
-		
-
-		
-        		// *TAG* - no modifiers, so either 2 or 4
-        int targetIngredientCount = AilmentData.Instance.currentAilment._secondaryEffectDropdownNumber == 0 ? 2 : 4;
-		int numMatches = 0;
-
-
-		
-        if (ingredientsChosen == targetIngredientCount)
-        {
-            foreach (string ingredient in inventoryContentsOnSubmission)
-            {
-				for (int h = 0; h < AllHerbsData.Instance.herbDrawerContents.Count; h++)
-				{
-					if (AllHerbsData.Instance.herbDrawerContents[h]._herbName == ingredient)
-					{
-						CheckHerb
-					}
-					else
-					{
-						continue;
-					}
-				}
-
-                Debug.Log("Checking to see whether " + ingredient + " is a valid ingredient to treat this ailment...");
-				
-				if */
             }
         }
         
@@ -319,56 +253,30 @@ public class ResultsCalculator : MonoBehaviour
 
     public void SetPatientData(string ailmentName)
     {
-        // Called from PatientData when receiving a new patient. Updates the current ailment to treat for.
+        // Called from PatientData when receiving a new patient.
+        // Updates the current ailment to treat for.
         currentPatientAilmentFromClientData = ailmentName;
-        // currentPatientResult = PatientData.Instance.activePatientData._patientName;
     }
 
     public void SetMaxPatientsNumber(int maxPatientsNumber)
     {
         // Remove one from the number to adjust for the initial 0 value of a list
         maxNumberOfDailyClientResults = maxPatientsNumber;
-        // Debug.Log("Max number of patients to see will be: " + maxNumberOfDailyClientResults);
     }
 
     void CreateDailyTreatedPatientsList()
     {
         dailyTreatedPatientsList = new List<FinishedPatient>();
-        
-        // assuming 5 is the maximum number of patients per day
-        /*FinishedPatient treatedClient01 = new FinishedPatient();
-            treatedClient01.SetupEmptyPatientSlot();
-            dailyTreatedPatientsList.Add(treatedClient01);
-            
-        FinishedPatient treatedClient02 = new FinishedPatient();
-            treatedClient02.SetupEmptyPatientSlot();
-            dailyTreatedPatientsList.Add(treatedClient02);
-            
-        FinishedPatient treatedClient03 = new FinishedPatient();
-            treatedClient03.SetupEmptyPatientSlot();
-            dailyTreatedPatientsList.Add(treatedClient03);
-            
-        FinishedPatient treatedClient04 = new FinishedPatient();
-            treatedClient04.SetupEmptyPatientSlot();
-            dailyTreatedPatientsList.Add(treatedClient04);
-            
-        FinishedPatient treatedClient05 = new FinishedPatient();
-            treatedClient05.SetupEmptyPatientSlot();
-            dailyTreatedPatientsList.Add(treatedClient05);
-            */
 
         for (int i = 0; i < maxNumberOfDailyClientResults; i++)
         {
             FinishedPatient f = new FinishedPatient();
-            // f.Name = "treatedClient " + i;
-            // Debug.Log(f.Name);
+            
             f.SetupEmptyPatientSlot();
             dailyTreatedPatientsList.Add(f);
         }
         
-        // Debug.Log("dailyTreatedPatientsList is " + dailyTreatedPatientsList.Count + " entries long.");
-            
-            return;
+        return;
     }
     
     void AdjustListForNumberDailyClients()
@@ -377,8 +285,6 @@ public class ResultsCalculator : MonoBehaviour
         {
             dailyTreatedPatientsList.RemoveAt(i - 1);
         }
-
-        // Debug.Log("Clients to be treated today: " + dailyTreatedPatientsList.Count);
     }
     
 
@@ -395,6 +301,9 @@ public class ResultsCalculator : MonoBehaviour
                 Debug.Log("Client name: " + f._treatedPatientName);
                 Debug.Log("Correct ailment: " + f._correctAilment + " correct recipe: " + f._correctRecipe + " correct treatment combination: " + f._correctHerbs);
                 
+                //f._patientCheckupLetter = 
+                
+                
 				totalClientResults++;
                 f.FinishTreatingPatient();
 
@@ -410,8 +319,6 @@ public class ResultsCalculator : MonoBehaviour
 		{
 			if (DayManager.Instance.currentDayNumber == DayManager.Instance.allGameDays.Count - 1)
 			{
-				// GameManager.Instance.GoEndMVP();
-				// MENUMANAGER INST.
 				MenuManager.Instance.OpenTutorialPopup("endOfMVP");
 			}
 			else

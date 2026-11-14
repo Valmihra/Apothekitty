@@ -151,6 +151,7 @@ public class SoundManager : MonoBehaviour
             SwitchInstrumental(musicResultsScreen);
         }
     }
+    
     public void GetAudioToReturnTo()
     {
         // Used when returning to the game from the pause screen

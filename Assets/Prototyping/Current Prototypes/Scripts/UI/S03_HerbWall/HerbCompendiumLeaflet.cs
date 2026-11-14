@@ -7,20 +7,6 @@ using UnityEngine.EventSystems;
 
 public class HerbCompendiumLeaflet : MouseHover, IBeginDragHandler, IDragHandler, IPointerDownHandler, IPointerUpHandler
 {
-    /*  CURRENT ISSUE IS THAT LEAFLETS DO NOT SETASLASTSIBLING ON DRAG/POINTERDOWN,
-     WHICH MEANS THEY ARE HARD TO KEEP ORGANISED. 
-     
-     COULD POTENTIALLY FIX THIS WITH AN INSTANTIATE PREFAB ON POINTERDOWN, HIDE THE
-     REAL LEAFLET OBJECT AT SAME TIME, AND DRAG THE FAKE ONE AROUND? 
-     
-     WOULD NEED A GAMEOBJECT PARENT LOCATION TO SHARE WITH THE OTHER LEAFLETS -- AND
-     PROBABLY ALSO SOMTHING IN PLACE TO MAKE SURE THEY RETURN WELL. ALSO, CLICKING 
-     AND DRAGGING ON THEM WOULD HAVE TO BE FIXED SOMEHOW, SINCE THE OG SCRIPT WOULD
-     STILL BE IN THE DOCK. HMMMMMMRRRMMMHHH,,,,
-     
-     */
-    
-    
     // Leaflet display properties
     private Image leafletImage;
     private Color defaultLeafletColour;
@@ -29,7 +15,6 @@ public class HerbCompendiumLeaflet : MouseHover, IBeginDragHandler, IDragHandler
     private TMP_Text titleText;
     private string leafletDetailText;
     private string leafletTitleText;
-    private string tempLeafletPrefaceText = "This is just to prove the detail switching works.\n\nThis card has information about the following treatment category: ";
     
     // Leaflet positions on screen
     private Vector3 hoverLeafletPosition;
@@ -66,18 +51,13 @@ public class HerbCompendiumLeaflet : MouseHover, IBeginDragHandler, IDragHandler
         leafletImage.color = defaultLeafletColour;
         
         titleText = GetComponentInChildren<TMP_Text>();
-        // could remove these two here?
-        // leafletTitleText = titleText.text;
-        // leafletDetailText = (tempLeafletPrefaceText + "<b>" + leafletTitleText + "</b>").ToString();
         
         // Sets defaults
         ResetDefaultValues();
         defaultPositionsSet = false;
         
         currentSize = smallestSize;
-        // Debug.Log("Setup at " + transform.position);
-        
-        
+                
         // Sets default positions if they do not exist
         if (!defaultPositionsSet)
         {
@@ -122,8 +102,6 @@ public class HerbCompendiumLeaflet : MouseHover, IBeginDragHandler, IDragHandler
 
     public void ResetLeaflet()
     {
-        // in the case that a leaflet was loose between resets, this returns the leaflet to its original state and resets associated bools.
-        
         // Resets the size values
         rectTransform.sizeDelta = smallestSize;
         currentSize = smallestSize;
@@ -150,7 +128,6 @@ public class HerbCompendiumLeaflet : MouseHover, IBeginDragHandler, IDragHandler
     
     private Vector3 GetPositionFromTransform()
     {
-        // Uses the current transform to set a position vector
         Vector3 leafletPositionToSet = transform.position;
         return leafletPositionToSet;
     }
