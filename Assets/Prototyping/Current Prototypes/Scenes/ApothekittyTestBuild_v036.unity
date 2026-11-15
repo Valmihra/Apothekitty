@@ -7328,7 +7328,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -395, y: 55}
+  m_AnchoredPosition: {x: -395, y: 15}
   m_SizeDelta: {x: 600, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &327733435
@@ -28047,7 +28047,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Quit To Main Menu
+  m_text: Quit Game
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 2c316abe624a26f458d4bc9cfe34c572, type: 2}
   m_sharedMaterial: {fileID: 7584378297025017986, guid: 2c316abe624a26f458d4bc9cfe34c572, type: 2}
@@ -36420,7 +36420,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Save and Quit to Main
+  m_text: Quit Game
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 2c316abe624a26f458d4bc9cfe34c572, type: 2}
   m_sharedMaterial: {fileID: 7584378297025017986, guid: 2c316abe624a26f458d4bc9cfe34c572, type: 2}
@@ -42711,7 +42711,6 @@ GameObject:
   - component: {fileID: 2003910738}
   - component: {fileID: 2003910737}
   - component: {fileID: 2003910736}
-  - component: {fileID: 2003910735}
   - component: {fileID: 2003910739}
   m_Layer: 5
   m_Name: Button - Results Screen - See Next Client Result
@@ -42741,18 +42740,6 @@ RectTransform:
   m_AnchoredPosition: {x: 765.0001, y: -185.00002}
   m_SizeDelta: {x: 300, y: 400}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &2003910735
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2003910733}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8482e774c15e80d44a063821209fec31, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &2003910736
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -45952,7 +45939,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1407787454571873610
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -46019,10 +46006,10 @@ RectTransform:
   m_Father: {fileID: 8054317346203152343}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 275, y: -271.875}
+  m_SizeDelta: {x: 550, y: 56.25}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1860712433773534914
 MonoBehaviour:
@@ -46699,18 +46686,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &5137260720320247795
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5137260720320247805}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1c1f870a34e9c824dbde16ab07ba2987, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!224 &5137260720320247804
 RectTransform:
   m_ObjectHideFlags: 0
@@ -46745,7 +46720,6 @@ GameObject:
   - component: {fileID: 5137260720320247804}
   - component: {fileID: 5137260720320247793}
   - component: {fileID: 5137260720320247794}
-  - component: {fileID: 5137260720320247795}
   - component: {fileID: 5137260720320247792}
   - component: {fileID: 5137260720320247806}
   m_Layer: 5
@@ -47195,7 +47169,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Save and Quit
+  m_text: Quit Game
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 2c316abe624a26f458d4bc9cfe34c572, type: 2}
   m_sharedMaterial: {fileID: 7584378297025017986, guid: 2c316abe624a26f458d4bc9cfe34c572, type: 2}

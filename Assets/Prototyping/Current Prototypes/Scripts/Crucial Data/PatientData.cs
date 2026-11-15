@@ -409,20 +409,31 @@ public class PatientData : MonoBehaviour
     {
         string checkupLetterText = "default text. Issue with update on ReturnPatientCheckupLetter";
         
-        foreach (SinglePatientData c in currentDayPatientsList)
+		for (int i = 0; i < currentDayPatientsList.Count; i++)
+		{
+			if (currentDayPatientsList[i]._patientName == patientName)
+			{
+				checkupLetterText = curedText ? currentDayPatientsList[i]._patientCuredText : currentDayPatientsList[i]._patientFailedText;
+				break;
+			}
+            /*else
+            {
+                continue;
+            }*/
+		}
+        /*foreach (SinglePatientData c in currentDayPatientsList)
         {
             if (c._patientName == patientName)
             {
-                checkupLetterText = curedText ? c._patientCuredText : c._patientFailedText;
-                break;
+                
             }
             else
             {
                 continue;
             }
-        }
+        }*/
 
-        Debug.Log("Patient checkup letter text saved.");
+		// if (checkupLetterText != "")
         return checkupLetterText;
     }
 }
