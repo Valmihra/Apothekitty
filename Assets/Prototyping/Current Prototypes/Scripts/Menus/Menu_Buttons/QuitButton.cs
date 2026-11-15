@@ -6,14 +6,14 @@ using UnityEngine.UI;
 public class QuitButton : MonoBehaviour
 {
     private Button quitButton;
-    private bool buttonSavesProgress;
+    // private bool buttonSavesProgress;
 
     void Start()
     {
         quitButton = GetComponent<Button>();
         quitButton.onClick.AddListener(delegate { ExitGame(); });
             
-        GameObject saveButton = GameObject.Find("Pause Menu Button - Save and Quit");
+        /*GameObject saveButton = GameObject.Find("Pause Menu Button - Save and Quit");
         if (this.gameObject == saveButton)
         {
             buttonSavesProgress = true;
@@ -21,13 +21,13 @@ public class QuitButton : MonoBehaviour
         else
         {
             buttonSavesProgress = false;
-        }
+        }*/
     }
 
     
     void ExitGame()
     {
-        if (GameManager.Instance.onMainMenu)
+        /*if (GameManager.Instance.onMainMenu)
         {
             SoundManager.Instance.PlayAudio(SoundManager.Instance.menuSelect);
             
@@ -41,10 +41,14 @@ public class QuitButton : MonoBehaviour
             if (buttonSavesProgress)
             {
                 GameManager.Instance.SaveGame();
-            }
+            }*/
             
-            MenuManager.Instance.ExitMenu(MenuManager.Instance.pauseMenuCanvasGroup);
-            GameManager.Instance.GoMainMenu();
-        }
+            SoundManager.Instance.PlayAudio(SoundManager.Instance.menuReturn);
+        
+            // MenuManager.Instance.ExitMenu(MenuManager.Instance.pauseMenuCanvasGroup);
+            // GameManager.Instance.GoMainMenu();
+            
+            MenuManager.Instance.ExitGamePopup();
+        // }
     }
 }
