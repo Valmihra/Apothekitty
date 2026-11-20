@@ -59,8 +59,8 @@ public class GrimoireNavigation : MonoBehaviour, IPointerClickHandler
         grimoireDisplayedImage = GetComponent<Image>();
         
 		// currentGrimoirePageNumber = 0;
-        grimoireNavigationLeft.onClick.AddListener(delegate { GoToPage(currentGrimoirePageNumber--); });
-        grimoireNavigationRight.onClick.AddListener(delegate { GoToPage(currentGrimoirePageNumber++); });
+        grimoireNavigationLeft.onClick.AddListener(delegate { GoToPage(currentGrimoirePageNumber - 1); });
+        grimoireNavigationRight.onClick.AddListener(delegate { GoToPage(currentGrimoirePageNumber + 1); });
         
         notOpenedGrimoire = true;
         resettingGrimoire = false;
