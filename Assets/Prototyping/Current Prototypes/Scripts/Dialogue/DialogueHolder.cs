@@ -215,7 +215,7 @@ public class DialogueHolder : MonoBehaviour
             cd_JimothyEnter._dialogue = new List<string>();
             cd_JimothyEnter._dialogue.Add("E-Excuse me… could I take a moment of your time?");
             cd_JimothyEnter._dialogue.Add("I'm so w-worried... that I'll lose my job as the king's j-jester… please, dear cat doctor...");
-            cd_JimothyEnter._dialogue.Add("Could you help me? I would be ever so g-greatful…!");
+            cd_JimothyEnter._dialogue.Add("Could you help me? I would be ever so g-grateful…!");
             // cd_JimothyEnter._dialogue.Add("AH! Oh, my sincerest a-apologies cat d-doctor… I'm quite jumpy...");
         // UPDATED
         cd_JimothyFinish = new DialogueSnippet();

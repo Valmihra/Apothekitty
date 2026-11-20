@@ -11,6 +11,7 @@ public class MouseHover : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
     public Color hoverColour;
     private bool menuObject;
     private bool debugObject;
+    
     void Awake()
     {
         image = GetComponent<Image>();

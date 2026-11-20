@@ -8,10 +8,6 @@ public class _PrototypeCursor : MonoBehaviour
 {
     public Texture2D defaultCursor;
     public Texture2D clickCursor;
-	// public Texture2D openCursor;
-    
-	// private float halfTime = 0.1f;
-    // private float fullTime = 0.2f;
 
     public Vector2 cursorPosition = Vector2.zero;
     public CursorMode cursorMode = CursorMode.Auto;
@@ -40,8 +36,6 @@ public class _PrototypeCursor : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
         {
             Cursor.SetCursor(clickCursor, cursorPosition, cursorMode);
-            // Invoke(nameof(AnimateGrabOne), halfTime);
-            // Invoke(nameof(AnimateGrabTwo), fullTime);
         }
 
         if (Input.GetMouseButtonUp(0))
@@ -49,14 +43,4 @@ public class _PrototypeCursor : MonoBehaviour
             Cursor.SetCursor(defaultCursor, cursorPosition, cursorMode);
         }
     }
-
-    /*void AnimateGrabOne()
-    {
-        Cursor.SetCursor(openCursor, cursorPosition, cursorMode);
-    }
-
-    void AnimateGrabTwo()
-    {
-        Cursor.SetCursor(clickCursor, cursorPosition, cursorMode);
-    }*/
 }

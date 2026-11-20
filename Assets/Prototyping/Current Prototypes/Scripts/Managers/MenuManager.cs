@@ -66,9 +66,7 @@ public class MenuManager : MonoBehaviour
 
     void Awake()
     {
-        //if (_instance = null)         {
-            _instance = this;
-
+		_instance = this;
         InitialiseMenuManager();
     }
 
@@ -144,7 +142,7 @@ public class MenuManager : MonoBehaviour
         
         if (menuCanvasGroup == mainMenuCanvasGroup)
         {
-            GameManager.Instance.onMainMenu = false;
+            GameManager.Instance.gameIsOnMainMenu = false;
         }
         // game is no longer paused?
     }
@@ -244,34 +242,14 @@ public class MenuManager : MonoBehaviour
 	                imagePopupCode,
 	                "To check the specific information about a herb, hover the mouse over it to pull up its Botanical Codex entry.",
 	                "Once you think you've found a good herb, drag it into your inventory tray. If you change your mind about it, simply drag it to the bin. \n\nWhen you're happy with your combination, click 'submit' to give the herbs to your patient.",
-	                // "Over time, you will be able to visually determine which treatment categories a herb belongs to, but the specific information about each herb is harder to remember. " +
 	                "Make good use of the Codex and Compendium to give your patients the best chance at recovering!"
                 };
                 
                 popupSensor.SetupLongPopupText(infoToSend);
             }
-            
-            
-            
-            
-            /*else
-            {
-                // *TAG* - THIS IS A DOUBLE-UP NOW
-                popupText = "If you forget your chosen treatment plan, you can click the arrow in the bottom right to navigate to the desk.\n\nOnce you're done, click <b>'submit treatment'</b> to hand your recipe to the client.\n\nMake sure you're 100% certain before submitting, as there's no going back!";// how to submit and view results
-            }*/
-            
-            
         }
         
-        // popupTextBox.text = popupText;
-        UpdatePopupText();
-
-        // *TAG* - ADD A JOURNAL THAT RECORDS THESE STRINGS AND LETS PLAYERS COME BACK TO THEM IF THEY NEED IT!!		USEFUL SAUCE FOR LATER!
-
-        // IF RED IS PRESENT, WAIT .5F AND THEN INVOKE CHANGE COLOUR ON THE OBJECT
-        // CHANGE COLOUR (WAITS .5F AND THEN SETS BACK TO DEFAULT COLOUR?)
-        // INVOKE IT 3X? EACH TIME PERFORMING TIMESCALLED++ UNTIL 3X
-        // THEN RESET TO 0 AND STOP RUNNING CHANGE COLOUR.
+		UpdatePopupText();
     }
 
 
@@ -336,14 +314,14 @@ public class MenuManager : MonoBehaviour
 
 	public void NewDayMenu(string command)
 	{
-		if (command == "open")
+		if (command == "showNewDayMenu")
 		{
 			HideAllMenuCanvases();
             OpenMenu(newDayMenuCanvasGroup);
 
             newDayAnimatedTextComponent.NewDayAnimation();
 		}
-		if (command == "close")
+		if (command == "closeNewDayMenu")
 		{
 			ExitMenu(newDayMenuCanvasGroup);
 		}

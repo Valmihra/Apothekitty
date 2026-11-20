@@ -178,9 +178,8 @@ public class AilmentData : MonoBehaviour
     // Called from PatientData once the current client has been set. 
     // This searches through the current ailments in the list for a name that matches the
     // current client. If found, it links the client and ailment for the results screen.
-    public void SetCurrentAilmentByPatient(string name)      //(Ailment ailment)
+    public void SetCurrentAilmentByPatient(string name)
     {
-        // Debug.Log("String sent is: " + name);
         foreach (Ailment a in allAilmentsList)
         {
             if (name == a._affectedClientName)
@@ -205,7 +204,6 @@ public class AilmentData : MonoBehaviour
             if (allAilmentsList[i]._affectedClientName == name)
             {
 				// +1 to account for the empty page at the beginning of the pages array
-                // ailmentName = GrimoirePagesData.Instance.grimoirePagesArray[i+1]._ailmentName;
                 ailmentName = GrimoirePagesData.Instance.grimoirePagesList[i+1]._ailmentName;
             }
             else

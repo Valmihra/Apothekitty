@@ -23,32 +23,16 @@ public class PatientData : MonoBehaviour
         public string _patientCuredText;
         public string _patientFailedText;
         
+        public string _patientExtras = "x";     // *TAG* - REDUNDANT. SHOULD REMOVE THIS & ASSOCIATED TMP_TEXT COMPONENTS FROM GAME
         
-        public string _patientExtras = "x"; // *TAG* - (FOR NOW)
-
-        /*public void ReadAllPatientInformation()
-        {
-            Debug.Log("Reading all patient information." + _patientName + " is a " + _patientSize + " " + _patientSpecies + ". Their diet is: " + _patientDiet);
-        }*/
-
-        public void SetPatientInformation(string newName, string newSpecies)//, string newExtras)
+        public void SetPatientInformation(string newName, string newSpecies)
         {
             _patientName = newName;
             _patientSpecies = newSpecies;
-            // _patientExtras = newExtras;
         }
 
         public void SetPatientExtras(string extraToUpdate, string newExtras)
         {
-            /*extraToUpdate = newExtras;
-
-            string size = "Size";
-            string diet = "Diet";
-            string debugExtra = newExtras == PatientData.Instance.sizeS ? size : newExtras ==  PatientData.Instance.sizeM ? size : newExtras == PatientData.Instance.sizeL ? size : diet;
-            
-            Debug.Log("Updated " + _patientName + "'s " + debugExtra + " with: " + extraToUpdate);*/
-            // Debug.Log(extraToUpdate);
-            
             if (extraToUpdate == "size")
             {
                 _patientSize = newExtras;
@@ -58,12 +42,6 @@ public class PatientData : MonoBehaviour
                 _patientDiet = newExtras;
             }
         }
-        
-        /*public void SetPatientDiet(string newExtras)
-        {
-            _patientDiet = newExtras;
-            // Debug.Log(extraToUpdate);
-        }*/
 
         public void SetPatientText(string textToUpdate, string newText)
         {
@@ -129,8 +107,6 @@ public class PatientData : MonoBehaviour
     [HideInInspector] public string dietO = "Omnivore";
     [HideInInspector] public string dietH = "Herbivore";
     
-    
-    // private ResultsCalculator resultsCalculatorReference;
     private PatientLetter patientLetter;
 
     private static PatientData _instance;
@@ -148,8 +124,8 @@ public class PatientData : MonoBehaviour
     {
         // not full singleton because i'm still scared from last semester's Horrors lmao
         _instance = this;
-        // resultsCalculatorReference = FindObjectOfType<ResultsCalculator>();
-        patientLetter = FindObjectOfType<PatientLetter>(); //GetComponent<PatientLetter>();
+        
+        patientLetter = FindObjectOfType<PatientLetter>();
     }
 
     public void InitialisePatientLetter()
@@ -177,7 +153,7 @@ public class PatientData : MonoBehaviour
     public void SetCurrentDayPatientsList()
     {
         // Uses the current day number to access the correct entry in dailyPatientsDictionary
-        currentDayPatientsList = dailyPatientsDictionary[DayManager.Instance.currentDayNumber];
+        currentDayPatientsList = new List<SinglePatientData>(dailyPatientsDictionary[DayManager.Instance.currentDayNumber]);
     }
 
     public void AssignPatientsToGameDays()
@@ -217,11 +193,10 @@ public class PatientData : MonoBehaviour
             }
         }
         
-        // Debug.Log(mostPatientsInAnyGameDay);
         ResultsCalculator.Instance.SetMaxPatientsNumber(mostPatientsInAnyGameDay);
     }
     
-    void CreatePatientInformation()              // *TAG* - Would be good to reorder, but then I'll have to fix a bunch,,, HHHHHHHHbruhhhhhh
+    void CreatePatientInformation()
     {
         // Creates the individual SinglePatientData objects and fills them out with information related to each specific patient.
         allPatientsList = new List<SinglePatientData>();
@@ -345,8 +320,8 @@ public class PatientData : MonoBehaviour
         Debug.Log("Would play sound effect for: " + audioToPlay);
         SoundManager.Instance.PlayAudio(SoundManager.Instance.sfxFootsteps);
 
-        
-        GameManager.Instance.SetClientData();
+        // Saves the active patient to gameData
+        GameManager.Instance.RecordActivePatient();
         
         Invoke(nameof(SpawnPatient), 1.0f);
     }
@@ -409,31 +384,17 @@ public class PatientData : MonoBehaviour
     {
         string checkupLetterText = "default text. Issue with update on ReturnPatientCheckupLetter";
         
-		for (int i = 0; i < currentDayPatientsList.Count; i++)
-		{
-			if (currentDayPatientsList[i]._patientName == patientName)
-			{
-				checkupLetterText = curedText ? currentDayPatientsList[i]._patientCuredText : currentDayPatientsList[i]._patientFailedText;
-				break;
-			}
-            /*else
-            {
-                continue;
-            }*/
-		}
-        /*foreach (SinglePatientData c in currentDayPatientsList)
+        List <SinglePatientData> tempList = dailyPatientsDictionary[DayManager.Instance.currentDayNumber];
+        int numberPatients = tempList.Count;
+        
+        for (int i = 0; i < numberPatients; i++)
         {
-            if (c._patientName == patientName)
-            {
-                
-            }
-            else
-            {
-                continue;
-            }
-        }*/
-
-		// if (checkupLetterText != "")
+			if (tempList[i]._patientName == patientName)
+			{
+				checkupLetterText = curedText ? tempList[i]._patientCuredText : tempList[i]._patientFailedText;
+			}
+		}
+        
         return checkupLetterText;
     }
 }

@@ -25,19 +25,30 @@ public class GrimoireNavigation : MonoBehaviour, IPointerClickHandler
         public GameObject grimoireInkFromStampObject;
         private List<Image> grimoireAilmentIconsList;
 
-        private bool resettingGrimoire;
-        private bool grimoireIsClosed;
-        
-        
+    private bool resettingGrimoire;
+    private bool grimoireIsClosed;
+    
+    // Key stats to track:
+    private bool notOpenedGrimoire;
+    public int currentGrimoirePageNumber;
+    
+    // Vectors to store relevant positions for UI
+    private Vector2 grimoireInitialPosition;
+    private Vector2 buttonsPositionPage; 
+    private Vector2 buttonsPositionCover;
 
-        // Key stats to track:
-        private bool notOpenedGrimoire;
-        public int currentGrimoirePageNumber;       // *TAG* - private it again once I've got this check working !!!
+	/*void Awake ()
+	{
+		buttonsPositionPage = navigationButtonsObject.transform.position;
+        buttonsPositionCover = new Vector2((buttonsPositionPage.x + 100), buttonsPositionPage.y);
+        grimoireInitialPosition = transform.position;
         
-        // Vectors to store relevant positions for UI
-        private Vector2 grimoireInitialPosition;
-        private Vector2 buttonsPositionPage; 
-        private Vector2 buttonsPositionCover;
+        grimoireDisplayedImage = GetComponent<Image>();
+        
+		// currentGrimoirePageNumber = 0;
+        grimoireNavigationLeft.onClick.AddListener(delegate { GoToPage(currentGrimoirePageNumber--); });
+        grimoireNavigationRight.onClick.AddListener(delegate { GoToPage(currentGrimoirePageNumber++); });
+	}*/
 
     public void InitialiseGrimoireNavigation()
     {
@@ -47,26 +58,26 @@ public class GrimoireNavigation : MonoBehaviour, IPointerClickHandler
         
         grimoireDisplayedImage = GetComponent<Image>();
         
-        grimoireNavigationLeft.onClick.AddListener(delegate { GoToPage(currentGrimoirePageNumber -1); });
-        grimoireNavigationRight.onClick.AddListener(delegate { GoToPage(currentGrimoirePageNumber +1); });
+		// currentGrimoirePageNumber = 0;
+        grimoireNavigationLeft.onClick.AddListener(delegate { GoToPage(currentGrimoirePageNumber--); });
+        grimoireNavigationRight.onClick.AddListener(delegate { GoToPage(currentGrimoirePageNumber++); });
         
         notOpenedGrimoire = true;
         resettingGrimoire = false;
         InitialiseGrimoireAilmentIconList();
-        ResetGrimoireNavigation();
     }
 
-    // Basic scene setup
+    
     public void ResetGrimoireNavigation()
     {
+        // Basic scene setup
         resettingGrimoire = true;
         
-        // grimoireAilmentSelectionButton.interactable = true;
+        // Hides stamped ink and resets position on screen
         grimoireInkFromStampObject.SetActive(false);
-
-        // reset position on screen
         transform.position = grimoireInitialPosition;
         
+        // Sets page to 0, thus closing book on GoToPage
         currentGrimoirePageNumber = 0;
         GoToPage(currentGrimoirePageNumber);
     }
@@ -81,12 +92,8 @@ public class GrimoireNavigation : MonoBehaviour, IPointerClickHandler
         grimoireInkFromStampObject.SetActive(false);
         grimoireAilmentIconDisplay.gameObject.SetActive(false);
         navigationButtonsObject.SetActive(false);
-        // grimoireNavigationLeft.gameObject.SetActive(false);
 
         UIManager.Instance.SpriteShift(grimoireDisplayedImage, grimoireFrontCoverImage.sprite);
-        // Moves navigation object. instead hide it and turn on open button object?
-        // navigationButtonsObject.transform.position = buttonsPositionCover;
-        
         grimoireIsClosed = true;
     }
     
@@ -113,27 +120,26 @@ public class GrimoireNavigation : MonoBehaviour, IPointerClickHandler
     void RunGrimoireTutorial()
     {
         notOpenedGrimoire = false;
+        
         if (GameManager.Instance.runningTutorial)
         {
             MenuManager.Instance.OpenTutorialPopup("grimoire");
         }
     }
-
-
+    
     // Determines which directions you can turn pages, and alters the UI's information to imitate a page turn 
     void GoToPage(int target)
     {
+        // Plays sound if not called from reset function
         if (!resettingGrimoire)
         {
-            // Plays audio if not resetting          could probably remove check by calling differently on reset?
             SoundManager.Instance.PlayAudio(SoundManager.Instance.sfxGrimoirePageTurn);
         }
         
         grimoireNavigationLeft.gameObject.SetActive(true);
 		grimoireNavigationRight.gameObject.SetActive(true);
         
-        // disables L/R buttons when target int leads outside of array's bounds
-        // if (target == GrimoirePagesData.Instance.grimoirePagesArray.Length - 1)
+        // Prevents navigating outside of the list's bounds
         if (target == GrimoirePagesData.Instance.grimoirePagesList.Count - 1)
         {
 			grimoireNavigationRight.gameObject.SetActive(false);
@@ -158,15 +164,29 @@ public class GrimoireNavigation : MonoBehaviour, IPointerClickHandler
         if (resettingGrimoire)
         {
             // *TAG* - Check here for null entries?
+            string errorsFound = "Error entries detected: ";
+            int errorNum = 0;
+            
+            foreach (GrimoirePagesData.SinglePage s in GrimoirePagesData.Instance.grimoirePagesList)
+            {
+                if (s._ailmentName == null)
+                {
+                    errorsFound = (errorsFound + s + ". ");
+                    errorNum++;
+                }
+            }
+
+            if (errorNum >= 1)
+            {
+                Debug.Log(errorsFound);
+            }
+            
             resettingGrimoire = false;
         }
     }
 
     void UpdateGrimoireDisplay(int target)
     {
-        // grimoireAilmentNameDisplay.text = GrimoirePagesData.Instance.grimoirePagesArray[target]._ailmentName;
-        // grimoireAilmentDescriptionDisplay.text = GrimoirePagesData.Instance.grimoirePagesArray[target]._ailmentDescription;
-        
         grimoireAilmentNameDisplay.text = GrimoirePagesData.Instance.grimoirePagesList[target]._ailmentName;
         grimoireAilmentDescriptionDisplay.text = GrimoirePagesData.Instance.grimoirePagesList[target]._ailmentDescription;
             
@@ -178,13 +198,11 @@ public class GrimoireNavigation : MonoBehaviour, IPointerClickHandler
         GetSelectedAilment(currentGrimoirePageNumber);
     }
     
-            // *TAG* - Private it again once stamp interaction is working!!!!
     void GetSelectedAilment(int pageNum)
     {
         grimoireInkFromStampObject.SetActive(true);
         GameManager.Instance.ailmentSubmitted = true;
         
-        // string selectedAilmentName = GrimoirePagesData.Instance.grimoirePagesArray[pageNum]._ailmentName;
         string selectedAilmentName = GrimoirePagesData.Instance.grimoirePagesList[pageNum]._ailmentName;
         SceneManager.Instance.UpdateAilment(selectedAilmentName);
         SceneManager.Instance.SubmitAilment();
@@ -205,6 +223,7 @@ public class GrimoireNavigation : MonoBehaviour, IPointerClickHandler
 
     public void OnPointerClick(PointerEventData eventData)
     {
+        // Allows grimoire object to act as a button, but only when closed
         if (grimoireIsClosed)
         {
             GoToPage(currentGrimoirePageNumber +1);

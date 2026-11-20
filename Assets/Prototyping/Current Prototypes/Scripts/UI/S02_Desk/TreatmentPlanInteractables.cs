@@ -76,7 +76,7 @@ public class TreatmentPlanInteractables : MonoBehaviour
     private void UpdateTargetOptions()
     {
         // Removes spirit from the target dropdowns if running current MVP version
-        if (GameManager.Instance.isMVP)
+        if (GameManager.Instance.gameIsMVP)
         {
             if (!updatedForMVP)
             {

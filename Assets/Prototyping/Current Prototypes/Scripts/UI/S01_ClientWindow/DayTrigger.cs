@@ -39,14 +39,14 @@ public class DayTrigger : MonoBehaviour, IPointerClickHandler
     void ToggleCurtainState()
     {
         // If it's the beginning of the day
-        if (GameManager.Instance.shopIsClosed == true)
+        if (GameManager.Instance.shopIsClosed)
         {
             if (displayedCurtainImage.sprite == closedCurtainSpriteVariant)
             {
 				UIManager.Instance.SpriteShift(displayedCurtainImage, openCurtainSpriteVariant);
                 UIManager.Instance.DisableInteraction(curtainCanvasGroup);
                 GameManager.Instance.shopIsClosed = false;
-                GameManager.Instance.SummonClient();
+                GameManager.Instance.GetNewPatient();
             }
             else
             {

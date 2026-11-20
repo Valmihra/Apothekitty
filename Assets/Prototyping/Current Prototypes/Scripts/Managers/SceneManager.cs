@@ -66,7 +66,7 @@ public class SceneManager : MonoBehaviour
 
     void Awake()
     {
-            _instance = this;
+        _instance = this;
 
         switchDeskHerbButton.onClick.AddListener(delegate {SwitchSceneDeskHerb(); });
         switchDeskClientButton.onClick.AddListener(delegate {SwitchSceneDeskClient(); });
@@ -75,7 +75,7 @@ public class SceneManager : MonoBehaviour
         InitialiseSceneManager();
     }
 
-    void InitialiseSceneManager()
+    private void InitialiseSceneManager()
     {
         InitialiseLists();
         defaultPatientImagePosition = patientWindowPatientObject.transform.position;
@@ -91,10 +91,14 @@ public class SceneManager : MonoBehaviour
     public void ResetScene()
     {
         questLog.ResetQuestLog();
-
+        
         SetInitialBools();
         SetupInitialGameScene();
         patientWindowPatientObject.transform.position = defaultPatientImagePosition;
+
+        Debug.Log("Getting Audio to return to...");
+        SoundManager.Instance.GetAudioToReturnTo();
+        // ResultsScreen.Instance.HideResultsScreen();
     }
     
     void SetInitialBools()
@@ -147,7 +151,8 @@ public class SceneManager : MonoBehaviour
 
     public void SubmitDiagnosis()
     {
-        Debug.Log("Treatment plan has been submitted.");
+        // Debug.Log("Treatment plan has been submitted.");
+        GameManager.Instance.diagnosisSubmitted = true;
         questLog.UpdateQuestLog();
 
         if (GameManager.Instance.runningTutorial)
@@ -188,7 +193,7 @@ public class SceneManager : MonoBehaviour
         allCanvasesHerbWall.Add(canvasGroupSubmitHerbCombinationButton);
     }
     
-    public void SwitchSceneDeskHerb()
+    private void SwitchSceneDeskHerb()
     {
         // Enables the UI associated with the correct scene
         SoundManager.Instance.PlayAudio(SoundManager.Instance.sfxSceneNavigation);
@@ -221,7 +226,7 @@ public class SceneManager : MonoBehaviour
         SoundManager.Instance.GetAudioToReturnTo();
     }
 
-    public void SwitchSceneDeskClient()
+    private void SwitchSceneDeskClient()
     {
         SoundManager.Instance.PlayAudio(SoundManager.Instance.sfxSceneNavigation);
         
@@ -258,7 +263,7 @@ public class SceneManager : MonoBehaviour
         SoundManager.Instance.GetAudioToReturnTo();
     }
     
-    public void SetupInitialGameScene()
+    private void SetupInitialGameScene()
     {
         SetupUI(allCanvasesClientWindow);
 
@@ -268,12 +273,13 @@ public class SceneManager : MonoBehaviour
         CleanupScene();
     }
 
-    void CleanupScene()
+    private void CleanupScene()
     {
         // Resets direction of arrows
         UIManager.Instance.SpriteShift(switchDeskClientButton.GetComponent<Image>(), iconArrowDown.sprite);
         UIManager.Instance.SpriteShift(switchDeskHerbButton.GetComponent<Image>(), iconArrowRight.sprite);
-
+        
+        // Hides Herb Wall switch button, quest log, and submit herbs components
         UIManager.Instance.DisableUI(switchDeskHerbButton.GetComponent<CanvasGroup>());
         UIManager.Instance.DisableUI(questLog.GetComponent<CanvasGroup>());
         UIManager.Instance.DisableUI(canvasGroupSubmitHerbCombinationButton);

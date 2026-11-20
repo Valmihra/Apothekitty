@@ -64,6 +64,7 @@ public class DialogueRunner : MonoBehaviour
 
     public void InitialiseDialogueRunner()
     {
+        // Initialises tutorial-specific bools
         notSeenDeskHint = true;
         firstVisitDesk = false;
         deskIsClean = false;
@@ -80,9 +81,8 @@ public class DialogueRunner : MonoBehaviour
         firstDialogueComplete = false;
     }
 
-    public void FixDialogueBools()
+    private void FixDialogueBools()
     {
-        // Debug.Log("Should be hiding now...");
         // UIManager.Instance.DisableUI(dialogueBox);
         dialogueBox.gameObject.SetActive(false);
         currentLineNumber = 0;
@@ -245,7 +245,7 @@ public class DialogueRunner : MonoBehaviour
         }
     }
 
-    void CloseDialogueWindow()
+    private void CloseDialogueWindow()
     {
         dialogueBox.gameObject.SetActive(false);
         dialogueSet = false;
@@ -255,7 +255,7 @@ public class DialogueRunner : MonoBehaviour
         currentString.text = defaultString;
     }
 
-    void JumpNextDialogue(List<string> target)//, string speaker)
+    private void JumpNextDialogue(List<string> target)//, string speaker)
     {
         currentDialogue = target;
         SetupDialogueForCatSpeaker();
@@ -342,7 +342,7 @@ public class DialogueRunner : MonoBehaviour
         }
     }
 
-    void SetupDialogueForCatSpeaker()
+    private void SetupDialogueForCatSpeaker()
     {
         speakerName.text = catName;
         dialogueSet = true;
@@ -352,7 +352,7 @@ public class DialogueRunner : MonoBehaviour
         dialogueBox.gameObject.SetActive(true);
     }
 
-    void GetDialogueByClient(string dialogueType)
+    private void GetDialogueByClient(string dialogueType)
     {
         nameOfNPC = PatientData.Instance.activePatientData._patientName;
         speakerName.text = nameOfNPC;
@@ -433,7 +433,7 @@ public class DialogueRunner : MonoBehaviour
         RunDialogue();
     }
 
-    void SetCorrectDialogueBoxPrompt()
+    private void SetCorrectDialogueBoxPrompt()
     {
         if (currentLineNumber < currentDialogue.Count - 1)
         {
@@ -446,7 +446,7 @@ public class DialogueRunner : MonoBehaviour
     }
 
     // checks if there's highlighted text in the string and performs an action with the thing inside it
-    void CheckDialogueForActions()
+    private void CheckDialogueForActions()
     {
         if (currentString.text.Contains("</color>"))
         {
@@ -470,7 +470,7 @@ public class DialogueRunner : MonoBehaviour
         }
     }
 
-    void PerformAction(string stringToRead)
+    private void PerformAction(string stringToRead)
     {
 		// Highlights the corresponding canvas element through UIManager
         if (stringToRead.Contains("Each recipe has an"))

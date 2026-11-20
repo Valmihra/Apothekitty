@@ -6,14 +6,30 @@ using UnityEngine.UI;
 public class QuitButton : MonoBehaviour
 {
     private Button quitButton;
-    // private bool buttonSavesProgress;
+
+    void Start()
+    {
+        quitButton = GetComponent<Button>();
+        quitButton.onClick.AddListener(delegate { ExitGame(); });
+    }
+    
+    void ExitGame()
+    {
+        SoundManager.Instance.PlayAudio(SoundManager.Instance.menuReturn);
+        MenuManager.Instance.ExitGamePopup();
+    }
+    
+    /*
+        // EXTENDED VERSION::
+	private Button quitButton;
+    private bool buttonSavesProgress;
 
     void Start()
     {
         quitButton = GetComponent<Button>();
         quitButton.onClick.AddListener(delegate { ExitGame(); });
             
-        /*GameObject saveButton = GameObject.Find("Pause Menu Button - Save and Quit");
+        GameObject saveButton = GameObject.Find("Pause Menu Button - Save and Quit");
         if (this.gameObject == saveButton)
         {
             buttonSavesProgress = true;
@@ -21,34 +37,34 @@ public class QuitButton : MonoBehaviour
         else
         {
             buttonSavesProgress = false;
-        }*/
+        }
     }
 
     
     void ExitGame()
     {
-        /*if (GameManager.Instance.onMainMenu)
+        if (GameManager.Instance.gameIsOnMainMenu)
         {
             SoundManager.Instance.PlayAudio(SoundManager.Instance.menuSelect);
-            
+
             MenuManager.Instance.ExitGamePopup();
         }
         else
         {
-            SoundManager.Instance.PlayAudio(SoundManager.Instance.menuReturn);
-            
+            // SoundManager.Instance.PlayAudio(SoundManager.Instance.menuReturn);
+
             // Save progress here!!!
-            if (buttonSavesProgress)
+            /*if (buttonSavesProgress)
             {
                 GameManager.Instance.SaveGame();
-            }*/
+            }
             
             SoundManager.Instance.PlayAudio(SoundManager.Instance.menuReturn);
-        
-            // MenuManager.Instance.ExitMenu(MenuManager.Instance.pauseMenuCanvasGroup);
-            // GameManager.Instance.GoMainMenu();
-            
+            MenuManager.Instance.ExitMenu(MenuManager.Instance.pauseMenuCanvasGroup);
+
+            GameManager.Instance.GoMainMenu();
             MenuManager.Instance.ExitGamePopup();
-        // }
+        }
     }
+	*/
 }

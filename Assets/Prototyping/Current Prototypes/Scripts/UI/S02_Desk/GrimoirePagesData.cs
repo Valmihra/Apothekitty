@@ -7,7 +7,6 @@ public class GrimoirePagesData : MonoBehaviour
 {
     public class SinglePage
     {
-        // public int/icon? which to use? int??
         public string _ailmentName;
         public string _ailmentDescription;
 
@@ -22,13 +21,15 @@ public class GrimoirePagesData : MonoBehaviour
         }
     }
 
+    // Single page information
     public List<SinglePage> grimoirePagesList { get; private set; }
-    // public SinglePage[] grimoirePagesArray;
-
-    int totalPages = 0;
-
-    private GrimoireNavigation grimoireNavigation;
-    private Stamp stamp;
+    private int totalGrimoirePages = 0;
+    
+    // Script references
+    private GrimoireNavigation grimoireNavigationReference;
+    private Stamp stampReference;
+    
+    // Grimoire object bounding box
     private Rect grimoireRect;
 
     private static GrimoirePagesData _instance;
@@ -43,67 +44,53 @@ public class GrimoirePagesData : MonoBehaviour
     void Awake()
     {
         _instance = this;
-        grimoireNavigation = GetComponent<GrimoireNavigation>();
+        grimoireNavigationReference = GetComponent<GrimoireNavigation>();
     }
     
-        public Rect GetAndReturnGrimoireRect()
-        {
-            // *TAG* - For grimoire's stamp.
-            grimoireRect.center = transform.position;
-            return grimoireRect;
-        }
+    private void GetGrimoireRect()
+    {
+        // Initialises the rect for Stamp
+        Vector3[] corners = new Vector3[4];
+        GetComponent<RectTransform>().GetWorldCorners(corners);
 
-        public bool SelectedPageIsNotTheCover()
-        {
-            bool boolToReturn = grimoireNavigation.currentGrimoirePageNumber > 0 ? true : false;
-            return boolToReturn;
-        }
-        
-        public void TempSelectionCheck()
-        {
-            grimoireNavigation.TempSelectionCheck();
-        }
+        Vector2 min = corners[0];
+        Vector2 max = corners[2];
+        Vector2 size = max - min;
 
-        private void GetGrimoireRect()
-        {
-            // Initialises the rect for Stamp
-            Vector3[] corners = new Vector3[4];
-            GetComponent<RectTransform>().GetWorldCorners(corners);
+        grimoireRect = new Rect(min, size);
+    }
+    
+    public Rect GetAndReturnGrimoireRect()
+    {
+        grimoireRect.center = transform.position;
+        return grimoireRect;
+    }
 
-            Vector2 min = corners[0];
-            Vector2 max = corners[2];
-            Vector2 size = max - min;
-
-            grimoireRect = new Rect(min, size);
-        }
+    public bool SelectedPageIsNotTheCover()
+    {
+        bool boolToReturn = grimoireNavigationReference.currentGrimoirePageNumber > 0 ? true : false;
+        return boolToReturn;
+    }
+    
+    public void TempSelectionCheck()
+    {
+        grimoireNavigationReference.TempSelectionCheck();
+    }
 
     public void InitialiseGrimoirePagesData()
     {
         InitialiseGrimoirePagesList();
+        grimoireNavigationReference.InitialiseGrimoireNavigation();
         
-        grimoireNavigation.InitialiseGrimoireNavigation();
-        
-        stamp = FindObjectOfType<Stamp>();
-        stamp.InitialiseStamp();
+        stampReference = FindObjectOfType<Stamp>();
+        stampReference.InitialiseStamp();
         GetGrimoireRect();
         
     }
 
-    /*void SetGrimoirePagesArray()
-    {
-        grimoirePagesArray = grimoirePagesList.ToArray();
-    }*/
-
     void InitialiseGrimoirePagesList()  // alphabetically set up for now
     {
         grimoirePagesList = new List<SinglePage>();
-
-        /*if (grimoirePagesList.Count > 3)
-        {
-            Debug.Log("Already set up.");
-            return;
-        }*/
-        
         
                 SinglePage cover = new SinglePage();
                 cover.UpdateName("cover");
@@ -167,16 +154,20 @@ public class GrimoirePagesData : MonoBehaviour
 
         foreach (SinglePage s in grimoirePagesList)
         {
-            totalPages++;
+            totalGrimoirePages++;
         }
 
-        // Debug.Log("There are: " + grimoirePagesList.Count + " total grimoire entries.");
     }
 
     public void ResetGrimoire()
     {
-        grimoireNavigation.ResetGrimoireNavigation();
-		// *TAG* - Stamp probably shouldn't be here.
-        stamp.ResetStamp();
+        grimoireNavigationReference.ResetGrimoireNavigation();
+        stampReference.ResetStamp();
+        
+        /*Debug.Log("There are: " + grimoirePagesList.Count + " total grimoire pages set up.");
+		foreach (SinglePage s in grimoirePagesList)
+		{
+			Debug.Log(s._ailmentName);
+		}*/
     }
 }

@@ -14,7 +14,6 @@ public class ResultsCalculator : MonoBehaviour
         public bool _correctHerbs;
         
         public bool _patientDataStored;
-
         // public string _patientCheckupLetter;
 
         public void SetupEmptyPatientSlot()
@@ -217,7 +216,7 @@ public class ResultsCalculator : MonoBehaviour
         if (numMatches == targetIngredientCount)
         {
             correctHerbs = true;
-			GameManager.Instance.RecordCuredPatient();
+			// GameManager.Instance.RecordCuredPatient();
         }
         
         return;
@@ -303,11 +302,10 @@ public class ResultsCalculator : MonoBehaviour
                 
                 //f._patientCheckupLetter = 
                 
+                f.FinishTreatingPatient();
+                GameManager.Instance.RecordTreatedPatient(f);
                 
 				totalClientResults++;
-                f.FinishTreatingPatient();
-
-                GameManager.Instance.AddFinishedPatientToData(f);
                 break;
             }
         }

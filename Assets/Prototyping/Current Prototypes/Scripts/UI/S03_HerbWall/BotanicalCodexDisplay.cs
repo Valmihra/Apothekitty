@@ -82,13 +82,13 @@ public class BotanicalCodexDisplay : MonoBehaviour
 	{
 		for (int i = 0; i < herb._sizes.Count; i++)
         {
-            if (herb._sizes[i] == true)
+            if (herb._sizes[i])		// == true)
             {
 				int index = sizeIconList.IndexOf(sizeIconList[i]);
 				sizeIconUpdaterDictionary[index].ToggleBotanicalCodexIcon();
             }
 
-            if (herb._diets[i] == true)
+            if (herb._diets[i])		// == true)
             {
                 int index = sizeIconList.IndexOf(sizeIconList[i]);
                 dietIconUpdaterDictionary[index].ToggleBotanicalCodexIcon();

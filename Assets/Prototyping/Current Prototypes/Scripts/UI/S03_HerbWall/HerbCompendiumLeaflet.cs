@@ -122,8 +122,8 @@ public class HerbCompendiumLeaflet : MouseHover, IBeginDragHandler, IDragHandler
 
 	public void UpdateLeafletText(int numberInGuide)
 	{
-		leafletTitleText = ("<b>" + HerbCompendiumData.Instance.pagesList[numberInGuide]._treatmentCategoryName + "</b>").ToString();
-		leafletDetailText = (leafletTitleText + "\n\n" + HerbCompendiumData.Instance.pagesList[numberInGuide]._treatmentCategoryDescription).ToString();
+		leafletTitleText = ("<b>" + HerbCompendiumData.Instance.compendiumLeafletsList[numberInGuide]._treatmentCategoryName + "</b>").ToString();
+		leafletDetailText = (leafletTitleText + "\n\n" + HerbCompendiumData.Instance.compendiumLeafletsList[numberInGuide]._treatmentCategoryDescription).ToString();
 	}
     
     private Vector3 GetPositionFromTransform()

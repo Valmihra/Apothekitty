@@ -48,7 +48,7 @@ public class ProgressLevelButton : MonoBehaviour
         if (clientsRemaining)
         {
 			MenuManager.Instance.ExitMenu(MenuManager.Instance.progressMenuCanvasGroup);
-            GameManager.Instance.GoNextClient();
+            GameManager.Instance.GoNextPatient();
         }
         else
         {

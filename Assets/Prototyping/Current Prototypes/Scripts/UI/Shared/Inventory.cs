@@ -22,13 +22,7 @@ public class Inventory : MonoBehaviour, IDropHandler
 
     void Awake()
     {
-        //if (_instance = null)
-        //{
-            _instance = this;
-
-            //canvas = GetComponentInParent<Canvas>();
-            //uiScale = canvas.scaleFactor;
-        //}
+        _instance = this;
     }
 
     public void InitialiseInventorySlots()

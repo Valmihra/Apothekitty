@@ -37,13 +37,6 @@ public class ResultsScreen : MonoBehaviour
         _instance = this;
     }
 
-	public void HideResultsScreen()
-	{
-		UIManager.Instance.DisableUI(SceneManager.Instance.mainCanvasGroupResultsScreen);
-        PrepNextClientResultScreen();
-        SoundManager.Instance.GetAudioToReturnTo();
-	}
-
 	public void PrepNextClientResultScreen()
 	{
 		UIManager.Instance.DisableUI(resultsIconCanvas);

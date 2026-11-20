@@ -89,7 +89,7 @@ public class AnimatedTextEffectNewDay : MonoBehaviour
 
     void CanMoveScreens()
     {
-        MenuManager.Instance.NewDayMenu("close");
+        MenuManager.Instance.NewDayMenu("closeNewDayMenu");
         GameManager.Instance.StartNewDay();
     }
 

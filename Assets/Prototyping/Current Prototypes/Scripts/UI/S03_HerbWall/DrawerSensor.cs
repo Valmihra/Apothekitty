@@ -17,25 +17,32 @@ public class DrawerSensor : MonoBehaviour
 
     public string drawerContents;
 
+    private Color deactivatedColour;
+    private Color defaultColour;
+
+    private Image closedDrawerImage;
+
     void Awake()
     {
         openDrawer = transform.Find("Drawer Button - Open").GetComponent<CanvasGroup>();
         closedDrawer = transform.Find("Drawer Button - Closed").GetComponent<CanvasGroup>();
-
+        closedDrawerImage = closedDrawer.GetComponent<Image>();
+        
         buttonClosed = closedDrawer.GetComponent<Button>();
         buttonOpen = openDrawer.GetComponent<Button>();
-    
-
+        
         buttonClosed.onClick.AddListener(delegate { OpenDrawer(); });
         buttonOpen.onClick.AddListener(delegate { CloseDrawer(); });
         
+        defaultColour = closedDrawerImage.color;
+        deactivatedColour = new Color(0.3f, 0.3f, 0.3f, 0.3f);
     }
 
     public void SetupHerbWall()
     {
         UIManager.Instance.DisableUI(this.openDrawer);
         UIManager.Instance.EnableUI(this.closedDrawer);
-        buttonClosed.enabled = true;
+        EnableDrawer();
     }
 
     void OpenDrawer()
@@ -89,8 +96,15 @@ public class DrawerSensor : MonoBehaviour
         }
     }
 
+    private void EnableDrawer()
+    {
+        buttonClosed.enabled = true;
+        closedDrawerImage.color = defaultColour;
+    }
+    
     public void DisableDrawer()
     {
         buttonClosed.enabled = false;
+        closedDrawerImage.color = deactivatedColour;
     }
 }

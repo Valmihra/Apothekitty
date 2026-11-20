@@ -16,6 +16,7 @@ public class ContinueButton : MonoBehaviour
     // Exits the menu and starts a new game
     void ContinueGame()
     {
+        Debug.Log("Continue Game");
         GameManager.Instance.LoadGame();
     }
 }
